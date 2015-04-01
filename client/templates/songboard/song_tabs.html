@@ -1,0 +1,22 @@
+<template name="songTabs">
+	<div id="main" class="col-md-4 column">
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#mygroovs" aria-controls="mygroovs" role="tab" data-toggle="tab">my groovs</a></li>
+		    <li role="presentation"><a href="#tastemakers" aria-controls="tastemakers" role="tab" data-toggle="tab">tastemakers</a></li>
+		    <li role="presentation"><a href="#global" aria-controls="global" role="tab" data-toggle="tab">global</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane fade in active" id="mygroovs">
+		    	{{> songsList}}
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="tastemakers">...</div>
+		    <div role="tabpanel" class="tab-pane fade" id="global">...</div>
+		  </div>
+		</div>
+	</div>
+</template>

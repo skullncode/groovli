@@ -1,0 +1,115 @@
+/*if (Songs.find().count() === 0) {
+  Songs.insert({
+      sl : "https://www.youtube.com/watch?v=u1ZB_rGFyeU",
+      sharedBy : [ 
+          {
+              msg : "well, that's pretty insane.",
+              systemDate : "1414476212",
+              uid : "721431527969807"
+          }
+      ],
+      listenCount : 1,
+      meCount : 0,
+      aeCount : 0,
+      songSearchText : "OK GO I WON'T LET YOU DOWN",
+      LFMLargeAlbumArt : "",
+      LFMMediumAlbumArt : "",
+      iTunesLargeAlbumArt : "http://is5.mzstatic.com/image/pf/us/r30/Music3/v4/7d/6a/5a/7d6a5a0d-9ad1-ce5f-8118-5889f881b573/859381011873.100x100-75.jpg",
+      iTunesMediumAlbumArt : "http://is2.mzstatic.com/image/pf/us/r30/Music3/v4/7d/6a/5a/7d6a5a0d-9ad1-ce5f-8118-5889f881b573/859381011873.60x60-50.jpg",
+      trackDuration : "222633",
+      trackExplicitness : "notExplicit",
+      albumExplicitness : "",
+      iTunesPriceCurrency : "USD", 
+      iTunesAlbumPrice : "5.99",
+      iTunesTrackPrice : "1.29",
+      iTunesAlbumURL : "https://itunes.apple.com/us/album/i-wont-let-you-down/id913538082?i=913538206&uo=4",
+      iTunesTrackURL : "https://itunes.apple.com/us/album/i-wont-let-you-down/id913538082?i=913538206&uo=4",
+      discCount : "1",
+      discNumber : "1",
+      trackCount : "12",
+      trackNumber : "8",
+      genre : "Alternative",
+      album : "Hungry Ghosts",
+      st : "I Won't Let You Down",
+      sa : "OK Go",
+      type : "YOUTUBE",
+      dataSource : "FB",
+      __v : 0,
+  });
+
+  Songs.insert({
+      sl : "https://www.youtube.com/watch?v=lEjy3juYDJ4",
+      sharedBy : [ 
+          {
+              msg : "insta-calm",
+              systemDate : "1410950910",
+              uid : "721431527969807"
+          }
+      ],
+      listenCount : 1,
+      meCount : 0,
+      aeCount : 0,
+      songSearchText : "KINGS OF CONVENIENCE LIVE LONG",
+      LFMLargeAlbumArt : "",
+      LFMMediumAlbumArt : "",
+      iTunesLargeAlbumArt : "http://is5.mzstatic.com/image/pf/us/r30/Music4/v4/07/a3/20/07a320eb-fce3-f452-d2a3-48c3a305d162/00724357166553.100x100-75.jpg",
+      iTunesMediumAlbumArt : "http://is3.mzstatic.com/image/pf/us/r30/Music4/v4/07/a3/20/07a320eb-fce3-f452-d2a3-48c3a305d162/00724357166553.60x60-50.jpg",
+      trackDuration : "177773",
+      trackExplicitness : "notExplicit",
+      albumExplicitness : "",
+      iTunesPriceCurrency : "USD",
+      iTunesAlbumPrice : "9.99",
+      iTunesTrackPrice : "1.29",
+      iTunesAlbumURL : "https://itunes.apple.com/us/album/live-long/id724403401?i=724403577&uo=4",
+      iTunesTrackURL : "https://itunes.apple.com/us/album/live-long/id724403401?i=724403577&uo=4",
+      discCount : "1",
+      discNumber : "1",
+      trackCount : "12",
+      trackNumber : "9",
+      genre : "Rock",
+      album : "Riot On an Empty Street",
+      st : "Live Long",
+      sa : "Kings of Convenience",
+      type : "YOUTUBE",
+      dataSource : "FB",
+      __v : 0,
+  });
+
+  Songs.insert({
+      sl : "https://www.youtube.com/watch?v=_mTRvJ9fugM",
+      sharedBy : [ 
+          {
+              msg : "loooooop",
+              systemDate : "1417458430",
+              uid : "721431527969807"
+          }
+      ],
+      listenCount : 1,
+      meCount : 0,
+      aeCount : 0,
+      songSearchText : "CHVRCHES THE MOTHER WE SHARE",
+      LFMLargeAlbumArt : "",
+      LFMMediumAlbumArt : "",
+      iTunesLargeAlbumArt : "http://is3.mzstatic.com/image/pf/us/r30/Music/v4/2c/0c/f2/2c0cf2b4-f676-98fb-ac03-ba806ec8aca9/UMG_cvrart_00044003171008_01_RGB72_1500x1500_13CANIM00541.100x100-75.jpg",
+      iTunesMediumAlbumArt : "http://is3.mzstatic.com/image/pf/us/r30/Music/v4/2c/0c/f2/2c0cf2b4-f676-98fb-ac03-ba806ec8aca9/UMG_cvrart_00044003171008_01_RGB72_1500x1500_13CANIM00541.60x60-50.jpg",
+      trackDuration : "191294",
+      trackExplicitness : "explicit",
+      albumExplicitness : "",
+      iTunesPriceCurrency : "USD",
+      iTunesAlbumPrice : "5.99",
+      iTunesTrackPrice : "1.29",
+      iTunesAlbumURL : "https://itunes.apple.com/us/album/the-mother-we-share/id684545029?i=684545030&uo=4",
+      iTunesTrackURL : "https://itunes.apple.com/us/album/the-mother-we-share/id684545029?i=684545030&uo=4",
+      discCount : "1",
+      discNumber : "1",
+      trackCount : "12",
+      trackNumber : "1",
+      genre : "Alternative",
+      album : "The Bones of What You Believe",
+      st : "The Mother We Share",
+      sa : "CHVRCHES",
+      type : "YOUTUBE",
+      dataSource : "FB",
+      __v : 0,
+  });
+}*/

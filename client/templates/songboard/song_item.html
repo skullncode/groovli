@@ -1,0 +1,10 @@
+<template name="songItem">
+	<a class='thumbnail songBrowserItem' href={{songID}} data-toggle="tooltip" data-placement="top" title={{songItemMessageForUser}}>
+		<div style="float:left;width:100px;"><img src={{youtubeThumbnail}}></div>
+		<center>
+		<div class='songItemText'>{{sa}} - {{st}}</div>
+		<div class='songItemText'><h6 class='text-muted'><i>originally shared to {{dataSource}} on <br> {{songItemTimeStamp}}</i></h6></div>
+		</center>
+		<div style="clear:both;"></div>
+	</a>
+</template>

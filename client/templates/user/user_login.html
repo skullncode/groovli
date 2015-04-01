@@ -1,0 +1,34 @@
+<template name="userLogin">
+	{{#if currentUser}}
+	  <ul class="nav navbar-nav navbar-right">
+		<li>
+			<img class="img-rounded headerProfileImage" style="height: 40px; margin-top: 4px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square">
+		</li>
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	        <i class="fa fa-user"></i> {{ currentUser.profile.name }} <i class="fa fa-caret-down"></i>
+	      </a>
+	      <ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="/#!/settings/profile">Edit Profile</a>
+			</li>
+			<!--
+			<li>
+			<a href="/#!/settings/accounts">Manage Social Accounts</a>
+			</li>
+			<li data-ng-show="authentication.user.provider === 'local'">
+			<a href="/#!/settings/password">Change Password</a>
+			</li>-->
+	        <li><a href="#" data-action="logout" id="logout"><i class="fa fa-lock"></i> Sign Out</a></li>
+	      </ul>
+	    </li>
+	  </ul>
+	{{else}}
+	  <div class="navbar-right">
+	    <a class="btn btn-default navbar-btn" id="facebook-login">Sign in with Facebook</a>
+	    <!--<a href="{{ pathFor 'atSignUp' }}" class="btn btn-primary navbar-btn">Register</a>-->
+	  </div>
+	{{/if}}
+</template>
+
+<!--href="{{ pathFor 'atSignIn' }}" -->

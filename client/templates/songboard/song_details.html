@@ -1,0 +1,32 @@
+<template name='songDetails'>
+	{{#if songPlaying}}
+		{{#with currentSong}}
+			{{currentSongHasEncounteredAnError}}
+			<div class="col-md-6 column">
+				{{#if artistTrackAreNotSame}}
+					<div>
+						<h3>{{currentSong.sa}}</h3>
+						<h4>{{currentSong.st}}</h4>
+						{{#if albumDeetsNotEmpty}}
+							<div>
+								<h6>Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
+								<br>from the album <b>{{currentSong.album}}</b>
+								<br>released <b>{{formattedReleaseDate}}</b>
+								<br>Genre: {{currentSong.genre}}</h6>
+							</div>
+						{{/if}}
+					</div>
+				{{else}}
+					<div>
+						<h3>{{currentSong.sa}}</h3>
+					</div>
+				{{/if}}
+			</div>
+			<div class="col-md-4 column" align="right">
+				{{>songRater}}
+			</div>
+		{{/with}}
+	{{else}}
+		<h5>NOTHING PLAYING RIGHT NOW</h5>
+	{{/if}}
+</template>

@@ -1,0 +1,13 @@
+<template name="songsList">
+	<span class="badge pull-right">{{songs.count}}</span>
+	<ul id='personalVidList' class="songsList horizontal-slide">
+		{{#if songsLoaded}}
+			{{startPlayer}}
+		{{/if}}
+		<li>
+			{{#each songs}}
+				{{> songItem}}
+			{{/each}}
+		</li>
+	</ul>
+</template>
