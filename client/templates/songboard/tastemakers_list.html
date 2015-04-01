@@ -1,0 +1,14 @@
+<template name="tastemakersList">
+	{{#if songOfFriendsExist}}
+		<span class="badge pull-right">{{songs.count}}</span>
+	{{else}}
+		<span>NO FRIENDS HAVE JOINED GROOVLI yet!!! :(</span>
+	{{/if}}
+	<ul id='personalVidList' class="songsList horizontal-slide">
+		<li>
+			{{#each songs}}
+				{{> songItem}}
+			{{/each}}
+		</li>
+	</ul>
+</template>

@@ -5,8 +5,8 @@ if (Meteor.isClient) {
 	Deps.autorun(function() {
 		if(Meteor.user() && Meteor.user().services !== undefined && Meteor.user().services.facebook !== undefined)
 			Session.set('ud', Meteor.user().services.facebook.id);
-		else
-			console.log('STILL DONT HAVE METEOR USER!!!');
+		//else
+			//console.log('STILL DONT HAVE METEOR USER!!!');
 		
 		Meteor.subscribe('songs', Session.get('ud'));
 	})

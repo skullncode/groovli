@@ -1,17 +1,15 @@
 var fullSongList = {};
 Session.set('playerStarted', false);
 
-Template.songsList.helpers({
+Template.mygroovsList.helpers({
   songs: function() {
   	//Session.set('personalSongList', Songs.find());
-
-    console.log('INSIDE THE SONG HELPER!!!!!!');
-    fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)});
+    fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: { 'sharedBy.systemDate': -1 }});
     var songCollection = fullSongList.fetch();
     //songCollectionLength = songCollection.length;
     //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + songCollection.length);
     Session.set('pSongsLength', songCollection.length);
-    updateMySongs(songCollection);
+    updateMySongs(songCollection, 'mygroovs');
     return fullSongList;
   },
 
@@ -32,4 +30,4 @@ Template.songsList.helpers({
       Session.set('playerLoaded', false);
     }
   }
-});    
+});

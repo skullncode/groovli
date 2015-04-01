@@ -22,6 +22,11 @@ Template.songboard.rendered = function() {
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 
-  //resetSession();
-	Meteor.call('getLatestStoriesFromDBAndFB');
+  	//resetSession();
+  	Meteor.call('getLatestStoriesFromDBAndFB');
+	/*Meteor.setInterval(
+		function(){
+			console.log('Refreshing and getting latest tracks from social networks.');
+			Meteor.call('getLatestStoriesFromDBAndFB');
+		}, 60000);*/
 };

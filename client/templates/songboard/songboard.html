@@ -5,10 +5,14 @@
 		src="https://www.youtube.com/embed/dummyid?version=3&controls=0&enablejsapi=1&rel=0&showinfo=0&color=white&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
 	</div>
 	<br>
-	{{>songDetails}}
+	{{#if currentUser}}
+		{{>songDetails}}
+	{{/if}}
 	<div class="well" style="width:640px;">
 		<div data-show_title="false" class="muut" id="muut-custom"></div>
 	</div>
   </div>
-  {{>songTabs}}
+  {{#if currentUser}}
+  	{{>songTabs}}
+  {{/if}}
 </template>

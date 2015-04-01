@@ -4,7 +4,10 @@ Meteor.publish('songs', function(userID) {
   //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}], aeCount: {$lt: 1}});
   console.log('FROM THE PUBLISHing CODE; this is the USER ID to get data for: ' + userID);
   if(userID !== null)
-    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}]},{'sharedBy.uid': String(userID)});
+  {
+    var options = {songSearchText: 0, aeCount: 0, meCount: 0, iTunesValid: 0, LFMValid: 0, _id: 0};
+    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
+  }
 });
 
 Meteor.publish("userData", function () {
@@ -16,7 +19,8 @@ Meteor.publish("userData", function () {
        	{
        		"services.facebook": 1,
        		"emails.address[0]": 1,
-          "profile": 1
+          "profile": 1,
+          "fbFriends": 1
        	}
      });
   } else {

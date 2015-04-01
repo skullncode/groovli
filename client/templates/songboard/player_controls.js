@@ -39,7 +39,7 @@ Template.playerControls.events({
 
 function nextSong() {
 	//console.log('HISTORY GETTING!!!!!: ' + getHistory());
-	console.log('PRESSED NEXTTTT!!!!!');
+	//console.log('PRESSED NEXTTTT!!!!!');
 	if(!nextPressed)
 	{
 		nextPressed = true;
@@ -207,12 +207,12 @@ function setShare(currentShare)
 }
 
 function selectShareFromControls(share, shares) {
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
-	console.log('##############THIS IS the SELECTED SHARE:');
-	console.log(share.st);
+	//console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
+	//console.log('##############THIS IS the SELECTED SHARE:');
+	//console.log(share.st);
   //var chosenIndex = shares.indexOf(share) + 2;
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
-  console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + shares[chosenIndex]);
+  //console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + shares[chosenIndex]);
   var firstSongObject = document.querySelector('.songBrowserItem:nth-child(1)');
   var selectedRandomSongLink = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
   var selectedRandomSongObject = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
@@ -279,9 +279,12 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
      Session.set('CS', s);
    }
    
-   updateMySongs = function(sh) {
+   updateMySongs = function(sh, tab) {
     //console.log('UPDATING my songs via songstate service');
-    mySongs = sh;
+    if(tab === 'mygroovs')
+      mySongs = sh;
+    else if(tab === 'tastemakers')
+      friendSongs = sh;
     //console.log('SONG STATE LENGTH: ' + mySongs.length);
    }
    
