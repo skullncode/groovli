@@ -1,33 +1,35 @@
 <template name='playerControls'>
-	<ul class='nav navbar-nav'>
-		<li id='previousButton' title='Previous' class='vidControls'>
-			<a ng-click='previousSong();'>
-				<i class='glyphicon glyphicon-step-backward'></i>
-			</a>
-		</li> 
-		<li id='playButton' title='Play' class='vidControls'>
-			<a onClick='playpauseVideo();'>
-				<i class='glyphicon glyphicon-play'></i>
-			</a>
-		</li>
-		<li id='nextButton' title='Next'>
-			<a ng-click='nextSong();'>
-				<i class='glyphicon glyphicon-step-forward'></i>
-			</a>
-		</li>
-		<li>
-			<a>
-				<div id='progContainer' class='progress'>
-					<div id='progBar' class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-   					</div>
-				</div>
-			</a>
-		</li>
-		{{encounteredErroneousSong}}
-	    <li>
-	    	<div style='visibility:hidden; padding: 50px 0px 0px 0px;'>
-	    		{{>spinner}}
-	    	</div>
-		</li>
-	</ul>
+	{{#if currentlyOnSongboard}}
+		<ul class='nav navbar-nav'>
+			<li id='previousButton' title='Previous' class='vidControls'>
+				<a ng-click='previousSong();'>
+					<i class='glyphicon glyphicon-step-backward'></i>
+				</a>
+			</li> 
+			<li id='playButton' title='Play' class='vidControls'>
+				<a onClick='playpauseVideo();'>
+					<i class='glyphicon glyphicon-play'></i>
+				</a>
+			</li>
+			<li id='nextButton' title='Next'>
+				<a ng-click='nextSong();'>
+					<i class='glyphicon glyphicon-step-forward'></i>
+				</a>
+			</li>
+			<li>
+				<a>
+					<div id='progContainer' class='progress'>
+						<div id='progBar' class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+	   					</div>
+					</div>
+				</a>
+			</li>
+			{{encounteredErroneousSong}}
+		    <li>
+		    	<div style='visibility:hidden; padding: 50px 0px 0px 0px;'>
+		    		{{>spinner}}
+		    	</div>
+			</li>
+		</ul>
+	{{/if}}
 </template>

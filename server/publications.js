@@ -1,8 +1,10 @@
-Meteor.publish('songs', function() {
+Meteor.publish('songs', function(userID) {
   //return Songs.find({iTunesValid:'PENDING'});
   //console.log('THIS IS THE user ID that will be publishing for: ' + this.userId)
   //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}], aeCount: {$lt: 1}});
-  return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}]});
+  console.log('FROM THE PUBLISHing CODE; this is the USER ID to get data for: ' + userID);
+  if(userID !== null)
+    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}]},{'sharedBy.uid': String(userID)});
 });
 
 Meteor.publish("userData", function () {

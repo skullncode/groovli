@@ -4,8 +4,10 @@ Session.set('playerStarted', false);
 Template.songsList.helpers({
   songs: function() {
   	//Session.set('personalSongList', Songs.find());
-    fullSongList = Songs.find();
-    var songCollection = fullSongList.fetch()
+
+    console.log('INSIDE THE SONG HELPER!!!!!!');
+    fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)});
+    var songCollection = fullSongList.fetch();
     //songCollectionLength = songCollection.length;
     //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + songCollection.length);
     Session.set('pSongsLength', songCollection.length);

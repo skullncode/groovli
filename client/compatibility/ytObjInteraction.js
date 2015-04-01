@@ -80,8 +80,9 @@ function onPlayerStateChange(event) {
 function onPlayerError(errorCode) {
   //mixpanel.track("auto error");
   Session.set('SongErroneous', true);
+  Session.set('YTErrorCode', errorCode.target.e);
   console.log('ERROR CODE IS: ');
-  console.log(errorCode); 
+  console.log(errorCode.target.e); 
 
   /*
   console.log('!!!!ERRONEOUS SHARE is: '+ss.getCurrentID());

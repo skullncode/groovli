@@ -15,6 +15,9 @@ reachedEndOfStream = false;
 //END SONG state VARS
 
 Template.playerControls.helpers({
+  currentlyOnSongboard: function(){
+    return Router.current().route.path() === '/songboard';
+  },
   encounteredErroneousSong: function() {
     if(Session.get('SongErroneous'))
     {
@@ -77,7 +80,8 @@ function previousSong() {
 
 function dealWithErroneousSong() {
   currentSong.aeCount += 1;
-  Meteor.call('updateAEC', currentID, 'yt', currentSong.aeCount);
+  Meteor.call('updateAEC', currentID, 'yt', currentSong.aeCount, Session.get('YTErrorCode'));
+  Session.set('YTErrorCode', 0);
   //musicHistory = musicHistory.pop();
   //decrementHistoryBy1();
   //decrementHistoryBy1();
