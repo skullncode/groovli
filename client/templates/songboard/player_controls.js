@@ -12,6 +12,7 @@ currentSong = [];
 currentID = '';
 lastAction = 'next';
 reachedEndOfStream = false;
+playableTabs = [];
 //END SONG state VARS
 
 Template.playerControls.helpers({
@@ -49,7 +50,7 @@ function nextSong() {
 		}
 		else
 		{
-			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);//getSongs('me'));
+			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);
 		}
 		nextPressed = false;
 	}
@@ -67,7 +68,7 @@ function previousSong() {
 		previousPressed = true;
 		if(previousPressedNotReachedBeginning())
 		{
-			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);//getSongs('me'));
+			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);
 		}
 		previousPressed = false;
 	}
@@ -82,9 +83,7 @@ function dealWithErroneousSong() {
   currentSong.aeCount += 1;
   Meteor.call('updateAEC', currentID, 'yt', currentSong.aeCount, Session.get('YTErrorCode'));
   Session.set('YTErrorCode', 0);
-  //musicHistory = musicHistory.pop();
-  //decrementHistoryBy1();
-  //decrementHistoryBy1();
+
   Session.set('SongErroneous',false);
   if(lastAction === 'next')  
     nextSong();
@@ -100,15 +99,8 @@ function selectNewRandomSongAndPush() {
 	if(randomChoice >= 1)
 	{
 		randomChoice = randomChoice - 1; 
-	}// - 1);
-	//console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^ THIS IS THE RANDOM CHOICE number:" + randomChoice);
-	//var adjustedListPosition = randomChoice + 2;
-	//console.log('inside new random song and push method');
+	}
 
-	//console.log('THIS IS THE RANDOM CHOICE:');
-	//console.log(randomChoice);
-
-	//OLD NON-WORKING HISTORY CHECKER//while(_.contains(SongState.getHistory(), SongState.getSongAtIndex('me',randomChoice)) && SongState.getHistoryLength() <= SongState.getSongsLength('me'))
 	while(songAlreadyExistsInHistory(getSongAtIndex('me',randomChoice)) && !hasReachedEndOfStream())
 	{
 		//console.log('INSIDE WHILE IN RANDOM AND PUSH METHOD');
@@ -141,7 +133,7 @@ function selectNewRandomSongAndPush() {
 
 	if(!hasReachedEndOfStream())
 	{
-		//console.log('#################################DECIDED on this SONG: '+ getSongAtIndex('me',randomChoice).st + '!!!!! PUSHING NOW');
+		console.log('#################################DECIDED on this SONG: '+ getSongAtIndex('me',randomChoice).st + '!!!!! PUSHING NOW');
 		selectShareFromControls(getSongAtIndex('me',randomChoice), getSongs('me'));
 	}
 	else
@@ -161,6 +153,7 @@ function songIndexWithinList(song, songList) {
 	    while(c < songList.length){
 	    	if(song.sl === songList[c].sl)
 	    	{
+          console.log('INSIDE THE SONG INDEX METHOD - this is the TRACK TITLE: ' + songList[c].st);
 	    		//console.log('INSIDE THE SONG INDEX METHOD: ' + c);
 	    		return c;
 	    	}
@@ -224,41 +217,17 @@ function selectShareFromControls(share, shares, tab) {
     $('#songTabs a[href="#tastemakers"]').tab('show');
   }
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
-  //console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + shares[chosenIndex]);
+  console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + share.st);//shares[chosenIndex].st);
   var firstSongObject = document.querySelector('.songBrowserItem:nth-child(1)');
   var selectedRandomSongLink = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
   var selectedRandomSongObject = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
-  //console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
-  //console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
-  //console.log(selectedRandomSongObject);
+  console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
+  console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
+  console.log(selectedRandomSongObject);
   setShare(share);
   incrementListenCount();
   $(selectedRandomSongLink).click();
-  removeAndAddSelectedClassToSelectedSong(selectedRandomSongObject);
-  
-  var listName = '';
-  if(share.sourceTab === 'me')
-  {
-    listName = '#mygroovsList';
-  }
-  else if(share.sourceTab === 'friends')
-  {
-    listName = '#tastemakersList';
-  } 
-  $(listName).animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
-  //console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!FINISHED SHARE SELECTION FROM METHOD');
-}  
-
-function removeAndAddSelectedClassToSelectedSong(selectedSong) {
-	 //CHANGE SELECTED CLASS
-    $('.selected').removeClass('selected');
-    $(selectedSong).addClass('selected');
-    //END CHANGE SELECTED CLASS
-
-    //take care of now playing overlay
-    $('.nowplaying').removeClass('nowplaying');
-    $('.selected .overlay').addClass('nowplaying');
-}
+} 
 
 
 //SongState Methods: USING <functionName> = function () {...} format so that it is globally accessible
@@ -329,6 +298,7 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
         //console.log(sh[counter]);
         counter++;
       }
+      Session.set('mLen', sh.length); //me length
       mySongs = sh;
     }
     else if(tab === 'friends')
@@ -341,6 +311,7 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
         //console.log(sh[counter]);
         counter++;
       }
+      Session.set('fLen', sh.length); //friends length
       friendSongs = sh;
     }
     //console.log('SONG STATE LENGTH: ' + mySongs.length);
@@ -492,49 +463,6 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
      });*/
    }
    
-   //method to update the auto error count for a video
-   function updateAEC() {
-     currentSong.aeCount += 1;
-     /*$http.put('/aec/' + currentID + '/yt/' + currentSong.aeCount).
-       success(function(data, status) {
-         if(status === 200)
-           console.log('this is the successful data: '+ data);
-         else
-           console.log('this is the non-200 data: ' + data);
-       }).
-       error(function(data, status) {
-         //console.log('ERROR!!!!!! this is the status: ' + status + ' and this is the data: ' + data);
-     });*/
-   }
-
-   function updateSongRating(userRating) {
-     //console.log('#####################INSIDE UPDATE SONG RATING METHOD in song state service!!!!! : ' + userRating);
-     /*$http.put('/rs/' + currentID + '/yt/' + userRating).
-       success(function(data, status) {
-         if(status === 200)
-           console.log('this is the successful data: '+ data);
-         else
-           console.log('this is the non-200 data: ' + data);
-       }).
-       error(function(data, status) {
-         console.log('ERROR!!!!!! this is the status: ' + status + ' and this is the data: ' + data);
-     });*/
-   }
-
-   function getAvgSongRating() {
-    //console.log('INSIDE GET AVERAGE SONG RATING method!!!!');
-    //console.log('GETTING RATINGS FOR THIS SONG: ' + currentSong.sa + ' - ' + currentSong.st + ': ' + currentID);
-    /*$http.get('/rs/yt/' +currentID).
-    success(function(data, status, headers, config) {
-      console.log('no issues with get average song rating method');
-      //$scope.currentStatus = "songs loaded";
-    }).
-    error(function(data, status, headers, config) {
-      console.log('ENCOUNTERED AN ERROR in client DB & FB method!!!!');
-      console.log(data);
-    });*/
-   }
-
    function nextPressedSelectNewOrAdvanceThruHistory() {
     //console.log('this is the current history index - NEXT PRESSED:' + getCurrentHistoryIndex());
     setLastActionAsNext();
@@ -565,7 +493,6 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
       {
         //mixpanel.track("next song in history");
         incrementHistoryBy1();
-        //selectShareFromControls(SongState.getHistory()[SongState.getCurrentHistoryIndex()],SongState.getSongs('me'));
         return false;
       } 
     }

@@ -1,5 +1,6 @@
 <template name="mygroovsList">
 	<span class="badge pull-right">{{songs.count}}</span>
+	{{animateListToCurrentlyPlayingSong}}
 	<ul id='mygroovsList' class="songsList horizontal-slide">
 		{{#if songsLoaded}}
 			{{startPlayer}}

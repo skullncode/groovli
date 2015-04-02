@@ -142,7 +142,9 @@ function updatePlayerInfo() {
 				}
 				else if(currentProgress < 1)
 				{
-          var listName = '';
+
+          //animateListToCurrentlyPlayingSong(null);
+          /*var listName = '';
           if(Session.get('activeTab') === 'me')
           {
             listName = '#mygroovsList';
@@ -152,7 +154,7 @@ function updatePlayerInfo() {
             listName = '#tastemakersList';
           } 
 					var currentScrollOffset = $(listName).scrollTop();//$("#personalVidList").scrollTop();
-					$(listName).animate({ scrollTop: $(".thumbnail.shareBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+					$(listName).animate({ scrollTop: $(".thumbnail.shareBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);*/
 				}
 			}
 		}

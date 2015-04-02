@@ -19,6 +19,16 @@ Template.tastemakersList.helpers({
       return true;
     else
       return false;
+  },
+
+  animateListToCurrentlyPlayingSong: function() {
+    if(Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'friends') {
+      console.log('ANIMATING LIST WITHIN TASTEMAKERSSSSSSS TAB');
+      $('#songTabs a[href="#tastemakers"]').tab('show'); 
+      var currentScrollOffset = $('#tastemakersList').scrollTop();//$("#personalVidList").scrollTop();
+      $('#tastemakersList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+      //$('#tastemakersList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+    }
   }
 });
 

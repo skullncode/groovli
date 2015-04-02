@@ -29,5 +29,5 @@ Template.songboard.rendered = function() {
 			console.log('Refreshing and getting latest tracks from social networks.');
 			Meteor.call('getLatestStoriesFromDBAndFB');
 		}, 60000);*/
-	//Session.set('activeTab', 'me');
+	Session.set('activeTab', 'me');
 };
