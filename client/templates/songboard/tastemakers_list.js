@@ -9,7 +9,7 @@ Template.tastemakersList.helpers({
     songCollectionLength = songCollection.length;
     console.log('#$#$#$#$$###$ SETTING TASTEMAKERSSSSSSS LENGTH!!!!! ' + songCollection.length);
     Session.set('tastemakersSongsLength', songCollection.length);
-    updateMySongs(songCollection, 'tastemakers');
+    updateMySongs(songCollection, 'friends');
     return tastemakerSongList;
   },
 

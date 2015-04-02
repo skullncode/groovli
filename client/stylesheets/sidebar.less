@@ -1,0 +1,158 @@
+/* var */
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+@orange:                #f89406;
+
+@sidebar_width: 80px;
+@sidebar_child_width: 120px;
+
+
+
+
+/* mixin */
+.box-shadow(@shadow: 0 1px 3px rgba(0,0,0,.25)) {
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+
+
+
+
+/* animation */
+.show_child_anime(){
+	0%   { left:-@sidebar_child_width; }
+	100% { left: @sidebar_width; }
+}
+@keyframes         show_child {.show_child_anime()}
+@-webkit-keyframes show_child {.show_child_anime()}
+
+.hide_child_anime(){
+	0%   { left: @sidebar_width; }
+	100% { left:-@sidebar_child_width; }
+}
+@keyframes         hide_child {.hide_child_anime()}
+@-webkit-keyframes hide_child {.hide_child_anime()}
+
+.set_anime(@name, @timing, @iteration, @duration){
+	/* Firefox 4+ */
+	-moz-animation-name: @name;
+	-moz-animation-timing-function: @timing;
+	-moz-animation-iteration-count: @iteration;
+	-moz-animation-duration: @duration;
+
+	/* Webkit */
+	-webkit-animation-name: @name;
+	-webkit-animation-timing-function: @timing;
+	-webkit-animation-iteration-count: @iteration;
+	-webkit-animation-duration: @duration;
+}
+
+
+
+
+/* icon */
+/*
+ this is dammy icon's css.
+ please use there icon set.
+ http://fontello.com/
+*/
+i[class^="icon-"]:before{
+	font-family: 'Economica', sans-serif;
+  font-size:100px;
+}
+i.icon-a:before {content: "A";}
+i.icon-b:before {content: "B";}
+i.icon-c:before {content: "C";}
+
+
+/* main */
+#sidebar{}
+dl#sidebar_list:after{
+  content:"";
+  display:block;
+	position: fixed;
+	top:0px; left:0px;
+	width:@sidebar_width;
+	height:100%;
+	background-color: @grayDark;
+	.box-shadow(8px 0 20px rgba(0,0,0,.1));
+}
+dl#sidebar_list{
+	font-family: 'Economica', sans-serif;
+	position: fixed;
+	top:50px; left:0px;
+	width:@sidebar_width;
+	height:100%;
+	background-color: @grayDark;
+	dt{
+		position: relative;
+		z-index: 100;
+		list-style-type: none;
+		text-align: center;
+		a{
+			color:@gray;
+			font-weight: bold;
+			text-decoration: none;
+			display:block;
+			padding:20px;
+      transition:color .5s ease-in;
+      transition:background-color .5s ease-in;
+  		&:hover{
+  			color:@orange;
+  			background-color: @grayDarker;
+  		}
+		}
+	}
+  dd{
+	  .set_anime(hide_child, ease-out, once, 0.3s);
+  	display:block;
+	  position: fixed;
+	  top:50px;
+	  left:-@sidebar_width - @sidebar_child_width;
+  	width:@sidebar_width + @sidebar_child_width;
+  	height:100%;
+	  background-color:rgba(0,0,0,0.7);
+  	li{
+  		list-style-type: none;
+  		text-align: center;
+  		border-bottom: 1px solid rgba(0,0,0,0.2);
+  		overflow: hidden;
+  		a{
+  			color:@orange;
+  			display:block;
+  			text-align: center;
+  			font-size: 20px;
+  			padding:0.8em;
+        height:1em;
+        line-height:1em;
+        transition:color .5s ease-in;
+        transition:background-color .5s ease-in;
+        &:hover{
+    			color:@white;
+    			text-decoration: none;
+    			background-color: @orange;
+    		}
+  		}
+  	}
+  }
+}
+
+/* Activating the animation */
+dl#sidebar_list dt:hover + dd,
+dl#sidebar_list dd:hover{
+	display:block;
+	left:@sidebar_width;
+	.set_anime(show_child, ease-out, once, 0.3s);
+}
+
+
+
+/* discription */
+body {
+  background-color:#aa2244;
+}

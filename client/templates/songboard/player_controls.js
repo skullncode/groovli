@@ -49,7 +49,7 @@ function nextSong() {
 		}
 		else
 		{
-			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs('me'));
+			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);//getSongs('me'));
 		}
 		nextPressed = false;
 	}
@@ -67,7 +67,7 @@ function previousSong() {
 		previousPressed = true;
 		if(previousPressedNotReachedBeginning())
 		{
-			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs('me'));
+			selectShareFromControls(getHistory()[getCurrentHistoryIndex()], getSongs(getHistory()[getCurrentHistoryIndex()].sourceTab), getHistory()[getCurrentHistoryIndex()].sourceTab);//getSongs('me'));
 		}
 		previousPressed = false;
 	}
@@ -172,13 +172,17 @@ function songIndexWithinList(song, songList) {
 }
 
 setShareByLinkID = function(linkID) {
-  var songObj = getSongObjectForSong('me', linkID);
+  console.log('setting sHARE by LINK ID: ');
+  var currentTab = Session.get('activeTab');
+  var songObj = getSongObjectForSong(currentTab, linkID);
   if(songObj !== null)
     setShare(songObj);
 }
 
 function setShare(currentShare)
 {
+  console.log('SETTING THE SHARE TO THIS: ');
+  console.log(currentShare);
   setCurrentSong(currentShare);
   if(isHistoryEmpty())
   {
@@ -206,11 +210,19 @@ function setShare(currentShare)
   //SongState.getAvgSongRating();
 }
 
-function selectShareFromControls(share, shares) {
+function selectShareFromControls(share, shares, tab) {
 	//console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
 	//console.log('##############THIS IS the SELECTED SHARE:');
 	//console.log(share.st);
   //var chosenIndex = shares.indexOf(share) + 2;
+  if(tab === 'me')
+  {
+    $('#songTabs a[href="#mygroovs"]').tab('show');
+  }
+  else if(tab === 'friends')
+  {
+    $('#songTabs a[href="#tastemakers"]').tab('show');
+  }
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
   //console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + shares[chosenIndex]);
   var firstSongObject = document.querySelector('.songBrowserItem:nth-child(1)');
@@ -223,8 +235,17 @@ function selectShareFromControls(share, shares) {
   incrementListenCount();
   $(selectedRandomSongLink).click();
   removeAndAddSelectedClassToSelectedSong(selectedRandomSongObject);
- 
-  $('#personalVidList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+  
+  var listName = '';
+  if(share.sourceTab === 'me')
+  {
+    listName = '#mygroovsList';
+  }
+  else if(share.sourceTab === 'friends')
+  {
+    listName = '#tastemakersList';
+  } 
+  $(listName).animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
   //console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!FINISHED SHARE SELECTION FROM METHOD');
 }  
 
@@ -233,6 +254,10 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
     $('.selected').removeClass('selected');
     $(selectedSong).addClass('selected');
     //END CHANGE SELECTED CLASS
+
+    //take care of now playing overlay
+    $('.nowplaying').removeClass('nowplaying');
+    $('.selected .overlay').addClass('nowplaying');
 }
 
 
@@ -270,6 +295,18 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
       }
       return null;
     }
+    else if(tab === 'friends')
+    {
+      while(counter < friendSongs.length)
+      {
+        var lid = friendSongs[counter].sl.substring(friendSongs[counter].sl.indexOf('v=')+2);
+        if(linkID === lid)
+          return friendSongs[counter];
+        else
+          counter++;
+      }
+      return null;
+    }
    }
 
    function setCurrentSong(s) {
@@ -281,10 +318,31 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
    
    updateMySongs = function(sh, tab) {
     //console.log('UPDATING my songs via songstate service');
-    if(tab === 'mygroovs')
+    var counter = 0;
+    if(tab === 'me')
+    {
+      //console.log('UPDATING SONGS For MY GROOOOOOOOVS TAB: ');
+      while(counter < sh.length)
+      {
+        sh[counter].sourceTab = 'me';
+        //console.log('THIS IS THE UPDATTTTTED SONG OBJECT: ');
+        //console.log(sh[counter]);
+        counter++;
+      }
       mySongs = sh;
-    else if(tab === 'tastemakers')
+    }
+    else if(tab === 'friends')
+    {
+      //console.log('UPDATING SONGS For TASTEMAKERSSSSSS TAB: ');
+      while(counter < sh.length)
+      {
+        sh[counter].sourceTab = 'friends';
+        //console.log('THIS IS THE UPDATTTTTED SONG OBJECT: ');
+        //console.log(sh[counter]);
+        counter++;
+      }
       friendSongs = sh;
+    }
     //console.log('SONG STATE LENGTH: ' + mySongs.length);
    }
    
@@ -339,8 +397,11 @@ function removeAndAddSelectedClassToSelectedSong(selectedSong) {
    
    function pushToHistory(s) {
      //console.log('pushing this to the musicHistory'+ s.st);
+     //s.sourceTab = Session.get('activeTab');
      musicHistory.push(s);
      currentHistoryIndex = musicHistory.length - 1;
+     console.log('CURRENT HISTORY IS: ');
+     console.log(musicHistory);
    }
    
    function getCurrentHistoryIndex() {

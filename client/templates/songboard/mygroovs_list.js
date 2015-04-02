@@ -9,7 +9,7 @@ Template.mygroovsList.helpers({
     //songCollectionLength = songCollection.length;
     //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + songCollection.length);
     Session.set('pSongsLength', songCollection.length);
-    updateMySongs(songCollection, 'mygroovs');
+    updateMySongs(songCollection, 'me');
     return fullSongList;
   },
 
@@ -28,6 +28,7 @@ Template.mygroovsList.helpers({
       $(".glyphicon-step-forward").click();
       Session.set('playerStarted', true);
       Session.set('playerLoaded', false);
+      Session.set('activeTab', 'me');
     }
   }
 });

@@ -142,8 +142,17 @@ function updatePlayerInfo() {
 				}
 				else if(currentProgress < 1)
 				{
-					var currentScrollOffset = $("#personalVidList").scrollTop();
-					$("#personalVidList").animate({ scrollTop: $(".thumbnail.shareBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+          var listName = '';
+          if(Session.get('activeTab') === 'me')
+          {
+            listName = '#mygroovsList';
+          }
+          else if(Session.get('activeTab') === 'friends')
+          {
+            listName = '#tastemakersList';
+          } 
+					var currentScrollOffset = $(listName).scrollTop();//$("#personalVidList").scrollTop();
+					$(listName).animate({ scrollTop: $(".thumbnail.shareBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
 				}
 			}
 		}
