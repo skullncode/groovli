@@ -7,27 +7,23 @@ Template.tastemakersList.helpers({
     tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
     var songCollection = tastemakerSongList.fetch();
     songCollectionLength = songCollection.length;
-    console.log('#$#$#$#$$###$ SETTING TASTEMAKERSSSSSSS LENGTH!!!!! ' + songCollection.length);
+    //console.log('#$#$#$#$$###$ SETTING TASTEMAKERSSSSSSS LENGTH!!!!! ' + songCollection.length);
     Session.set('tastemakersSongsLength', songCollection.length);
     updateMySongs(songCollection, 'friends');
     return tastemakerSongList;
   },
 
   songOfFriendsExist: function() {
-    console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
+    //console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
     if(Session.get('tastemakersSongsLength') > 0)
       return true;
     else
       return false;
   },
 
-  animateListToCurrentlyPlayingSong: function() {
-    if(Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'friends') {
-      console.log('ANIMATING LIST WITHIN TASTEMAKERSSSSSSS TAB');
-      $('#songTabs a[href="#tastemakers"]').tab('show'); 
-      var currentScrollOffset = $('#tastemakersList').scrollTop();//$("#personalVidList").scrollTop();
-      $('#tastemakersList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
-      //$('#tastemakersList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+  switchTabsAndAnimateListToCurrentlyPlayingSong: function() {
+    if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'friends') {
+      switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
   }
 });
@@ -56,8 +52,36 @@ function getMongoSelectorForFriendSongs() {
     counter++;
   }
 
-  console.log('THIS IS THE FINAL SELECTOR THAT WILL BE USED!!!!!');
-  console.log(query);
+  //console.log('THIS IS THE FINAL SELECTOR THAT WILL BE USED!!!!!');
+  //console.log(query);
 
   return query;
+}
+
+function animateListToCurrentlyPlayingSong()
+{
+  //console.log('ANIMATING LIST WITHIN TASTEMAKERSSSSSSS TAB');
+  //$('#songTabs a[href="#tastemakers"]').tab('show'); 
+  var currentScrollOffset = $('#tastemakersList').scrollTop();//$("#personalVidList").scrollTop();
+  $('#tastemakersList').animate({scrollTop: $(".thumbnail.tastemakersongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+  //$('#tastemakersList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+  Session.set('animatedToSong', true);
+}
+
+
+function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
+  if(songSourceTab !== Session.get('activeTab'))
+  {
+    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    if(songSourceTab === 'friends')
+    {
+      console.log('switching TABS from my groovs list to tastemakers');
+      $('#songTabs a[href="#tastemakers"]').tab('show');
+    }
+  }
+  else
+    console.log('not switching tabs as active tab and song source tab is the same!!!');
+
+  //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
+  Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);
 }

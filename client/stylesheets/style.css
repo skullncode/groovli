@@ -127,6 +127,16 @@ ul.horizontal-slide li a:hover {
    background-color: yellow;
  }
 
+ .tastemakersongItem {
+   background-color: white;
+   transition: background-color 500ms linear 0;
+   -moz-transition: background-color 500ms linear 0;
+ }
+
+ .tastemakersongItem.selected {
+   background-color: yellow;
+ }
+
   .overlay{ 
     position:relative;
     top:0px;
@@ -138,7 +148,7 @@ ul.horizontal-slide li a:hover {
   }
 
   .nowplaying.overlay{ 
-    opacity:0.9;
+    opacity:0.7;
     color:#FFF;
     font-size:25px;
     font-style:italic;

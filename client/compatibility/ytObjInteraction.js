@@ -197,7 +197,7 @@ function makeMuutCommentRelatedUpdates(soundID, currentSong) {
   //UPDATE MUUT COMMENTS BOX
   var commentsUniqueID = "https://muut.com/i/groovli/music/comments:" + soundID;
   var pageTitle = '';
-  console.log('#$#$#$#$##$#$#$#$#$THIS IS THE COMMENTS UNIQUE ID: ' + commentsUniqueID);
+  //console.log('#$#$#$#$##$#$#$#$#$THIS IS THE COMMENTS UNIQUE ID: ' + commentsUniqueID);
    //CHANGE PAGE TITLE
   if(currentSong.sa === currentSong.st)
     pageTitle = 'groovli - '+ currentSong.sa
@@ -219,7 +219,7 @@ function makeMuutCommentRelatedUpdates(soundID, currentSong) {
 function loadVideoById(soundID, currentSong) {
   var playpauseButton = $('.glyphicon-play');
   playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
-  console.log('inside the video loader!!!');
+  //console.log('inside the video loader!!!');
 	if(ytplayer) {
 	  ytplayer.loadVideoById(soundID,0,"large")
 	}

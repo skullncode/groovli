@@ -1,5 +1,5 @@
 if (Meteor.isClient) {   
-  Template.songItem.helpers({
+  Template.tastemakersongItem.helpers({
     youtubeThumbnail: function() {
       var ytImgLink = 'https://i.ytimg.com/vi/' + this.sl.substring(this.sl.indexOf("v=")+2) + '/default.jpg';
       return ytImgLink;
@@ -29,15 +29,16 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.songItem.events({
-    "click a.songBrowserItem": function (event) {
+  Template.tastemakersongItem.events({
+    "click a.tastemakersongItem": function (event) {
       // This function is called when the new task form is submitted
-      console.log('THIS IS THE CLICK EVENT for the SONG ITEM!!!!!!');
-      console.log(event);
+      Session.set('animatedToSong', false);
+      //console.log('THIS IS THE CLICK EVENT for the SONG ITEM!!!!!!');
+      //console.log(event);
       //var text = event.target.text.value;
       var ytLinkID=  this.sl.substring(this.sl.indexOf("v=")+2);
       //console.log(ytLinkID);
-      console.log('CALLING JQUERY EVENT CLASS METHOD!!!!');
+      //console.log('CALLING JQUERY EVENT CLASS METHOD!!!!');
       removeAndAddSelectedClassToSelectedSong(event.currentTarget);
       loadVideoById(ytLinkID, this);
       makeMuutCommentRelatedUpdates(ytLinkID, this);
@@ -49,8 +50,8 @@ if (Meteor.isClient) {
 }
 
 function removeAndAddSelectedClassToSelectedSong(selectedSong) {
-  console.log('setting CLASS using JQUERY event!!!!!!!')
-  console.log(selectedSong);
+  //console.log('setting CLASS using JQUERY event!!!!!!!')
+  //console.log(selectedSong);
    //CHANGE SELECTED CLASS
   $('.selected').removeClass('selected');
   $(selectedSong).addClass('selected');

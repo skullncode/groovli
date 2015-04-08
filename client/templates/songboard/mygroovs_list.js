@@ -25,6 +25,7 @@ Template.mygroovsList.helpers({
     if(!Session.get('playerStarted'))
     {
       console.log('SONGS apparently loaded!!! STARTINGGGG PLAYERR!!!');
+      initializePlayableTabs();
       $(".glyphicon-step-forward").click();
       Session.set('playerStarted', true);
       Session.set('playerLoaded', false);
@@ -32,17 +33,58 @@ Template.mygroovsList.helpers({
     }
   },
 
-  animateListToCurrentlyPlayingSong: function() {
-    if(Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'me') {
-      console.log('ANIMATING LIST WITHIN MY GROOVS TAB');
-      $('#songTabs a[href="#mygroovs"]').tab('show'); 
-      var currentScrollOffset = $('#mygroovsList').scrollTop();//$("#personalVidList").scrollTop();
-      $('#mygroovsList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
-      //$('#mygroovsList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+  switchTabsAndAnimateListToCurrentlyPlayingSong: function() {
+    if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'me') {
+      switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
   }
 
 });
+
+function initializePlayableTabs()
+{
+  //console.log('INITIALIZING PLAYABLE TABS');
+  Session.set('playableTabs', []);
+  var temp = [];
+  if(Session.get('pSongsLength') > 0)
+  {
+    temp.push('me');
+    Session.set('playableTabs',temp);
+  }
+
+  if(Session.get('tastemakersSongsLength') > 0)
+  {
+    temp.push('friends');
+    Session.set('playableTabs',temp);
+  }
+}
+
+function animateListToCurrentlyPlayingSong() {
+  //console.log('ANIMATING LIST WITHIN MY GROOVS TAB');
+  //$('#songTabs a[href="#mygroovs"]').tab('show'); 
+  var currentScrollOffset = $('#mygroovsList').scrollTop();//$("#personalVidList").scrollTop();
+  $('#mygroovsList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+  Session.set('animatedToSong', true);
+  //$('#mygroovsList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+}
+
+function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
+  if(songSourceTab !== Session.get('activeTab'))
+  {
+    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    if(songSourceTab === 'me')
+    {
+      console.log('switching TABS from tastemakers list to my groovs');
+      $('#songTabs a[href="#mygroovs"]').tab('show');
+    }
+  }
+  else
+    console.log('not switching tabs as active tab and song source tab is the same!!!');
+
+  //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
+  Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);
+}
+
 
 /*
 function animateListToCurrentlyPlayingSong(currentShare) {

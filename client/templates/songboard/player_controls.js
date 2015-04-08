@@ -6,6 +6,9 @@ currentTab = 'me';
 mySongs = [];
 friendSongs = [];
 globalSongs = [];
+mySongsPlayLog = [];
+friendSongsPlayLog = [];
+globalSongsPlayLog = [];
 musicHistory = [];
 currentHistoryIndex = 0;
 currentSong = [];
@@ -40,7 +43,8 @@ Template.playerControls.events({
 
 function nextSong() {
 	//console.log('HISTORY GETTING!!!!!: ' + getHistory());
-	//console.log('PRESSED NEXTTTT!!!!!');
+	console.log('PRESSED NEXTTTT!!!!!');
+  Session.set('animatedToSong', false);
 	if(!nextPressed)
 	{
 		nextPressed = true;
@@ -63,6 +67,7 @@ function nextSong() {
 
 function previousSong() {
 	console.log('PRESSED PREvioussss!!!!!');
+  Session.set('animatedToSong', false);
 	if(!previousPressed)
 	{
 		previousPressed = true;
@@ -91,58 +96,99 @@ function dealWithErroneousSong() {
     previousSong();
 }
 
-function selectNewRandomSongAndPush() {
-	var songsLength = getSongsLength('me');
-  var invalidTries = 0;
-	
-	var randomChoice = Math.floor(Math.random() * songsLength);
-	if(randomChoice >= 1)
-	{
-		randomChoice = randomChoice - 1; 
-	}
+// PROBLEMS: CURRENTLY  GOING IN INFINITE LOOP AFTER RUNNING OUT OF SONGS TO PlAY IN ONE TAB
+// FIX THAT, so that it knows to not choose any more songs from one tab
+//NOW USE COPY of songs list copy to remove the played song from the copy array once played, 
+//that way once the copy array is empty that means there's nothing left to play
 
-	while(songAlreadyExistsInHistory(getSongAtIndex('me',randomChoice)) && !hasReachedEndOfStream())
-	{
-		//console.log('INSIDE WHILE IN RANDOM AND PUSH METHOD');
-		randomChoice = Math.floor(Math.random() * songsLength);
-		if(randomChoice >= 1)
-		{
-			randomChoice = randomChoice - 1; 
-		}
-	}
 
-  //check if chosen index is invalid or not
-  //first get rid of 
-  while(selectedSongIsInvalid(getSongAtIndex('me',randomChoice)))
+function getRandomSongTabThatStillHasUnplayedSongs()
+{
+  var playableTabsLength = Session.get('playableTabs').length;
+  console.log('@#@#@#@#@#@NUMBER OF PLAYABLE TABS: ' + playableTabsLength);
+  var randomlySelectedTabIndex = _.random(playableTabsLength-1);
+
+  var selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
+  if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
   {
-    //console.log('INSIDE RANDOM PUSH METHOD - SONG VALIDATION SECTION');
-    randomChoice = Math.floor(Math.random() * songsLength);
-    if(randomChoice >= 1)
+    if(selectedTab === 'me')
     {
-      randomChoice = randomChoice - 1; 
+      if(Session.get('mygroovsPlayedLength') < getSongsLength(selectedTab))
+      {
+        return 'me';
+      }
+      else
+      {
+        return getRandomSongTabThatStillHasUnplayedSongs();
+        console.log('################################## MY GROOVS HAS RUN OUT OF TRACKS TO PLAY SO CANNOT SELECT FROM THIS ANYMORE!');
+      }
     }
 
-    if(invalidTries === 5)
+    if(selectedTab === 'friends')
     {
-      //console.log('TRIED TO FIND A REPLACEMENT For AN INVALID SONG - TOOOO MANY TIMES');
-      break;
+      if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
+      {
+        return 'friends';
+      }
+      else
+      {
+        return getRandomSongTabThatStillHasUnplayedSongs();
+        console.log('################################## TASTEMAKERSSS HAS RUN OUT OF TRACKS TO PLAY SO CANNOT SELECT FROM THIS ANYMORE!');
+      }
     }
-
-    invalidTries++;
   }
+  else // both tabs have been played out so reset history
+  {
+    setReachedEndOfStream(true);
+    return null;
+  }
+}
 
-	if(!hasReachedEndOfStream())
-	{
-		console.log('#################################DECIDED on this SONG: '+ getSongAtIndex('me',randomChoice).st + '!!!!! PUSHING NOW');
-		selectShareFromControls(getSongAtIndex('me',randomChoice), getSongs('me'));
-	}
-	else
-	{
-		//console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
-		resetCurrentHistoryIndex();
-		//console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
-		selectShareFromControls(getSongInHistoryAtIndex('me',0), getSongs('me'));
-	}      
+function selectNewRandomSongAndPush() {
+  var selectedTab = getRandomSongTabThatStillHasUnplayedSongs();
+
+  if(selectedTab !== null && selectedTab !== undefined)
+  {
+    console.log('@#@#@#@#@#@#@#HAVE RANDOMLY SELECTED THIS TAB FOR THE NEXT SONG: ' + selectedTab);
+    var songsLength = getSongsLength(selectedTab);
+    var invalidTries = 0;
+  	
+    var randomChoice = _.random(songsLength-1);
+
+    console.log('&&^&^&^&^^&^&^&^^&&^^&^THIS IS THE ZEROTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,0).st);
+    console.log('THIS IS THE LENGTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,songsLength-1).st);
+
+    while(songAlreadyExistsInHistory(getSongAtIndex(selectedTab,randomChoice)) && !hasReachedEndOfStream())
+  	{
+  		console.log('INSIDE WHILE IN RANDOM AND PUSH METHOD');
+  		randomChoice = _.random(songsLength-1);
+  	}
+
+    updatePlayCountPerTab(selectedTab, randomChoice);
+
+  	if(!hasReachedEndOfStream())
+  	{
+  		//console.log('#################################DECIDED on this SONG: '+ getSongAtIndex('me',randomChoice).st + '!!!!! PUSHING NOW');
+      console.log('#################################DECIDED on this SONG: '+ getSongAtIndex(selectedTab,randomChoice).st + '!!!!! PUSHING NOW');
+  		//selectShareFromControls(getSongAtIndex('me',randomChoice), getSongs('me'), getSongAtIndex('me',randomChoice).sourceTab);
+      selectShareFromControls(getSongAtIndex(selectedTab,randomChoice), getSongs(selectedTab), getSongAtIndex(selectedTab,randomChoice).sourceTab);
+  	}
+  	else
+  	{
+  		resetCurrentHistoryIndex();
+  		console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
+  		//selectShareFromControls(getSongInHistoryAtIndex('me',0), getSongs('me'), getSongAtIndex('me',randomChoice).sourceTab);
+      selectShareFromControls(getSongInHistoryAtIndex(0), getSongs(getSongInHistoryAtIndex(0).sourceTab), getSongInHistoryAtIndex(0).sourceTab);
+  	}
+  }
+  else //reached end of stream
+  {
+    //setReachedEndOfStream(true);
+    resetCurrentHistoryIndex();
+    console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
+    //selectShareFromControls(getSongInHistoryAtIndex('me',0), getSongs('me'), getSongAtIndex('me',randomChoice).sourceTab);
+    selectShareFromControls(getSongInHistoryAtIndex(0), getSongs(getSongInHistoryAtIndex(0).sourceTab), getSongInHistoryAtIndex(0).sourceTab);
+  }
 }
 
 function songIndexWithinList(song, songList) {
@@ -164,12 +210,76 @@ function songIndexWithinList(song, songList) {
 	}
 }
 
+function updatePlayCountPerTab(tab, selectedChoice)
+{
+  var currentCount = 0;
+  if(tab === 'me')
+  {
+    currentCount = Session.get('mygroovsPlayedLength');
+    currentCount++;
+    Session.set('mygroovsPlayedLength', currentCount);
+
+    console.log('HISTORY COUNT: CURRENT MY GROOVS PLAY LENGTH IS: ' + Session.get('mygroovsPlayedLength'));
+  }
+  else if(tab === 'friends')
+  {
+    currentCount = Session.get('tastemakersPlayedLength');
+    currentCount++;
+    Session.set('tastemakersPlayedLength', currentCount);
+
+    console.log('HISTORY COUNT: CURRENT TASTEMAKERSSSSSS PLAY LENGTH IS: ' + Session.get('tastemakersPlayedLength'));
+  }
+
+  console.log('COMBINED MUSIC LENGTH IS: ' + getCombinedMusicLength());
+}
+
 setShareByLinkID = function(linkID) {
   console.log('setting sHARE by LINK ID: ');
   var currentTab = Session.get('activeTab');
+  console.log('######################### SETTING THE SHARE by LINK ID: ' + linkID);
+  console.log('######################### THIS IS THE CURRENT ACTIVE TAB AS PER THE SESSION VAR: ' + currentTab);
+  //switchTabIfNotAlreadyFocusedForSelectedSong(getTabWhereLinkIDResides(linkID));
   var songObj = getSongObjectForSong(currentTab, linkID);
   if(songObj !== null)
     setShare(songObj);
+}
+
+//////////////////////// STOPPED HEREEEE!!!! FIX THIS part and use the newly created song items for each tab
+///and also the new session var for playable tabs
+
+function getTabWhereLinkIDResides(linkID) {
+  var counter = 0;
+  if(mySongs.length > 0) //need to check if it resides in my groovs Tab
+  {
+    while(counter < mySongs.length)
+    {
+      var lid = mySongs[counter].sl.substring(mySongs[counter].sl.indexOf('v=')+2);
+      if(linkID === lid)
+      {
+        console.log('THIS SONG: ' + mySongs[counter].st + ' FOUND INSIDE tHIS TAB: ' + mySongs[counter].sourceTab);
+        return mySongs[counter].sourceTab; //song found in my groovs Tab
+      }
+      else
+        counter++;
+    }
+  }
+
+  counter = 0;
+
+  if(friendSongs.length > 0) //need to check if it resides in my groovs Tab
+  {
+    while(counter < friendSongs.length)
+    {
+      var lid = friendSongs[counter].sl.substring(friendSongs[counter].sl.indexOf('v=')+2);
+      if(linkID === lid)
+      {
+        console.log('THIS SONG: ' + friendSongs[counter].st + ' FOUND INSIDE tHIS TAB: ' + friendSongs[counter].sourceTab);
+        return mySongs[counter].sourceTab; //song found in my groovs Tab
+      }
+      else
+        counter++;
+    }
+  }
 }
 
 function setShare(currentShare)
@@ -204,9 +314,9 @@ function setShare(currentShare)
 }
 
 function selectShareFromControls(share, shares, tab) {
-	//console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
-	//console.log('##############THIS IS the SELECTED SHARE:');
-	//console.log(share.st);
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
+	console.log('##############THIS IS the SELECTED SHARE:');
+	console.log(share.st);
   //var chosenIndex = shares.indexOf(share) + 2;
   if(tab === 'me')
   {
@@ -217,16 +327,32 @@ function selectShareFromControls(share, shares, tab) {
     $('#songTabs a[href="#tastemakers"]').tab('show');
   }
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
-  console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + share.st);//shares[chosenIndex].st);
-  var firstSongObject = document.querySelector('.songBrowserItem:nth-child(1)');
-  var selectedRandomSongLink = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
-  var selectedRandomSongObject = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
-  console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
-  console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
-  console.log(selectedRandomSongObject);
-  setShare(share);
-  incrementListenCount();
-  $(selectedRandomSongLink).click();
+  console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + share.st);//shares[chosenIndex].st)';
+  console.log('THIS IS THE TAB!!!: '+ tab);
+  if(tab === 'me')
+  {
+    var firstSongObject = document.querySelector('.songBrowserItem:nth-child(1)');
+    var selectedRandomSongLink = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
+    var selectedRandomSongObject = document.querySelector('.songBrowserItem:nth-child('+chosenIndex+')');
+    console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
+    console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
+    console.log(selectedRandomSongObject);
+    setShare(share);
+    incrementListenCount();
+    $(selectedRandomSongLink).click();
+  }
+  else if(tab === 'friends') 
+  {
+    var firstSongObject = document.querySelector('.tastemakersongItem:nth-child(1)');
+    var selectedRandomSongLink = document.querySelector('.tastemakersongItem:nth-child('+chosenIndex+')');
+    var selectedRandomSongObject = document.querySelector('.tastemakersongItem:nth-child('+chosenIndex+')');
+    console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
+    console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
+    console.log(selectedRandomSongObject);
+    setShare(share);
+    incrementListenCount();
+    $(selectedRandomSongLink).click();
+  }
 } 
 
 
@@ -344,9 +470,9 @@ function selectShareFromControls(share, shares, tab) {
        return globalSongs[i];     
    }
 
-   function getSongInHistoryAtIndex(tab, i) {
-     if(tab === 'me')
-       return musicHistory[i];
+   function getSongInHistoryAtIndex(i) {
+     //if(tab === 'me')
+     return musicHistory[i];
      /*else if(tab === 'friends')
        return friendSongs[i];
      else if(tab === 'global')
@@ -411,20 +537,29 @@ function selectShareFromControls(share, shares, tab) {
     c = 0;
     if(s !== undefined)
     {
-      //console.log('INSIDE THE HISTORY CHECK METHOD: ');
-      //console.log(s.st);
-      //console.log('LENGTH of HISTORY: ' + musicHistory.length);
+      console.log('INSIDE THE HISTORY CHECK METHOD: ');
+      console.log(s.st);
+      console.log('LENGTH of HISTORY: ' + musicHistory.length);
+      var match = _.where(musicHistory, {sl: s.sl});
+      if(_.isEmpty(match))
+        return false;
+      else
+        return true;
+      /*
       while(c < musicHistory.length){
         if(s.sl === musicHistory[c].sl)
+        {
+          console.log('found a match with : ' + s.st + ' AND ' + musicHistory[c].st);
           return true;
+        }
         else
           c++;
       }
-      return false;
+      return false;*/
     }
     else
     {
-      //console.log('hISTORY CHECK METHOD --- INVALID SONG SELECTION -- try again!!!');
+      console.log('hISTORY CHECK METHOD --- INVALID SONG SELECTION -- try again!!!');
       return true;
     }
    }
@@ -462,10 +597,42 @@ function selectShareFromControls(share, shares, tab) {
          //console.log('ERROR!!!!!! this is the status: ' + status + ' and this is the data: ' + data);
      });*/
    }
+
+   function playCountFromHistoryForTab(tab)
+   {
+    if(tab === 'me')
+      return Session.get('tastemakersPlayedLength');
+    else if(tab === 'friends')
+      return Session.get('mygroovsPlayedLength');
+   }
+
+   function getCombinedMusicLength() {
+    var totalLength = 0;
+    if(mySongs.length > 0)
+    {
+      totalLength += mySongs.length;
+      console.log('MY SONGS LENGTH IS: ' + mySongs.length);
+    }
+
+    if(friendSongs.length > 0)
+    {
+      totalLength += friendSongs.length;
+      console.log('TASTEMAKERS SONG LENGTH IS: ' + friendSongs.length);
+    }
+
+    if(globalSongs.length > 0)
+      totalLength += globalSongs.length;
+
+    if(totalLength > 0)
+      totalLength -= 1;
+
+    return totalLength;
+   }
    
    function nextPressedSelectNewOrAdvanceThruHistory() {
     //console.log('this is the current history index - NEXT PRESSED:' + getCurrentHistoryIndex());
     setLastActionAsNext();
+
 
     if(isHistoryEmpty())
     {
@@ -473,12 +640,12 @@ function selectShareFromControls(share, shares, tab) {
       //console.log("nothing in here so pushing the first random choice i got");
 
       initializeHistory();
-      //selectNewRandomSongAndPush();
       return true;
     }
     else
     {
-      if(getHistoryLength() < getSongsLength('me')-1)
+      //if(getHistoryLength() < getSongsLength('me')-1)
+      if(getHistoryLength() < getCombinedMusicLength())
         setReachedEndOfStream(false);
       else
         setReachedEndOfStream(true);
@@ -486,7 +653,6 @@ function selectShareFromControls(share, shares, tab) {
       if(atEndOfHistory())//it is at the end of the random linklist, then add the next choice
       {
         //console.log("at the end of linklist getting new random choice");
-        //selectNewRandomSongAndPush();
         return true;
       }     
       else //if not at the end of the linklist then just move to the next one
