@@ -139,6 +139,7 @@ function getRandomSongTabThatStillHasUnplayedSongs()
   }
   else // both tabs have been played out so reset history
   {
+    console.log('$#$#$#$#$#$##$#$# NOTHING IS AVAILABLE IN  TABS TO PLAYY');
     setReachedEndOfStream(true);
     return null;
   }
@@ -146,7 +147,7 @@ function getRandomSongTabThatStillHasUnplayedSongs()
 
 function selectNewRandomSongAndPush() {
   var selectedTab = getRandomSongTabThatStillHasUnplayedSongs();
-
+  console.log('***************************** THIS IS THE SELECTED TAB We GOT BACK: ' + selectedTab);
   if(selectedTab !== null && selectedTab !== undefined)
   {
     console.log('@#@#@#@#@#@#@#HAVE RANDOMLY SELECTED THIS TAB FOR THE NEXT SONG: ' + selectedTab);
@@ -539,8 +540,11 @@ function selectShareFromControls(share, shares, tab) {
     {
       console.log('INSIDE THE HISTORY CHECK METHOD: ');
       console.log(s.st);
-      console.log('LENGTH of HISTORY: ' + musicHistory.length);
+      console.log('CURRENT MUSIC HISTORY: ');
+      console.log(musicHistory);
       var match = _.where(musicHistory, {sl: s.sl});
+      console.log('HISTORY CHECK MATCH IS: ');
+      console.log(match);
       if(_.isEmpty(match))
         return false;
       else
@@ -623,8 +627,8 @@ function selectShareFromControls(share, shares, tab) {
     if(globalSongs.length > 0)
       totalLength += globalSongs.length;
 
-    if(totalLength > 0)
-      totalLength -= 1;
+    /*if(totalLength > 0)
+      totalLength -= 1;*/
 
     return totalLength;
    }
@@ -645,6 +649,8 @@ function selectShareFromControls(share, shares, tab) {
     else
     {
       //if(getHistoryLength() < getSongsLength('me')-1)
+      console.log('CHECKING HISTORY LENGTH : HISTORY LENGTH IS: ' + getHistoryLength());
+      console.log('CHECKING HISTORY LENGTH : COMBINED HISTORY LENGTH IS: ' + getCombinedMusicLength());
       if(getHistoryLength() < getCombinedMusicLength())
         setReachedEndOfStream(false);
       else

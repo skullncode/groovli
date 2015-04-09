@@ -3,15 +3,19 @@ var tastemakerSongList = {};
 Template.tastemakersList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
-    var sel = getMongoSelectorForFriendSongs();
-    tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
-    var songCollection = tastemakerSongList.fetch();
-    songCollectionLength = songCollection.length;
-    console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
-    console.log(tastemakerSongList);
-    Session.set('tastemakersSongsLength', songCollection.length);
-    updateMySongs(songCollection, 'friends');
-    return tastemakerSongList;
+    if(!_.isUndefined(Meteor.user().fbFriends)) {
+      var sel = getMongoSelectorForFriendSongs();
+      tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
+      var songCollection = tastemakerSongList.fetch();
+      songCollectionLength = songCollection.length;
+      console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
+      console.log(tastemakerSongList);
+      Session.set('tastemakersSongsLength', songCollection.length);
+      updateMySongs(songCollection, 'friends');
+      return tastemakerSongList;
+    }
+    else
+      return [];
   },
 
   songOfFriendsExist: function() {
