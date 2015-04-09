@@ -6,7 +6,7 @@ accounts-ui-unstyled@1.1.7
 autoupdate@1.2.1
 base64@1.0.3
 binary-heap@1.0.3
-blaze@2.1.1
+blaze@2.1.2
 blaze-tools@1.0.3
 boilerplate-generator@1.0.3
 callback-hook@1.0.3
@@ -42,7 +42,7 @@ meteor-platform@1.2.2
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
-momentjs:moment@2.9.0
+momentjs:moment@2.10.2
 mongo@1.1.0
 natestrauser:font-awesome@4.3.0
 oauth@1.1.4

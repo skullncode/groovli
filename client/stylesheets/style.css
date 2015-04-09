@@ -173,9 +173,19 @@ ul.horizontal-slide li[class*="span"] {
 }
 /*END SONG OBJECT STYLING*/
 
- .headerProfileImage {
-   margin-left:10px;
- }
+  .tastemakerFriendSharedByContainer {
+    float:right;
+    width:200px;
+    height:20px;
+  }
+
+  .headerProfileImage {
+    margin-left:10px;
+  }
+
+  .tastemakerFriendSharedBy {
+    float: none;
+  }
 
  /*STAR RATING CSS*/
 .rating {

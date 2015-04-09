@@ -14,7 +14,7 @@ if (Meteor.isClient) {
           return new moment(this.sharedBy[counter].systemDate * 1000).format('llll');
   		  else
   				counter++;
-  		}
+  		}      
   	},
     songItemMessageForUser: function() {
       var counter = 0;

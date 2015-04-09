@@ -16,16 +16,25 @@ if (Meteor.isClient) {
   				counter++;
   		}
   	},
-    songItemMessageForUser: function() {
-      var counter = 0;
-      while(counter < this.sharedBy.length)
+    friendsSharedByForTastemakerItem: function() {
+      var shareCounter = 0;
+      var friendCounter = 0;
+      var friendIDsThatSharedThisSong = [];
+      while(shareCounter < this.sharedBy.length)
       {
-        //return new Date(this.sharedBy[counter].systemDate * 1000).toUTCString();
-        if(this.sharedBy[counter].uid === Meteor.user().services.facebook.id)
-          return this.sharedBy[counter].msg;
-        else
-          counter++;
+        //console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
+        while(friendCounter < Meteor.user().fbFriends.length)
+        {
+          //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
+          //console.log('FRIEND COUNTER IS:  '+ friendCounter);
+          if(this.sharedBy[shareCounter].uid === Meteor.user().fbFriends[friendCounter].id)
+            friendIDsThatSharedThisSong.push({friendID: Meteor.user().fbFriends[friendCounter].id, friendName: Meteor.user().fbFriends[friendCounter].name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
+        
+          friendCounter++;
+        }
+        shareCounter++;
       }
+      return friendIDsThatSharedThisSong;
     }
   });
 

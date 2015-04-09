@@ -7,7 +7,8 @@ Template.tastemakersList.helpers({
     tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
     var songCollection = tastemakerSongList.fetch();
     songCollectionLength = songCollection.length;
-    //console.log('#$#$#$#$$###$ SETTING TASTEMAKERSSSSSSS LENGTH!!!!! ' + songCollection.length);
+    console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
+    console.log(tastemakerSongList);
     Session.set('tastemakersSongsLength', songCollection.length);
     updateMySongs(songCollection, 'friends');
     return tastemakerSongList;
