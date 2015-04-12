@@ -1,13 +1,10 @@
-<template name="mygroovsList">
+<template name="globalList">
 	<span class="badge pull-right">{{songs.count}}</span>
 	{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
-	<ul id='mygroovsList' class="songsList horizontal-slide">
-		{{#if songsLoaded}}
-			{{startPlayer}}
-		{{/if}}
+	<ul id='globalList' class="songsList horizontal-slide">
 		<li>
 			{{#each songs}}
-				{{> mygroovItem}}
+				{{> globalsongItem}}
 			{{/each}}
 		</li>
 	</ul>

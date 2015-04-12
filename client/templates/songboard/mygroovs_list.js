@@ -57,6 +57,13 @@ function initializePlayableTabs()
     temp.push('friends');
     Session.set('playableTabs',temp);
   }
+
+  if(Session.get('globalSongsLength') > 0)
+  {
+    temp.push('global');
+    Session.set('playableTabs',temp);
+  }
+  
 }
 
 function animateListToCurrentlyPlayingSong() {

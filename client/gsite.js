@@ -5,6 +5,7 @@ if (Meteor.isClient) {
      Session.set('animatedToSong', false);
      Session.set('mygroovsPlayedLength', 0);
      Session.set('tastemakersPlayedLength',0);
+     Session.set('globalPlayedLength',0);
   });
 	Deps.autorun(function() {
 		if(Meteor.user() && Meteor.user().services !== undefined && Meteor.user().services.facebook !== undefined)

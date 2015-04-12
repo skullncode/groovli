@@ -107,14 +107,15 @@ function getRandomSongTabThatStillHasUnplayedSongs()
   var playableTabsLength = Session.get('playableTabs').length;
   console.log('@#@#@#@#@#@NUMBER OF PLAYABLE TABS: ' + playableTabsLength);
   var randomlySelectedTabIndex = _.random(playableTabsLength-1);
-
+  console.log('THIS IS THE RANDOMLY SELECTED TAB INDEX: ' + randomlySelectedTabIndex);
   var selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
-  if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
+  if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends') || Session.get('globalPlayedLength') < getSongsLength('global'))
   {
     if(selectedTab === 'me')
     {
       if(Session.get('mygroovsPlayedLength') < getSongsLength(selectedTab))
       {
+        console.log('RETURNING THIS TAB FOR RANDOM PLAY: MY GROOVS');
         return 'me';
       }
       else
@@ -128,12 +129,27 @@ function getRandomSongTabThatStillHasUnplayedSongs()
     {
       if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
       {
+        console.log('RETURNING THIS TAB FOR RANDOM PLAY: TASTEMAKERSSSSSS');
         return 'friends';
       }
       else
       {
         return getRandomSongTabThatStillHasUnplayedSongs();
         console.log('################################## TASTEMAKERSSS HAS RUN OUT OF TRACKS TO PLAY SO CANNOT SELECT FROM THIS ANYMORE!');
+      }
+    }
+
+    if(selectedTab === 'global')
+    {
+      if(Session.get('globalPlayedLength') < getSongsLength('global'))
+      {
+        console.log('RETURNING THIS TAB FOR RANDOM PLAY: GLOBAL LIST');
+        return 'global';
+      }
+      else
+      {
+        return getRandomSongTabThatStillHasUnplayedSongs();
+        console.log('################################## GLOBAL TAB HAS RUN OUT OF TRACKS TO PLAY SO CANNOT SELECT FROM THIS ANYMORE!');
       }
     }
   }
@@ -229,6 +245,14 @@ function updatePlayCountPerTab(tab, selectedChoice)
     Session.set('tastemakersPlayedLength', currentCount);
 
     console.log('HISTORY COUNT: CURRENT TASTEMAKERSSSSSS PLAY LENGTH IS: ' + Session.get('tastemakersPlayedLength'));
+  }
+  else if(tab === 'global')
+  {
+    currentCount = Session.get('globalPlayedLength');
+    currentCount++;
+    Session.set('globalPlayedLength', currentCount);
+
+    console.log('HISTORY COUNT: CURRENT GLOBAL PLAY LENGTH IS: ' + Session.get('globalPlayedLength'));
   }
 
   console.log('COMBINED MUSIC LENGTH IS: ' + getCombinedMusicLength());
@@ -327,6 +351,10 @@ function selectShareFromControls(share, shares, tab) {
   {
     $('#songTabs a[href="#tastemakers"]').tab('show');
   }
+  else if(tab === 'global')
+  {
+    $('#songTabs a[href="#global"]').tab('show');
+  }
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
   console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + share.st);//shares[chosenIndex].st)';
   console.log('THIS IS THE TAB!!!: '+ tab);
@@ -347,6 +375,18 @@ function selectShareFromControls(share, shares, tab) {
     var firstSongObject = document.querySelector('.tastemakersongItem:nth-child(1)');
     var selectedRandomSongLink = document.querySelector('.tastemakersongItem:nth-child('+chosenIndex+')');
     var selectedRandomSongObject = document.querySelector('.tastemakersongItem:nth-child('+chosenIndex+')');
+    console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
+    console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
+    console.log(selectedRandomSongObject);
+    setShare(share);
+    incrementListenCount();
+    $(selectedRandomSongLink).click();
+  }
+  else if(tab === 'global') 
+  {
+    var firstSongObject = document.querySelector('.globalsongItem:nth-child(1)');
+    var selectedRandomSongLink = document.querySelector('.globalsongItem:nth-child('+chosenIndex+')');
+    var selectedRandomSongObject = document.querySelector('.globalsongItem:nth-child('+chosenIndex+')');
     console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
     console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
     console.log(selectedRandomSongObject);
@@ -403,6 +443,18 @@ function selectShareFromControls(share, shares, tab) {
       }
       return null;
     }
+    else if(tab === 'global')
+    {
+      while(counter < globalSongs.length)
+      {
+        var lid = globalSongs[counter].sl.substring(globalSongs[counter].sl.indexOf('v=')+2);
+        if(linkID === lid)
+          return globalSongs[counter];
+        else
+          counter++;
+      }
+      return null;
+    }
    }
 
    function setCurrentSong(s) {
@@ -440,6 +492,19 @@ function selectShareFromControls(share, shares, tab) {
       }
       Session.set('fLen', sh.length); //friends length
       friendSongs = sh;
+    }
+    else if(tab === 'global')
+    {
+      //console.log('UPDATING SONGS For TASTEMAKERSSSSSS TAB: ');
+      while(counter < sh.length)
+      {
+        sh[counter].sourceTab = 'global';
+        //console.log('THIS IS THE UPDATTTTTED SONG OBJECT: ');
+        //console.log(sh[counter]);
+        counter++;
+      }
+      Session.set('gLen', sh.length); //friends length
+      globalSongs = sh;
     }
     //console.log('SONG STATE LENGTH: ' + mySongs.length);
    }
@@ -600,14 +665,6 @@ function selectShareFromControls(share, shares, tab) {
        error(function(data, status) {
          //console.log('ERROR!!!!!! this is the status: ' + status + ' and this is the data: ' + data);
      });*/
-   }
-
-   function playCountFromHistoryForTab(tab)
-   {
-    if(tab === 'me')
-      return Session.get('tastemakersPlayedLength');
-    else if(tab === 'friends')
-      return Session.get('mygroovsPlayedLength');
    }
 
    function getCombinedMusicLength() {
