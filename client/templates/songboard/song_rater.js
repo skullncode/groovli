@@ -137,7 +137,7 @@ function getPersonalRatingForSong()
     Meteor.call('getPersonalRatingForSong', sid, 'yt', function(error, result) {
       if(error)
         console.log('Encountered error while trying to get personal rating for current song!');
-      else
+      else if(!_.isUndefined(result))
       {
         //console.log('THIS IS THE PERSONAL RATING GOT from the DB: ');
         personalSongRatingForSong = result[0].rating;

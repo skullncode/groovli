@@ -26,6 +26,24 @@ if (Meteor.isClient) {
         else
           counter++;
       }
+    },
+    howManyOthers: function() {
+      var counter = 0;
+      var otherCounter = 0;
+      while(counter < this.sharedBy.length)
+      {
+        if(this.sharedBy[counter].uid !== Meteor.user().services.facebook.id)
+        {
+          otherCounter++
+        }
+        counter++;
+      }
+      if(otherCounter === 1)
+        return '& 1 other person, '
+      else if (otherCounter > 1)
+        return '& ' + otherCounter + ' other people, '
+      else
+        return '';
     }
   });
 
