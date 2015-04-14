@@ -8,8 +8,8 @@ Template.tastemakersList.helpers({
       tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
       var songCollection = tastemakerSongList.fetch();
       songCollectionLength = songCollection.length;
-      console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
-      console.log(tastemakerSongList);
+      //console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
+      //console.log(tastemakerSongList);
       Session.set('tastemakersSongsLength', songCollection.length);
       updateMySongs(songCollection, 'friends');
       updatePlayableTabsIfNecessary();
@@ -102,10 +102,10 @@ function animateListToCurrentlyPlayingSong()
 function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
   if(songSourceTab !== Session.get('activeTab'))
   {
-    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'friends')
     {
-      console.log('switching TABS from my groovs list to tastemakers');
+      //console.log('switching TABS from my groovs list to tastemakers');
       $('#songTabs a[href="#tastemakers"]').tab('show');
     }
   }

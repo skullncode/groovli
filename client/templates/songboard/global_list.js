@@ -7,8 +7,8 @@ Template.globalList.helpers({
     globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
     var songCollection = globalSongList.fetch();
     songCollectionLength = songCollection.length;
-    console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
-    console.log(globalSongList);
+    //console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
+    //console.log(globalSongList);
     Session.set('globalSongsLength', songCollection.length);
     updateMySongs(songCollection, 'global');
     updatePlayableTabsIfNecessary();
@@ -16,9 +16,9 @@ Template.globalList.helpers({
   },
 
   switchTabsAndAnimateListToCurrentlyPlayingSong: function() {
-    console.log('GOING TO SWITCH AND ANIMATE LIST NOW: ');
+    //console.log('GOING TO SWITCH AND ANIMATE LIST NOW: ');
     if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'global') {
-      console.log('SWITCHING TAB IF NOT ALREADY FOCUSED CURRENTLY PLAYING SOnG!!!!');
+      //console.log('SWITCHING TAB IF NOT ALREADY FOCUSED CURRENTLY PLAYING SOnG!!!!');
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
   }
@@ -69,15 +69,15 @@ function getMongoSelectorForGlobal() {
     }
   }
 
-  console.log('THIS IS THE FINAL SELECTOR THAT WILL BE USED FOR THE GLOBAL LIST!!!!!');
-  console.log(query);
+  //console.log('THIS IS THE FINAL SELECTOR THAT WILL BE USED FOR THE GLOBAL LIST!!!!!');
+  //console.log(query);
 
   return query;
 }
 
 function animateListToCurrentlyPlayingSong()
 {
-  console.log('ANIMATING TO THe currentLY SELECTED SONG IN THE GLOBAL LIST!!!!');
+  //console.log('ANIMATING TO THe currentLY SELECTED SONG IN THE GLOBAL LIST!!!!');
   var currentScrollOffset = $('#globalList').scrollTop();//$("#personalVidList").scrollTop();
   $('#globalList').animate({scrollTop: $(".thumbnail.globalsongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
   //$('#globalList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
@@ -88,10 +88,10 @@ function animateListToCurrentlyPlayingSong()
 function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
   if(songSourceTab !== Session.get('activeTab'))
   {
-    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'global')
     {
-      console.log('switching TABS to global');
+      //console.log('switching TABS to global');
       $('#songTabs a[href="#global"]').tab('show');
     }
   }

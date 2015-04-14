@@ -1,6 +1,4 @@
-var topGenresLength = 0;
-var topBandsLength = 0;
-Template.userprofile.helpers({
+Template.profile.helpers({
 	memberSince: function() {
 		return new moment(Meteor.user().createdAt).format('llll');
 	},

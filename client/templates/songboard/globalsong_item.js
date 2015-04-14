@@ -36,12 +36,12 @@ if (Meteor.isClient) {
     "click a.globalsongItem": function (event) {
       // This function is called when the new task form is submitted
       Session.set('animatedToSong', false);
-      console.log('THIS IS THE CLICK EVENT for the SONG ITEM!!!!!!');
-      console.log(event);
+      //console.log('THIS IS THE CLICK EVENT for the SONG ITEM!!!!!!');
+      //console.log(event);
       //var text = event.target.text.value;
       var ytLinkID=  this.sl.substring(this.sl.indexOf("v=")+2);
-      console.log(ytLinkID);
-      console.log('CALLING JQUERY EVENT CLASS METHOD!!!!');
+      //console.log(ytLinkID);
+      //console.log('CALLING JQUERY EVENT CLASS METHOD!!!!');
       removeAndAddSelectedClassToSelectedSong(event.currentTarget);
       loadVideoById(ytLinkID, this);
       makeMuutCommentRelatedUpdates(ytLinkID, this);

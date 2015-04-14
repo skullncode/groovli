@@ -201,6 +201,11 @@ ul.horizontal-slide li[class*="span"] {
     margin-left:10px;
   }
 
+  .headerProfileImageLink {
+    font-size:0;
+    margin-top:-10px;
+  }
+
   .tastemakerFriendSharedBy {
     float: none;
   }

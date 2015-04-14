@@ -14,20 +14,28 @@ var playerStarted = false;
 
 function playerLoaded()
 {
-  console.log('INSIDE THE PLAYER Loaded method!!!!!');
-  ytplayer = new YT.Player('player', {
-              playerVars: { 
-                'autoplay': 0, 
-                'controls': 0,
-                'autohide': 1,
-                'wmode':'opaque', 
-                'enablejsapi': 1, 
-                'showinfo': 0, 
-                'color': 'white',
-                'iv_load_policy': 3,
-                'fs': 0
-              }
-  });
+  //console.log('INSIDE THE PLAYER Loaded method!!!!!');
+  if(!_.isUndefined(YT))
+  {
+    ytplayer = new YT.Player('player', {
+                playerVars: { 
+                  'autoplay': 0, 
+                  'controls': 0,
+                  'autohide': 1,
+                  'wmode':'opaque', 
+                  'enablejsapi': 1, 
+                  'showinfo': 0, 
+                  'color': 'white',
+                  'iv_load_policy': 3,
+                  'fs': 0
+                }
+    });
+  }
+  else
+  {
+    //console.log('YT NOT VALID ->> RELOADING PAGE!!!');
+    location.reload();
+  }
   ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
 	ytplayer.addEventListener("onReady", "onPlayerReady"); 
 	ytplayer.addEventListener("onError", "onPlayerError"); 
@@ -36,8 +44,8 @@ function playerLoaded()
 	progBar = document.getElementById('progBar');
   
 	progContainer.addEventListener('click', function(e) {
-	  console.log("clickedinside prog container at X"+e.offsetX);
-	  console.log("clickedinside prog container at Y "+e.offsetY);
+	  //console.log("clickedinside prog container at X"+e.offsetX);
+	  //console.log("clickedinside prog container at Y "+e.offsetY);
 	  progBar.style.width = e.offsetX + "px";
 
 	  var selectedPosition = (e.offsetX / progContainer.scrollWidth);
@@ -49,27 +57,27 @@ function playerLoaded()
     
 	}, false);
   
-  //console.log(ytplayer);
+  ////console.log(ytplayer);
 }
 
 function onPlayerReady() {
-    console.log('inside on player ready method!!!');
+    //console.log('inside on player ready method!!!');
     Session.set('playerLoaded', true);
     Session.set('playerStarted', false);
     //ytplayer.playVideo();
 }
 
 function onPlayerStateChange(event) {
-  console.log('this is the current player state:' + event.data);
+  //console.log('this is the current player state:' + event.data);
   var loader = $('img#songLoader');
   if(event.data === 0) {  //video finished playing, so move to next video      
-      console.log("VID DONE!");
+      //console.log("VID DONE!");
       var nextBtn = $('.glyphicon-step-forward');
       //mixpanel.track("reached end of song");
       nextBtn.click();
 	}
   else if(event.data === -1 || event.data === 3) { //if buffering show loader 
-    //console.log(loader);
+    ////console.log(loader);
     loader.css("visibility","visible");
   }
   else if(event.data === 1) { //if playing hide loader
@@ -81,8 +89,8 @@ function onPlayerError(errorCode) {
   //mixpanel.track("auto error");
   Session.set('SongErroneous', true);
   Session.set('YTErrorCode', errorCode.target.e);
-  console.log('ERROR CODE IS: ');
-  console.log(errorCode.target.e); 
+  //console.log('ERROR CODE IS: ');
+  //console.log(errorCode.target.e); 
 
   /*
   console.log('!!!!ERRONEOUS SHARE is: '+ss.getCurrentID());
@@ -170,7 +178,7 @@ function updatePlayerInfo() {
 
 function playpauseVideo() {
   var playpauseButton = $('.glyphicon-play');
-  console.log('inside playpause method!!! this is the playpausebutton result: '+ playpauseButton.length);
+  //console.log('inside playpause method!!! this is the playpausebutton result: '+ playpauseButton.length);
   //ytplayer = document.getElementById("sharePlayer");
   if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
   {

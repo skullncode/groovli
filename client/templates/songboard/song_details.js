@@ -39,7 +39,7 @@ Template.songDetails.helpers({
   },
 
   currentSongHasEncounteredAnError: function() {
-    console.log('INSIDE THE SONG ERROR CHECKER!!!!');
+    //console.log('INSIDE THE SONG ERROR CHECKER!!!!');
     if(Session.get('SongErroneous'))
     {
       console.log('THERE IS AN ACTUAL ERROR WITH THE SONG!!!!');

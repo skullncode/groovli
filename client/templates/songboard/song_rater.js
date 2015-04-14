@@ -28,7 +28,7 @@ Template.songRater.helpers({
 
   getPersonalRatingForSong: function() {
     var cs = Session.get('CS');
-    if(!_.isUndefined(currentSong) && currentSong.sl.indexOf('youtube.com') >= 0)
+    if(!_.isUndefined(currentSong) && !_.isUndefined(currentSong.sl) && currentSong.sl.indexOf('youtube.com') >= 0)
     {
       var sid = cs.sl.substring(cs.sl.indexOf("v=")+2);
       Meteor.call('getPersonalRatingForSong', sid, 'yt', function(error, result) {
@@ -53,7 +53,7 @@ Template.songRater.helpers({
   getAverageRatingForSong: function() {
     var cs = Session.get('CS');
     var avg = 0;
-    if(!_.isUndefined(currentSong) && currentSong.sl.indexOf('youtube.com') >= 0)
+    if(!_.isUndefined(currentSong) && !_.isUndefined(currentSong.sl) && currentSong.sl.indexOf('youtube.com') >= 0)
     {
       var sid = cs.sl.substring(cs.sl.indexOf("v=")+2);
       Meteor.call('getAverageRatingForSong', sid, 'yt', function(error, result) {

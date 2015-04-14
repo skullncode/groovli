@@ -25,7 +25,7 @@ Template.mygroovsList.helpers({
   startPlayer: function() {
     if(!Session.get('playerStarted'))
     {
-      console.log('SONGS apparently loaded!!! STARTINGGGG PLAYERR!!!');
+      //console.log('SONGS apparently loaded!!! STARTINGGGG PLAYERR!!!');
       initializePlayableTabs();
       $(".glyphicon-step-forward").click();
       Session.set('playerStarted', true);
@@ -93,15 +93,15 @@ function animateListToCurrentlyPlayingSong() {
 function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
   if(songSourceTab !== Session.get('activeTab'))
   {
-    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'me')
     {
-      console.log('switching TABS from tastemakers list to my groovs');
+      //console.log('switching TABS from tastemakers list to my groovs');
       $('#songTabs a[href="#mygroovs"]').tab('show');
     }
   }
   else
-    console.log('not switching tabs as active tab and song source tab is the same!!!');
+    //console.log('not switching tabs as active tab and song source tab is the same!!!');
 
   //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
   Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);
