@@ -11,6 +11,7 @@ Template.globalList.helpers({
     console.log(globalSongList);
     Session.set('globalSongsLength', songCollection.length);
     updateMySongs(songCollection, 'global');
+    updatePlayableTabsIfNecessary();
     return globalSongList;
   },
 
@@ -24,7 +25,20 @@ Template.globalList.helpers({
 });
 
 
-/////FIX FROM HERE!!!!!!!!!
+function updatePlayableTabsIfNecessary() {
+  var temp = Session.get('playableTabs');
+  if(!_.isUndefined(temp))
+  {
+    if(_.indexOf(temp, 'global') === -1)
+    {
+      if(Session.get('globalSongsLength') > 0)
+      {
+        temp.push('global');
+        Session.set('playableTabs',temp);
+      }
+    }
+  }
+}
 
 function getMongoSelectorForGlobal() {
   var counter = 0;

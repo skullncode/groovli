@@ -20,7 +20,8 @@ Meteor.publish("userData", function () {
        		"services.facebook": 1,
        		"emails.address[0]": 1,
           "profile": 1,
-          "fbFriends": 1
+          "fbFriends": 1,
+          "createdAt": 1
        	}
      });
   } else {

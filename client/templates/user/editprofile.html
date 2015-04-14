@@ -1,0 +1,27 @@
+<template name="editprofile">
+	{{#if currentUser}}
+		<section class="row">
+			<h2 class="col-xs-12 col-md-12">Edit your profile</h2>
+			<div class="col-md-3">
+				<img id="profileImg" class="img-rounded" style="height: 180px; margin-top: 4px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=large">
+			</div>
+			<div class="col-xs-5 col-md-5">
+				<form name="userForm" class="signin form-horizontal" autocomplete="on">
+					<fieldset>
+						<div class="form-group">
+							<label for="firstName">First Name</label>
+							<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" value='{{currentUser.services.facebook.first_name}}'>
+						</div>
+						<div class="form-group">
+							<label for="lastName">Last Name</label>
+							<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" value='{{currentUser.services.facebook.last_name}}'>
+						</div>
+						<div class="text-center form-group">
+							<button type="submit" class="btn btn-large btn-primary" id='updateProfile'>Update Profile</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</section>
+	{{/if}}
+</template>

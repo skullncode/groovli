@@ -12,6 +12,7 @@ Template.tastemakersList.helpers({
       console.log(tastemakerSongList);
       Session.set('tastemakersSongsLength', songCollection.length);
       updateMySongs(songCollection, 'friends');
+      updatePlayableTabsIfNecessary();
       return tastemakerSongList;
     }
     else
@@ -33,11 +34,35 @@ Template.tastemakersList.helpers({
   }
 });
 
+function updatePlayableTabsIfNecessary() {
+  var temp = Session.get('playableTabs');
+  if(!_.isUndefined(temp))
+  {
+    if(_.indexOf(temp, 'friends') === -1)
+    {
+      if(Session.get('tastemakersSongsLength') > 0)
+      {
+        temp.push('friends');
+        Session.set('playableTabs',temp);
+      }
+    }
+  }
+}
+
 function getMongoSelectorForFriendSongs() {
   var counter = 0;
   var selector = "";
   var ender = "]}";
   var query = {};
+
+  var userSelf = {
+    "sharedBy.uid": Meteor.user().services.facebook.id
+  };
+
+  query["$nor"] = [];
+
+  //first add self ID for exclusion from Global list
+  query["$nor"].push(userSelf);
 
   if(Meteor.user().fbFriends.length > 1)
     query["$or"] = [];

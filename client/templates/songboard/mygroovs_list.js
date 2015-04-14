@@ -4,12 +4,13 @@ Session.set('playerStarted', false);
 Template.mygroovsList.helpers({
   songs: function() {
   	//Session.set('personalSongList', Songs.find());
-    fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: { 'sharedBy.systemDate': -1 }});
+    fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
     var songCollection = fullSongList.fetch();
     //songCollectionLength = songCollection.length;
     //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + songCollection.length);
     Session.set('pSongsLength', songCollection.length);
     updateMySongs(songCollection, 'me');
+    updatePlayableTabsIfNecessary();
     return fullSongList;
   },
 
@@ -38,8 +39,22 @@ Template.mygroovsList.helpers({
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
   }
-
 });
+
+function updatePlayableTabsIfNecessary() {
+  var temp = Session.get('playableTabs');
+  if(!_.isUndefined(temp))
+  {
+    if(_.indexOf(temp, 'me') === -1)
+    {
+      if(Session.get('pSongsLength') > 0)
+      {
+        temp.push('me');
+        Session.set('playableTabs',temp);
+      }
+    }
+  }
+}
 
 function initializePlayableTabs()
 {

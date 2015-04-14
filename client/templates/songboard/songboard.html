@@ -1,7 +1,7 @@
 <template name="songboard">
-  <div class='col-md-1 column'>
-  	<!--{{>sideNavbar}}-->
-  </div>
+  <!--<div class='col-md-1 column'>
+  	{{>sideNavbar}}
+  </div>-->
   <div class='col-md-7 column'>
     <div id='player'>
 		<iframe id="player" class="embed-responsive-item" type="text/html" onload='playerLoaded();' width="480" height="270"
@@ -18,4 +18,6 @@
   {{#if currentUser}}
   	{{>songTabs}}
   {{/if}}
+
+  {{> userprofile}}
 </template>

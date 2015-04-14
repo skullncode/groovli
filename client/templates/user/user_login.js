@@ -21,5 +21,11 @@ Template.userLogin.events({
             else
                 Router.go('/')
         })
+    },
+
+    'click .headerProfileImage': function(event) {
+        console.log('CLICKED THE PROFIle PIC');
+        $('#userprofileModal').modal('show');
+        return true;
     }
 });

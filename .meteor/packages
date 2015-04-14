@@ -17,3 +17,4 @@ http
 momentjs:moment
 less
 underscore
+semantic:ui-sidebar
