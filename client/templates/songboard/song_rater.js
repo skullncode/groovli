@@ -76,7 +76,7 @@ Template.songRater.helpers({
             //console.log('this is the initial averageRating : ' + avg)
             while(counter < result.length)
             {
-              avg += result[counter].rating;
+              avg += parseInt(result[counter].rating);
               counter++;
             }
 

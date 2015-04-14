@@ -50,8 +50,8 @@ Template.userprofile.helpers({
 		var topTeng = [];
 		//console.log(t);
 		var gCounter = 0;
-		_.chain(t).map(function(value){if(value !== 'undefined' && gCounter < 10){console.log('THIS IS THE GENRE: ' + value);gCounter++;topTeng.push({'genre': value})}});
-		console.log(topTeng);
+		_.chain(t).map(function(value){if(value !== 'undefined' && gCounter < 10){gCounter++;topTeng.push({'genre': value})}});
+		//console.log(topTeng);
 		Session.set('topGenresLength', topTeng.length);
 		return topTeng;
 	},
