@@ -35,6 +35,7 @@ Template.mygroovsList.helpers({
   },
 
   switchTabsAndAnimateListToCurrentlyPlayingSong: function() {
+    //console.log('ANIMATING TO CURRENTLY PLAYING SONG!!!!');
     if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'me') {
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }

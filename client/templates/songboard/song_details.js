@@ -44,5 +44,20 @@ Template.songDetails.helpers({
     {
       console.log('THERE IS AN ACTUAL ERROR WITH THE SONG!!!!');
     }
-  }
+  },
+
+  sharedByDetailsForCurrentSong: function() {
+      var shareCounter = 0;
+      var globalIDsThatSharedThisSong = [];
+      while(shareCounter < this.sharedBy.length)
+      {
+        //console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
+        //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
+        //console.log('FRIEND COUNTER IS:  '+ friendCounter);
+        globalIDsThatSharedThisSong.push({personID: this.sharedBy[shareCounter].uid, personName: this.sharedBy[shareCounter].uname, personTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll'), p_id: this.sharedBy[shareCounter]._id});
+        
+        shareCounter++;
+      }
+      return globalIDsThatSharedThisSong;
+    }
 });

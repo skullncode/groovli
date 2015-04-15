@@ -1,6 +1,6 @@
 function updateUserFriendList(latestFriendList){
 	//console.log('REACHED THE UPDATE USER FRIEND LIST server method, with this list of friends: ');
-	console.log(latestFriendList);
+	//console.log(latestFriendList);
 	Meteor.users.update({_id: Meteor.userId()},{$set:{fbFriends: latestFriendList}});
 }
 
@@ -26,7 +26,7 @@ Meteor.methods({
 						fbFriends.push(foundFriend);
 						counter++;
 					}
-					console.log('FOUND ' + fbFriends.length + ' friend(s)');
+					//console.log('FOUND ' + fbFriends.length + ' friend(s)');
 					if(fbFriends.length > 0)
 						updateUserFriendList(fbFriends);
 
@@ -39,5 +39,10 @@ Meteor.methods({
 				}
 			}
 		);
+	},
+	findUserForRouting: function(uid)
+	{
+		console.log("REACHED SERVER METHOD TO GET USER DATA FOR THIS ID: " + uid);
+		return Meteor.users.findOne(uid);;
 	}
 });

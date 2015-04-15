@@ -2,17 +2,18 @@
 	{{#if currentUser}}
 	  <ul class="nav navbar-nav navbar-right">
 		<li>
-			<a class='headerProfileImageLink' href="{{pathFor 'profile'}}" target='blank'><img class="img-rounded headerProfileImage" style="height: 40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
+			<a class='headerProfileImageLink' href="/profile/{{currentUser._id}}" target='blank'><img class="img-rounded headerProfileImage" style="height: 40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
 		</li>
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	        <i class="fa fa-user"></i> {{ currentUser.profile.name }} <i class="fa fa-caret-down"></i>
+	        <!--<i class="fa fa-user"></i> {{ currentUser._id }} <i class="fa fa-caret-down"></i>-->
 	      </a>
 	      <ul class="dropdown-menu" role="menu">
-			<li>
+			<!--<li>
 				<a href="/editprofile">Edit Profile</a>
 			</li>
-			<!--
+			
 			<li>
 			<a href="/#!/settings/accounts">Manage Social Accounts</a>
 			</li>

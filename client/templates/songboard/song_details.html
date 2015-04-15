@@ -21,12 +21,16 @@
 						<h3>{{currentSong.sa}}</h3>
 					</div>
 				{{/if}}
+				Shared by: 
+				{{#each sharedByDetailsForCurrentSong}}
+					<a href="/profile/{{p_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+				{{/each}}
 			</div>
 			<div class="col-md-4 column" align="right">
 				{{>songRater}}
 			</div>
 		{{/with}}
 	{{else}}
-		<h5>NOTHING PLAYING RIGHT NOW</h5>
+		<h5>still loading song...</h5>
 	{{/if}}
 </template>
