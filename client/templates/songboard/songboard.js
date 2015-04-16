@@ -25,10 +25,15 @@ Template.songboard.rendered = function() {
 	var updateFBFriendListFunction = function () {
 		Meteor.call('updateFBFriendList');
 	}
+
+	var getLatestStoriesFromDBAndFBFunction = function () {
+		Meteor.call('getLatestStoriesFromDBAndFB');
+	}
   	//resetSession();
   	Meteor.call('updateFBFriendList');
   	Meteor.setInterval(updateFBFriendListFunction, 30000);
   	Meteor.call('getLatestStoriesFromDBAndFB');
+  	Meteor.setInterval(getLatestStoriesFromDBAndFBFunction, 15000);
 	/*Meteor.setInterval(
 		function(){
 			console.log('Refreshing and getting latest tracks from social networks.');

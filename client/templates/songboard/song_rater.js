@@ -145,7 +145,7 @@ function getTotalSongListens()
           console.log('Encountered error while trying to get personal rating for current song!');
         else
         {
-          console.log('GOT THIS LISTEN COUNT FROM THE SERVER: ' + result);
+          //console.log('GOT THIS LISTEN COUNT FROM THE SERVER: ' + result);
           Session.set(currentID+'_lc', result);
         }
       });
