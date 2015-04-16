@@ -6,7 +6,11 @@
 		</div>
 		<center>
 		<div class='historyItemText'>{{songArtist}} - {{songTitle}}</div>
-		<div class='historyItemText'><h6 class='text-muted'><i>you listened to this song on <br> {{songItemTimeStamp}}</i></h6></div>
+		{{#if userProfileIsNotYou}}
+			<div class='historyItemText'><h6 class='text-muted'><i>they listened to this song on <br> {{songItemTimeStamp}}</i></h6></div>
+		{{else}}
+			<div class='historyItemText'><h6 class='text-muted'><i>you listened to this song on <br> {{songItemTimeStamp}}</i></h6></div>
+		{{/if}}
 		<div class='historyItemText'><h6 class='text-muted'><i>{{howManyOthers}}</i></h6></div>
 		</center>
 		<div style="clear:both;"></div>
