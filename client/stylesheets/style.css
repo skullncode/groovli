@@ -403,3 +403,26 @@ span.tags
   float: right;  
 }
 /*END SONG ITEM MENU*/
+
+/*listen history styling*/
+
+ul.listenHistory {
+    margin: 0;
+    padding: 0;
+    width: 480px;
+    height: 320px;
+    white-space: nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.historyItemText {
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+   float:left;
+   padding-left: 50px;
+   width:350px;
+}
+/*end listen history styling*/

@@ -12,7 +12,7 @@ Template.songDetails.helpers({
     if(cs !== undefined && cs !== {} && cs !== [])
 		return cs;
   },
-
+  
   artistTrackAreNotSame: function() {
   	//console.log('CHECKING for artist and track!!');
   	var cs = Session.get('CS');

@@ -653,7 +653,8 @@ function selectShareFromControls(share, shares, tab) {
    function incrementListenCount() {
      currentSong.listenCount += 1;
      //console.log('INSIDE INCREMENT LISTEN COUNT METHOD in song state service!!!!!');
-     Meteor.call('updateListenCount', getCurrentID(), 'yt', currentSong.listenCount);
+     //OLD UPDATE LISTEN COUNT METHOD//Meteor.call('updateListenCount', getCurrentID(), 'yt', currentSong.listenCount);
+     Meteor.call('insertSongListen', getCurrentID(), 'yt');
      //$http({method: 'PUT', url: '/lc/' + currentID + '/yt/' + currentSong.listenCount}).
      /*$http.put('/lc/' + currentID + '/yt/' + currentSong.listenCount).
        success(function(data, status) {

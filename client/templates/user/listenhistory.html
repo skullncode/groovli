@@ -1,0 +1,24 @@
+<template name="listenHistory">
+	{{retrieveListenHistoryForUser}}
+	<div role="tabpanel">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs listenHistoryTab" role="tablist" id="listenHistory">
+	    <li role="presentation" class="active"><a href="#listenHistory" aria-controls="listenHistory" role="tab" data-toggle="tab">listen history</a></li>
+	  </ul>
+
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane fade in active" id="listenHistory">
+			<ul id='listenHistory' class="listenHistory">
+				<li>
+					{{#each listenHistoryForUser}}
+						{{> historyItem}}
+					{{/each}}
+				</li>
+			</ul>
+			<h2><strong>{{historyCount}}</strong></h2>                    
+            <p><small>listens</small></p>
+	    </div>
+	  </div>
+	</div>
+</template>

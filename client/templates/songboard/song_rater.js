@@ -14,6 +14,25 @@ Template.songRater.helpers({
       return cs;
   },
 
+  retrieveTotalSongListens: function() {
+    getTotalSongListens();
+  },
+
+  totalListensForThisSong: function() {
+    var cs = Session.get('CS');
+    var currentID = cs.sl.substring(cs.sl.indexOf('v=')+2);
+    var lc = Session.get(currentID+'_lc');
+    return lc;
+  },
+
+  listenCountMoreThanOne: function() {
+    var lc = Session.get(currentID+'_lc');
+    if(lc > 1)
+      return true;
+    else
+      return false;
+  },
+
   averageRating: function() {
     return Session.get('avgrtg');
   },
@@ -112,6 +131,27 @@ Template.songRater.events({
     return true;
   }
 });
+
+function getTotalSongListens()
+{
+  var cs = Session.get('CS');
+  if(cs !== undefined && cs !== {} && cs !== [])
+  {
+    var currentID = cs.sl.substring(cs.sl.indexOf('v=')+2);
+    if(cs.type === 'YOUTUBE')
+    {
+      var lc = Meteor.call('getTotalListenCountForSong', currentID, 'yt', function(error, result) {
+        if(error)
+          console.log('Encountered error while trying to get personal rating for current song!');
+        else
+        {
+          console.log('GOT THIS LISTEN COUNT FROM THE SERVER: ' + result);
+          Session.set(currentID+'_lc', result);
+        }
+      });
+    }
+  }
+}
 
 function setSongRater(rating) 
 {

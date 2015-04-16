@@ -65,6 +65,10 @@ Template.profile.helpers({
 
 	topGenreLength: function() {
 		return Session.get(Router.current().params._id+'topGenresLength');
+	},
+
+	userProfileIsNotYou: function() {
+		return Router.current().params._id !== Meteor.user()._id;
 	}
 });
 

@@ -3,7 +3,14 @@
 		{{#with currentSong}}
 			{{getPersonalRatingForSong}}
 			{{getAverageRatingForSong}}
-			<h4><i>{{currentSong.listenCount}} listens</i></h4>
+			{{retrieveTotalSongListens}}
+			<!--<h4><i>{{currentSong.listenCount}} listens</i></h4>-->
+			{{#if listenCountMoreThanOne}}
+				<h4><i>{{totalListensForThisSong}} listens</i></h4>
+			{{else}}
+				<h4><i>{{totalListensForThisSong}} listen</i></h4>
+			{{/if}}
+			
 			{{#if ratingsExist}}
 				<h6>Average Rating: {{averageRating}}</h6>
 				<h6>Number of Votes: {{numberOfRaters}}</h6>
