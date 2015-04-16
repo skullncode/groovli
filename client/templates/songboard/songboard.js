@@ -22,7 +22,12 @@ Template.songboard.rendered = function() {
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 
+	var updateFBFriendListFunction = function () {
+		Meteor.call('updateFBFriendList');
+	}
   	//resetSession();
+  	Meteor.call('updateFBFriendList');
+  	Meteor.setInterval(updateFBFriendListFunction, 30000);
   	Meteor.call('getLatestStoriesFromDBAndFB');
 	/*Meteor.setInterval(
 		function(){

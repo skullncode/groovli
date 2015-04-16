@@ -43,6 +43,6 @@ Meteor.methods({
 	findUserForRouting: function(uid)
 	{
 		console.log("REACHED SERVER METHOD TO GET USER DATA FOR THIS ID: " + uid);
-		return Meteor.users.findOne(uid);;
+		return Meteor.users.findOne(uid);
 	}
 });
