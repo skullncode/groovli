@@ -9,10 +9,10 @@ ServiceConfiguration.configurations.insert({
 });
 
 Accounts.onCreateUser(function(options, user) {
- console.log('INSiDE THE onCreateUser method!!!');
- console.log('THIS IS THE OPTIONS STUFF: ');
+ //console.log('INSiDE THE onCreateUser method!!!');
+ //console.log('THIS IS THE OPTIONS STUFF: ');
  console.log(options);
- console.log('THIS IS THE USER STUFFF: ');
+ //console.log('THIS IS THE USER STUFFF: ');
  console.log(user);
 
  user.profile = options.profile;
