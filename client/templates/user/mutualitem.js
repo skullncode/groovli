@@ -1,5 +1,5 @@
 if (Meteor.isClient) { 
-  Template.historyItem.helpers({
+  Template.mutualItem.helpers({
     songArtist: function() {
       return this.songObj.sa;
     },
@@ -11,6 +11,19 @@ if (Meteor.isClient) {
     youtubeThumbnail: function() {
       var ytImgLink = 'https://i.ytimg.com/vi/' + this.songObj.sl.substring(this.songObj.sl.indexOf("v=")+2) + '/default.jpg';
       return ytImgLink;
+    },
+
+    mutualID: function() {
+      return this._id;
+    },
+
+    mutualUserThumbnail: function() {
+      var fbProfThumb = 'http://graph.facebook.com/'+this.soc_id+'/picture?type=large';
+      return fbProfThumb;
+    },
+
+    mutualUserSocialName: function() {
+      return this.soc_name;
     },
 
     songItemTimeStamp: function() {

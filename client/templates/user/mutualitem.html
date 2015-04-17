@@ -1,0 +1,16 @@
+<template name="mutualItem">
+	<div class='thumbnail songBrowserItem' href={{songID}} data-toggle="tooltip" data-placement="top" title={{songItemMessageForUser}}>
+		<div class="col-md-1 column" style="float:left;width:100px;">
+			<a href="/profile/{{mutualID}}" target='blank'><img class="img-rounded headerProfileImage" src="{{mutualUserThumbnail}}"></a>
+		</div>
+		<div class="col-md-2 column" style="float:right;width:100px;">
+			<a href="#" target='blank'><img class="img-rounded headerProfileImage" src="{{youtubeThumbnail}}"></a>
+		</div>
+		<div class="col-md-1 column" style="align:center">
+			<h5>{{mutualUserSocialName}}</h5>also listened to <br>
+			<h5>{{songArtist}} - {{songTitle}}</h5>
+			<h6 class='text-muted'><i>on <br> {{songItemTimeStamp}}</i></h6>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+</template>
