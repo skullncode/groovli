@@ -18,7 +18,7 @@ if (Meteor.isClient) {
   	},
     userProfileIsNotYou: function() {
       var x = Router.current().params._id !== Meteor.user()._id;
-      console.log('USER PROFILE IS NOT YOU???? : ' + x);
+      //console.log('USER PROFILE IS NOT YOU???? : ' + x);
       return Router.current().params._id !== Meteor.user()._id;
     }
   });

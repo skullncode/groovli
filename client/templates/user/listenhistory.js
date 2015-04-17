@@ -26,7 +26,7 @@ Template.listenHistory.helpers({
 
 function getListenHistoryForUser(uid)
 {
-	console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
+	//console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
 	Meteor.call('getListenHistoryForUser', uid, function(error,result){
 	    if(error){
 	        console.log(error.reason);
@@ -52,10 +52,29 @@ function getMutualListenHistory(lh, uid)
 	        console.log(error.reason);
 	    }
 	    else{
-	    	console.log('MUTUAL LISTEN HISTORY SUCCESS: ');
-	    	console.log(result);
-	    	var mlh = _.map(result, function(lis){ return {timestamp: lis.timestamp, _id: lis._id, soc_id: lis.soc_id, soc_name: lis.soc_name, songObj: Songs.findOne({'sl': lis.sl})}});
-	    	Session.set(uid+'_mlh', mlh);
+	    	//console.log('MUTUAL LISTEN HISTORY SUCCESS: ');
+	    	//console.log(result);
+	    	var mlh = _.map(result, function(lis){ return {_id: lis._id, soc_id: lis.soc_id, soc_name: lis.soc_name, songObj: Songs.findOne({'sl': lis.sl})}});
+	    	var cleanedMlh = [];
+	    	var mlhAndCount = [];
+	    	_.each(mlh, function(x) {
+	    		//console.log('inside the mlh function: ');
+	    		var foundListen = _.findWhere(cleanedMlh, {_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
+	    		//console.log('THIS IS THE FIND LOC: ' + findLoc);
+	    		if(_.isUndefined(foundListen))
+	    		{
+	    			cleanedMlh.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
+	    			mlhAndCount.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl, listenCount: 1});
+	    		}
+	    		else
+	    		{
+	    			var loc = _.indexOf(cleanedMlh, foundListen);
+	    			mlhAndCount[loc].listenCount += 1;
+	    		}
+	    	});
+	    	//console.log('THIS IS THE CLEANED mlh:');
+	    	//console.log(mlhAndCount);
+	    	Session.set(uid+'_mlh', mlhAndCount);
 	    }
 	});
 }

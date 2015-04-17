@@ -9,7 +9,11 @@
 		<div class="col-md-1 column" style="align:center">
 			<h5>{{mutualUserSocialName}}</h5>also listened to <br>
 			<h5>{{songArtist}} - {{songTitle}}</h5>
-			<h6 class='text-muted'><i>on <br> {{songItemTimeStamp}}</i></h6>
+			{{#if listenCountMoreThanOne}}
+				<h6 class='text-muted'><i>{{listenCount}} times</i></h6>
+			{{else}}
+				<h6 class='text-muted'><i>{{listenCount}} time</i></h6>
+			{{/if}}
 		</div>
 		<div style="clear:both;"></div>
 	</div>
