@@ -1,0 +1,61 @@
+<template name="reviewItem">
+	<div class='thumbnail songBrowserItem'>
+		<div class="col-md-2 column">
+			<img src="{{youtubeThumbnail}}" style="float:left;" height="90px" width="120px">
+			<div class="row">
+				<a id="externalSongLink" href="{{sl}}" target="blank"><i class="fa fa-external-link"></i>Link</a>
+			</div>
+		</div>
+		<div class="col-md-8 column" style="float:right;text-align:left;"  >
+			<div class="row">
+				{{#if pendingIsInvalid}}
+					<i class="fa fa-exclamation-triangle"></i>
+				{{/if}}
+				<h5 id='songArtistLabel' class='reviewItemText'>Song Artist:</h5><h5 id='songArtistValue' class='reviewItemText'>{{sa}}</h5>
+				<h5 id='songTitleLabel' class='reviewItemText'>Song Title:</h5><h5 id='songTitleValue' class='reviewItemText'>{{st}}</h5>
+				<div id="editLabels" class="col-md-3 column" style="display:none">
+					<label id="lblEditArtist" for="txtEditArtist">Artist:</label>
+					<br>
+					<label id="lblEditTitle" for="txtEditTitle">Title:</label>
+					<br>
+					<label id="lblEditTitle" for="txtEditLink">Link:</label>
+					<br>
+					<label id="lblSongValidity" for="songValidityRadio">Validity:</label>
+					<br>
+				</div>
+				<div class="col-md-4 column" style="display:none" id="editSection">
+					<input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
+					<br>
+					<input type="text" class='reviewItemText' size="30" id="txtEditTitle" value="{{st}}">
+					<br>
+					<input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
+					<br>
+					<select name="songValidity" id="songValiditySelect">
+						<option selected="selected">VALID</option>
+						<option>INVALID</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 column">
+					<button type="button" id="manualEdit" class="btn btn-default btn-xs">
+					  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manual
+					</button>
+					<button type="button" id="itunesCheck" class="btn btn-default btn-xs">
+					 <i class="fa fa-apple"></i> iTunes
+					</button>
+					<button type="button" id="lfmCheck" class="btn btn-default btn-xs">
+					  <i class="fa fa-lastfm"></i> LFM
+					</button>
+					<button type="button" id="confirmUpdate" style="display:none" class="btn btn-success btn-xs">
+					  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+					<button type="button" id="cancelUpdate" style="display:none" class="btn btn-danger btn-xs">
+					  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>	
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+</template>

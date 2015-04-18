@@ -13,7 +13,7 @@ Template.profile.helpers({
 	},
 
 	personalSongCount: function(uid) {
-		var c = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'}]}]}).fetch();
+		var c = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{manualApproval:'VALID'}]}]}).fetch();
 		if(!_.isUndefined(c))
 			return c.length;
 		else

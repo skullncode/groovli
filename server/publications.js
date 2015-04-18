@@ -6,7 +6,7 @@ Meteor.publish('songs', function(userID) {
   if(userID !== null)
   {
     var options = {songSearchText: 0, aeCount: 0, meCount: 0, iTunesValid: 0, LFMValid: 0, _id: 0};
-    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
+    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
   }
 });
 

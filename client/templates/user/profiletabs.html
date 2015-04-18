@@ -1,4 +1,4 @@
-<template name="listenHistory">
+<template name="profileTabs">
 	{{retrieveListenHistoryForUser}}
 	<div role="tabpanel">
 		<!-- Nav tabs -->
@@ -6,6 +6,10 @@
 			<li role="presentation" class="active"><a href="#listenHistory" aria-controls="listenHistory" role="tab" data-toggle="tab">history</a></li>
 			{{#if userProfileIsYou}}
 				<li role="presentation"><a href="#mutualListen" aria-controls="mutualListen" role="tab" data-toggle="tab">mutual</a></li>
+			{{/if}}
+			{{#if userIsKing}}
+				{{retrievePendingSongsForReview}}
+				<li role="presentation"><a href="#reviewPending" aria-controls="reviewPending" role="tab" data-toggle="tab">review pending</a></li>
 			{{/if}}
 		</ul>
 
@@ -31,6 +35,19 @@
 							{{/each}}
 						</li>
 					</ul>
+				</div>
+			{{/if}}
+			{{#if userIsKing}}
+				<div role="tabpanel" class="tab-pane fade" id="reviewPending">
+					<ul id='listenHistory' class="listenHistory">
+						<li>
+							{{#each pendingSongsForReview}}
+								{{> reviewItem}}
+							{{/each}}
+						</li>
+					</ul>
+					<h2><strong>{{pendingCount}}</strong></h2>                    
+	            	<p><small>pending</small></p>
 				</div>
 			{{/if}}
 		</div>
