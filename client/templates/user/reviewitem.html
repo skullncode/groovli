@@ -4,6 +4,10 @@
 			<img src="{{youtubeThumbnail}}" style="float:left;" height="90px" width="120px">
 			<div class="row">
 				<a id="externalSongLink" href="{{sl}}" target="blank"><i class="fa fa-external-link"></i>Link</a>
+				<br>
+				{{#each sharedByDetailsForCurrentSong}}
+					<img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'>
+				{{/each}}
 			</div>
 		</div>
 		<div class="col-md-8 column" style="float:right;text-align:left;"  >
