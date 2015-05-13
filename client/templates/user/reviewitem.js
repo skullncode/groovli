@@ -13,6 +13,9 @@ if (Meteor.isClient) {
     },
     pendingIsInvalid: function() {
       return this.manualApproval === 'INVALID';
+    },
+    albumDeetsNotEmpty: function() {
+      return (this.album !== undefined && this.album !== "");
     }
   });
 

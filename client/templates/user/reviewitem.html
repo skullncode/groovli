@@ -57,8 +57,13 @@
 					<button type="button" id="cancelUpdate" style="display:none" class="btn btn-danger btn-xs">
 					  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
+					{{#if albumDeetsNotEmpty}}
+						<i class="glyphicon glyphicon-check">Deets</i>
+					{{else}}
+						<i class="glyphicon glyphicon-thumbs-down">Empty</i>						
+					{{/if}}
 				</div>
-			</div>	
+			</div>
 		</div>
 		<div style="clear:both;"></div>
 	</div>
