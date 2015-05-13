@@ -20,8 +20,7 @@
 					<br>
 					<label id="lblEditTitle" for="txtEditLink">Link:</label>
 					<br>
-					<label id="lblSongValidity" for="songValidityRadio">Validity:</label>
-					<br>
+					<label id="lblSongValidity" for="songValiditySelect">Validity:</label>
 				</div>
 				<div class="col-md-4 column" style="display:none" id="editSection">
 					<input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
@@ -30,9 +29,14 @@
 					<br>
 					<input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
 					<br>
-					<select name="songValidity" id="songValiditySelect">
+					<select id="songValiditySelect">
 						<option selected="selected">VALID</option>
 						<option>INVALID</option>
+					</select>
+					<br>
+					<select id="songManualItunesCheck">
+						<option selected="selected">CHECK ITUNES</option>
+						<option>NO HOPE IN ITUNES</option>
 					</select>
 				</div>
 			</div>

@@ -58,6 +58,7 @@ if (Meteor.isClient) {
     var newArtist = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditArtist').val();
     var newTitle = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditTitle').val();
     var songValidity = $(event.currentTarget.parentElement.parentElement.parentElement).find("#songValiditySelect").val()
+    var checkItunes = $(event.currentTarget.parentElement.parentElement.parentElement).find("#songManualItunesCheck").val()
     var songLink = $(event.currentTarget.parentElement.parentElement.parentElement.parentElement).find("#externalSongLink").attr('href');
     var updatedLink = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditLink').val();
 
@@ -67,13 +68,20 @@ if (Meteor.isClient) {
     console.log(newArtist);
     console.log('VALIDITY:');
     console.log(songValidity);
+    console.log('CHECK ITUNES:');
+    console.log(checkItunes);
+
+    if(checkItunes === 'CHECK ITUNES')
+      checkItunes = true;
+    else if(checkItunes === 'NO HOPE IN ITUNES')
+      checkItunes = false;
 
     console.log('THIS IS THE LInK SL: ' + songLink);
 
     if((originalArtist !== newArtist) || (originalTitle !== newTitle) || (songLink !== updatedLink) || songValidity === 'INVALID') //something has been updated
     {
       console.log('SOMETHING HAS BEEN UDPATED!!!!!');
-      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity);
+      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes);
       //if update is actually done refresh page
       location.reload();
     }

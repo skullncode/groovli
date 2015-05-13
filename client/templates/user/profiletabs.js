@@ -29,6 +29,11 @@ Template.profileTabs.helpers({
 		return Session.get(Router.current().params._id+'_esReview');
 	},
 
+	existingCount: function()
+	{
+		return Session.get(Router.current().params._id+'_esReviewCount');
+	},
+
 	pendingSongsForReview: function() 
 	{
 		return Session.get(Router.current().params._id+'_psReview');
@@ -137,6 +142,7 @@ function getExistingSongsForReview()
 		    	console.log('REVIEW EXISTING SUCCESS: ');
 		    	//console.log(result);
 		    	Session.set(Router.current().params._id+'_esReview', result);
+		    	Session.set(Router.current().params._id+'_esReviewCount', result.length);
 		    }
 		});
 }

@@ -29,7 +29,7 @@ Template.songDetails.helpers({
   	var cs = Session.get('CS');
     //console.log('CHECKING if ALBUM deets are empty!!');
     //console.log('ALBUM IS ['+cs.album+']');
-  	return (cs.album !== undefined);
+  	return (cs.album !== undefined && cs.album !== "");
   },
 
   formattedReleaseDate: function() {

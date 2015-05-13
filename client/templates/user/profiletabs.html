@@ -11,6 +11,10 @@
 				{{retrievePendingSongsForReview}}
 				<li role="presentation"><a href="#reviewPending" aria-controls="reviewPending" role="tab" data-toggle="tab">review pending</a></li>
 			{{/if}}
+			{{#if userIsKing}}
+				{{retrieveExistingSongsForReview}}
+				<li role="presentation"><a href="#reviewExisting" aria-controls="reviewExisting" role="tab" data-toggle="tab">review existing</a></li>
+			{{/if}}
 		</ul>
 
 		<!-- Tab panes -->
@@ -48,6 +52,19 @@
 					</ul>
 					<h2><strong>{{pendingCount}}</strong></h2>                    
 	            	<p><small>pending</small></p>
+				</div>
+			{{/if}}
+			{{#if userIsKing}}
+				<div role="tabpanel" class="tab-pane fade" id="reviewExisting">
+					<ul id='listenHistory' class="listenHistory">
+						<li>
+							{{#each existingSongsForReview}}
+								{{> reviewItem}}
+							{{/each}}
+						</li>
+					</ul>
+					<h2><strong>{{existingCount}}</strong></h2>                    
+	            	<p><small>songs in total</small></p>
 				</div>
 			{{/if}}
 		</div>
