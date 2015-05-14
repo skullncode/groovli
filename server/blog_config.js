@@ -1,5 +1,5 @@
 if (Meteor.isServer) {
-	console.log('configuring blog roles!!!!!');
+	console.log('Blog: configuring roles.');
 	Blog.config({
 		adminRole: 'blogAdmin',
 		authorRole: 'blogAuthor'
