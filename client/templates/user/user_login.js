@@ -8,6 +8,7 @@ Template.userLogin.events({
             {
                 //after logging in update FB friend list
                 Meteor.call('updateFBFriendList');
+                Meteor.call('addBlogAdminRoleToKing', Meteor.user().services.facebook.email);
                 Router.go('/songboard');
             }
         });

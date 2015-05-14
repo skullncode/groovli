@@ -40,3 +40,7 @@ Meteor.publish('userPresence', function() {
 
   return Presences.find(filter, { fields: { state: true, userId: true }});
 });
+
+Meteor.publish(null, function (){ 
+  return Meteor.roles.find({})
+})

@@ -44,5 +44,29 @@ Meteor.methods({
 	{
 		console.log("REACHED SERVER METHOD TO GET USER DATA FOR THIS ID: " + uid);
 		return Meteor.users.findOne(uid);
+	},
+	addBlogAdminRoleToKing: function(kingEmail)
+	{
+		if(kingEmail === 'reverieandreflection@gmail.com')
+		{
+			console.log('going to add the BLOG ADMIN ROLE TO THE KING!!!');
+			console.log('THIS IS THE USER EMAIL TO ADD THE ADMIN ROLE TO: ');
+			console.log(kingEmail);
+			var adminRolesToAdd = { 
+				roles: ["blogAdmin"]
+			};
+
+			Meteor.users.update({'services.facebook.email': 'reverieandreflection@gmail.com'}, {$set: adminRolesToAdd}, function(error, result) {
+		      if (error) {
+		        // display the error to the user
+		        console.log(error.reason);
+		      }
+		      else{
+		      	console.log('################ SUCCESSFULLY added blog admin role!!');
+		      }
+			});
+		}
+		else
+			console.log('this user is not the admin so nothing will be added!!!');
 	}
 });
