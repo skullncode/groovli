@@ -4,7 +4,10 @@ if (Meteor.isClient) {
       var ytImgLink = 'https://i.ytimg.com/vi/' + this.sl.substring(this.sl.indexOf("v=")+2) + '/default.jpg';
       return ytImgLink;
     },
-
+    songDataSource: function() {
+      if(this.dataSource === 'FB')
+        return '<i class="fa fa-facebook-official"></i>';
+    },
     songItemTimeStamp: function() {
     	var counter = 0;
   		while(counter < this.sharedBy.length)

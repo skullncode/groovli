@@ -16,6 +16,10 @@ if (Meteor.isClient) {
   				counter++;
   		}      
   	},
+    songDataSource: function() {
+      if(this.dataSource === 'FB')
+        return '<i class="fa fa-facebook-official"></i>';
+    },
     songItemMessageForUser: function() {
       var counter = 0;
       while(counter < this.sharedBy.length)
