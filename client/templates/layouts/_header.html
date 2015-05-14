@@ -23,6 +23,7 @@
           {{#unless currentUser}}
             <li class="{{ isActiveRoute regex='home' }}"><a href="{{ pathFor 'home' }}"><i class="fa fa-home"></i> Home</a></li>
           {{/unless}}
+          <li class="{{ isActiveRoute regex='blog' }}"><a href="/blog"><i class="fa fa-book"></i> Blog</a></li>
           <!--<li class="{{ isActiveRoute regex='dashboard' }}"><a href="{{ pathFor 'dashboard' }}"><i class="fa fa-gear"></i> Dashboard</a></li>-->
           {{#if currentUser}}
             <li class="{{ isActiveRoute regex='songboard' }}"><a href="{{ pathFor 'songboard' }}"><i class="fa fa-music"></i> Songboard</a></li>
