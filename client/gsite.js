@@ -14,5 +14,7 @@ if (Meteor.isClient) {
 			//console.log('STILL DONT HAVE METEOR USER!!!');
 		
 		Meteor.subscribe('songs', Session.get('ud'));
+
+		Meteor.subscribe('userPresence');
 	})
 }
