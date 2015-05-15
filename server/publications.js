@@ -44,3 +44,36 @@ Meteor.publish('userPresence', function() {
 Meteor.publish(null, function (){ 
   return Meteor.roles.find({})
 })
+
+Meteor.publish('/invites', function() {
+  console.log("INSIDE THE INVITES publishing code: ");
+  console.log(this.userId);
+  if (Roles.userIsInRole(this.userId, ['admin'])) {
+    console.log("USER IS IN ADMIN ROLE");
+    return Invites.find({}, {
+      fields: {
+        "_id": 1,
+        "inviteNumber": 1,
+        "requested": 1,
+        "email": 1,
+        "token": 1,
+        "dateInvited": 1,
+        "invited": 1,
+        "accountCreated": 1
+      }
+    });
+  }
+  else
+  {
+    console.log("USER IS not an admin");
+    return Invites.find({});
+  }
+});
+
+Meteor.publish('inviteCount', function() {
+  return Invites.find({}, {
+    fields: {
+      "_id": 1
+    }
+  });
+});

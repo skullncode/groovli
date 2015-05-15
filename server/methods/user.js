@@ -45,7 +45,7 @@ Meteor.methods({
 		console.log("REACHED SERVER METHOD TO GET USER DATA FOR THIS ID: " + uid);
 		return Meteor.users.findOne(uid);
 	},
-	addBlogAdminRoleToKing: function(kingEmail)
+	addAdminRolesToKing: function(kingEmail)
 	{
 		if(kingEmail === 'reverieandreflection@gmail.com')
 		{
@@ -53,7 +53,7 @@ Meteor.methods({
 			console.log('THIS IS THE USER EMAIL TO ADD THE ADMIN ROLE TO: ');
 			console.log(kingEmail);
 			var adminRolesToAdd = { 
-				roles: ["blogAdmin"]
+				roles: ["blogAdmin", "admin", "tester"]
 			};
 
 			Meteor.users.update({'services.facebook.email': 'reverieandreflection@gmail.com'}, {$set: adminRolesToAdd}, function(error, result) {
@@ -67,6 +67,21 @@ Meteor.methods({
 			});
 		}
 		else
-			console.log('this user is not the admin so nothing will be added!!!');
+		{
+			console.log('this user is not the admin so will add only TESTER role!!');
+			var testerRoleToAdd = { 
+				roles: ["tester"]
+			};
+
+			Meteor.users.update({'services.facebook.email': kingEmail}, {$set: testerRoleToAdd}, function(error, result) {
+		      if (error) {
+		        // display the error to the user
+		        console.log(error.reason);
+		      }
+		      else{
+		      	console.log('################ SUCCESSFULLY added tester role!!');
+		      }
+			});
+		}
 	}
 });

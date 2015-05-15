@@ -34,6 +34,8 @@ Template.songboard.rendered = function() {
   	Meteor.setInterval(updateFBFriendListFunction, 30000);
   	Meteor.call('getLatestStoriesFromDBAndFB');
   	Meteor.setInterval(getLatestStoriesFromDBAndFBFunction, 15000);
+
+  	Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
 	/*Meteor.setInterval(
 		function(){
 			console.log('Refreshing and getting latest tracks from social networks.');
