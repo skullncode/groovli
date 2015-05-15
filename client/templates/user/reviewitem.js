@@ -90,7 +90,8 @@ if (Meteor.isClient) {
 
     if(checkItunes === 'CHECK ITUNES')
       checkItunes = true;
-    else if(checkItunes === 'NO HOPE IN ITUNES')
+    
+    if(checkItunes === 'NO HOPE IN ITUNES' || songValidity === 'INVALID')
       checkItunes = false;
 
     console.log('THIS IS THE LInK SL: ' + songLink);
