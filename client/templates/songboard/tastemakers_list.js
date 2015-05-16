@@ -61,7 +61,7 @@ function getMongoSelectorForFriendSongs() {
 
   query["$nor"] = [];
 
-  //first add self ID for exclusion from Global list
+  //first add self ID for exclusion from tastemaker list
   query["$nor"].push(userSelf);
 
   if(Meteor.user().fbFriends.length > 1)
