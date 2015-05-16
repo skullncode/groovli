@@ -139,7 +139,7 @@ function getExistingSongsForReview()
 		        console.log(error.reason);
 		    }
 		    else{
-		    	console.log('REVIEW EXISTING SUCCESS: ');
+		    	//console.log('REVIEW EXISTING SUCCESS: ');
 		    	//console.log(result);
 		    	Session.set(Router.current().params._id+'_esReview', result);
 		    	Session.set(Router.current().params._id+'_esReviewCount', result.length);
@@ -154,7 +154,7 @@ function getPendingSongsForReview()
 		        console.log(error.reason);
 		    }
 		    else{
-		    	console.log('REVIEW PenDING SUCCESS: ');
+		    	//console.log('REVIEW PenDING SUCCESS: ');
 		    	//console.log(result.length);
 		    	Session.set(Router.current().params._id+'_psReview', result);
 		    	Session.set(Router.current().params._id+'_psReviewCount', result.length);

@@ -7,7 +7,6 @@ if (Meteor.isClient) {
      Session.set('tastemakersPlayedLength',0);
      Session.set('globalPlayedLength',0);
 
-
     //blog client configuration
 	//console.log('Blog: configuring comments.');
 	Blog.config({

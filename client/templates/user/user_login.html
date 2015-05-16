@@ -2,7 +2,7 @@
 	{{#if currentUser}}
 	  <ul class="nav navbar-nav navbar-right">
 		<li>
-			<a class='headerProfileImageLink' href="/profile/{{currentUser._id}}" target='blank'><img class="img-rounded headerProfileImage" style="height: 40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
+			<a class='headerProfileImageLink' href="/profile/{{currentUser._id}}" target='blank' data-toggle="tooltip" data-placement="top" title="Your profile page"><img class="img-rounded headerProfileImage" style="width:40px;height:40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
 		</li>
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -27,7 +27,7 @@
 	{{else}}
 		{{#if notOnSignUpPage}}
 		  <div class="navbar-right">
-		    <a class="btn btn-default navbar-btn" id="facebook-login">Sign in with Facebook</a>
+		    <a class="btn btn-default navbar-btn" data-toggle="tooltip" data-placement="top" title="already signed up? Sign in here with your Facebook account!" id="facebook-login">Sign in with Facebook</a>
 		    <!--<a href="{{ pathFor 'atSignUp' }}" class="btn btn-primary navbar-btn">Register</a>-->
 		  </div>
 	  	{{/if}}

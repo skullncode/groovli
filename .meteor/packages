@@ -16,7 +16,6 @@ natestrauser:font-awesome
 http
 momentjs:moment
 less
-underscore
 semantic:ui-sidebar
 aldeed:collection2
 meteorhacks:kadira
@@ -28,3 +27,4 @@ random
 cmather:handlebars-server
 themeteorchef:jquery-validation
 email
+underscore
