@@ -2,6 +2,34 @@ function updateUserFriendList(latestFriendList){
 	//console.log('REACHED THE UPDATE USER FRIEND LIST server method, with this list of friends: ');
 	//console.log(latestFriendList);
 	Meteor.users.update({_id: Meteor.userId()},{$set:{fbFriends: latestFriendList}});
+	insertFriendsIntoTastemakersList(latestFriendList);
+}
+
+function insertFriendsIntoTastemakersList(latestFriendList)
+{
+	var updatedTastemakerList = Meteor.user().tastemakers;
+	console.log('this is the current tastemaker list: ');
+	console.log(updatedTastemakerList);
+	if(_.isNull(updatedTastemakerList) || _.isUndefined(updatedTastemakerList)){
+		updatedTastemakerList = [];
+	}
+	_.each(latestFriendList, function(x) {
+		console.log('CHECKING TO SEE IF THIS FRIEND IS UNFOLLOWED OR NOT: ');
+		console.log('this is the result of the search: ');
+		var result = _.findWhere(Meteor.user().unfollowedFriends, {'fbid': x.fbid});
+		console.log(result);
+		//if undefined that means this friend is not unfollowed, and can be safely added to the existing tastemaker list
+		if(_.isUndefined(_.findWhere(Meteor.user().unfollowedFriends, {'fbid': x.fbid})) && _.isUndefined(_.findWhere(updatedTastemakerList, {'fbid': x.fbid})))
+		{
+			console.log('THIS FRIEND IS NOT UNFOLLOWED YET SO will add them as a tastemaker:');
+			console.log(x);
+			updatedTastemakerList.push(x);
+		}
+	});
+
+	_.uniq(updatedTastemakerList);
+
+	Meteor.users.update({_id: Meteor.userId()},{$set:{tastemakers: updatedTastemakerList}});
 }
 
 Meteor.methods({
@@ -21,7 +49,7 @@ Meteor.methods({
 						//console.log('THIS IS THE Friends ID: ' + result.data.data[counter].id);
 						var foundFriend = {
 							name: result.data.data[counter].name,
-							id:result.data.data[counter].id
+							fbid:result.data.data[counter].id
 						};
 						fbFriends.push(foundFriend);
 						counter++;

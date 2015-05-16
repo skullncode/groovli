@@ -3,7 +3,8 @@ var tastemakerSongList = {};
 Template.tastemakersList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
-    if(!_.isUndefined(Meteor.user().fbFriends)) {
+    //if(!_.isUndefined(Meteor.user().fbFriends) || !_.isUndefined(Meteor.user().tastemakers)) {
+    if(!_.isUndefined(Meteor.user().tastemakers)) {
       var sel = getMongoSelectorForFriendSongs();
       tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
       var songCollection = tastemakerSongList.fetch();
@@ -64,17 +65,20 @@ function getMongoSelectorForFriendSongs() {
   //first add self ID for exclusion from tastemaker list
   query["$nor"].push(userSelf);
 
-  if(Meteor.user().fbFriends.length > 1)
+  //if(Meteor.user().fbFriends.length > 1)
+  if(Meteor.user().tastemakers.length > 1)
     query["$or"] = [];
 
-  while(counter < Meteor.user().fbFriends.length)
+  //while(counter < Meteor.user().fbFriends.length)
+  while(counter < Meteor.user().tastemakers.length)
   {
-    if(Meteor.user().fbFriends.length === 1)
-      query["sharedBy.uid"] = Meteor.user().fbFriends[counter].id;
+    //if(Meteor.user().fbFriends.length === 1)
+    if(Meteor.user().tastemakers.length === 1)
+      query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
     else
     {
       var additional = {
-        "sharedBy.uid": Meteor.user().fbFriends[counter].id
+        "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
       }
       query["$or"].push(additional);
     }

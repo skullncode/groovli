@@ -21,6 +21,8 @@ Meteor.publish("userData", function () {
        		"emails.address[0]": 1,
           "profile": 1,
           "fbFriends": 1,
+          "tastemakers": 1,
+          "unfollowedFriends": 1,
           "createdAt": 1
        	}
      });

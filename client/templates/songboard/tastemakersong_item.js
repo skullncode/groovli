@@ -30,8 +30,8 @@ if (Meteor.isClient) {
         {
           //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
           //console.log('FRIEND COUNTER IS:  '+ friendCounter);
-          if(this.sharedBy[shareCounter].uid === Meteor.user().fbFriends[friendCounter].id)
-            friendIDsThatSharedThisSong.push({friendID: Meteor.user().fbFriends[friendCounter].id, friendName: Meteor.user().fbFriends[friendCounter].name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
+          if(this.sharedBy[shareCounter].uid === Meteor.user().tastemakers[friendCounter].fbid)
+            friendIDsThatSharedThisSong.push({friendID: Meteor.user().tastemakers[friendCounter].fbid, friendName: Meteor.user().tastemakers[friendCounter].name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
         
           friendCounter++;
         }

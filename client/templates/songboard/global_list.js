@@ -61,7 +61,7 @@ function getMongoSelectorForGlobal() {
     while(counter < Meteor.user().fbFriends.length)
     {
       var additional = {
-        "sharedBy.uid": Meteor.user().fbFriends[counter].id
+        "sharedBy.uid": Meteor.user().fbFriends[counter].fbid
       };
       query["$nor"].push(additional);
 

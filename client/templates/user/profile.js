@@ -8,6 +8,14 @@ Template.profile.helpers({
 		return x;
 	},
 
+	alreadyFollowed: function() {
+		var x = Session.get(Router.current().params._id+'_uObj')
+		if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': x.services.facebook.id})))
+			return false;
+		else
+			return true;
+	},
+
 	memberSince: function(createdDate) {
 		return new moment(createdDate).format('llll');
 	},
