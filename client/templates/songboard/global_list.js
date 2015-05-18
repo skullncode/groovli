@@ -21,7 +21,14 @@ Template.globalList.helpers({
       //console.log('SWITCHING TAB IF NOT ALREADY FOCUSED CURRENTLY PLAYING SOnG!!!!');
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
-  }
+  },
+  globalSongsExist: function() {
+    //console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
+    if(Session.get('globalSongsLength') > 0)
+      return true;
+    else
+      return false;
+  },
 });
 
 
@@ -56,14 +63,22 @@ function getMongoSelectorForGlobal() {
   query["$nor"].push(userSelf);
 
 
-  if(!_.isUndefined(Meteor.user().fbFriends)) {
+  //if(!_.isUndefined(Meteor.user().fbFriends)) {
+  if(!_.isUndefined(Meteor.user().tastemakers)) {
     //then add all of user's friends for exclusion from Global list
-    while(counter < Meteor.user().fbFriends.length)
+    //while(counter < Meteor.user().fbFriends.length)
+    while(counter < Meteor.user().tastemakers.length)
     {
-      var additional = {
-        "sharedBy.uid": Meteor.user().fbFriends[counter].fbid
-      };
-      query["$nor"].push(additional);
+      //var unfollowedFriends = Meteor.user().unfollowedFriends;
+      //if user is an unfollowed friend, i.e not showing up in the unfollowed friend lsit, then only they should be added to the NOR list for the global list
+      //if((!_.isUndefined(unfollowedFriends) && _.isUndefined(_.findWhere(Meteor.user().unfollowedFriends, {fbid: Meteor.user().fbFriends[counter].fbid}))) || (_.isUndefined(unfollowedFriends)))
+      //{
+        var additional = {
+          //"sharedBy.uid": Meteor.user().fbFriends[counter].fbid
+          "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
+        };
+        query["$nor"].push(additional);
+      //}
 
       counter++;
     }

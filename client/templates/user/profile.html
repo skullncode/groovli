@@ -51,11 +51,16 @@
                             </figure>
                             <br>
                             {{#if userProfileIsNotYou}}
+                                {{{isUserAFBFriend}}}
                                 {{#if alreadyFollowed}}
-                                    <button class="btn btn-success btn-block"><span class="fa fa-minus-circle"></span> Unfollow</button>
+                                    <button class="btn btn-warning btn-block" id="unfollowUser"><span class="fa fa-minus-circle"></span> Unfollow</button>
+                                    <br>
                                 {{else}}
-                                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow</button>
+                                    <button class="btn btn-success btn-block" id="followUser"><span class="fa fa-plus-circle"></span> Follow</button>
+                                    <br>
                                 {{/if}}
+                            {{else}}
+                                {{{fbFriendCount}}}
                             {{/if}}
                         </div>
                     </div>            
@@ -69,12 +74,13 @@
                             <p><small>Songs Rated</small></p>
                         </div>
                         <div class="col-xs-12 col-sm-3 emphasis">
-                            <h2><strong> 20,7K </strong></h2>                    
-                            <p><small>Followers</small></p>
+                            <!--<h2><strong> 20,7K </strong></h2>-->
+                            {{getFollowerCount}}
+                            {{{followerCount}}}
                         </div>
                         <div class="col-xs-12 col-sm-3 emphasis">
-                            <h2><strong>245</strong></h2>                    
-                            <p><small>Following</small></p>
+                            <!--<h2><strong>245</strong></h2>-->
+                            {{{followingCount}}}
                             <!--<button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>-->
                         </div>
                     </div>

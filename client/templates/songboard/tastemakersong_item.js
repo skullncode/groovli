@@ -26,12 +26,16 @@ if (Meteor.isClient) {
       while(shareCounter < this.sharedBy.length)
       {
         //console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
-        while(friendCounter < Meteor.user().fbFriends.length)
+        //while(friendCounter < Meteor.user().fbFriends.length)
+        while(friendCounter < Meteor.user().tastemakers.length)
         {
           //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
           //console.log('FRIEND COUNTER IS:  '+ friendCounter);
-          if(this.sharedBy[shareCounter].uid === Meteor.user().tastemakers[friendCounter].fbid)
-            friendIDsThatSharedThisSong.push({friendID: Meteor.user().tastemakers[friendCounter].fbid, friendName: Meteor.user().tastemakers[friendCounter].name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
+          if(!_.isUndefined(Meteor.user().tastemakers[friendCounter]))
+          {
+            if(this.sharedBy[shareCounter].uid === Meteor.user().tastemakers[friendCounter].fbid)
+              friendIDsThatSharedThisSong.push({friendID: Meteor.user().tastemakers[friendCounter].fbid, friendName: Meteor.user().tastemakers[friendCounter].name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
+          }
         
           friendCounter++;
         }

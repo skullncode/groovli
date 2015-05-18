@@ -8,12 +8,63 @@ Template.profile.helpers({
 		return x;
 	},
 
+	isUserAFBFriend: function() {
+		var userObj = Session.get(Router.current().params._id+'_uObj')
+		var userIsAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: userObj.services.facebook.id}));
+		//console.log('USER IS A FRIEND!!!!!: ' + userIsAFriend);
+    	if(userIsAFriend)
+    		return '<i class="fa fa-facebook-official"></i> friend<br><br>';
+	},
+
+	fbFriendCount: function() {
+		if(!_.isUndefined(Meteor.user().fbFriends))
+		{
+			if(Meteor.user().fbFriends.length > 1 || Meteor.user().fbFriends.length === 0)
+				return Meteor.user().fbFriends.length + ' <i class="fa fa-facebook-official"></i> friends<br><br>';
+			else
+				return Meteor.user().fbFriends.length + ' <i class="fa fa-facebook-official"></i> friend<br><br>';
+		}
+		else
+			return 'None of your <i class="fa fa-facebook-official"></i> friends have joined yet!<br><br>';
+	},
+
 	alreadyFollowed: function() {
 		var x = Session.get(Router.current().params._id+'_uObj')
 		if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': x.services.facebook.id})))
 			return false;
 		else
 			return true;
+	},
+
+	followerCount: function() {
+		var x = Session.get(Router.current().params._id+'_followerCount');
+		if(x === 0)
+			return "<h2><strong>"+x+"</strong></h2><p><small>Followers</small></p>"
+		else if(x === 1)
+			return "<h2><strong>"+x+"</strong></h2><p><small>Follower</small></p>"
+		else if(x > 1)
+			return "<h2><strong>"+x+"</strong></h2><p><small>Followers</small></p>"
+	},
+
+	getFollowerCount: function() {
+		var x = Session.get(Router.current().params._id+'_uObj');
+		Meteor.call('getFollowerCount', x, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	Session.set(Router.current().params._id+'_followerCount',result);
+		    };
+		});
+	},
+
+	followingCount: function() {
+		var x = Session.get(Router.current().params._id+'_uObj')
+		if(!_.isUndefined(x.tastemakers))
+			return "<h2><strong>"+x.tastemakers.length+"</strong></h2><p><small>Following</small></p>";
+		else
+			return "<h2><strong>0</strong></h2><p><small>Following</small></p>";
 	},
 
 	memberSince: function(createdDate) {
@@ -79,6 +130,46 @@ Template.profile.helpers({
 		return Router.current().params._id !== Meteor.user()._id;
 	}
 });
+
+Template.profile.events({
+    "click #unfollowUser": function (event) {
+      var userObj = Session.get(Router.current().params._id+'_uObj')
+      var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: userObj.services.facebook.id}));
+
+      //console.log('UNFOLLOW user button clicked!');
+      //console.log('and this user is a friend: ' + isUserAFriend);
+
+      Meteor.call('unfollowUser', userObj, isUserAFriend, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	//console.log('SUCCESSFULLY unfollowed user!');
+		    };
+		});
+      return true;
+    },
+    "click #followUser": function (event) {
+      var userObj = Session.get(Router.current().params._id+'_uObj')
+      var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: userObj.services.facebook.id}));
+
+      //console.log('Follow user button clicked!');
+      //console.log('and this user is a friend: ' + isUserAFriend);
+
+      Meteor.call('followUser', userObj, isUserAFriend, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	//console.log('SUCCESSFULLY followed user!');
+		    };
+		});
+      return true;
+    }
+
+  });
 
 function getUserForRouting()
 {

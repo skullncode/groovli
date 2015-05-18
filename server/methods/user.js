@@ -73,6 +73,11 @@ Meteor.methods({
 		console.log("REACHED SERVER METHOD TO GET USER DATA FOR THIS ID: " + uid);
 		return Meteor.users.findOne(uid);
 	},
+	getFollowerCount: function(userObj)
+	{
+		var followerList = Meteor.users.find({'tastemakers.fbid': String(userObj.services.facebook.id)}).fetch();
+		return followerList.length
+	},
 	addAdminRolesToKing: function(kingEmail)
 	{
 		if(kingEmail === 'reverieandreflection@gmail.com')
@@ -110,6 +115,96 @@ Meteor.methods({
 		      	console.log('################ SUCCESSFULLY added tester role!!');
 		      }
 			});
+		}
+	},
+	unfollowUser: function(userToUnfollow, isUserFriend) {
+		var currentTastemakerList = Meteor.user().tastemakers;
+
+		var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.services.facebook.id})
+		var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
+
+		currentTastemakerList.splice(locationOfThisUserInList, 1)
+
+		//console.log('updated tastemaker list: ');
+		//console.log(currentTastemakerList);
+
+		//update Tastemaker list
+		Meteor.users.update({_id: Meteor.userId()},{$set:{tastemakers: currentTastemakerList}});
+
+		if(isUserFriend)
+		{
+			var currentUnfollowedFriends = Meteor.user().unfollowedFriends;
+			if(_.isNull(currentUnfollowedFriends) || _.isUndefined(currentUnfollowedFriends))
+			{
+				//console.log('NO UNFOLLOWED FRIENDS SO FAR!!!');
+				currentUnfollowedFriends = [];
+			}
+			currentUnfollowedFriends.push(identifiedUserInList);
+			//console.log('UNFOLLOWED FRIENDS ARE NOW: ');
+			//console.log(currentUnfollowedFriends);
+
+			//if this person is also a friend add them to the list of unfollowed friends
+			Meteor.users.update({_id: Meteor.userId()},{$set:{unfollowedFriends: currentUnfollowedFriends}});
+		}
+	},
+	followUser: function(userToFollow, isUserFriend) {
+		var currentTastemakerList = Meteor.user().tastemakers;
+
+		//console.log('THIS IS THE user to follows object: ');
+		//console.log(userToFollow.profile.name);
+
+		if(_.isNull(currentTastemakerList) || _.isUndefined(currentTastemakerList))
+		{
+			//console.log('NO TASTEMAKERS SO FAR!!!');
+			currentTastemakerList = [];
+		}
+
+		var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToFollow.services.facebook.id})
+		//console.log('THIS IS THE IDd user in the tastemaker list: ');
+		//console.log(identifiedUserInList);
+		var userObjToAddTastemakerList = _.findWhere(Meteor.user().fbFriends, {fbid: userToFollow.services.facebook.id})
+
+		//this means that the user to follow is not a friend but an outsider / global user
+		//create the user object manually
+		if(_.isNull(userObjToAddTastemakerList) || _.isUndefined(userObjToAddTastemakerList))
+		{
+			userObjToAddTastemakerList = {
+				name: userToFollow.profile.name,
+				fbid: userToFollow.services.facebook.id
+			};
+		}
+		
+		var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
+		
+		if(locationOfThisUserInList === -1)
+		{
+			//console.log('DOES NOT EXIST IN CURRENT TASTEMAKER LIST, so will add them!!!');
+			currentTastemakerList.push(userObjToAddTastemakerList);
+
+			//console.log('NEW LIST is: ');
+			//console.log(currentTastemakerList);
+			
+			//add this user to the Tastemaker list
+			Meteor.users.update({_id: Meteor.userId()},{$set:{tastemakers: currentTastemakerList}});
+		}
+
+		if(isUserFriend)
+		{
+			var currentUnfollowedFriends = Meteor.user().unfollowedFriends;
+			if(_.isNull(currentUnfollowedFriends) || _.isUndefined(currentUnfollowedFriends))
+			{
+				console.log('NO UNFOLLOWED FRIENDS SO FAR so nothing to remove!');
+			}
+
+			var locationOfThisUserInUnfollowedFriendList = currentUnfollowedFriends.indexOf(userObjToAddTastemakerList);
+
+			currentUnfollowedFriends.splice(locationOfThisUserInUnfollowedFriendList, 1)
+
+			//console.log('UNFOLLOWED FRIENDS ARE NOW after splicing: ');
+			//console.log(currentUnfollowedFriends);
+
+			//if this person is also a friend remove them to the list of unfollowed friends
+			Meteor.users.update({_id: Meteor.userId()},{$set:{unfollowedFriends: currentUnfollowedFriends}});
 		}
 	}
 });
