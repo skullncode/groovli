@@ -49,6 +49,7 @@ if (Meteor.isClient) {
     "click a.tastemakersongItem": function (event) {
       // This function is called when the new task form is submitted
       Session.set('animatedToSong', false);
+      Session.set('activeTab', 'friends');
       //console.log('THIS IS THE CLICK EVENT for the SONG ITEM!!!!!!');
       //console.log(event);
       //var text = event.target.text.value;
