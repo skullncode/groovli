@@ -93,6 +93,7 @@ reactive-dict@1.1.0
 reactive-var@1.0.5
 reload@1.1.3
 retry@1.0.3
+rosh93:slide-panel@0.1.6
 routepolicy@1.0.5
 ryw:blog@0.6.3
 sacha:spin@2.0.4

@@ -178,7 +178,6 @@ function updatePlayerInfo() {
 
 function playpauseVideo() {
   var playpauseButton = $('.glyphicon-play');
-  //console.log('inside playpause method!!! this is the playpausebutton result: '+ playpauseButton.length);
   //ytplayer = document.getElementById("sharePlayer");
   if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
   {
@@ -224,6 +223,19 @@ function makeMuutCommentRelatedUpdates(soundID, currentSong) {
   $(document).prop('title', pageTitle);
 }
 
+
+//this is required in order to push a listen only once the user has listened thru 40% of the song, or the listen does not qualify
+function setupListenIncrementMethod(){
+  listenThreshold = 0.40 * ytplayer.getDuration() * 1000;
+  //console.log('DURATION OF song is: ' + ytplayer.getDuration());
+  //console.log('40% of song duration is: ' + listenThreshold);
+  //console.log('this is the current track time: ' + ytplayer.getCurrentTime());
+  var y = setTimeout(incrementListenCount, listenThreshold);
+  Session.set('currentListenIncrementID', y);
+  //alert('THIS IS THE CURRENT SONG: ' + Session.get('CS').st + ' - and this is the timeout value: ' + Session.get('currentListenIncrementID'));
+  //incrementListenCount();
+}
+
 function loadVideoById(soundID, currentSong) {
   var playpauseButton = $('.glyphicon-play');
   playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
@@ -231,6 +243,16 @@ function loadVideoById(soundID, currentSong) {
 	if(ytplayer) {
 	  ytplayer.loadVideoById(soundID,0,"large")
 	}
+
+  clearTimeout(Session.get('listenSetupID'));
+  clearTimeout(Session.get('currentListenIncrementID'));
+  Session.set('listenSetupID', 0);
+  Session.set('currentListenIncrementID', 0);
+  var x = setTimeout(setupListenIncrementMethod, 5000);
+  Session.set('listenSetupID', x);
+  //console.log('CURRENT TIMEOUT VALUE ID: ' + x);
+  //console.log('DURATION OF song is: ' + ytplayer.getDuration());
+  //console.log('40% of song duration is: ' + 0.40 * ytplayer.getDuration());
   //mixpanel.track("load new YT song");
   //makeMuutCommentRelatedUpdates(soundID, currentSong);
 }

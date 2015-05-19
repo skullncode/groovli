@@ -335,6 +335,7 @@ function setShare(currentShare)
     //console.log('and this is the history so far: ');
     //console.log(SongState.getHistory());
   }
+  //incrementListenCount(); //ACTUAL PROPER LOCATION FOR SONG LISTEN INCREMENTING
   //SongState.getAvgSongRating();
 }
 
@@ -366,8 +367,8 @@ function selectShareFromControls(share, shares, tab) {
     //console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
     //console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
     //console.log(selectedRandomSongObject);
-    setShare(share);
-    incrementListenCount();
+    //setShare(share);
+    //incrementListenCount();
     $(selectedRandomSongLink).click();
   }
   else if(tab === 'friends') 
@@ -378,8 +379,8 @@ function selectShareFromControls(share, shares, tab) {
     //console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
     //console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
     //console.log(selectedRandomSongObject);
-    setShare(share);
-    incrementListenCount();
+    //setShare(share);
+    //incrementListenCount();
     $(selectedRandomSongLink).click();
   }
   else if(tab === 'global') 
@@ -390,8 +391,8 @@ function selectShareFromControls(share, shares, tab) {
     //console.log('**************THIS IS THE CHOSEN INDEX: '+chosenIndex);
     //console.log('**************THIS IS THE CHOSEN SONG OBJECT: ');
     //console.log(selectedRandomSongObject);
-    setShare(share);
-    incrementListenCount();
+    //setShare(share);
+    //incrementListenCount();
     $(selectedRandomSongLink).click();
   }
 } 
@@ -650,7 +651,7 @@ function selectShareFromControls(share, shares, tab) {
      return currentID;
    }
    
-   function incrementListenCount() {
+   incrementListenCount = function() {
      currentSong.listenCount += 1;
      //console.log('INSIDE INCREMENT LISTEN COUNT METHOD in song state service!!!!!');
      //OLD UPDATE LISTEN COUNT METHOD//Meteor.call('updateListenCount', getCurrentID(), 'yt', currentSong.listenCount);

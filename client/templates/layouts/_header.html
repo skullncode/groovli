@@ -18,8 +18,9 @@
 
       <div class="collapse navbar-collapse" id="main-nav">
         {{>userLogin}}
-
+        {{> slidePanel}}
         <ul class="nav navbar-nav navbar-right">
+          <li class="{{ isActiveRoute regex='contact' }}"><a href="#" id='contactButton'><i class="fa fa-bullhorn"></i> Feedback / Issue?</a></li>
           {{#unless currentUser}}
             <li class="{{ isActiveRoute regex='home' }}"><a href="{{ pathFor 'home' }}"><i class="fa fa-home"></i> Home</a></li>
           {{/unless}}
