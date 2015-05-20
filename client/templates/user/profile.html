@@ -12,7 +12,8 @@
                             {{else}}
                                 <h2>you</h2>
                             {{/if}}
-                            <p><strong>Joined: </strong> {{memberSince createdAt}} </p>
+                            <p><strong>Member since: </strong> {{memberSince createdAt}} </p>
+                            <p><strong>Last activity: </strong> {{lastActivity}} </p>
                             <!--<p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>-->
                             <p><strong>Top {{topBandLength}} Bands: </strong>
                             {{#each topTenBands services.facebook.id}}

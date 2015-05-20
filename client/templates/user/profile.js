@@ -71,6 +71,12 @@ Template.profile.helpers({
 		return new moment(createdDate).format('llll');
 	},
 
+	lastActivity: function() {
+		var userLh = Session.get(Router.current().params._id+'_lh');
+		if(!_.isUndefined(userLh) && !_.isUndefined(userLh[0]))
+			return new moment(userLh[0].timestamp).calendar();
+	},
+
 	personalSongCount: function(uid) {
 		var c = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{manualApproval:'VALID'}]}]}).fetch();
 		if(!_.isUndefined(c))

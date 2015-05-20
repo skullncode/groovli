@@ -1,16 +1,36 @@
 if (Meteor.isClient) { 
   Template.historyItem.helpers({
     songArtist: function() {
-      return this.songObj.sa;
+      if(!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.sa))
+      {
+        return this.songObj.sa;
+      }
+      else
+      {
+        return "";
+      }
     },
 
     songTitle: function() {
-      return this.songObj.st;
+      if(!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.st))
+      {
+        return this.songObj.st;
+      }
+      else
+      {
+        return "";
+      }
     },
 
     youtubeThumbnail: function() {
-      var ytImgLink = 'https://i.ytimg.com/vi/' + this.songObj.sl.substring(this.songObj.sl.indexOf("v=")+2) + '/default.jpg';
-      return ytImgLink;
+      if(!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.sl))
+      {
+        var ytImgLink = 'https://i.ytimg.com/vi/' + this.songObj.sl.substring(this.songObj.sl.indexOf("v=")+2) + '/default.jpg';
+        return ytImgLink;
+      }
+      else{
+        return 'https://i.ytimg.com/vi/default.jpg';
+      }
     },
 
     songItemTimeStamp: function() {
