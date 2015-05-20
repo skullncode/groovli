@@ -23,10 +23,12 @@ Template.home.rendered = function() {
       };
 	    return Meteor.call('addToInvitesList', invitee, function(error, response) {
 	      if (error) {
-	        return alert(error.reason);
+	        //return alert(error.reason);
+          return toastr.error(error.reason);
 	      } else {
 	      	$('[name="emailAddress"]').val('');
-	        return alert("Invite requested. We'll be in touch soon. Thanks for your interest in Groovli!");
+	        //return alert("Invite requested. We'll be in touch soon. Thanks for your interest in Groovli!");
+          return toastr.success("Invite requested. We'll be in touch soon. Thanks for your interest in Groovli!");
 	      }
 	    });
     }

@@ -56,7 +56,8 @@ Template.contactForm.events({
           return console.log(error);
         } else {
           slidePanel.closePanel();
-          return alert("Thank you for your valuable feedback!");
+          //return alert("Thank you for your valuable feedback!");
+          return toastr.success("Thank you for your valuable feedback!");
         }
       });
     	return true;
