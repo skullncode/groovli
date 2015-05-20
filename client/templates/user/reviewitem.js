@@ -30,6 +30,14 @@ if (Meteor.isClient) {
         shareCounter++;
       }
       return globalIDsThatSharedThisSong;
+    },
+    albumArt: function() {
+      if(!_.isUndefined(this.LFMLargeAlbumArt) && this.LFMLargeAlbumArt.indexOf('http') === 0)
+        return '<img src="'+this.LFMLargeAlbumArt+'" height="100px" width="100px">';
+      else if(!_.isUndefined(this.LFMLargeAlbumArt) && this.LFMLargeAlbumArt === 'none')
+        return '<p>ART UNAVAILABLE</p>';
+      else
+        return '<p>ART NOT RETRIEVED!</p>';
     }
   });
 
@@ -140,6 +148,18 @@ if (Meteor.isClient) {
       console.log('clicked ITUNES CHECK BUTTON');
       var songLink = $(event.currentTarget.parentElement.parentElement.parentElement.parentElement).find("#externalSongLink").attr('href');
       Meteor.call('doManualItunesValidationForLink', songLink, 'YT');
+      location.reload();
+    },
+    "click #lfmCheck": function (event) {
+      console.log('clicked LastFM CHECK BUTTON');
+      var songLink = $(event.currentTarget.parentElement.parentElement.parentElement.parentElement).find("#externalSongLink").attr('href');
+      console.log('FOR THIS SONG: ');
+      console.log(songLink);
+      var originalArtist = $(event.currentTarget.parentElement.parentElement.parentElement).find('#songArtistValue').text();
+      var originalTitle = $(event.currentTarget.parentElement.parentElement.parentElement).find('#songTitleValue').text();
+      console.log('and with this Artist: ' + originalArtist);
+      console.log('and with this song title: ' + originalTitle);
+      Meteor.call('doManualLFMValidationForLink', songLink, originalArtist, originalTitle, 'YT');
       location.reload();
     }
 

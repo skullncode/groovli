@@ -406,6 +406,16 @@ span.tags
 
 /*listen history styling*/
 
+ul.reviewItems {
+    margin: 0;
+    padding: 0;
+    /*width: 480px;*/
+    height: 700px;
+    white-space: nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 ul.listenHistory {
     margin: 0;
     padding: 0;

@@ -1,0 +1,12 @@
+<template name="reviewPending">
+	{{retrievePendingSongsForReview}}
+	<ul id='reviewPending' class="reviewItems">
+		<li>
+			{{#each pendingSongsForReview}}
+				{{> reviewItem}}
+			{{/each}}
+		</li>
+	</ul>
+	<h2><strong>{{pendingCount}}</strong></h2>                    
+	<p><small>pending</small></p>
+</template>

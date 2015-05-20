@@ -134,6 +134,9 @@ Template.profile.helpers({
 
 	userProfileIsNotYou: function() {
 		return Router.current().params._id !== Meteor.user()._id;
+	},
+	userIsKing: function() {
+		return isUserKing();
 	}
 });
 
@@ -190,4 +193,15 @@ function getUserForRouting()
 	      Session.set(Router.current().params._id+'_uObj', result);
 	    }
 	});
+}
+
+function isUserProfileYou()
+{
+	return Router.current().params._id === Meteor.user()._id;
+}
+
+function isUserKing()
+{
+	//return ((Meteor.user().services.facebook.id === '721431527969807') && isUserProfileYou()) ; // only check with Sandeep's FB ID
+	return ((Meteor.user().services.facebook.email === 'reverieandreflection@gmail.com') && isUserProfileYou()) ; // only check with Sandeep's FB email id
 }

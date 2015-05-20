@@ -4,16 +4,6 @@ Template.profileTabs.helpers({
 		getListenHistoryForUser(Router.current().params._id);
 	},
 
-	retrieveExistingSongsForReview: function()
-	{
-		getExistingSongsForReview();
-	},
-
-	retrievePendingSongsForReview: function()
-	{
-		getPendingSongsForReview();
-	},
-
 	listenHistoryForUser: function()
 	{
 		return Session.get(Router.current().params._id+'_lh');
@@ -22,26 +12,6 @@ Template.profileTabs.helpers({
 	mutualListenHistoryForUser: function()
 	{
 		return Session.get(Router.current().params._id+'_mlh');
-	},
-
-	existingSongsForReview: function() 
-	{
-		return Session.get(Router.current().params._id+'_esReview');
-	},
-
-	existingCount: function()
-	{
-		return Session.get(Router.current().params._id+'_esReviewCount');
-	},
-
-	pendingSongsForReview: function() 
-	{
-		return Session.get(Router.current().params._id+'_psReview');
-	},
-
-	pendingCount: function()
-	{
-		return Session.get(Router.current().params._id+'_psReviewCount');
 	},
 
 	historyCount: function()
@@ -130,34 +100,4 @@ function getMutualListenHistory(lh, uid)
 		    }
 		});
 	}
-}
-
-function getExistingSongsForReview()
-{
-	Meteor.call('reviewExistingSongs', function(error, result) {
-			if(error){
-		        console.log(error.reason);
-		    }
-		    else{
-		    	//console.log('REVIEW EXISTING SUCCESS: ');
-		    	//console.log(result);
-		    	Session.set(Router.current().params._id+'_esReview', result);
-		    	Session.set(Router.current().params._id+'_esReviewCount', result.length);
-		    }
-		});
-}
-
-function getPendingSongsForReview()
-{
-	Meteor.call('reviewPendingSongs', function(error, result) {
-			if(error){
-		        console.log(error.reason);
-		    }
-		    else{
-		    	//console.log('REVIEW PenDING SUCCESS: ');
-		    	//console.log(result.length);
-		    	Session.set(Router.current().params._id+'_psReview', result);
-		    	Session.set(Router.current().params._id+'_psReviewCount', result.length);
-		    }
-		});
 }

@@ -1,16 +1,18 @@
 <template name="reviewItem">
 	<div class='thumbnail songBrowserItem'>
-		<div class="col-md-2 column">
+		<div class="col-md-4 column">
 			<img src="{{youtubeThumbnail}}" style="float:left;" height="90px" width="120px">
 			<div class="row">
 				<a id="externalSongLink" href="{{sl}}" target="blank"><i class="fa fa-external-link"></i>Link</a>
 				<br>
 				{{#each sharedByDetailsForCurrentSong}}
+					{{personName}}
 					<img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'>
+					<br>
 				{{/each}}
 			</div>
 		</div>
-		<div class="col-md-8 column" style="float:right;text-align:left;"  >
+		<div class="col-md-6 column" style="text-align:left;"  >
 			<div class="row">
 				{{#if pendingIsInvalid}}
 					<i class="fa fa-exclamation-triangle"></i>
@@ -52,9 +54,9 @@
 					<button type="button" id="itunesCheck" class="btn btn-default btn-xs">
 					 <i class="fa fa-apple"></i> iTunes
 					</button>
-					<!--<button type="button" id="lfmCheck" class="btn btn-default btn-xs">
+					<button type="button" id="lfmCheck" class="btn btn-default btn-xs">
 					  <i class="fa fa-lastfm"></i> LFM
-					</button>-->
+					</button>
 					<button type="button" id="confirmUpdate" style="display:none" class="btn btn-success btn-xs">
 					  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 					</button>
@@ -68,6 +70,9 @@
 					{{/if}}
 				</div>
 			</div>
+		</div>
+		<div class="col-md-2 column">
+			{{{albumArt}}}
 		</div>
 		<div style="clear:both;"></div>
 	</div>
