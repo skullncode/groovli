@@ -1,7 +1,7 @@
 <template name="globalList">
+	{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 	{{#if globalSongsExist}}
 		<span class="badge pull-right">{{songs.count}}</span>
-		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 	{{else}}
 		<span>You're currently following everyone on Groovli! You apparently love everyone's music taste!</span>
 	{{/if}}

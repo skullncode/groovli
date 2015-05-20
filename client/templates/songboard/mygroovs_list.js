@@ -30,7 +30,7 @@ Template.mygroovsList.helpers({
       $(".glyphicon-step-forward").click();
       Session.set('playerStarted', true);
       Session.set('playerLoaded', false);
-      Session.set('activeTab', 'me');
+      //Session.set('activeTab', 'me'); // removed this as auto scrolling wasn't happening on first song load!!!
     }
   },
 

@@ -342,19 +342,23 @@ function setShare(currentShare)
 function selectShareFromControls(share, shares, tab) {
 	//console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!INSIDE SHARE SELECTION FROM METHOD');
 	//console.log('##############THIS IS the SELECTED SHARE:');
+  //console.log('THIS IS THE TAB THAT THE SELECTED SONG BELONGS TO: ' + tab);
 	//console.log(share.st);
   //var chosenIndex = shares.indexOf(share) + 2;
   if(tab === 'me')
   {
     $('#songTabs a[href="#mygroovs"]').tab('show');
+    Session.set('activeTab', 'me');
   }
   else if(tab === 'friends')
   {
     $('#songTabs a[href="#tastemakers"]').tab('show');
+    Session.set('activeTab', 'friends');
   }
   else if(tab === 'global')
   {
     $('#songTabs a[href="#global"]').tab('show');
+    Session.set('activeTab', 'global');
   }
   var chosenIndex = songIndexWithinList(share,shares) + 1;// + 2;
   //console.log('################################## TRACK TITLE WITHIN ENTIRE LIST:' + share.st);//shares[chosenIndex].st)';

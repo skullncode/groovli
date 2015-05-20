@@ -30,6 +30,7 @@ Template.tastemakersList.helpers({
 
   switchTabsAndAnimateListToCurrentlyPlayingSong: function() {
     if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'friends') {
+      //console.log('SWITCHING TAB IF NOT ALREADY FOCUSED CURRENTLY PLAYING SOnG!!!!');
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
   }
