@@ -22,7 +22,8 @@ Template.tastemakersList.helpers({
 
   songOfFriendsExist: function() {
     //console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
-    if(Session.get('tastemakersSongsLength') > 0)
+    //if(Session.get('tastemakersSongsLength') > 0)
+    if(Session.get('fLen') > 0)
       return true;
     else
       return false;
@@ -42,7 +43,8 @@ function updatePlayableTabsIfNecessary() {
   {
     if(_.indexOf(temp, 'friends') === -1)
     {
-      if(Session.get('tastemakersSongsLength') > 0)
+      //if(Session.get('tastemakersSongsLength') > 0)
+      if(Session.get('fLen') > 0)
       {
         temp.push('friends');
         Session.set('playableTabs',temp);

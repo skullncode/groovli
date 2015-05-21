@@ -1,14 +1,19 @@
 <template name="mygroovsList">
-	<span class="badge pull-right">{{songs.count}}</span>
+	{{#if myGroovsExist}}
+		<span class="badge pull-right">{{songs.count}}</span>
+	{{/if}}
 	{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 	<ul id='mygroovsList' class="songsList horizontal-slide">
 		{{#if songsLoaded}}
 			{{startPlayer}}
 		{{/if}}
 		<li>
-			{{#each songs}}
-				{{> mygroovItem}}
-			{{/each}}
+		{{#each songs}}
+			{{> mygroovItem}}
+		{{/each}}
+		{{#unless myGroovsExist}}
+			No music shared to Facebook yet!
+		{{/unless}}
 		</li>
 	</ul>
 </template>

@@ -109,6 +109,16 @@ function getRandomSongTabThatStillHasUnplayedSongs()
   var randomlySelectedTabIndex = _.random(playableTabsLength-1);
   //console.log('THIS IS THE RANDOMLY SELECTED TAB INDEX: ' + randomlySelectedTabIndex);
   var selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
+  //var x = Session.get('mygroovsPlayedLength') < getSongsLength('me');
+  //var y = Session.get('tastemakersPlayedLength') < getSongsLength('friends');
+  //var z = Session.get('globalPlayedLength') < getSongsLength('global');
+
+  //console.log('1st condition check : ' + x);
+  //console.log('2nd condition check : ' + y);
+  //console.log('3rd condition check : ' + z);
+  //console.log('my songs length: ' + mySongs.length);
+  //console.log('friend songs length: ' + friendSongs.length);
+  //console.log('global songs length: ' + globalSongs.length);
   if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends') || Session.get('globalPlayedLength') < getSongsLength('global'))
   {
     if(selectedTab === 'me')
@@ -500,7 +510,7 @@ function selectShareFromControls(share, shares, tab) {
     }
     else if(tab === 'global')
     {
-      //console.log('UPDATING SONGS For TASTEMAKERSSSSSS TAB: ');
+      //console.log('UPDATING SONGS For global TAB: ');
       while(counter < sh.length)
       {
         sh[counter].sourceTab = 'global';

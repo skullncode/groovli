@@ -3,10 +3,8 @@ Session.set('playerStarted', false);
 
 Template.mygroovsList.helpers({
   songs: function() {
-  	//Session.set('personalSongList', Songs.find());
     fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
     var songCollection = fullSongList.fetch();
-    //songCollectionLength = songCollection.length;
     //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + songCollection.length);
     Session.set('pSongsLength', songCollection.length);
     updateMySongs(songCollection, 'me');
@@ -16,7 +14,17 @@ Template.mygroovsList.helpers({
 
   songsLoaded: function() {
     //console.log('CHECKING if SONGS ARE LOADED OR NOT!!!!!!!!');
-    if(Session.get('pSongsLength') > 0 && Session.get('playerLoaded'))//&& !Session.get('playerStarted'))
+    //var anySongsloaded = (Session.get('pSongsLength') > 0 || Session.get('tastemakersSongsLength') > 0 || Session.get('globalSongsLength') > 0);
+    var anySongsProcessedAndLoaded = (Session.get('mLen') > 0 || Session.get('fLen') > 0 || Session.get('gLen') > 0);
+    //if(Session.get('pSongsLength') > 0 && Session.get('playerLoaded'))//&& !Session.get('playerStarted'))
+    if(anySongsProcessedAndLoaded && Session.get('playerLoaded'))
+      return true;
+    else
+      return false;
+  },
+
+  myGroovsExist: function() {
+    if(Session.get('mLen') > 0)
       return true;
     else
       return false;
@@ -48,7 +56,8 @@ function updatePlayableTabsIfNecessary() {
   {
     if(_.indexOf(temp, 'me') === -1)
     {
-      if(Session.get('pSongsLength') > 0)
+      //if(Session.get('pSongsLength') > 0)
+      if(Session.get('mLen') > 0)
       {
         temp.push('me');
         Session.set('playableTabs',temp);
@@ -62,19 +71,22 @@ function initializePlayableTabs()
   //console.log('INITIALIZING PLAYABLE TABS');
   Session.set('playableTabs', []);
   var temp = [];
-  if(Session.get('pSongsLength') > 0)
+  //if(Session.get('pSongsLength') > 0)
+  if(Session.get('mLen') > 0)
   {
     temp.push('me');
     Session.set('playableTabs',temp);
   }
 
-  if(Session.get('tastemakersSongsLength') > 0)
+  //if(Session.get('tastemakersSongsLength') > 0)
+  if(Session.get('fLen') > 0)
   {
     temp.push('friends');
     Session.set('playableTabs',temp);
   }
 
-  if(Session.get('globalSongsLength') > 0)
+  //if(Session.get('globalSongsLength') > 0)
+  if(Session.get('gLen') > 0)
   {
     temp.push('global');
     Session.set('playableTabs',temp);
