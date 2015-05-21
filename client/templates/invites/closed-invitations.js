@@ -35,3 +35,19 @@ Template.closedInvitations.helpers({
     });
   }
 });
+
+Template.closedInvitations.events({
+  'click #deleteInvite': function(e) {
+    console.log('CLICKED delete invite button:');
+    var email = $(e.currentTarget.parentElement.parentElement).find('#emailAddress').text()
+    Meteor.call('deleteInvite', email, function(error,result){
+        if(error){
+          return toastr.error(error.reason);
+        }
+        else{
+            // do something with result
+          return toastr.success('Successfully deleted invite for user: ' + email);
+        };
+    });
+  }
+});

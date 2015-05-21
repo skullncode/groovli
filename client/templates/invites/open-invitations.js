@@ -48,7 +48,7 @@ Template.openInvitations.events({
         if (error) {
           return console.log(error);
         } else {
-          return alert("Invite sent to " + invitee.email + "!");
+          return toastr.success("Invite sent to " + invitee.email + "!");
         }
       });
     }

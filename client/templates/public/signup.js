@@ -44,6 +44,16 @@ Template.signup.rendered = function() {
             else
             {
               //after logging in update FB friend list
+              //Meteor.call('markBetaTokenUsed', user);
+              Meteor.call('markBetaTokenUsed', user, function(error,result){
+                  if(error){
+                    return toastr.error(error.reason);
+                  }
+                  else{
+                      // do something with result
+                    return toastr.success('Successfully signed up for Groovli!');
+                  };
+              });
               Meteor.call('updateFBFriendList');
               Router.go('/songboard');
             }

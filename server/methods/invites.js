@@ -82,7 +82,39 @@ Meteor.methods({
         password: user.password
       });
       Roles.addUsersToRoles(id, ['tester']);*/
-      return Invites.update(testInvite._id, {
+      /*return Invites.update(testInvite._id, {
+        $set: {
+          accountCreated: true
+        },
+        $unset: {
+          token: ""
+        }
+      });*/ //MOVING THIS piece of code to separately MARK TOKEN USED after FB login is successful
+      return true;
+    }
+  },
+  markBetaTokenUsed: function(user) {
+    console.log('INSIDE method to mark beta token used!!!');
+    console.log(user);
+    var id, testInvite;
+    check(user, {
+      email: String,
+      betaToken: String
+    });
+    testInvite = Invites.findOne({
+      email: user.email,
+      token: user.betaToken
+    }, {
+      fields: {
+        "_id": 1,
+        "email": 1,
+        "token": 1
+      }
+    });
+     if (!testInvite) {
+      throw new Meteor.Error("could not consume beta token", "Hmm, this token doesn't match your email. Try again?");
+    } else {
+    return Invites.update(testInvite._id, {
         $set: {
           accountCreated: true
         },
@@ -91,5 +123,16 @@ Meteor.methods({
         }
       });
     }
+  },
+  deleteInvite: function(emailAddress) {
+    Invites.remove({email: emailAddress}, function(error) {
+          if (error) {
+            // display the error to the user
+            return error;
+          }
+          else{
+            //console.log('result');
+          }
+      })
   }
 });
