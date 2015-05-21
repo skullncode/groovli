@@ -19,7 +19,6 @@ less
 semantic:ui-sidebar
 aldeed:collection2
 meteorhacks:kadira
-tmeasday:presence
 ryw:blog
 alanning:roles
 biasport:facebook-sdk
@@ -30,3 +29,4 @@ email
 underscore
 rosh93:slide-panel
 chrismbeckett:toastr
+mizzao:user-status

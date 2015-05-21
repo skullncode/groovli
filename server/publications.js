@@ -23,7 +23,8 @@ Meteor.publish("userData", function () {
           "fbFriends": 1,
           "tastemakers": 1,
           "unfollowedFriends": 1,
-          "createdAt": 1
+          "createdAt": 1,
+          "status": 1
        	}
      });
   } else {
@@ -31,21 +32,19 @@ Meteor.publish("userData", function () {
   }
 });
 
-Meteor.publish('userPresence', function() {
-  // Setup some filter to find the users your user
-  // cares about. It's unlikely that you want to publish the 
-  // presences of _all_ the users in the system.
-
-  // If for example we wanted to publish only logged in users we could apply:
-  filter = { userId: { $exists: true }};
-  //var filter = {}; 
-
-  return Presences.find(filter, { fields: { state: true, userId: true }});
-});
-
 Meteor.publish(null, function (){ 
   return Meteor.roles.find({})
 })
+
+Meteor.publish('userStatus', function() {
+  return Meteor.users.find({'status.online': true }, 
+  { 
+    fields: 
+    {
+      "status": 1
+    }
+  });
+});
 
 Meteor.publish('/invites', function() {
   console.log("INSIDE THE INVITES publishing code: ");

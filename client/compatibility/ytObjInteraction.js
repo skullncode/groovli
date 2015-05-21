@@ -17,19 +17,23 @@ function playerLoaded()
   //console.log('INSIDE THE PLAYER Loaded method!!!!!');
   if(!_.isUndefined(YT))
   {
-    ytplayer = new YT.Player('player', {
-                playerVars: { 
-                  'autoplay': 0, 
-                  'controls': 0,
-                  'autohide': 1,
-                  'wmode':'opaque', 
-                  'enablejsapi': 1, 
-                  'showinfo': 0, 
-                  'color': 'white',
-                  'iv_load_policy': 3,
-                  'fs': 0
-                }
-    });
+    while(_.isUndefined(ytplayer))
+    {
+      ytplayer = new YT.Player('player', {
+                  playerVars: { 
+                    'autoplay': 0, 
+                    'controls': 0,
+                    'autohide': 1,
+                    'wmode':'opaque', 
+                    'enablejsapi': 1, 
+                    'showinfo': 0, 
+                    'color': 'white',
+                    'iv_load_policy': 3,
+                    'fs': 0
+                  }
+      });
+    }
+    console.log('ytplayer loaded, not undefined now!');
   }
   else
   {

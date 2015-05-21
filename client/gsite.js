@@ -34,6 +34,6 @@ if (Meteor.isClient) {
 		
 		Meteor.subscribe('songs', Session.get('ud'));
 
-		Meteor.subscribe('userPresence');
+		Meteor.subscribe('userStatus');
 	})
 }
