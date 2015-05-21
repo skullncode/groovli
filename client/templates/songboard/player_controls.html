@@ -1,20 +1,16 @@
 <template name='playerControls'>
 	{{#if currentlyOnSongboard}}
 		<ul class='nav navbar-nav'>
-			<li id='previousButton' title='Previous' class='vidControls'>
-				<a ng-click='previousSong();'>
-					<i class='glyphicon glyphicon-step-backward'></i>
-				</a>
+			<li title='Previous' class='vidControls'>
+				<a id='previousButton' href='#'><i class='glyphicon glyphicon-step-backward'></i></a>
 			</li> 
 			<li id='playButton' title='Play' class='vidControls'>
-				<a onClick='playpauseVideo();'>
+				<a onClick='playpauseVideo();' href='#'>
 					<i class='glyphicon glyphicon-play'></i>
 				</a>
 			</li>
-			<li id='nextButton' title='Next'>
-				<a ng-click='nextSong();'>
-					<i class='glyphicon glyphicon-step-forward'></i>
-				</a>
+			<li title='Next'>
+				<a id='nextButton' href='#'><i class='glyphicon glyphicon-step-forward'></i></a>
 			</li>
 			<li>
 				<a>

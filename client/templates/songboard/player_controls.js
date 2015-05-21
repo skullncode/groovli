@@ -32,11 +32,11 @@ Template.playerControls.helpers({
 });
 
 Template.playerControls.events({
-    'click .glyphicon-step-forward': function(event) {
+    'click #nextButton': function(event) {
         nextSong();
     },
 
-    'click .glyphicon-step-backward': function(event) {
+    'click #previousButton': function(event) {
         previousSong();
     }
 });
