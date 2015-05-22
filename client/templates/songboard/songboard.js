@@ -42,3 +42,18 @@ Template.songboard.rendered = function() {
 			Meteor.call('getLatestStoriesFromDBAndFB');
 		}, 60000);*/
 };
+
+Template.songboard.helpers({
+	dimmedOverlay: function(){
+		if(Session.get('playerStarted'))
+			return 'hideDimmer';
+		else
+			return 'dimmed';
+	},
+	dimmedLoader: function(){
+		if(Session.get('playerStarted'))
+			return 'hideDimmer';
+		else
+			return 'musicLoader';
+	}
+});

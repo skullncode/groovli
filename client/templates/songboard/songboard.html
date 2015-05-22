@@ -2,6 +2,26 @@
   <!--<div class='col-md-1 column'>
   	{{>sideNavbar}}
   </div>-->
+  <style>
+	.dimmed {
+	    position:absolute;
+	    left:0;
+	    top:0;
+	    background: rgba(255,255,255,1);
+	    width:100%;
+	    height:700px;
+	}
+
+	.hideDimmer {
+		display:none;
+	}
+
+	.musicLoader {
+		position:absolute;
+	    left:45%;
+	    top:50%;
+	}
+  </style>
   <div class='col-md-7 column'>
     <div id='player'>
 		<iframe id="player" class="embed-responsive-item" type="text/html" onload='playerLoaded();' width="480" height="270"
@@ -18,4 +38,13 @@
   {{#if currentUser}}
   	{{>songTabs}}
   {{/if}}
+  <div class='{{dimmedOverlay}}'>
+  	<h2 class='{{dimmedLoader}}'>
+  		Loading music...
+  		<br><br>
+  		<center>
+  			{{>loading}}
+  		</center>
+  	</h2>
+  </div>
 </template>
