@@ -1,10 +1,9 @@
 <template name="contactForm">
 	<style>
-
 		.feedback {
 		  background: #fff;
 		  width: 415px;
-		  height: 450px;
+		  height: 415px;
 		  -moz-border-radius: 3px;
 		  -webkit-border-radius: 3px;
 		  border-radius: 3px;
@@ -114,18 +113,22 @@
 	</style>
 	<div class="feedback">
 		<h1>Groovli Feedback</h1>
+		<br>
 		  <p>What would you like to share with us?</p>
-		  <ul class="type">
-		  	<li id='bug' class="active"><a href="#"><i class="fa fa-bug"></i> Problem</a></li>
-		  	<li id='question'><a href="#"><i class="fa fa-question-circle"></i> Question</a></li>
-		  	<li id='suggestion'><a href="#"><i class="fa fa-lightbulb-o"></i> Suggestion</a></li>
-		  	<li id='kudos'><a href="#"><i class="fa fa-heart"></i> Kudos</a></li>
-		  </ul>
-		  <div class="form">
-		  	<textarea id="feedbackTextArea" name="feedback_text" placeholder="Your feedback"></textarea>
-		  	<br>
-		    <input id='userEmail' type="text" placeholder="Your Email (will not be published)"/>    
-		  </div>
+			<ul class="type">
+				<li id='bug' class="active"><a href="#"><i class="fa fa-bug"></i> Problem</a></li>
+				<li id='question'><a href="#"><i class="fa fa-question-circle"></i> Question</a></li>
+				<li id='suggestion'><a href="#"><i class="fa fa-lightbulb-o"></i> Suggestion</a></li>
+				<li id='kudos'><a href="#"><i class="fa fa-heart"></i> Kudos</a></li>
+			</ul>
+			<div class="form">
+				<textarea id="feedbackTextArea" name="feedback_text" placeholder="Your feedback"></textarea>
+				<br><br>
+				<input id='userEmail' type="text" placeholder="Your Email (will not be published)"/>    
+			</div>
+			<br>
+			<button class="btn btn-success" id="submitFeedback"> Submit</button>
+		  <!--
 		  <br>
 		  <p>How would you rate the overall speed of Groovli?</p>
 		    <ul class="type speed">
@@ -133,7 +136,6 @@
 		    	<li id='siteFine'><a href="#"><i class="fa fa-thumbs-o-up"></i> Fine</a></li>
 		    	<li id='siteSlow'><a href="#"><i class="fa fa-thumbs-o-down"></i> Slow</a></li>
 		    </ul>
-		    <br>
-		    <button class="btn btn-success" id="submitFeedback"> Submit</button>
+		  -->
 	</div>
 </template>

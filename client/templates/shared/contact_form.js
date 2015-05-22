@@ -32,6 +32,7 @@ Template.contactForm.events({
   		$('#kudos').addClass('active');
   		Session.set('feedbackType', 'kudos');
     },
+    /*
     'click #siteFast': function(event) {
     	//console.log('this is fast site!');
     	$($(event.currentTarget.parentElement).find('.active')).removeClass('active')
@@ -49,9 +50,9 @@ Template.contactForm.events({
     	$($(event.currentTarget.parentElement).find('.active')).removeClass('active')
   		$('#siteSlow').addClass('active');
   		Session.set('siteSpeed', 'slow');
-    }, 	
+    },*/
     'click #submitFeedback': function(event) {
-    	Meteor.call('sendFeedback', Session.get('feedbackType'), $('#feedbackTextArea').val(), $('#userEmail').val(), Session.get('siteSpeed'), function(error) {
+    	Meteor.call('sendFeedback', Session.get('feedbackType'), $('#feedbackTextArea').val(), $('#userEmail').val(), function(error) {
         if (error) {
           return console.log(error);
         } else {
