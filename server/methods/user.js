@@ -206,5 +206,9 @@ Meteor.methods({
 			//if this person is also a friend remove them to the list of unfollowed friends
 			Meteor.users.update({_id: Meteor.userId()},{$set:{unfollowedFriends: currentUnfollowedFriends}});
 		}
+	},
+	getMasterUserData: function() {
+		var allUserData = Meteor.users.find({}).fetch();
+		return allUserData;
 	}
 });
