@@ -1,0 +1,14 @@
+<template name="userMaster">
+	{{retrieveExistingSongsForReview}}
+	<ul id='userList'>
+		<li>
+			{{#each existingSongsForReview}}
+				{{> reviewItem}}
+			{{/each}}
+		</li>
+	</ul>
+	<div class="col-md-2 column">
+		<h2><strong>{{existingCount}}</strong></h2>                    
+		<p><small>users</small></p>
+	</div>
+</template>
