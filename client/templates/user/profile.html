@@ -52,9 +52,11 @@
                             </figure>
                             <br>
                             {{#if userIsKing}}
-                               <a class="btn btn-warning btn-xs" id="reviewPending" href="{{ pathFor 'pending' }}" target="blank"> Review Pending</a>
+                               <a class="btn btn-warning btn-xs" id="reviewPending" href="{{ pathFor 'pending' }}"> Review Pending</a>
                                <br><br>
-                               <a class="btn btn-warning btn-xs" id="reviewExisting" href="{{ pathFor 'existing' }}" target="blank"> Review Existing</a>
+                               <a class="btn btn-warning btn-xs" id="reviewExisting" href="{{ pathFor 'existing' }}"> Review Existing</a>
+                               <br><br>
+                               <a class="btn btn-warning btn-xs" id="seeAllUsers" href="{{ pathFor 'allusers' }}"> All Users</a>
                                <br><br>
                             {{/if}}
                             {{#if userProfileIsNotYou}}

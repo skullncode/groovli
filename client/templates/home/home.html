@@ -2,13 +2,17 @@
   <div>
     <div class="jumbotron">
 		<h1>your social jukebox. clean. simple. groovy!</h1>
-		<h3 class="page-header">Type in your email below to get on Groovli's beta list.</h3>
-		<!--<img class="urkel-gif" src="http://media.giphy.com/media/TaFTuXWTJf2iA/giphy.gif" alt="Steve urkel making faces.">-->
-		<form id="request-beta-invite" class="form-horizontal">
-			<input type="email" id="betaEmail" name="emailAddress" class="form-control" placeholder="e.g. john.doe@beta.com">
-			<br>
-			<button type="submit" class="btn btn-success">Request Beta Invite</button>
-		</form>
+		{{#if currentUser}}
+			<i><h3 class="page-header">Thank you for joining the Groovli Beta! We look forward to your feedback!</h3></i>
+		{{else}}
+			<h3 class="page-header">Type in your email below to get on Groovli's beta list.</h3>
+			<!--<img class="urkel-gif" src="http://media.giphy.com/media/TaFTuXWTJf2iA/giphy.gif" alt="Steve urkel making faces.">-->
+			<form id="request-beta-invite" class="form-horizontal">
+				<input type="email" id="betaEmail" name="emailAddress" class="form-control" placeholder="e.g. john.doe@beta.com">
+				<br>
+				<button type="submit" class="btn btn-success">Request Beta Invite</button>
+			</form>
+		{{/if}}
 		<!--{{>signupCount}} removed out signup count for now-->
 	</div>
   </div>
