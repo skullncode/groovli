@@ -20,9 +20,9 @@ Template.profile.helpers({
 		if(!_.isUndefined(Meteor.user().fbFriends))
 		{
 			if(Meteor.user().fbFriends.length > 1 || Meteor.user().fbFriends.length === 0)
-				return Meteor.user().fbFriends.length + ' <i class="fa fa-facebook-official"></i> friends<br><br>';
+				return Meteor.user().fbFriends.length + ' <a href="/friends"><i class="fa fa-facebook-official"></i> friends</a><br><br>';
 			else
-				return Meteor.user().fbFriends.length + ' <i class="fa fa-facebook-official"></i> friend<br><br>';
+				return Meteor.user().fbFriends.length + ' <a href="/friends"><i class="fa fa-facebook-official"></i> friend</a><br><br>';
 		}
 		else
 			return 'None of your <i class="fa fa-facebook-official"></i> friends have joined yet!<br><br>';

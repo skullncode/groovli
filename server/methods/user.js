@@ -210,5 +210,9 @@ Meteor.methods({
 	getMasterUserData: function() {
 		var allUserData = Meteor.users.find({}).fetch();
 		return allUserData;
+	},
+	getFriendData: function(friendList) {
+		var friendData = Meteor.users.find({'services.facebook.id': {$in: friendList}}).fetch();
+		return friendData;
 	}
 });
