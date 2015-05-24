@@ -61,7 +61,63 @@ Template.friendList.helpers({
 		var x = Songs.find({'sharedBy.uid': String(this.services.facebook.id)}).fetch();
 		//console.log('SONG LENGTH : ' + x.length);
 		return x.length;
+	},
+	alreadyFollowed: function() {
+		Session.set(this._id+'_uObj', this);
+		if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': this.services.facebook.id})))
+			return false;
+		else
+			return true;
 	}
+});
+
+Template.friendList.events({
+    "click #unfollowUser": function (event) {
+		console.log('UNFOLLOW user button clicked!');
+		//console.log(event);
+		var x = $(event.currentTarget.parentElement.parentElement).find('#friendProfileLink').prop('href');
+		var beginOfProfileID = x.indexOf('profile/') + 8; //length of 'profile/'
+		var profileId = x.substring(beginOfProfileID);
+
+		var userObj = Session.get(profileId+'_uObj');
+		var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: this.services.facebook.id}));
+
+		//console.log('UNFOLLOW user button clicked!');
+		//console.log('and this user is a friend: ' + isUserAFriend);
+
+		Meteor.call('unfollowUser', userObj, isUserAFriend, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	console.log('SUCCESSFULLY unfollowed user!');
+		    };
+		});
+		return true;
+    },
+    "click #followUser": function (event) {
+		console.log('Follow user button clicked!');
+		var x = $(event.currentTarget.parentElement.parentElement).find('#friendProfileLink').prop('href');
+		var beginOfProfileID = x.indexOf('profile/') + 8; //length of 'profile/'
+		var profileId = x.substring(beginOfProfileID);
+
+		var userObj = Session.get(profileId+'_uObj');
+		var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: this.services.facebook.id}));
+
+		//console.log('and this user is a friend: ' + isUserAFriend);
+
+		Meteor.call('followUser', userObj, isUserAFriend, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	console.log('SUCCESSFULLY followed user!');
+		    };
+		});
+		return true;
+    }
 });
 
 

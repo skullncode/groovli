@@ -12,13 +12,13 @@
           <th width="10%" class="text-center">Status</th>
           <th width="5%" class="text-center">Songs</th>
           <th width="5%" class="text-center">FB Friends</th>
-          <th width="5%" class="text-center">Following</th>
+          <th width="5%" class="text-center">Tastemakers</th>
         </tr>
       </thead>
       <tbody>
         {{#each userData}}
         <tr>
-          <td class="vertical-align"><a href="/profile/{{_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:30px;height:30px;" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square"></a></td>
+          <td class="vertical-align"><a id='friendProfileLink' href="/profile/{{_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:30px;height:30px;" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square"></a></td>
           <td class="vertical-align"><span class="label {{statusClass}}">{{profile.name}}</span></td>
           <td class="text-center vertical-align">{{services.facebook.id}}</td>
           <td class="text-center vertical-align">{{memberSince}}</td>
@@ -26,7 +26,13 @@
           <td class="text-center vertical-align">{{currentStatus}}</td>
           <td class="text-center vertical-align">{{songCount}}</td>
           <td class="text-center vertical-align">{{fbFriends.length}}</td>
-          <td class="text-center vertical-align">{{tastemakers.length}}</td>
+          {{#if alreadyFollowed}}
+              <td class="text-center vertical-align"><button class="btn btn-warning btn-xs" id="unfollowUser"><span class="fa fa-minus-circle"></span> Unfollow</button></td>
+              <br>
+          {{else}}
+               <td class="text-center vertical-align"><button class="btn btn-success btn-xs" id="followUser"><span class="fa fa-plus-circle"></span> Follow</button></td>
+              <br>
+          {{/if}}
         </tr>
         {{/each}}
       </tbody>

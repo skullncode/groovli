@@ -68,25 +68,50 @@ function getMongoSelectorForFriendSongs() {
   //first add self ID for exclusion from tastemaker list
   query["$nor"].push(userSelf);
 
+  //if friends are unfollowed they need to be excluded from the tastemaker list also
+  if(Meteor.user().unfollowedFriends.length > 0)
+  {
+    while(counter < Meteor.user().unfollowedFriends.length)
+    {
+      var unfollowedFriendObj = {
+        "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
+      };
+      query["$nor"].push(unfollowedFriendObj);
+      counter++;
+    }
+  }
+
+  counter = 0;
   //if(Meteor.user().fbFriends.length > 1)
-  if(Meteor.user().tastemakers.length > 1)
+  if(Meteor.user().tastemakers.length > 0)
+  {
     query["$or"] = [];
 
-  //while(counter < Meteor.user().fbFriends.length)
-  while(counter < Meteor.user().tastemakers.length)
-  {
-    //if(Meteor.user().fbFriends.length === 1)
-    if(Meteor.user().tastemakers.length === 1)
-      query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
-    else
+    //while(counter < Meteor.user().fbFriends.length)
+    while(counter < Meteor.user().tastemakers.length)
     {
-      var additional = {
-        "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
-      }
-      query["$or"].push(additional);
-    }
+      //if(Meteor.user().fbFriends.length === 1)
+      //if(Meteor.user().tastemakers.length === 1)
+        //query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
+      //else
+      //{
+        var additional = {
+          "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
+        }
+        query["$or"].push(additional);
+      //}
 
-    counter++;
+      counter++;
+    }
+  }
+  else
+  {
+    query["$or"] = [];
+    //use a fake user to simplify not selecting anyone if tastemakers is empty
+    var fakeUser = {
+      "sharedBy.uid": String('testid_willnever_betrue')
+    }
+    query["$or"].push(fakeUser);
   }
 
   //console.log('THIS IS THE FINAL SELECTOR THAT WILL BE USED!!!!!');
