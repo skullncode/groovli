@@ -14,6 +14,11 @@ Template.profileTabs.helpers({
 		return Session.get(Router.current().params._id+'_mlh');
 	},
 
+	mutualListenHistoryMatchCount: function()
+	{
+		return Session.get(Router.current().params._id+'_mlh').length;
+	},
+
 	historyCount: function()
 	{
 		return Session.get(Router.current().params._id+'_lh_count');
