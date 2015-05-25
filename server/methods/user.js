@@ -1,3 +1,5 @@
+geoBytesLocationURL = 'http://getcitydetails.geobytes.com/GetCityDetails?fqcn=#USER_IP#';
+
 function updateUserFriendList(latestFriendList){
 	//console.log('REACHED THE UPDATE USER FRIEND LIST server method, with this list of friends: ');
 	//console.log(latestFriendList);
@@ -30,6 +32,59 @@ function insertFriendsIntoTastemakersList(latestFriendList)
 	_.uniq(updatedTastemakerList);
 
 	Meteor.users.update({_id: Meteor.userId()},{$set:{tastemakers: updatedTastemakerList}});
+}
+
+function setLocationForUser(uid)
+{
+	//console.log('REACHED LOCATION method in server!');
+	var user = Meteor.users.findOne({'services.facebook.id': String(uid)});
+	if(!_.isUndefined(user) && _.isUndefined(user.baseLocation))
+	{
+		//console.log('not undefined user but LOCATION IS UNDEFINED: ');
+		//console.log(user);
+		if(!_.isUndefined(user.status) && !_.isUndefined(user.status.lastLogin) && !_.isUndefined(user.status.lastLogin.ipAddr) && user.status.lastLogin.ipAddr !== '127.0.0.1')
+		{
+			updatedIPURL = geoBytesLocationURL.replace('#USER_IP#', user.status.lastLogin.ipAddr)
+			//updatedIPURL = geoBytesLocationURL.replace('#USER_IP#', '106.51.234.19'); //testing
+			Meteor.http.get(updatedIPURL, 
+			function(error, result) {
+				if(!error && result.statusCode === 200) {
+					// this callback will be called asynchronously
+					// when the response is available
+					//console.log("THIS IS THE RESULT FROM GEOBYTES");
+					//console.log(result.data);
+					if(!_.isUndefined(result))
+					{
+						var locationProperties = {
+							country: result.data.geobytescountry,
+							countryInternetCode: result.data.geobytesinternet,
+							city: result.data.geobytescity,
+							state: result.data.geobytesregion,
+							lat: result.data.geobyteslatitude,
+							lon: result.data.geobyteslongitude,
+							mapArea: result.data.geobytesmapreference,
+							currency: result.data.geobytescurrency,
+							currencyCode: result.data.geobytescurrencycode,
+							nationality: result.data.geobytesnationalitysingular,
+							nationalityPlural: result.data.geobytesnationalityplural
+						};
+						Meteor.users.update({_id: user._id},{$set:{baseLocation: locationProperties}});
+					}
+					else
+						console.log('ENCOUNTERED an eRROR in IP LOCATION METHOD even though response was 200: '+response);
+				}
+				else
+				{
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+					console.log('REACHED IP LOCATION METHOD ERROR: ');
+					console.log(error);
+				}
+			});
+		}
+	}
+	else
+		console.log('Base location already exists for this user; so not doing anything!');
 }
 
 Meteor.methods({
@@ -249,5 +304,20 @@ Meteor.methods({
 	getFriendData: function(friendList) {
 		var friendData = Meteor.users.find({'services.facebook.id': {$in: friendList}}).fetch();
 		return friendData;
+	},
+	setUserBaseLocation: function(fbid) {
+		setLocationForUser(fbid);
+	},
+	setLocationForUnsetUsers: function() {
+		var unsetUsers = Meteor.users.find({'baseLocation': { '$exists': false }, 'status.lastLogin': { '$exists': true }, 'status.lastLogin.ipAddr': {'$ne': '127.0.0.1'}}).fetch();
+		console.log('THESE ARE THE USERS WHO do not have location set yet, but have a last login and the last login IP address is not 127.0.0.1: ');
+		console.log(unsetUsers.length + ' USERS in total');
+		console.log(unsetUsers);
+		if(!_.isEmpty(unsetUsers))
+		{
+			_.each(unsetUsers, function(z){
+				setLocationForUser(z.services.facebook.id);
+			});
+		}
 	}
 });

@@ -24,7 +24,8 @@ Meteor.publish("userData", function () {
           "tastemakers": 1,
           "unfollowedFriends": 1,
           "createdAt": 1,
-          "status": 1
+          "status": 1,
+          "baseLocation": 1
        	}
      });
   } else {

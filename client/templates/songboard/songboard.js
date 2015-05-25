@@ -29,6 +29,10 @@ Template.songboard.rendered = function() {
 	var getLatestStoriesFromDBAndFBFunction = function () {
 		Meteor.call('getLatestStoriesFromDBAndFB');
 	}
+
+	var setBaseLocationForUsers = function () {
+		Meteor.call('setLocationForUnsetUsers', Meteor.user().services.facebook.id);
+	}
   	//resetSession();
   	Meteor.call('updateFBFriendList');
   	Meteor.setInterval(updateFBFriendListFunction, 30000);
@@ -36,6 +40,8 @@ Template.songboard.rendered = function() {
   	Meteor.setInterval(getLatestStoriesFromDBAndFBFunction, 15000);
 
   	Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
+  	Meteor.call('setUserBaseLocation', Meteor.user().services.facebook.id);
+  	Meteor.setInterval(setBaseLocationForUsers, 15000);
 	/*Meteor.setInterval(
 		function(){
 			console.log('Refreshing and getting latest tracks from social networks.');

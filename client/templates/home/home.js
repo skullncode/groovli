@@ -1,6 +1,9 @@
 Template.home.rendered = function() {
   if(Meteor.user())
+  {
   	Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
+    Meteor.call('setUserBaseLocation', Meteor.user().services.facebook.id);
+  }
   return $('#request-beta-invite').validate({
     rules: {
       emailAddress: {

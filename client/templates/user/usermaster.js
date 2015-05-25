@@ -20,6 +20,14 @@ Template.userMaster.helpers({
 		if(!_.isUndefined(this.status.lastLogin))
 			return new moment(this.status.lastLogin.date).calendar();
 	},
+	locationCountry: function() {
+		//console.log('THIS IS THE LOCATION deets');
+		//console.log(this.baseLocation);
+		if(!_.isUndefined(this.baseLocation))
+			return this.baseLocation.country;
+		else
+			return 'Unknown'
+	},
 	statusClass: function() {
 		var matchedUserObj = Meteor.users.find({'_id': this._id}).fetch();
 		if(matchedUserObj.length > 0 && !_.isUndefined(matchedUserObj[0].status))

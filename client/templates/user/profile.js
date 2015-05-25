@@ -16,6 +16,20 @@ Template.profile.helpers({
     		return '<i class="fa fa-facebook-official"></i> friend<br><br>';
 	},
 
+	locationDetailsExist: function() {
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
+			return true;
+		else
+			return false;
+	},
+
+	locationCountry: function() {
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
+			return Session.get(Router.current().params._id+'_uObj').baseLocation.country;
+		else
+			return 'Unknown'
+	},
+
 	fbFriendCount: function() {
 		if(!_.isUndefined(Meteor.user().fbFriends))
 		{

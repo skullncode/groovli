@@ -12,6 +12,9 @@
                             {{else}}
                                 <h2>you</h2>
                             {{/if}}
+                            {{#if locationDetailsExist}}
+                                <p><strong>From: </strong> {{locationCountry}} </p>
+                            {{/if}}
                             <p><strong>Member since: </strong> {{memberSince createdAt}} </p>
                             <p><strong>Last activity: </strong> {{lastActivity}} </p>
                             <!--<p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>-->
