@@ -16,7 +16,10 @@ Template.profileTabs.helpers({
 
 	mutualListenHistoryMatchCount: function()
 	{
-		return Session.get(Router.current().params._id+'_mlh').length;
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_mlh')))
+			return Session.get(Router.current().params._id+'_mlh').length;
+		else 
+			return 0;
 	},
 
 	historyCount: function()
@@ -82,21 +85,29 @@ function getMutualListenHistory(lh, uid)
 		    	//console.log('MUTUAL LISTEN HISTORY SUCCESS: ');
 		    	//console.log(result);
 		    	var mlh = _.map(result, function(lis){ return {_id: lis._id, soc_id: lis.soc_id, soc_name: lis.soc_name, songObj: Songs.findOne({'sl': lis.sl})}});
+		    	//console.log('THIS IS THE MAPPED MLH: ');
+		    	//console.log(mlh);
 		    	var cleanedMlh = [];
 		    	var mlhAndCount = [];
 		    	_.each(mlh, function(x) {
 		    		//console.log('inside the mlh function: ');
-		    		var foundListen = _.findWhere(cleanedMlh, {_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
-		    		//console.log('THIS IS THE FIND LOC: ' + findLoc);
-		    		if(_.isUndefined(foundListen))
+		    		if(!_.isUndefined(x.songObj))
 		    		{
-		    			cleanedMlh.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
-		    			mlhAndCount.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl, listenCount: 1});
-		    		}
-		    		else
-		    		{
-		    			var loc = _.indexOf(cleanedMlh, foundListen);
-		    			mlhAndCount[loc].listenCount += 1;
+			    		var foundListen = _.findWhere(cleanedMlh, {_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
+			    		//console.log('THIS IS THE FIND LOC: ' + foundListen);
+			    		if(_.isUndefined(foundListen))
+			    		{
+			    			//console.log('PUSHING THIS link for the first time: ' + x.songObj.sl);
+
+			    			cleanedMlh.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl});
+			    			mlhAndCount.push({_id: x._id, soc_id: x.soc_id, soc_name: x.soc_name, sa: x.songObj.sa, st: x.songObj.st, sl: x.songObj.sl, listenCount: 1});
+			    		}
+			    		else
+			    		{
+			    			//console.log('PUSHING THIS link for not the first time: ' + x.songObj.sl);
+			    			var loc = _.indexOf(cleanedMlh, foundListen);
+			    			mlhAndCount[loc].listenCount += 1;
+			    		}
 		    		}
 		    	});
 		    	//console.log('THIS IS THE CLEANED mlh:');
