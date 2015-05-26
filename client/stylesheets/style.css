@@ -470,3 +470,16 @@ body {
   height: 100px;
   background-color: #f5f5f5;
 }
+/*share on facebook button*/
+.btn-facebook {
+    background: #3b5998;
+    border-radius: 0;
+    color: #fff;
+}
+.btn-facebook:link, .btn-facebook:visited {
+    color: #fff
+}
+.btn-facebook:active, .btn-facebook:hover {
+    background: #30477a;
+    color: #fff
+}

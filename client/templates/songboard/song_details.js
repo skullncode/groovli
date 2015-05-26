@@ -61,3 +61,25 @@ Template.songDetails.helpers({
       return globalIDsThatSharedThisSong;
     }
 });
+
+Template.songDetails.events({
+  'click #shareButton': function(e) {
+    //console.log('CLICKED share button!');
+    var cs = Session.get('CS');
+    if(cs !== undefined && cs !== {} && cs !== [])
+    {
+      //console.log(FB);
+      FB.init({
+            appId      : '848177241914409', //dev app
+            //appId      : '1555076711418973', //prod app
+            xfbml      : true,
+            version    : 'v2.2'
+          });
+      FB.ui({
+        method: 'share',
+        href: cs.sl,
+      }, function(response){});
+    }
+    return true;
+  }
+});

@@ -15,16 +15,6 @@ if (Meteor.isClient) {
 		}
 	});
 
-	//FB SDK configuration
-	/*window.fbAsyncInit = function() {
-		FB.init({
-		  appId      : '848177241914409',
-		  status     : true,
-		  xfbml      : true
-		});
-	};*/
-
-
   });
 	Deps.autorun(function() {
 		if(Meteor.user() && Meteor.user().services !== undefined && Meteor.user().services.facebook !== undefined)
