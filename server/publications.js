@@ -35,7 +35,20 @@ Meteor.publish("userData", function () {
 
 Meteor.publish(null, function (){ 
   return Meteor.roles.find({})
-})
+});
+
+Meteor.publish('messages', function(userID) {
+  //console.log('INSIDE THE messages publish function with this userID: ');
+  //console.log(userID);
+  if(userID !== null)
+  {
+    //var foundMsgs = Messages.find({$or: [{'from': String(userID)},{'to': String(userID)}]});
+    //console.log('THIS IS THE MESSAGES FOUND:')
+    //console.log(foundMsgs.fetch());
+    //return foundMsgs;
+    return Messages.find({$or: [{'from': String(userID)},{'to': String(userID)}]});
+  }
+});
 
 Meteor.publish('userStatus', function() {
   return Meteor.users.find({'status.online': true }, 

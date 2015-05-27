@@ -1,3 +1,7 @@
+Template.userLogin.rendered = function() {
+    //Session.set('umc', 0);  
+};
+
 Template.userLogin.helpers({
     notOnSignUpPage: function() {
         var currentRoute = Router.current().route.getName();
@@ -5,7 +9,19 @@ Template.userLogin.helpers({
             return true;
         else
             return false;
+    },
+    anyUnreadMsgs: function() {
+        //console.log('THIs is the result of unread msgs: ');
+        //console.log(Session.get('umc') > 0);
+        if(Session.get('umc') > 0)
+            return true;
+        else
+            return false;
+    },
+    unreadMsgCount: function() {
+        return Session.get('umc');
     }
+
 });
 
 Template.userLogin.events({

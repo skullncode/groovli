@@ -24,6 +24,16 @@ if (Meteor.isClient) {
 		
 		Meteor.subscribe('songs', Session.get('ud'));
 
+		Meteor.subscribe('messages', Session.get('ud'));
+
+		var msgCount = Messages.find({'to': String(Session.get('ud')), 'read': false}).fetch();
+		//console.log('THIS IS THE MSG COUNT RESULT: ');
+	    //console.log(msgCount);
+	    if(msgCount.length > 0)
+	        Session.set('umc', msgCount.length);
+	    else
+	        Session.set('umc', 0);
+
 		Meteor.subscribe('userStatus');
 	})
 }

@@ -22,7 +22,7 @@
         <ul class="nav navbar-nav navbar-right">
           {{#if currentUser}}
             <li class="{{ isActiveRoute regex='poll' }}" data-toggle="tooltip" data-placement="top" title="Tell us what you think of Groovli!"><a href="#" id='pollButton'><i class="fa fa-bar-chart"></i> Poll</a></li>
-            <li class="{{ isActiveRoute regex='contact' }}" data-toggle="tooltip" data-placement="top" title="Have any feedback?  Facing any issues?  Please let us know!"><a href="#" id='contactButton'><i class="fa fa-bullhorn"></i> Feedback / Issue?</a></li>
+            <li class="{{ isActiveRoute regex='contact' }}" data-toggle="tooltip" data-placement="top" title="Have any feedback?  Facing any issues?  Please let us know!"><a href="#" id='contactButton'><i class="fa fa-bullhorn"></i> Issues?</a></li>
           {{/if}}
           {{#unless currentUser}}
             <li class="{{ isActiveRoute regex='home' }}"><a href="{{ pathFor 'home' }}"><i class="fa fa-home"></i> Home</a></li>

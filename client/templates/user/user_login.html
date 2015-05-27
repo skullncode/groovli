@@ -4,6 +4,15 @@
 		<li>
 			<a class='headerProfileImageLink' href="/profile/{{currentUser._id}}" target='blank' data-toggle="tooltip" data-placement="top" title="Your profile page"><img class="img-rounded headerProfileImage" style="width:40px;height:40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
 		</li>
+		 <li class="{{ isActiveRoute regex='messages' }}">
+		 	<a href="{{ pathFor 'messages' }}"><i class="fa fa-comment"></i>
+			 {{#if anyUnreadMsgs}}
+			 	<span class="badge">{{unreadMsgCount}}</span>
+			 {{else}}
+			 	<span class="badge"></span>
+			 {{/if}}
+		 	</a>
+		 </li>
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	        <i class="fa fa-user"></i> {{ currentUser.profile.name }} <i class="fa fa-caret-down"></i>
