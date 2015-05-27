@@ -78,7 +78,24 @@ Template.songDetails.events({
       FB.ui({
         method: 'share',
         href: cs.sl,
-      }, function(response){});
+      },
+      // callback
+      function(response) {
+        if (response && !response.error_code) {
+          //console.log('THIs IS THE RESPONSE!')
+          var sharedFBObject = {
+            storyTitle: '',
+            uid: Meteor.user().services.facebook.id,
+            msgWithStory: 'shared from Groovli',
+            storyLink: cs.sl,
+            systemDate: new moment().unix()
+          };
+          Meteor.call('insertNewSong',sharedFBObject, 'FB', 'YOUTUBE');
+          toastr.success('Song shared successfully!');
+        } else {
+          toastr.error('Error while sharing song!');
+        }
+      });
     }
     return true;
   }
