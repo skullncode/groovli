@@ -70,8 +70,8 @@ Template.songDetails.events({
     {
       //console.log(FB);
       FB.init({
-            appId      : '848177241914409', //dev app
-            //appId      : '1555076711418973', //prod app
+            //appId      : '848177241914409', //dev app
+            appId      : '1555076711418973', //prod app
             xfbml      : true,
             version    : 'v2.2'
           });

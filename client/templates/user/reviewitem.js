@@ -34,7 +34,7 @@ if (Meteor.isClient) {
     albumArt: function() {
       if(!_.isUndefined(this.LFMLargeAlbumArt) && this.LFMLargeAlbumArt.indexOf('http') === 0)
         return '<img src="'+this.LFMLargeAlbumArt+'" height="100px" width="100px">';
-      else if(!_.isUndefined(this.LFMLargeAlbumArt) && this.LFMLargeAlbumArt === 'none')
+      else if((!_.isUndefined(this.LFMLargeAlbumArt) && this.LFMLargeAlbumArt === 'none') || _.isEmpty(this.LFMLargeAlbumArt))
         return '<p>ART UNAVAILABLE</p>';
       else
         return '<p>ART NOT RETRIEVED!</p>';

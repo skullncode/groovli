@@ -310,9 +310,9 @@ Meteor.methods({
 	},
 	setLocationForUnsetUsers: function() {
 		var unsetUsers = Meteor.users.find({'baseLocation': { '$exists': false }, 'status.lastLogin': { '$exists': true }, 'status.lastLogin.ipAddr': {'$ne': '127.0.0.1'}}).fetch();
-		console.log('THESE ARE THE USERS WHO do not have location set yet, but have a last login and the last login IP address is not 127.0.0.1: ');
-		console.log(unsetUsers.length + ' USERS in total');
-		console.log(unsetUsers);
+		//console.log('THESE ARE THE USERS WHO do not have location set yet, but have a last login and the last login IP address is not 127.0.0.1: ');
+		//console.log(unsetUsers.length + ' USERS in total');
+		//console.log(unsetUsers);
 		if(!_.isEmpty(unsetUsers))
 		{
 			_.each(unsetUsers, function(z){
