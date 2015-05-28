@@ -69,7 +69,7 @@ function getMongoSelectorForFriendSongs() {
   query["$nor"].push(userSelf);
 
   //if friends are unfollowed they need to be excluded from the tastemaker list also
-  if(Meteor.user().unfollowedFriends.length > 0)
+  if(!_.isUndefined(Meteor.user().unfollowedFriends) && Meteor.user().unfollowedFriends.length > 0)
   {
     while(counter < Meteor.user().unfollowedFriends.length)
     {
@@ -83,7 +83,7 @@ function getMongoSelectorForFriendSongs() {
 
   counter = 0;
   //if(Meteor.user().fbFriends.length > 1)
-  if(Meteor.user().tastemakers.length > 0)
+  if(!_.isUndefined(Meteor.user().tastemakers) && Meteor.user().tastemakers.length > 0)
   {
     query["$or"] = [];
 
