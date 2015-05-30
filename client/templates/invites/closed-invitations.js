@@ -27,6 +27,7 @@ Template.closedInvitations.helpers({
         "_id": 1,
         "inviteNumber": 1,
         "email": 1,
+        "fbID": 1,
         "token": 1,
         "dateInvited": 1,
         "invited": 1,
