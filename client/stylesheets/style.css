@@ -686,4 +686,8 @@ body {
   margin-top: 5px;
   float:right;
 }
+
+.badge-error {
+  background-color: red;
+}
 /*end chat messages styling*/

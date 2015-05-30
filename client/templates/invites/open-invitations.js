@@ -28,6 +28,7 @@ Template.openInvitations.helpers({
         "inviteNumber": 1,
         "requested": 1,
         "email": 1,
+        "fbID": 1,
         "invited": 1
       }
     });

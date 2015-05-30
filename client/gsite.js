@@ -30,7 +30,11 @@ if (Meteor.isClient) {
 		//console.log('THIS IS THE MSG COUNT RESULT: ');
 	    //console.log(msgCount);
 	    if(msgCount.length > 0)
+	    {
+	    	//var s = new buzz.sound('/sounds/laser.ogg');
+			//s.play();
 	        Session.set('umc', msgCount.length);
+	    }
 	    else
 	        Session.set('umc', 0);
 

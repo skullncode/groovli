@@ -9,18 +9,25 @@ Template.home.rendered = function() {
       emailAddress: {
         email: true,
         required: true
+      },
+      facebookID: {
+        required: true
       }
     },
     messages: {
       emailAddress: {
         email: "Please use a valid email address.",
         required: "An email address is required to get your invite."
+      },
+      facebookID: {
+        required: "We need your facebook account ID, in order to add you as a tester."
       }
     },
     submitHandler: function() {
       var invitee;
       invitee = {
         email: $('[name="emailAddress"]').val().toLowerCase(),
+        fbID: $('[name="facebookID"]').val().toLowerCase(),
         invited: false,
         requested: (new Date()).getTime()
       };

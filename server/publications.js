@@ -61,16 +61,17 @@ Meteor.publish('userStatus', function() {
 });
 
 Meteor.publish('/invites', function() {
-  console.log("INSIDE THE INVITES publishing code: ");
-  console.log(this.userId);
+  //console.log("INSIDE THE INVITES publishing code: ");
+  //console.log(this.userId);
   if (Roles.userIsInRole(this.userId, ['admin'])) {
-    console.log("USER IS IN ADMIN ROLE");
+    //console.log("USER IS IN ADMIN ROLE");
     return Invites.find({}, {
       fields: {
         "_id": 1,
         "inviteNumber": 1,
         "requested": 1,
         "email": 1,
+        "fbID": 1,
         "token": 1,
         "dateInvited": 1,
         "invited": 1,

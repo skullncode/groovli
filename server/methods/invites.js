@@ -3,6 +3,7 @@ Meteor.methods({
     var emailExists, inviteCount;
     check(invitee, {
       email: String,
+      fbID: String,
       requested: Number,
       invited: Boolean
     });

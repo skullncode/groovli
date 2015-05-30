@@ -84,7 +84,11 @@ Template.messagesMaster.helpers({
 				//console.log('THIS IS THE RESULT UNREAD:');
 				//console.log(x);
 				if(x.length > 0)
-					return '<span class="badge" style="margin-right:50px">'+x.length+'</span>'
+				{
+					//var s = new buzz.sound('/sounds/laser.ogg');
+					//s.play();
+					return '<span class="badge badge-error" style="margin-right:50px">'+x.length+'</span>'
+				}
 				else
 					return '';
 			}

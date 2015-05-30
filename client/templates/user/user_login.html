@@ -7,7 +7,7 @@
 		 <li class="{{ isActiveRoute regex='messages' }}">
 		 	<a href="{{ pathFor 'messages' }}" target='blank' title="messages"><i class="fa fa-comment"></i>
 			 {{#if anyUnreadMsgs}}
-			 	<span class="badge">{{unreadMsgCount}}</span>
+			 	<span class="badge badge-error">{{unreadMsgCount}}</span>
 			 {{else}}
 			 	<span class="badge"></span>
 			 {{/if}}
