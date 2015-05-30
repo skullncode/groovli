@@ -34,6 +34,12 @@ Template.tastemakersList.helpers({
       //console.log('SWITCHING TAB IF NOT ALREADY FOCUSED CURRENTLY PLAYING SOnG!!!!');
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
+  },
+  deselectedTab: function(){
+    if(_.isUndefined(_.findWhere(Session.get('selectedTabs'), 'friends')))
+      return 'dimmedTab';
+    else
+      return 'hideDimmer';
   }
 });
 

@@ -11,11 +11,7 @@
 	    width:100%;
 	    height:700px;
 	}
-
-	.hideDimmer {
-		display:none;
-	}
-
+	
 	.musicLoader {
 		position:absolute;
 	    left:45%;
@@ -37,6 +33,7 @@
   </div>
   {{#if currentUser}}
   	{{>songTabs}}
+  	{{>songFilter}}
   {{/if}}
   <div class='{{dimmedOverlay}}'>
   	<h2 class='{{dimmedLoader}}'>

@@ -106,9 +106,23 @@ function getRandomSongTabThatStillHasUnplayedSongs()
 {
   var playableTabsLength = Session.get('playableTabs').length;
   //console.log('@#@#@#@#@#@NUMBER OF PLAYABLE TABS: ' + playableTabsLength);
+  var selectedTabList = Session.get('selectedTabs');
   var randomlySelectedTabIndex = _.random(playableTabsLength-1);
   //console.log('THIS IS THE RANDOMLY SELECTED TAB INDEX: ' + randomlySelectedTabIndex);
   var selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
+
+  //console.log('CURRENTLY SELECTED RANDOM TAB IS: ' + selectedTab);
+  //console.log('CURRENT SELECTED TAB LIST IS : ');
+  //console.log(selectedTabList);
+  while(_.isUndefined(_.findWhere(selectedTabList, selectedTab)))
+  {
+    //console.log('RANDOMLY SELECTED TAB IS NOT A TAB THE USER WANTS TO LISTEN TO; so getting another tab!!!!');
+    randomlySelectedTabIndex = _.random(playableTabsLength-1);
+    selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
+    //console.log('NEW TAB SELECTION TAB IS: ' + selectedTab);
+  }
+
+  //console.log("RANDOM TAB SELECTION COMPLETE NOW; settled on this one: " + selectedTab);
   //var x = Session.get('mygroovsPlayedLength') < getSongsLength('me');
   //var y = Session.get('tastemakersPlayedLength') < getSongsLength('friends');
   //var z = Session.get('globalPlayedLength') < getSongsLength('global');

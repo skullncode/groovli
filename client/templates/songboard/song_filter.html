@@ -1,0 +1,19 @@
+<template name="songFilter">
+	<div id="filter" class="col-md-4 column" style="margin-top:10px">
+		<div class="panel panel-default songFilter">
+			<div class="panel-heading">
+				<h2 class="panel-title"><i class="fa fa-filter"></i>&nbsp;filters</h2>
+				<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+			</div>
+			<div class="panel-body">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i><i class="glyphicon glyphicon-headphones"></i>&nbsp;selected tabs</i></h3>
+			</div>
+               {{#each playableTabs}}
+               	{{{this}}}
+               	&nbsp;&nbsp;&nbsp;
+               {{/each}}
+			</div>
+		</div>
+	</div>
+</template>

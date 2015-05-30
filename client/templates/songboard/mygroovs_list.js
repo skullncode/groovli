@@ -47,6 +47,12 @@ Template.mygroovsList.helpers({
     if(!Session.get('animatedToSong') && Session.get('CS') !== undefined && Session.get('CS').sourceTab === 'me') {
       switchTabIfNotAlreadyFocusedForSelectedSong(Session.get('CS').sourceTab);
     }
+  },
+  deselectedTab: function(){
+    if(_.isUndefined(_.findWhere(Session.get('selectedTabs'), 'me')))
+      return 'dimmedTab';
+    else
+      return 'hideDimmer';
   }
 });
 
@@ -91,7 +97,8 @@ function initializePlayableTabs()
     temp.push('global');
     Session.set('playableTabs',temp);
   }
-  
+
+  Session.set('selectedTabs', temp); //based on playable tabs but determines what tabs have been chosen by the user  
 }
 
 function animateListToCurrentlyPlayingSong() {

@@ -691,3 +691,42 @@ body {
   background-color: red;
 }
 /*end chat messages styling*/
+
+/*song filter styling*/
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+.row {
+    margin-top: 40px;
+    padding: 0 10px;
+}
+.clickable {
+    cursor: pointer;
+}
+
+.songFilter {
+  width: 380px;
+}
+/*end song filter styling*/
+/*song tab deselection*/
+.dimmedTab {
+  position:absolute;
+  left:0;
+  top:45px;
+  background: rgba(255,255,255,1);
+  width:100%;
+  height:90%;
+}
+
+.hideDimmer {
+  display:none;
+}
+
+.tabDeselectedText {
+  position:absolute;
+  font-style: italic;
+    left:15%;
+    top:40%;
+}
+/*end song tab deselection*/

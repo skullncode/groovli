@@ -29,6 +29,12 @@ Template.globalList.helpers({
     else
       return false;
   },
+  deselectedTab: function(){
+    if(_.isUndefined(_.findWhere(Session.get('selectedTabs'), 'global')))
+      return 'dimmedTab';
+    else
+      return 'hideDimmer';
+  }
 });
 
 
