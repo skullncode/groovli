@@ -59,8 +59,10 @@
                                <br><br>
                                <a class="btn btn-warning btn-xs" id="reviewExisting" href="{{ pathFor 'existing' }}"> Review Existing</a>
                                <br><br>
-                               <a class="btn btn-warning btn-xs" id="seeAllUsers" href="{{ pathFor 'allusers' }}"> All Users</a>
+                               <a class="btn btn-warning btn-xs" id="reviewInvalid" href="{{ pathFor 'invalid' }}"> Review Invalid</a>
                                <br><br>
+                               <a class="btn btn-warning btn-xs" id="seeAllUsers" href="{{ pathFor 'allusers' }}"> All Users</a>
+                               <br>
                             {{/if}}
                             {{#if userProfileIsNotYou}}
                                 {{{isUserAFBFriend}}}

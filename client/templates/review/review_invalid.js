@@ -1,24 +1,24 @@
 Template.reviewInvalid.helpers({
-	retrieveExistingSongsForReview: function()
+	retrieveInvalidItemsForReview: function()
 	{
-		getExistingSongsForReview();
+		getInvalidItemsForReview();
 	},
 
 	existingSongsForReview: function() 
 	{
-		return Session.get('esReview');
+		return Session.get('invalidReview');
 	},
 
 	existingCount: function()
 	{
-		return Session.get('esReviewCount');
+		return Session.get('invalidReviewCount');
 	}
 });
 
 Template.reviewInvalid.events({
 	"click #getMissingAlbumArt": function (event) {
       console.log('CLICKED get missing album art button!!');
-      var songList = Session.get('esReview');
+      var songList = Session.get('invalidReview');
       var x = 0;
       while(x < songList.length)
       {
@@ -33,17 +33,17 @@ Template.reviewInvalid.events({
     }
 });
 
-function getExistingSongsForReview()
+function getInvalidItemsForReview()
 {
-	Meteor.call('reviewExistingSongs', function(error, result) {
+	Meteor.call('reviewInvalidSongs', function(error, result) {
 		if(error){
 	        console.log(error.reason);
 	    }
 	    else{
 	    	//console.log('REVIEW EXISTING SUCCESS: ');
 	    	//console.log(result);
-	    	Session.set('esReview', result);
-	    	Session.set('esReviewCount', result.length);
+	    	Session.set('invalidReview', result);
+	    	Session.set('invalidReviewCount', result.length);
 	    }
 	});
 }

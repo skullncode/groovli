@@ -182,7 +182,7 @@ function getAllPossibleUsersForMessaging() {
 Template.messagesMaster.events({
     "click .list-group-item": function (event) {
       //console.log(event);
-      $(event.currentTarget.parentElement).find('.active').removeClass('active');
+      $(event.currentTarget.parentElement.parentElement).find('.active').removeClass('active');
       $(event.currentTarget).addClass('active');
       Session.set('convSelected', true);
       Session.set('cr', event.currentTarget.id);
