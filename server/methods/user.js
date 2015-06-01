@@ -319,5 +319,24 @@ Meteor.methods({
 				setLocationForUser(z.services.facebook.id);
 			});
 		}
+	},
+	getOneSidedFollowers: function(fbid) {
+		//console.log('reached onesided server method with this fbid: ' + fbid);
+		//var onesided = Meteor.users.find({'tastemakers.fbid': String(fbid), 'fbFriends.fbid': {'$ne': String(fbid)}, 'tastemakers.fbid': {'$ne': String(fbid)}}).fetch();
+		var onesided = Meteor.users.find({'tastemakers.fbid': String(fbid)}).fetch();
+		var currentUserObj = Meteor.users.findOne({'services.facebook.id': String(fbid)});
+		var oneSidedCopy = [];
+		if(!_.isEmpty(currentUserObj) && !_.isUndefined(currentUserObj.fbFriends) && !_.isEmpty(onesided))
+		{
+			_.each(onesided, function(x){
+				if(_.isUndefined(_.findWhere(currentUserObj.fbFriends, {'fbid': x.services.facebook.id})) && _.isUndefined(_.findWhere(currentUserObj.tastemakers, {'fbid': x.services.facebook.id})))
+				{
+					//console.log('this person is NOT a friend or a tastemaker, so theyre good: ' + x.profile.name);
+					oneSidedCopy.push(x);
+				}
+			});
+		}
+		//console.log('this is the result: ');
+		return oneSidedCopy;
 	}
 });

@@ -1,12 +1,20 @@
 <template name="messagesMaster">
   <h2>Messages</h2>
 	<div class='col-md-4 column'>
-    <h3>Friends & Tastemakers</h3>
+    <h3><i>Friends & Tastemakers</i></h3>
     <div class="list-group">
       {{#each userList}}
-        <a id='{{services.facebook.id}}' href="#" class="list-group-item">{{profile.name}}{{{currentStatus}}}{{{messageCountPerUser}}}</a>
+        <a id='{{services.facebook.id}}' href="#" class="list-group-item">{{profile.name}}{{{currentStatus}}}{{{messageCountPerUser true}}}</a>
       {{/each}}
     </div>
+    {{#if userHasOneSidedFollowers}}
+      <h3><i>One-sided Followers</i></h3>
+      <div class="list-group">
+        {{#each oneSidedFollowerList}}
+          <a id='{{services.facebook.id}}' href="#" class="list-group-item">{{profile.name}}{{{currentStatus}}}{{{messageCountPerUser false}}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
   <div class='col-md-8 column well well-lg' style="overflow-x: hidden;overflow-y: auto;height:500px;">
     <div id="chatbox" class='chat'>
@@ -29,7 +37,7 @@
         <div id="btn-input" class="input-group" style="position: absolute;bottom: 0;left: 0;">
           <input id="input-chatMessage" type="text" class="form-control" placeholder="Type your message here...hit 'Enter' or click button to Send -->">
           <span class="input-group-btn">
-              <button class="btn btn-warning btn-block" id="btn-sendMessage">Send</button>
+              <button type="button" class="btn btn-primary" id="btn-sendMessage">Send</button>
           </span>
         </div>
       {{else}}

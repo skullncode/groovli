@@ -1,6 +1,8 @@
 Template.messagesMaster.rendered = function() {
 	Session.set(Meteor.user()._id + '_allMessagingUsers', null);
+	Session.set(Meteor.user()._id + '_oneSidedFollowers', null);
 	getAllPossibleUsersForMessaging();
+	getOneSidedFollowers();
 	Session.set('convSelected', false);
 	Session.set('cr', null); //current recipient
 };
@@ -11,9 +13,24 @@ Template.messagesMaster.helpers({
 		return Session.get(Meteor.user()._id + '_allMessagingUsers');
 	},
 
+	oneSidedFollowerList: function() 
+	{
+		return Session.get(Meteor.user()._id + '_oneSidedFollowers');
+	},
+
 	conversationSelected: function()
 	{
 		return Session.get('convSelected');
+	},
+
+	userHasOneSidedFollowers: function()
+	{
+		if(!_.isUndefined(Meteor.user()))
+		{
+			//console.log('THIS IS THE one sided follower list: ');
+			//console.log(Session.get(Meteor.user()._id + '_oneSidedFollowers'));
+			return !_.isEmpty(Session.get(Meteor.user()._id + '_oneSidedFollowers'))
+		}
 	},
 
 	messages: function()
@@ -70,31 +87,68 @@ Template.messagesMaster.helpers({
         else
         	return '<i><p style="float:right" class="small">'+lastLogin+'</p></i>';
 	},
-	messageCountPerUser: function() {
-		if(!_.isNull(Session.get(Meteor.user()._id + '_allMessagingUsers')))
+	messageCountPerUser: function(isFriend) {
+		if(isFriend) //for friends and tastemakers
 		{
-			//console.log('INSIDE FIRST if condition');
-			//var y = _.findWhere(Session.get(Meteor.user()._id + '_allMessagingUsers'), {'_id': String(this._id)});
-			//console.log('THIS IS THE RESULT OF THE FIND WHERE: ');
-			//console.log(y);
-			if(!_.isUndefined(_.findWhere(Session.get(Meteor.user()._id + '_allMessagingUsers'), {'_id': String(this._id)})))
+			if(!_.isNull(Session.get(Meteor.user()._id + '_allMessagingUsers')))
 			{
-				//console.log('INSIDE SECOND if condition');
-				var x = Messages.find({'from': String(this.services.facebook.id), 'read': false}).fetch();
-				//console.log('THIS IS THE RESULT UNREAD:');
-				//console.log(x);
-				if(x.length > 0)
+				//console.log('INSIDE FIRST if condition');
+				//var y = _.findWhere(Session.get(Meteor.user()._id + '_allMessagingUsers'), {'_id': String(this._id)});
+				//console.log('THIS IS THE RESULT OF THE FIND WHERE: ');
+				//console.log(y);
+				if(!_.isUndefined(_.findWhere(Session.get(Meteor.user()._id + '_allMessagingUsers'), {'_id': String(this._id)})))
 				{
-					//var s = new buzz.sound('/sounds/laser.ogg');
-					//s.play();
-					return '<span class="badge badge-error" style="margin-right:50px">'+x.length+'</span>'
+					//console.log('INSIDE SECOND if condition');
+					var x = Messages.find({'from': String(this.services.facebook.id), 'read': false}).fetch();
+					//console.log('THIS IS THE RESULT UNREAD:');
+					//console.log(x);
+					if(x.length > 0)
+					{
+						//var s = new buzz.sound('/sounds/laser.ogg');
+						//s.play();
+						return '<span class="badge badge-error" style="margin-right:50px">'+x.length+'</span>'
+					}
+					else
+						return '';
 				}
-				else
-					return '';
+			}
+		}
+		else //for onesided followers
+		{
+			if(!_.isNull(Session.get(Meteor.user()._id + '_oneSidedFollowers')))
+			{
+				if(!_.isUndefined(_.findWhere(Session.get(Meteor.user()._id + '_oneSidedFollowers'), {'_id': String(this._id)})))
+				{
+					//console.log('INSIDE SECOND if condition');
+					var x = Messages.find({'from': String(this.services.facebook.id), 'read': false}).fetch();
+					//console.log('THIS IS THE RESULT UNREAD:');
+					//console.log(x);
+					if(x.length > 0)
+					{
+						//var s = new buzz.sound('/sounds/laser.ogg');
+						//s.play();
+						return '<span class="badge badge-error" style="margin-right:50px">'+x.length+'</span>'
+					}
+					else
+						return '';
+				}
 			}
 		}
 	}
 });
+
+function getOneSidedFollowers() {
+	Meteor.call('getOneSidedFollowers', Meteor.user().services.facebook.id, function(error, result) {
+		if(error){
+	        console.log(error.reason);
+	    }
+	    else{
+	    	//console.log('result of getOneSidedFollowers: ');
+	    	//console.log(result);
+	    	Session.set(Meteor.user()._id + '_oneSidedFollowers', result);
+	    }
+	});
+}
 
 
 function getAllPossibleUsersForMessaging() {

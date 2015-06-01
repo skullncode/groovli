@@ -109,7 +109,7 @@ function animateListToCurrentlyPlayingSong()
 function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
   if(songSourceTab !== Session.get('activeTab'))
   {
-    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'global')
     {
       console.log('switching TABS to global');
