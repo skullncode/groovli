@@ -76,6 +76,8 @@ if (Meteor.isClient) {
      
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveLabel').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByValue').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').hide(); 
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').hide();
@@ -100,6 +102,8 @@ if (Meteor.isClient) {
 
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveLabel').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByValue').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').show(); 
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').show();
