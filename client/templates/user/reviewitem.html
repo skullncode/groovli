@@ -23,15 +23,21 @@
 				<div class="input-group">
 					<label id='songTitleLabel' class='reviewItemText'>Song Title:&nbsp;&nbsp;</label><label id='songTitleValue' class='reviewItemText'>{{st}}</label>
 				</div>
+				{{#if isSongLive}}
+					<div class="input-group">
+						<label id='liveLabel' class='reviewItemText'>Live:&nbsp;</label><label id='liveValue' class='reviewItemText'>{{isSongLive}}</label>
+					</div>
+				{{/if}}
+				{{#if isSongCover}}
 				<div class="input-group">
-					<label id='liveLabel' class='reviewItemText'>Live:&nbsp;&nbsp;</label><input id="liveValue" type="checkbox" aria-label="live" disabled {{isSongLive}}>
+					<label id='coverLabel' class='reviewItemText'>Cover:&nbsp;</label><label id='coverValue' class='reviewItemText'>{{isSongCover}}</label>
 				</div>
+				{{/if}}
+				{{#if isSongMashup}}
 				<div class="input-group">
-					<label id='coverLabel' class='reviewItemText'>Cover:&nbsp;&nbsp;</label><input id="coverValue" type="checkbox" aria-label="cover" disabled  {{isSongCover}}>
+					<label id='mashupLabel' class='reviewItemText'>Mashup:&nbsp;</label><label id='mashupValue' class='reviewItemText'>{{isSongMashup}}</label>
 				</div>
-				<div class="input-group">
-					<label id='mashupLabel' class='reviewItemText'>Mashup:&nbsp;&nbsp;</label><input id="mashupValue" type="checkbox" aria-label="mashup" disabled  {{isSongMashup}}>
-				</div>
+				{{/if}}
 				<div id="editSection" class="col-md-3 column" style="display:none">
 					<div class="input-group">
 				        <label for="txtEditArtist" class="control-label"><p class="text-info">Artist:</p></label>
@@ -64,6 +70,10 @@
 			        </div>
 			        <div class="input-group">
 			        	<label for="check_cover" class="control-label text-info">Cover:<input id="check_cover" type="checkbox" aria-label="cover"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditCoveredBy" class="control-label"><p class="text-info">Covered By:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditCoveredBy" value="{{coveredBy}}">
 			        </div>
 			        <div class="input-group">
 			        	<label for="check_mashup" class="control-label text-info">Mashup:<input id="check_mashup" type="checkbox" aria-label="mashup"></label>

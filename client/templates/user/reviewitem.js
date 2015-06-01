@@ -18,16 +18,28 @@ if (Meteor.isClient) {
       return (this.album !== undefined && this.album !== "");
     },
     isSongLive: function() {
-      if(this.live)
-        return 'checked';
+      if(!_.isUndefined(this.live))
+      {
+        return this.live;
+      }
+      else
+        return false;
     },
     isSongCover: function() {
-      if(this.cover)
-        return 'checked';
+      if(!_.isUndefined(this.cover))
+      {
+        return this.cover;
+      }
+      else
+        return false;
     },
     isSongMashup: function() {
-      if(this.mashup)
-        return 'checked';
+      if(!_.isUndefined(this.mashup))
+      {
+        return this.mashup;
+      }
+      else
+        return false;
     },
     sharedByDetailsForCurrentSong: function() {
       var shareCounter = 0;
@@ -117,6 +129,7 @@ if (Meteor.isClient) {
     var isSongLive = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_live').is(':checked');
     var isSongCover = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_cover').is(':checked');
     var isSongMashup = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_mashup').is(':checked');
+    var coveredBy = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditCoveredBy').val();
 
     //console.log('ORIGINAL ARTiSt:');
     //console.log(originalArtist);
@@ -129,10 +142,10 @@ if (Meteor.isClient) {
 
     //console.log(event);
 
-    //console.log('song is live:' + isSongLive);
+    //console.log('song is covered by:' + coveredBy);
     //console.log('song is cover:' + isSongCover);
     //console.log('song is mashup:' + isSongMashup);
-
+    
     if(checkItunes === 'CHECK ITUNES')
       checkItunes = true;
     
@@ -144,7 +157,7 @@ if (Meteor.isClient) {
     if((originalArtist !== newArtist) || (originalTitle !== newTitle) || (songLink !== updatedLink) || songValidity === 'INVALID' || isSongLive || !isSongLive) //something has been updated
     {
       console.log('SOMETHING HAS BEEN UDPATED!!!!!');
-      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup);
+      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup, coveredBy);
       //if update is actually done refresh page
       location.reload();
     }
