@@ -17,9 +17,60 @@
 				{{#if pendingIsInvalid}}
 					<i class="fa fa-exclamation-triangle"></i>
 				{{/if}}
-				<h5 id='songArtistLabel' class='reviewItemText'>Song Artist:</h5><h5 id='songArtistValue' class='reviewItemText'>{{sa}}</h5>
-				<h5 id='songTitleLabel' class='reviewItemText'>Song Title:</h5><h5 id='songTitleValue' class='reviewItemText'>{{st}}</h5>
-				<div id="editLabels" class="col-md-3 column" style="display:none">
+				<div class="input-group">
+					<label id='songArtistLabel' class='reviewItemText'>Song Artist:&nbsp;&nbsp;</label><label id='songArtistValue' class='reviewItemText'>{{sa}}</label>
+				</div>
+				<div class="input-group">
+					<label id='songTitleLabel' class='reviewItemText'>Song Title:&nbsp;&nbsp;</label><label id='songTitleValue' class='reviewItemText'>{{st}}</label>
+				</div>
+				<div class="input-group">
+					<label id='liveLabel' class='reviewItemText'>Live:&nbsp;&nbsp;</label><input id="liveValue" type="checkbox" aria-label="live" disabled {{isSongLive}}>
+				</div>
+				<div class="input-group">
+					<label id='coverLabel' class='reviewItemText'>Cover:&nbsp;&nbsp;</label><input id="coverValue" type="checkbox" aria-label="cover" disabled  {{isSongCover}}>
+				</div>
+				<div class="input-group">
+					<label id='mashupLabel' class='reviewItemText'>Mashup:&nbsp;&nbsp;</label><input id="mashupValue" type="checkbox" aria-label="mashup" disabled  {{isSongMashup}}>
+				</div>
+				<div id="editSection" class="col-md-3 column" style="display:none">
+					<div class="input-group">
+				        <label for="txtEditArtist" class="control-label"><p class="text-info">Artist:</p></label>
+				        <input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
+			        </div>
+			        <div class="input-group">
+				        <label for="txtEditTitle" class="control-label"><p class="text-info">Title:</p></label>
+				        <input type="text" class='reviewItemText' size="30" id="txtEditTitle" value="{{st}}">
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditLink" class="control-label"><p class="text-info">Link:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
+			        </div>
+			        <div class="input-group">
+				        <label for="songValiditySelect" class="control-label"><p class="text-info">Validity:</p></label>
+					        <select id="songValiditySelect">
+								<option selected="selected">VALID</option>
+								<option>INVALID</option>
+							</select>
+					</div>
+					<div class="input-group">
+				        <label for="songManualItunesCheck" class="control-label"><p class="text-info">iTunes:</p></label>
+					        <select id="songManualItunesCheck">
+								<option selected="selected">CHECK ITUNES</option>
+								<option>NO HOPE IN ITUNES</option>
+							</select>
+					</div>
+					<div class="input-group">
+			        	<label for="check_live" class="control-label text-info">Live:<input id="check_live" type="checkbox" aria-label="live"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_cover" class="control-label text-info">Cover:<input id="check_cover" type="checkbox" aria-label="cover"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_mashup" class="control-label text-info">Mashup:<input id="check_mashup" type="checkbox" aria-label="mashup"></label>
+			        </div>
+				</div>
+				<!--
+				<div id="editLabels" class="col-md-3 column form-horizontal" style="display:none">
 					<label id="lblEditArtist" for="txtEditArtist">Artist:</label>
 					<br>
 					<label id="lblEditTitle" for="txtEditTitle">Title:</label>
@@ -27,14 +78,20 @@
 					<label id="lblEditTitle" for="txtEditLink">Link:</label>
 					<br>
 					<label id="lblSongValidity" for="songValiditySelect">Validity:</label>
+					<br><br><br>
+					<label id="lblSongLive" for="check_live">Live:</label>
+					<br>
+					<label id="lblSongCover" for="check_cover">Cover:</label>
+					<br>
+					<label id="lblSongMashup" for="check_mashup">Mashup:</label>
 				</div>
-				<div class="col-md-4 column" style="display:none" id="editSection">
+				<div class="col-md-4 column form-horizontal" style="display:none" id="editSection">
 					<input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
 					<br>
 					<input type="text" class='reviewItemText' size="30" id="txtEditTitle" value="{{st}}">
 					<br>
 					<input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
-					<br>
+					<br><br>
 					<select id="songValiditySelect">
 						<option selected="selected">VALID</option>
 						<option>INVALID</option>
@@ -44,7 +101,13 @@
 						<option selected="selected">CHECK ITUNES</option>
 						<option>NO HOPE IN ITUNES</option>
 					</select>
-				</div>
+					<br><br>
+					<input id="check_live" type="checkbox" aria-label="live">
+					<br>
+					<input id="check_cover" type="checkbox" aria-label="cover">
+					<br>
+					<input id="check_mashup" type="checkbox" aria-label="mashup">
+				</div>-->
 			</div>
 			<div class="row">
 				<div class="col-md-4 column">

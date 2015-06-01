@@ -17,6 +17,18 @@ if (Meteor.isClient) {
     albumDeetsNotEmpty: function() {
       return (this.album !== undefined && this.album !== "");
     },
+    isSongLive: function() {
+      if(this.live)
+        return 'checked';
+    },
+    isSongCover: function() {
+      if(this.cover)
+        return 'checked';
+    },
+    isSongMashup: function() {
+      if(this.mashup)
+        return 'checked';
+    },
     sharedByDetailsForCurrentSong: function() {
       var shareCounter = 0;
       var globalIDsThatSharedThisSong = [];
@@ -49,10 +61,18 @@ if (Meteor.isClient) {
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songTitleLabel').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songArtistValue').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songTitleValue').hide();
+     
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').hide(); 
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupValue').hide();
+      
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#manualEdit').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#itunesCheck').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#lfmCheck').hide();
-      $(event.currentTarget.parentElement.parentElement.parentElement).find('#editLabels').show();
+      //$(event.currentTarget.parentElement.parentElement.parentElement).find('#editLabels').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#editSection').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songValidityContainer').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#confirmUpdate').show();
@@ -65,10 +85,18 @@ if (Meteor.isClient) {
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songTitleLabel').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songArtistValue').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songTitleValue').show();
+
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').show(); 
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupValue').show();
+
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#manualEdit').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#itunesCheck').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#lfmCheck').show();
-      $(event.currentTarget.parentElement.parentElement.parentElement).find('#editLabels').hide();
+      //$(event.currentTarget.parentElement.parentElement.parentElement).find('#editLabels').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#editSection').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#songValidityContainer').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#confirmUpdate').hide();
@@ -86,15 +114,24 @@ if (Meteor.isClient) {
     var checkItunes = $(event.currentTarget.parentElement.parentElement.parentElement).find("#songManualItunesCheck").val()
     var songLink = $(event.currentTarget.parentElement.parentElement.parentElement.parentElement).find("#externalSongLink").attr('href');
     var updatedLink = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditLink').val();
+    var isSongLive = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_live').is(':checked');
+    var isSongCover = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_cover').is(':checked');
+    var isSongMashup = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_mashup').is(':checked');
 
-    console.log('ORIGINAL ARTiSt:');
-    console.log(originalArtist);
-    console.log('new ARTiSt:');
-    console.log(newArtist);
-    console.log('VALIDITY:');
-    console.log(songValidity);
-    console.log('CHECK ITUNES:');
-    console.log(checkItunes);
+    //console.log('ORIGINAL ARTiSt:');
+    //console.log(originalArtist);
+    //console.log('new ARTiSt:');
+    //console.log(newArtist);
+    //console.log('VALIDITY:');
+    //console.log(songValidity);
+    //console.log('CHECK ITUNES:');
+    //console.log(checkItunes);
+
+    //console.log(event);
+
+    //console.log('song is live:' + isSongLive);
+    //console.log('song is cover:' + isSongCover);
+    //console.log('song is mashup:' + isSongMashup);
 
     if(checkItunes === 'CHECK ITUNES')
       checkItunes = true;
@@ -104,10 +141,10 @@ if (Meteor.isClient) {
 
     console.log('THIS IS THE LInK SL: ' + songLink);
 
-    if((originalArtist !== newArtist) || (originalTitle !== newTitle) || (songLink !== updatedLink) || songValidity === 'INVALID') //something has been updated
+    if((originalArtist !== newArtist) || (originalTitle !== newTitle) || (songLink !== updatedLink) || songValidity === 'INVALID' || isSongLive || !isSongLive) //something has been updated
     {
       console.log('SOMETHING HAS BEEN UDPATED!!!!!');
-      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes);
+      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup);
       //if update is actually done refresh page
       location.reload();
     }
@@ -120,8 +157,8 @@ if (Meteor.isClient) {
 
   Template.reviewItem.events({
     "click #manualEdit": function (event) {
-      console.log('CLICKED MANUAL EDIT!!!!');
-      console.log(event);
+      //console.log('CLICKED MANUAL EDIT!!!!');
+      //console.log(event);
       if(!Session.get('reviewActive'))
       {        
         switchToFromEditMode(event, 'to');
