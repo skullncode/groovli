@@ -41,6 +41,14 @@ if (Meteor.isClient) {
       else
         return false;
     },
+    isSongRemix: function() {
+      if(!_.isUndefined(this.remix))
+      {
+        return this.remix;
+      }
+      else
+        return false;
+    },
     sharedByDetailsForCurrentSong: function() {
       var shareCounter = 0;
       var globalIDsThatSharedThisSong = [];

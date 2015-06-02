@@ -26,7 +26,7 @@ Template.songDetails.helpers({
   },
 
   remixedByDeets: function() {
-    if(!_.isUndefined(this.remixedBy) || !_.isEmpty(this.remixedBy))
+    if(_.isUndefined(this.remixedBy) || _.isEmpty(this.remixedBy))
       return 'unknown'
     else
       return this.remixedBy;
