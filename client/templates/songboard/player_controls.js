@@ -595,6 +595,24 @@ function selectShareFromControls(share, shares, tab) {
      //console.log('CURRENT HISTORY IS: ');
      //console.log(musicHistory);
    }
+
+   function selectAndHighlightSongAfterSharing() {
+    $($('.songBrowserItem')[0]).addClass('selected');
+    $('.selected .overlay').addClass('nowplaying');
+    Meteor.setTimeout(animateToMyGroovListAfterSharingSong, 500);
+   }
+
+   function animateToMyGroovListAfterSharingSong()
+   {
+    switchTabIfNotAlreadyFocusedForSelectedSong('me');
+   }
+
+   updateSongSourceTabInHistory = function(updatedSong) {
+    var found = _.findWhere(musicHistory, {'sl': updatedSong.storyLink});
+    found.sourceTab = 'me';
+    setCurrentSong(found);
+    Meteor.setTimeout(selectAndHighlightSongAfterSharing, 500);
+   }
    
    function getCurrentHistoryIndex() {
      return currentHistoryIndex;

@@ -110,7 +110,7 @@ function animateListToCurrentlyPlayingSong() {
   //$('#mygroovsList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
 }
 
-function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
+switchTabIfNotAlreadyFocusedForSelectedSong = function (songSourceTab){
   if(songSourceTab !== Session.get('activeTab'))
   {
     //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');

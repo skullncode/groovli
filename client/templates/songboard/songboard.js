@@ -61,5 +61,16 @@ Template.songboard.helpers({
 			return 'hideDimmer';
 		else
 			return 'musicLoader';
+	},
+	currentSongAlbumArt: function() {
+		if(!_.isUndefined(Session.get('CS')) && !_.isUndefined(Session.get('CS').LFMLargeAlbumArt))
+		{
+			if(Session.get('CS').LFMLargeAlbumArt.indexOf('http://') !== -1)
+				return "background-image: url("+Session.get('CS').LFMLargeAlbumArt+");background-size:cover;"
+			else
+				return "";
+		}
+		else
+			return "";
 	}
 });

@@ -91,6 +91,7 @@ Template.songDetails.events({
             systemDate: new moment().unix()
           };
           Meteor.call('insertNewSong',sharedFBObject, 'FB', 'YOUTUBE');
+          updateSongSourceTabInHistory(sharedFBObject);
           toastr.success('Song shared successfully!');
         } else {
           toastr.error('Error while sharing song!');
