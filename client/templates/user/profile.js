@@ -141,6 +141,30 @@ Template.profile.helpers({
 		Session.set(Router.current().params._id+'topGenresLength', topTeng.length);
 		return topTeng;
 	},
+	getTotalListenCountForUser: function() {
+		
+		Meteor.call('getTotalListenHistoryCountForUser', Router.current().params._id, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	//console.log('SUCCESSFULLY got listen count user!');
+			  	//console.log(result);
+			  	Session.set(Router.current().params._id+'_lhCount', result);
+		    };
+		});
+	},
+	listenCount: function()
+	{
+		var x = Session.get(Router.current().params._id+'_lhCount');
+		if(x > 0)
+			return "<h2><strong>"+x+"</strong></h2><p><small>listens</small></p>";
+		else if(x === 1)
+			return "<h2><strong>1</strong></h2><p><small>listen</small></p>";
+		else
+			return "<h2><strong>0</strong></h2><p><small>listens</small></p>";
+	},
 
 	topGenreLength: function() {
 		return Session.get(Router.current().params._id+'topGenresLength');

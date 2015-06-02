@@ -62,6 +62,24 @@ Template.friendList.helpers({
 		//console.log('SONG LENGTH : ' + x.length);
 		return x.length;
 	},
+	getTotalListenCountForUser: function(uid) {
+		
+		Meteor.call('getTotalListenHistoryCountForUser', uid, function(error,result){
+		    if(error){
+		        console.log(error.reason);
+		    }
+		    else{
+		        // do something with result
+			  	//console.log('SUCCESSFULLY got listen count user!');
+			  	//console.log(result);
+			  	Session.set(uid+'_lhCount', result);
+		    };
+		});
+	},
+	listenCount: function()
+	{
+		return Session.get(this._id+'_lhCount');
+	},
 	alreadyFollowed: function() {
 		Session.set(this._id+'_uObj', this);
 		if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': this.services.facebook.id})))
