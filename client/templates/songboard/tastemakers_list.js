@@ -147,8 +147,6 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
       $('#songTabs a[href="#tastemakers"]').tab('show');
     }
   }
-  else
-    //console.log('not switching tabs as active tab and song source tab is the same!!!');
 
   //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
   Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);

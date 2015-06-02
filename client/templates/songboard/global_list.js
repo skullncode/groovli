@@ -112,13 +112,11 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
     //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'global')
     {
-      console.log('switching TABS to global');
+      //console.log('switching TABS to global');
       $('#songTabs a[href="#global"]').tab('show');
     }
   }
-  else
-    //console.log('not switching tabs as active tab and song source tab is the same!!!');
-
+ 
   //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
   Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);
 }

@@ -102,7 +102,7 @@ function initializePlayableTabs()
 }
 
 function animateListToCurrentlyPlayingSong() {
-  //console.log('ANIMATING LIST WITHIN MY GROOVS TAB');
+  //console.log('animating this list to the currently playing song!!!!');
   //$('#songTabs a[href="#mygroovs"]').tab('show'); 
   var currentScrollOffset = $('#mygroovsList').scrollTop();//$("#personalVidList").scrollTop();
   $('#mygroovsList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
@@ -120,10 +120,8 @@ switchTabIfNotAlreadyFocusedForSelectedSong = function (songSourceTab){
       $('#songTabs a[href="#mygroovs"]').tab('show');
     }
   }
-  else
-    //console.log('not switching tabs as active tab and song source tab is the same!!!');
-
-  //animateListToCurrentlyPlayingSong(); DOES NOT WORK AS DELAY IS REQUIRED
+  
+  //console.log('going to call list animation method now!');
   Meteor.setTimeout(animateListToCurrentlyPlayingSong, 500);
 }
 
