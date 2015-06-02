@@ -7,14 +7,28 @@
 					<div>
 						<h3>{{currentSong.sa}}</h3>
 						<h4>{{currentSong.st}}</h4>
+						<div>
+						<h6>
 						{{#if albumDeetsNotEmpty}}
-							<div>
-								<h6>Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
+								Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
 								<br>from the album <b>{{currentSong.album}}</b>
 								<br>released <b>{{formattedReleaseDate}}</b>
-								<br>Genre: {{currentSong.genre}}</h6>
-							</div>
+								<br>Genre: {{currentSong.genre}}
 						{{/if}}
+						{{#if cover}}
+							<br><i>as covered by <b>{{coveredBy}}</b></i>
+						{{/if}}
+						{{#if live}}
+							<br><b><i>performed live</i></b>
+						{{/if}}
+						{{#if mashup}}
+							<br><b><i>mashup of two or more songs</i></b>
+						{{/if}}
+						{{#if remix}}
+							<br><i>remixed by <b>{{remixedByDeets}}</b></i>
+						{{/if}}
+						</h6>
+						</div>
 					</div>
 				{{else}}
 					<div>

@@ -40,6 +40,13 @@
 					<label id='mashupLabel' class='reviewItemText'>Mashup:&nbsp;</label><label id='mashupValue' class='reviewItemText'>{{isSongMashup}}</label>
 				</div>
 				{{/if}}
+				{{#if isSongRemix}}
+				<div class="input-group">
+					<label id='remixLabel' class='reviewItemText'>Remix:&nbsp;</label><label id='remixValue' class='reviewItemText'>{{isSongRemix}}</label>
+					<br>
+					<label id='remixedByLabel' class='reviewItemText'>Remixed by:&nbsp;</label><label id='remixedByValue' class='reviewItemText'>{{remixedBy}}</label>
+				</div>
+				{{/if}}
 				<div id="editSection" class="col-md-3 column" style="display:none">
 					<div class="input-group">
 				        <label for="txtEditArtist" class="control-label"><p class="text-info">Artist:</p></label>
@@ -79,6 +86,13 @@
 			        </div>
 			        <div class="input-group">
 			        	<label for="check_mashup" class="control-label text-info">Mashup:<input id="check_mashup" type="checkbox" aria-label="mashup"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_remix" class="control-label text-info">Remix:<input id="check_remix" type="checkbox" aria-label="remix"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditRemixedBy" class="control-label"><p class="text-info">Remixed By:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditRemixedBy" value="{{remixedBy}}">
 			        </div>
 				</div>
 				<!--

@@ -78,6 +78,9 @@ if (Meteor.isClient) {
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByLabel').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByValue').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixedByLabel').hide();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixedByValue').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').hide(); 
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').hide();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').hide();
@@ -104,6 +107,9 @@ if (Meteor.isClient) {
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverLabel').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByLabel').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#covereredByValue').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixedByLabel').show();
+      $(event.currentTarget.parentElement.parentElement.parentElement).find('#remixedByValue').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#mashupLabel').show(); 
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#liveValue').show();
       $(event.currentTarget.parentElement.parentElement.parentElement).find('#coverValue').show();
@@ -132,8 +138,10 @@ if (Meteor.isClient) {
     var updatedLink = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditLink').val();
     var isSongLive = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_live').is(':checked');
     var isSongCover = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_cover').is(':checked');
+    var isSongRemix = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_remix').is(':checked');
     var isSongMashup = $(event.currentTarget.parentElement.parentElement.parentElement).find('#check_mashup').is(':checked');
     var coveredBy = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditCoveredBy').val();
+    var remixedBy = $(event.currentTarget.parentElement.parentElement.parentElement).find('#txtEditRemixedBy').val();
 
     //console.log('ORIGINAL ARTiSt:');
     //console.log(originalArtist);
@@ -161,7 +169,7 @@ if (Meteor.isClient) {
     if((originalArtist !== newArtist) || (originalTitle !== newTitle) || (songLink !== updatedLink) || songValidity === 'INVALID' || isSongLive || !isSongLive) //something has been updated
     {
       console.log('SOMETHING HAS BEEN UDPATED!!!!!');
-      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup, coveredBy);
+      Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup, coveredBy, isSongRemix, remixedBy);
       //if update is actually done refresh page
       location.reload();
     }

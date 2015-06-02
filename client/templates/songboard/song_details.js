@@ -25,6 +25,13 @@ Template.songDetails.helpers({
   		return false;
   },
 
+  remixedByDeets: function() {
+    if(!_.isUndefined(this.remixedBy) || !_.isEmpty(this.remixedBy))
+      return 'unknown'
+    else
+      return this.remixedBy;
+  },
+
   albumDeetsNotEmpty: function() {
   	var cs = Session.get('CS');
     //console.log('CHECKING if ALBUM deets are empty!!');
