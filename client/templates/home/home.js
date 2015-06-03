@@ -37,6 +37,7 @@ Template.home.rendered = function() {
           return toastr.error(error.reason);
 	      } else {
 	      	$('[name="emailAddress"]').val('');
+          $('[name="facebookID"]').val('');
 	        //return alert("Invite requested. We'll be in touch soon. Thanks for your interest in Groovli!");
           return toastr.success("Invite requested. We'll be in touch soon. Thanks for your interest in Groovli!");
 	      }

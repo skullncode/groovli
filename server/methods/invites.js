@@ -23,6 +23,8 @@ Meteor.methods({
         if (error) {
           return console.log(error);
         }
+        //console.log('SIGNED USER UP TO INVITE LIST!!!');
+        sendNotificationForUserSignup(invitee);
       });
     }
   },
@@ -137,3 +139,16 @@ Meteor.methods({
       })
   }
 });
+
+function sendNotificationForUserSignup(invitee){
+  //console.log('sending notification email now!');
+  Email.send({
+    to: "sandeep@groovli.com",
+    from: "Groovli Signup Notification <noreply@groovli.com>",
+    subject: "Groovli: new user sign-up notification",
+    html: Handlebars.templates['new-signup-notification']({
+      invitee_email: invitee.email,
+      invitee_id: invitee.fbID
+    })
+  });
+}
