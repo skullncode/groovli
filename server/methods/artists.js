@@ -45,7 +45,7 @@ Meteor.methods({
 	},
 	findArtistForRouting: function(artistName)
 	{
-		return Artists.findOne({'name': artistName});
+		return Artists.findOne({'name': {$regex: new RegExp('^' + artistName, 'i')}});
 	},
 	deleteArtistEntry: function(artistName) {
 	    Artists.remove({name: artistName}, function(error) {
@@ -59,7 +59,7 @@ Meteor.methods({
 	      })
   	},
   	doesArtistHavePage: function(artistName) {
-  		var x = Artists.findOne({'name': artistName});
+  		var x = Artists.findOne({'name': {$regex: new RegExp('^' + artistName, 'i')}});
   		//console.log("GOT THIS: ");
   		//console.log(x);
   		if(_.isEmpty(x))
