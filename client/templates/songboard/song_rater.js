@@ -100,7 +100,7 @@ Template.songRater.helpers({
             }
 
             avg = avg / result.length;
-
+            avg = avg.toFixed(1); //rounding to nearest 1 decimal place for rating or its too long
             Session.set('numrtrs', result.length);
 
             //console.log('THIS IS THE AVERAGE rating: ' + avg);
