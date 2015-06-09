@@ -1,0 +1,81 @@
+<template name="artistProfile">
+{{getArtist}}
+  {{#with artistObject}}
+    <div class="container">
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+               <div class="well profile">
+                    <div class="col-sm-12">
+                        <div class="col-xs-12 col-sm-8">
+                            <h2>{{name}}</h2>
+                            {{#if placeBegan}}
+                              <p><strong>From: </strong> {{placeBegan}} </p>
+                            {{/if}}
+                            {{#if began}}
+                              <p><strong>Started: </strong> {{began}} </p>
+                            {{/if}}
+                            {{#if bio}}
+                              <p><strong>About: </strong> {{{cleanedBio}}} </p>
+                            {{/if}}
+                            {{#if hasSimilar}}
+                              <p><strong>Simlar Artists: </strong>
+                              {{#each similar}}
+                                  {{{cleanedSimilarURL this}}}
+                              {{/each}}
+                              </p>
+                            {{/if}}
+                            <!--
+                            {{#if hasGenres}}
+                              <p><strong>Genres: </strong>
+                              {{#each genres}}
+                                  <a href='#'><span class="tags">{{this}}</span></a>
+                              {{/each}}
+                              </p>
+                            {{/if}}-->
+                        </div>         
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <figure>
+                                {{{artistImage}}}
+                            </figure>
+                        </div>
+                    </div>            
+                    <div class="col-xs-12 divider text-center">
+                        <div class="col-xs-12 col-sm-4 emphasis">
+                            {{{songCount}}}
+                        </div>
+                        <div class="col-xs-12 col-sm-4 emphasis">
+                            {{{albumCount}}}
+                        </div>
+                        
+                        <!--<div class="col-xs-12 col-sm-4 emphasis">
+                            <h2><strong>245</strong></h2>                    
+                            <p><small>Songs Rated</small></p>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 emphasis">
+                            <h2><strong>245</strong></h2>
+                            <p><small>Songs Rated</small></p>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 divider text-center">
+                        <div>
+                            {{> artistTabs}}
+                        </div>
+                        <!--<div class="col-xs-12 col-sm-3 emphasis">
+                            <h2><strong>{{ratingCount services.facebook.id}}</strong></h2>                    
+                            <p><small>Songs Rated</small></p>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 emphasis">
+                            <h2><strong> 20,7K </strong></h2>                    
+                            <p><small>Followers</small></p>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 emphasis">
+                            <h2><strong>245</strong></h2>                    
+                            <p><small>Following</small></p>
+                        </div>-->
+                    </div>
+               </div>                 
+            </div>
+          </div>
+        </div>
+  {{/with}}
+</template>

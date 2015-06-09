@@ -1,0 +1,39 @@
+<template name="artistTabs">
+	{{getSongsForArtist}}
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs listenHistoryTab" role="tablist" id="profileTabs">
+			<li role="presentation" class="active"><a href="#listenHistory" aria-controls="listenHistory" role="tab" data-toggle="tab">songs</a></li>
+			{{#if userProfileIsYou}}
+				<li role="presentation"><a href="#mutualListen" aria-controls="mutualListen" role="tab" data-toggle="tab">mutual</a></li>
+			{{/if}}
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="listenHistory">
+				<ul id='listenHistory' class="listenHistory">
+				<li>
+					{{#each songsForArtist}}
+						{{> songItem}}
+					{{/each}}
+				</li>
+				</ul>
+				<!--{{{songCount}}}-->
+			</div>
+			{{#if userProfileIsYou}}
+				<div role="tabpanel" class="tab-pane fade" id="mutualListen">
+					<ul id='listenHistory' class="listenHistory">
+						<li>
+							{{#each mutualListenHistoryForUser}}
+								{{> mutualItem}}
+							{{/each}}
+						</li>
+					</ul>
+					<h2><strong>{{mutualListenHistoryMatchCount}}</strong></h2>                    
+	            	<p><small>song matches</small></p>
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</template>

@@ -2,10 +2,15 @@
 	{{#if songPlaying}}
 		{{#with currentSong}}
 			{{currentSongHasEncounteredAnError}}
+			{{checkIfArtistHasPage currentSong.sa}}
 			<div class="col-md-8 column">
 				{{#if artistTrackAreNotSame}}
 					<div>
-						<h3>{{currentSong.sa}}</h3>
+						{{#if artistHasPage}}
+							<h3><a href="{{pathFor 'artist' _name=currentSong.sa }}" target='blank' title="artist page">{{currentSong.sa}}</a></h3>
+						{{else}}
+							<h3>{{currentSong.sa}}</h3>
+						{{/if}}
 						<h4>{{currentSong.st}}</h4>
 						<div>
 						<h6>

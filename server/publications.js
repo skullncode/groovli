@@ -37,6 +37,10 @@ Meteor.publish(null, function (){
   return Meteor.roles.find({})
 });
 
+Meteor.publish('artists', function (){ 
+  return Artists.find({})
+});
+
 Meteor.publish('messages', function(userID) {
   //console.log('INSIDE THE messages publish function with this userID: ');
   //console.log(userID);

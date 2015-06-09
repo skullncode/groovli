@@ -66,7 +66,13 @@ Template.songDetails.helpers({
         shareCounter++;
       }
       return globalIDsThatSharedThisSong;
-    }
+    },
+  artistHasPage: function() {
+    return Session.get('artistHasPage');
+  },
+  checkIfArtistHasPage: function(artistName) {
+    doesArtistHavePage(artistName);
+  }
 });
 
 Template.songDetails.events({
@@ -108,3 +114,16 @@ Template.songDetails.events({
     return true;
   }
 });
+
+function doesArtistHavePage(artName) {
+  Meteor.call('doesArtistHavePage', artName, function(error,result){
+        if(error){
+          console.log('Encountered error while trying to check if artist has page: ' + error)
+        }
+        else{
+            // do something with result
+          //console.log('received artist page result: ' + result);
+          Session.set('artistHasPage', result);
+        };
+    });
+}

@@ -19,19 +19,25 @@ function playerLoaded()
   {
     while(_.isUndefined(ytplayer))
     {
-      ytplayer = new YT.Player('player', {
-                  playerVars: { 
-                    'autoplay': 0, 
-                    'controls': 0,
-                    'autohide': 1,
-                    'wmode':'opaque', 
-                    'enablejsapi': 1, 
-                    'showinfo': 0, 
-                    'color': 'white',
-                    'iv_load_policy': 3,
-                    'fs': 0
-                  }
-      });
+      try {
+        ytplayer = new YT.Player('player', {
+          playerVars: { 
+            'autoplay': 0, 
+            'controls': 0,
+            'autohide': 1,
+            'wmode':'opaque', 
+            'enablejsapi': 1, 
+            'showinfo': 0, 
+            'color': 'white',
+            'iv_load_policy': 3,
+            'fs': 0
+          }
+        });
+      }
+      catch(err) {
+          console.log('encountered error while trying to initialize ytplayer: ' + err);
+          ytplayer = undefined;
+      }
     }
     console.log('ytplayer loaded, not undefined now!');
   }

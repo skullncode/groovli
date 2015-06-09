@@ -1,0 +1,15 @@
+<template name="artistItem">
+	<div class='thumbnail songBrowserItem' id='artistItemEntry'>
+		<div class="col-md-4 column">
+			{{{artistImage}}}
+		</div>
+		<div class="col-md-2 column">
+			<h3 id='artistName'>{{name}}</h3>
+			{{#each genres}}
+				<h5>{{this}}</h5>
+			{{/each}}
+			<button class="btn btn-danger btn-xs" id="deleteArtistEntry">Delete Artist Entry</button>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+</template>

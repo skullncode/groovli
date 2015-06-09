@@ -24,6 +24,8 @@ if (Meteor.isClient) {
 		
 		Meteor.subscribe('songs', Session.get('ud'));
 
+		Meteor.subscribe('artists');
+
 		Meteor.subscribe('messages', Session.get('ud'));
 
 		var msgCount = Messages.find({'to': String(Session.get('ud')), 'read': false}).fetch();
