@@ -11,7 +11,7 @@ Template.artistTabs.helpers({
 
 	songCount: function()
 	{
-		console.log('CHECKING SONG COUNT!!!');
+		//console.log('CHECKING SONG COUNT!!!');
 		if(Session.get(Router.current().params._name+'_as_count') > 1 || Session.get(Router.current().params._name+'_as_count') === 0)
 			return '<h2><strong>'+Session.get(Router.current().params._name+'_as_count')+'</strong></h2><p><small>songs on Groovli</small></p>';
 		else if(Session.get(Router.current().params._name+'_as_count') === 1)
@@ -52,7 +52,7 @@ function getSongsForSpecificArtist()
 	    }
 	    else{
 	        // do something with result
-	      console.log(result);
+	      //console.log(result);
 	      //update listen history with song object and timestamp
 	      var artSongs = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
 	      //console.log('GOT history BACK and modified it to be this: ' );

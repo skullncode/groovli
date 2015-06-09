@@ -67,7 +67,7 @@ Template.artistProfile.helpers({
   },
   songCount: function()
   {
-    console.log('CHECKING SONG COUNT!!!');
+    //console.log('CHECKING SONG COUNT!!!');
     if(Session.get(Router.current().params._name+'_as_count') > 1 || Session.get(Router.current().params._name+'_as_count') === 0)
       return '<h2><strong>'+Session.get(Router.current().params._name+'_as_count')+'</strong></h2><p><small>songs on Groovli</small></p>';
     else if(Session.get(Router.current().params._name+'_as_count') === 1)
