@@ -5,7 +5,11 @@
 			</div>
 		</div>
 		<center>
-			<div class='historyItemText'>{{songTitle}}</div>
+			{{#if songIsCover}}
+				<div class='historyItemText'>{{songTitle}} <i>as covered by<b> {{songObj.coveredBy}}</b></i></div>
+			{{else}}
+				<div class='historyItemText'>{{songTitle}}</div>
+			{{/if}}
 			{{#if albumDeetsNotEmpty}}
 				<div class='historyItemText'><small class='text-muted'><i>from the album <b>{{songObj.album}}</b></i></small></div>
 				<div class='historyItemText'><small class='text-muted'><i>released <b>{{formattedReleaseDate}}</b></i></small></div>

@@ -2,11 +2,17 @@ Template.artistTabs.helpers({
 	getSongsForArtist: function()
 	{
 		getSongsForSpecificArtist();
+		getCoverSongsForSpecificArtist();
 	},
 
 	songsForArtist: function()
 	{
 		return Session.get(Router.current().params._name+'_as');
+	},
+
+	coverSongsForArtist: function()
+	{
+		return Session.get(Router.current().params._name+'_acs');
 	},
 
 	songCount: function()
@@ -18,8 +24,11 @@ Template.artistTabs.helpers({
 			return '<h2><strong>'+Session.get(Router.current().params._name+'_as_count')+'</strong></h2><p><small>song on Groovli</small></p>';
 	},
 
-	userProfileIsYou: function() {
-		return isUserProfileYou();
+	hasCoverSongs: function() {
+		if(Session.get(Router.current().params._name+'_acs_count') > 0)
+			return true;
+		else
+			return false;
 	},
 
 	userIsKing: function() {
@@ -59,6 +68,26 @@ function getSongsForSpecificArtist()
 	      //console.log(lh);
 	      Session.set(Router.current().params._name+'_as', artSongs);
 	      Session.set(Router.current().params._name+'_as_count', artSongs.length);
+	    }
+	});
+}
+
+function getCoverSongsForSpecificArtist()
+{
+	//console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
+	Meteor.call('getCoverSongsForSpecificArtist', Router.current().params._name, function(error,result){
+	    if(error){
+	        console.log(error.reason);
+	    }
+	    else{
+	        // do something with result
+	      //console.log(result);
+	      //update listen history with song object and timestamp
+	      var coverSongs = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+	      //console.log('GOT history BACK and modified it to be this: ' );
+	      //console.log(lh);
+	      Session.set(Router.current().params._name+'_acs', coverSongs);
+	      Session.set(Router.current().params._name+'_acs_count', coverSongs.length);
 	    }
 	});
 }

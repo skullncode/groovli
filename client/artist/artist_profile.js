@@ -86,6 +86,18 @@ Template.artistProfile.helpers({
       else if(albumList.length === 1)
         return '<h2><strong>'+albumList.length+'</strong></h2><p><small>album</small></p>';
     }
+  },
+  coverSongCount: function() 
+  {
+    console.log('checking cover songs!!');
+    if(!_.isUndefined(Session.get(Router.current().params._name+'_acs_count')))
+    {
+      console.log('covers are valid!!!');
+      if(Session.get(Router.current().params._name+'_acs_count') > 1 || Session.get(Router.current().params._name+'_acs_count') === 0)
+        return '<h2><strong>'+Session.get(Router.current().params._name+'_acs_count')+'</strong></h2><p><small>covers</small></p>';
+      else if(Session.get(Router.current().params._name+'_acs_count') === 1)
+        return '<h2><strong>'+Session.get(Router.current().params._name+'_acs_count')+'</strong></h2><p><small>cover</small></p>';
+    }
   }
 });
 

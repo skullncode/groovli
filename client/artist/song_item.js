@@ -25,6 +25,13 @@ if (Meteor.isClient) {
       }
     },
 
+    songIsCover: function() {
+      if(!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.cover))
+      {
+        return this.songObj.cover;
+      }
+    },
+
     formattedReleaseDate: function() {
       var formattedDate = new Date(this.songObj.releaseDate).getFullYear();
       return formattedDate;
