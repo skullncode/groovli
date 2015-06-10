@@ -18,7 +18,7 @@ Template.artistProfile.helpers({
   },
   cleanedSimilarURL: function() {
     var cleaned = this.replace(',', ' ');
-    cleaned = cleaned.replace('.', ' ');
+    //cleaned = cleaned.replace(' . ', ' '); doesn't work with S. Carey
     cleaned = cleaned.replace(/\s{2,}/g, ' ');
     doesArtistHavePage(cleaned);
     if(Session.get(cleaned+'_hasPage'))
@@ -122,6 +122,7 @@ function getArtistForRouting()
 }
 
 function doesArtistHavePage(artName) {
+  //console.log('CLIENT METHOD: SEARCHING TO SEE IF THIS SIMILAR ARTIST HAS A PAGE: ' + artName);
   Meteor.call('doesArtistHavePage', artName, function(error,result){
         if(error){
           console.log('Encountered error while trying to check if artist has page: ' + error)
