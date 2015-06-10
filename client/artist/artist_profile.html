@@ -14,7 +14,9 @@
                             {{#if began}}
                               <p><strong>Started: </strong> {{began}} </p>
                             {{/if}}
-                            {{#if bio}}
+                            {{#if bioEmpty}}
+                              <h3><i>No bio exists for this artist</i></h3>
+                            {{else}}
                               <p><strong>About: </strong> {{{cleanedBio}}} </p>
                             {{/if}}
                             {{#if hasSimilar}}

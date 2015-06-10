@@ -44,6 +44,9 @@ Template.artistProfile.helpers({
     else
       return false;
   },
+  bioEmpty: function() {
+    return _.isEmpty(this.bio);
+  },
   cleanedBio: function() {
     this.bio = this.bio.replace(/(\r\n|\n|\r)/gm,"");//remove extra line breaks
     this.bio = this.bio.replace(/\s{2,}/g, ' '); //remove extra whitespace

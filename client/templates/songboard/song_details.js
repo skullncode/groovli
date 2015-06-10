@@ -12,6 +12,20 @@ Template.songDetails.helpers({
     if(cs !== undefined && cs !== {} && cs !== [])
 		return cs;
   },
+
+  ampersandRemovedArtistName: function() {
+    var cs = Session.get('CS');
+    if(!_.isUndefined(cs) && !_.isEmpty(cs) && !_.isUndefined(cs.sa))
+    {
+      var originalArtistName = cs.sa;
+      if(originalArtistName.indexOf('&') >= 0)
+      {
+        originalArtistName = originalArtistName.replace(/&/g, 'and');
+      }
+
+      return originalArtistName;
+    }
+  },
   
   artistTrackAreNotSame: function() {
   	//console.log('CHECKING for artist and track!!');
@@ -68,7 +82,13 @@ Template.songDetails.helpers({
       return globalIDsThatSharedThisSong;
     },
   artistHasPage: function() {
-    return Session.get('artistHasPage');
+    if(Session.get('artistHasPage'))
+    {
+      currentSong.sa = currentSong.sa.replace(/&/g, 'and');
+      return true;
+    }
+    else
+      return false;
   },
   checkIfArtistHasPage: function(artistName) {
     doesArtistHavePage(artistName);

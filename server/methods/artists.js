@@ -59,6 +59,11 @@ Meteor.methods({
 	      })
   	},
   	doesArtistHavePage: function(artistName) {
+  		//replace ampersand with AND so that check works correctly
+		if(artistName.indexOf('&') >= 0)
+		{
+			artistName = artistName.replace(/&/g, 'and');
+		}
   		var x = Artists.findOne({'name': {$regex: new RegExp('^' + artistName, 'i')}});
   		//console.log("GOT THIS: ");
   		//console.log(x);
@@ -196,7 +201,7 @@ function getInfoForNonexistentArtistAndInsert(artistName)
 function cleanArtistQuery(trackQuery)
 {
 	//clean up track information for searching Last.FM
-	trackQuery = trackQuery.replace('&', 'and');
+	trackQuery = trackQuery.replace(/&/g, 'and');
 
 	trackQuery = trackQuery.toUpperCase();
 	trackQuery = trackQuery.replace('LYRICS',' ');
@@ -209,7 +214,7 @@ function cleanArtistQuery(trackQuery)
 	//console.log('the track query ISSS1: '+ trackQuery);					
 
 	//trackQuery = trackQuery.replace(/[^A-Za-z0-9']/g, ' '); //remove special characters - simpler regex
-	trackQuery = trackQuery.replace(/['`~!@#$%^&*()_|+=?;:",<>\{\}\[\]\\\/]/gi, ' ');
+	trackQuery = trackQuery.replace(/['`~@#$%^&*()_|+=?;:",<>\{\}\[\]\\\/]/gi, ' ');
 	trackQuery = trackQuery.replace(/\s{2,}/g, ' '); //remove extra whitespace
 	trackQuery = trackQuery.trim();
 
