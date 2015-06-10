@@ -45,7 +45,9 @@
                         </div>
                         <div class="col-xs-12 col-sm-4 emphasis">
                             <!--{{{albumCount}}}-->
-                            {{{coverSongCount}}}
+                            {{#if hasCoverSongs}}
+                              {{{coverSongCount}}}
+                            {{/if}}
                         </div>
                         
                         <!--<div class="col-xs-12 col-sm-4 emphasis">

@@ -129,19 +129,19 @@ Template.songFilter.helpers({
     {
     	var tabFilters = [];
     	if(!_.isUndefined(_.findWhere(Session.get('playableTabs') ,'me')))
-    		tabFilters.push('<input id="tab_check_mygroovs" type="checkbox" aria-label="my groovs" checked>my groovs</input>');
+    		tabFilters.push('<input id="tab_check_mygroovs" type="checkbox" aria-label="my groovs" checked>&nbsp;my groovs</input>');
     	else
-    		tabFilters.push('<input id="tab_check_mygroovs" type="checkbox" aria-label="my groovs" disabled>my groovs</input>');
+    		tabFilters.push('<input id="tab_check_mygroovs" type="checkbox" aria-label="my groovs" disabled>&nbsp;my groovs</input>');
 
     	if(!_.isUndefined(_.findWhere(Session.get('playableTabs') ,'friends')))
-    		tabFilters.push('<input id="tab_check_tastemakers" type="checkbox" aria-label="tastemakers" checked>tastemakers</input>');
+    		tabFilters.push('<input id="tab_check_tastemakers" type="checkbox" aria-label="tastemakers" checked>&nbsp;tastemakers</input>');
     	else
-    		tabFilters.push('<input id="tab_check_tastemakers" type="checkbox" aria-label="tastemakers" disabled>tastemakers</input>');
+    		tabFilters.push('<input id="tab_check_tastemakers" type="checkbox" aria-label="tastemakers" disabled>&nbsp;tastemakers</input>');
 
     	if(!_.isUndefined(_.findWhere(Session.get('playableTabs') ,'global')))
-    		tabFilters.push('<input id="tab_check_global" type="checkbox" aria-label="global" checked>global</input>');
+    		tabFilters.push('<input id="tab_check_global" type="checkbox" aria-label="global" checked>&nbsp;global</input>');
     	else
-    		tabFilters.push('<input id="tab_check_global" type="checkbox" aria-label="global" disabled>global</input>');
+    		tabFilters.push('<input id="tab_check_global" type="checkbox" aria-label="global" disabled>&nbsp;global</input>');
 
     	return tabFilters;
     }

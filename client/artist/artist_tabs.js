@@ -1,22 +1,21 @@
 Template.artistTabs.helpers({
-	getSongsForArtist: function()
-	{
+	getSongsForArtist: function() {
 		getSongsForSpecificArtist();
-		getCoverSongsForSpecificArtist();
 	},
 
-	songsForArtist: function()
-	{
+	songsForArtist: function() {
 		return Session.get(Router.current().params._name+'_as');
 	},
 
-	coverSongsForArtist: function()
-	{
+	coverSongsForArtist: function()	{
 		return Session.get(Router.current().params._name+'_acs');
 	},
 
-	songCount: function()
-	{
+	artistSpecificActivePeople: function() {
+		return Session.get(Router.current().params._name+'_ausers');
+	},
+
+	songCount: function() {
 		//console.log('CHECKING SONG COUNT!!!');
 		if(Session.get(Router.current().params._name+'_as_count') > 1 || Session.get(Router.current().params._name+'_as_count') === 0)
 			return '<h2><strong>'+Session.get(Router.current().params._name+'_as_count')+'</strong></h2><p><small>songs on Groovli</small></p>';
@@ -29,6 +28,13 @@ Template.artistTabs.helpers({
 			return true;
 		else
 			return false;
+	},
+
+	hasUsers: function() {
+		if(!_.isUndefined(Session.get(Router.current().params._name+'_ausers')) && Session.get(Router.current().params._name+'_ausers').length > 0)
+			return true;
+		else
+			return false
 	},
 
 	userIsKing: function() {
@@ -68,6 +74,8 @@ function getSongsForSpecificArtist()
 	      //console.log(lh);
 	      Session.set(Router.current().params._name+'_as', artSongs);
 	      Session.set(Router.current().params._name+'_as_count', artSongs.length);
+	      getUsersFromSongList(artSongs);
+	      getCoverSongsForSpecificArtist();
 	    }
 	});
 }
@@ -88,8 +96,27 @@ function getCoverSongsForSpecificArtist()
 	      //console.log(lh);
 	      Session.set(Router.current().params._name+'_acs', coverSongs);
 	      Session.set(Router.current().params._name+'_acs_count', coverSongs.length);
+	      getUsersFromSongList(coverSongs);
 	    }
 	});
+}
+
+function getUsersFromSongList(songList)
+{
+	var userListForArtist = Session.get(Router.current().params._name+'_ausers');
+	if(_.isUndefined(userListForArtist))
+		userListForArtist = [];
+
+	_.each(songList, function(x){
+		_.each(x.songObj.sharedBy, function(y){
+			if(!_.isEmpty(y) && y.uid !== Meteor.user().services.facebook.id && _.isUndefined(_.findWhere(userListForArtist, {uid: y.uid})))
+			{
+				userListForArtist.push(y)
+			}
+		});
+	});
+
+	Session.set(Router.current().params._name+'_ausers', userListForArtist);
 }
 
 function getMutualListenHistory(lh, uid)

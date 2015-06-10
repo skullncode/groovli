@@ -27,7 +27,7 @@ Template.artistProfile.helpers({
     if(Session.get(cleaned+'_hasPage'))
       return '<a href="/artist/'+cleaned+'"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="'+this+' page""><b>'+this+'</b></span></a>';
     else
-      return '<span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="No music of this artist has been brought into Groovli yet!">'+this+'</span>';
+      return '<span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="No music of this artist has been brought into Groovli yet; be the first! Share some music of '+this+'!">'+this+'</span>';
   },
   hasSimilar: function() {
     if(!_.isUndefined(this.similar) && !_.isEmpty(this.similar))
@@ -37,6 +37,12 @@ Template.artistProfile.helpers({
   },
   hasGenres: function() {
     if(!_.isUndefined(this.genres) && !_.isEmpty(this.genres))
+      return true;
+    else
+      return false;
+  },
+  hasCoverSongs: function() {
+    if(Session.get(Router.current().params._name+'_acs_count') > 0)
       return true;
     else
       return false;
@@ -89,10 +95,10 @@ Template.artistProfile.helpers({
   },
   coverSongCount: function() 
   {
-    console.log('checking cover songs!!');
+    //console.log('checking cover songs!!');
     if(!_.isUndefined(Session.get(Router.current().params._name+'_acs_count')))
     {
-      console.log('covers are valid!!!');
+      //console.log('covers are valid!!!');
       if(Session.get(Router.current().params._name+'_acs_count') > 1 || Session.get(Router.current().params._name+'_acs_count') === 0)
         return '<h2><strong>'+Session.get(Router.current().params._name+'_acs_count')+'</strong></h2><p><small>covers</small></p>';
       else if(Session.get(Router.current().params._name+'_acs_count') === 1)
