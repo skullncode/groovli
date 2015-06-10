@@ -11,7 +11,8 @@ if (Meteor.isClient) {
       }
     },
     albumDeetsNotEmpty: function() {
-      return (this.songObj.album !== undefined && this.songObj.album !== "");
+      //return (this.songObj.album !== undefined && this.songObj.album !== "");
+      return (!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.album));
     },
 
     songTitle: function() {
@@ -38,46 +39,51 @@ if (Meteor.isClient) {
     },
 
     sharedByHowMany: function() {
-      var counter = 0;
-      var otherCounter = 0;
-      var selfCounter = 0;
-      while(counter < this.songObj.sharedBy.length)
+      if(!_.isUndefined(this.songObj) && !_.isUndefined(this.songObj.sharedBy))
       {
-        if(this.songObj.sharedBy[counter].uid !== Meteor.user().services.facebook.id)
+        var counter = 0;
+        var otherCounter = 0;
+        var selfCounter = 0;
+        while(counter < this.songObj.sharedBy.length)
         {
-          otherCounter++
+          if(this.songObj.sharedBy[counter].uid !== Meteor.user().services.facebook.id)
+          {
+            otherCounter++
+          }
+          else
+          {
+            selfCounter++;
+          }
+          counter++;
         }
-        else
+        var selfText = '';
+        var otherText = '';
+        if(selfCounter > 0)
         {
-          selfCounter++;
+          selfText = 'shared by you';
         }
-        counter++;
-      }
-      var selfText = '';
-      var otherText = '';
-      if(selfCounter > 0)
-      {
-        selfText = 'shared by you';
-      }
 
-      if(selfCounter > 0 && otherCounter === 1)
-      {
-        otherText = ' & ' + otherCounter + ' other person';
-      }
-      else if(selfCounter > 0 && otherCounter > 1)
-      {
-        otherText = ' & ' + otherCounter + ' other people';
-      }
-      else if(selfCounter === 0 && otherCounter === 1)
-      {
-        otherText = 'shared by ' + otherCounter + ' person'; 
-      }
-      else if(selfCounter === 0 && otherCounter > 1)
-      {
-        otherText = 'shared by ' + otherCounter + ' other people'; 
-      }
+        if(selfCounter > 0 && otherCounter === 1)
+        {
+          otherText = ' & ' + otherCounter + ' other person';
+        }
+        else if(selfCounter > 0 && otherCounter > 1)
+        {
+          otherText = ' & ' + otherCounter + ' other people';
+        }
+        else if(selfCounter === 0 && otherCounter === 1)
+        {
+          otherText = 'shared by ' + otherCounter + ' person'; 
+        }
+        else if(selfCounter === 0 && otherCounter > 1)
+        {
+          otherText = 'shared by ' + otherCounter + ' other people'; 
+        }
 
-      return selfText + otherText;
+        return selfText + otherText;
+      }
+      else 
+        return '';
     },
 
     youtubeThumbnail: function() {

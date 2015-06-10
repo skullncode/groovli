@@ -108,12 +108,15 @@ function getUsersFromSongList(songList)
 		userListForArtist = [];
 
 	_.each(songList, function(x){
-		_.each(x.songObj.sharedBy, function(y){
-			if(!_.isEmpty(y) && y.uid !== Meteor.user().services.facebook.id && _.isUndefined(_.findWhere(userListForArtist, {uid: y.uid})))
-			{
-				userListForArtist.push(y)
-			}
-		});
+		if(!_.isUndefined(x.songObj) && !_.isUndefined(x.songObj.sharedBy))
+		{
+			_.each(x.songObj.sharedBy, function(y){
+				if(!_.isEmpty(y) && y.uid !== Meteor.user().services.facebook.id && _.isUndefined(_.findWhere(userListForArtist, {uid: y.uid})))
+				{
+					userListForArtist.push(y)
+				}
+			});
+		}
 	});
 
 	Session.set(Router.current().params._name+'_ausers', userListForArtist);

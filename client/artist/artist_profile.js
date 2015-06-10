@@ -2,9 +2,6 @@ Template.artistProfile.helpers({
   getArtist: function() {
     getArtistForRouting();
   },
-  getSongsForArtist: function() {
-    getSongsForSpecificArtist();
-  },
   artistObject: function() {
     return Session.get(Router.current().params._name+'_artObj');
   },
