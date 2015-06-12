@@ -60,7 +60,7 @@ function isUserKing()
 
 function getSongsForSpecificArtist()
 {
-	//console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
+	//console.log('GOING TO GET SPECIFIC SONGS FOR THIS ARTIST: ' + Router.current().params._name);
 	Meteor.call('getSongsForSpecificArtist', Router.current().params._name, function(error,result){
 	    if(error){
 	        console.log(error.reason);

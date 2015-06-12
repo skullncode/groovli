@@ -3,19 +3,19 @@ lfmArtistAPI = "http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&artist=#
 Meteor.methods({
 	//if Artist doesn't already exist in DB insert and return ID
   setDetailsForUnsetArtists: function() {
-    console.log('reached the artist method');
+    //console.log('reached the artist method');
     var allSongs = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'aid': { $exists: false }}, {fields: {'sa':1}}).fetch();
-    console.log('FOUND THESE MANY SONGS without AID and that are valid: ' + allSongs.length);
+    //console.log('FOUND THESE MANY SONGS without AID and that are valid: ' + allSongs.length);
     var uniqueArtists = _.uniq(allSongs, function(x){
 	    return x.sa;
 	});
-	console.log('unique artist lenght is: ' + uniqueArtists.length);
+	//console.log('unique artist lenght is: ' + uniqueArtists.length);
     //console.log('UNIQUE artists are: ');
     //console.log(uniqueArtists);
 
     //getInfoForNonexistentArtistAndInsert('Limp Bizkit - Thieves');
 
-    console.log('starting to set unset artist details');
+    //console.log('starting to set unset artist details');
     var unsetArtists = 0;
     _.each(uniqueArtists, function(y){
     	//console.log('this is the original artist name: ' + y.sa)

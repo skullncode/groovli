@@ -20,11 +20,16 @@ Template.artistProfile.helpers({
     var cleaned = this.replace(',', ' ');
     //cleaned = cleaned.replace(' . ', ' '); doesn't work with S. Carey
     cleaned = cleaned.replace(/\s{2,}/g, ' ');
+    //replace ampersand with AND so that check works correctly
+    if(cleaned.indexOf('&') >= 0)
+    {
+      cleaned = cleaned.replace(/&/g, 'and');
+    }
     doesArtistHavePage(cleaned);
     if(Session.get(cleaned+'_hasPage'))
-      return '<a href="/artist/'+cleaned+'"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="'+this+' page""><b>'+this+'</b></span></a>';
+      return '<a href="/artist/'+cleaned+'"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="'+cleaned+' page""><b>'+cleaned+'</b></span></a>';
     else
-      return '<span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="No music of this artist has been brought into Groovli yet; be the first! Share some music of '+this+'!">'+this+'</span>';
+      return '<span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="No music of this artist has been brought into Groovli yet; be the first! Share some music of '+cleaned+'!">'+cleaned+'</span>';
   },
   hasSimilar: function() {
     if(!_.isUndefined(this.similar) && !_.isEmpty(this.similar))
