@@ -484,6 +484,19 @@ body {
     color: #fff
 }
 
+.btn-twitter {
+    background: #00acee;
+    border-radius: 0;
+    color: #fff
+}
+.btn-twitter:link, .btn-twitter:visited {
+    color: #fff
+}
+.btn-twitter:active, .btn-twitter:hover {
+    background: #0087bd;
+    color: #fff
+}
+
 /*chat messages styling
 .chat {
   display: block;

@@ -96,7 +96,7 @@ Template.songDetails.helpers({
 });
 
 Template.songDetails.events({
-  'click #shareButton': function(e) {
+  'click #shareFbButton': function(e) {
     //console.log('CLICKED share button!');
     var cs = Session.get('CS');
     if(cs !== undefined && cs !== {} && cs !== [])
