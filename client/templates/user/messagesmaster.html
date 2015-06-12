@@ -16,8 +16,8 @@
       </div>
     {{/if}}
   </div>
-  <div class='col-md-8 column well well-lg' style="overflow-x: hidden;overflow-y: auto;height:500px;">
-    <div id="chatbox" class='chat'>
+  <div class='col-md-8 column well well-lg messageMaster' style="overflow-x: hidden;overflow-y: auto;">
+    <!--<div id="chatbox" class='chat'>
       {{#if conversationSelected}}
         <ul style="margin-bottom:50px">
           {{#each messages}}
@@ -35,13 +35,40 @@
           {{/each}}
         </ul>
         <div id="btn-input" class="input-group" style="position: absolute;bottom: 0;left: 0;">
-          <input id="input-chatMessage" type="text" class="form-control" placeholder="Type your message here...hit 'Enter' or click button to Send -->">
+          <input id="input-chatMessage" type="text" class="form-control" placeholder="Type your message here...hit 'Enter' or click button to Send ">
           <span class="input-group-btn">
               <button type="button" class="btn btn-primary" id="btn-sendMessage">Send</button>
           </span>
         </div>
       {{else}}
         <center><h1><i>No people selected.</i></h1></center>
+      {{/if}}
+    </div>-->
+      <div class="wrapper">
+        {{#if conversationSelected}}
+          <ul class="messageMaster" id="chatbox">
+            {{#each messages}}
+                  {{#if messageIsFromCurrentLoggedInUser}}
+                    <li class="myMessageHeadImage" style="background-image: url({{userImageForThisMessage}})"></li>
+                    <li class="myMessage" title="{{formattedTimestamp}}">
+                  {{content}}
+                    </li>
+                  {{else}}
+                    <li class="otherMessageHeadImage" style="background-image: url({{userImageForThisMessage}})"></li>
+                    <li class="otherMessage" title="{{formattedTimestamp}}">
+                        {{content}}
+                    </li>
+                  {{/if}}
+            {{/each}}
+          </ul>
+          <div id="btn-input" class="input-group" style="position: absolute;bottom: 0;left: 0;">
+            <input id="input-chatMessage" type="text" class="form-control" placeholder="Type your message here...hit 'Enter' or click button to Send -->">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-primary" id="btn-sendMessage">Send</button>
+            </span>
+          </div>
+        {{else}}
+          <center><h1><i>No people selected.</i></h1></center>
       {{/if}}
     </div>
   </div>

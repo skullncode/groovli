@@ -65,7 +65,7 @@ Meteor.methods({
 			artistName = artistName.replace(/&/g, 'and');
 		}
 		//console.log('SEARCHING TO SEE IF THIS SIMILAR ARTIST HAS A PAGE: ' + artistName);
-  		var x = Artists.findOne({'name': {$regex: new RegExp('^' + artistName, 'i')}});
+  		var x = Artists.findOne({'name': {$regex: new RegExp(artistName + '$', 'i')}});
   		//console.log("GOT THIS: ");
   		//console.log(x);
   		if(_.isEmpty(x))

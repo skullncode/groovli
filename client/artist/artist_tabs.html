@@ -8,8 +8,9 @@
 				<li role="presentation"><a href="#coverSongs" aria-controls="coverSongs" role="tab" data-toggle="tab" title="All covers of this artist's songs, that are currently on Groovli">covers</a></li>
 			{{/if}}
 			{{#if hasUsers}}
-				<li role="presentation"><a href="#usersForArtist" aria-controls="usersForArtist" role="tab" data-toggle="tab" title="All users that have shared this artist's music">people</a></li>
+				<li role="presentation"><a href="#usersForArtist" aria-controls="usersForArtist" role="tab" data-toggle="tab" title="All users that have shared this artist's music or active in chatter">people</a></li>
 			{{/if}}
+			<li role="presentation"><a href="#artistChatter" aria-controls="artistChatter" role="tab" data-toggle="tab" title="chatter related to this artist">chatter</a></li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -50,6 +51,12 @@
 	            	<p><small>song matches</small></p>-->
 				</div>
 			{{/if}}
+			<div role="tabpanel" class="tab-pane fade" id="artistChatter">
+				<!--{{> artistChatter}}-->
+				<ul id='usersForArtist' class="artistChatter">
+					{{> artistChatter}}
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>

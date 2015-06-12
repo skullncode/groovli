@@ -120,6 +120,39 @@ function getUsersFromSongList(songList)
 	});
 
 	Session.set(Router.current().params._name+'_ausers', userListForArtist);
+
+	getUsersFromChatter();
+}
+
+function getUsersFromChatter()
+{
+	var userListForArtist = Session.get(Router.current().params._name+'_ausers');
+	var artistPage = Router.current().params._name+"_artist_group";
+	if(_.isUndefined(userListForArtist))
+		userListForArtist = [];
+
+	var artistMsgs = Messages.find({'to': String(artistPage)}, {sort: { 'timestamp': 1 }}).fetch();
+
+	//console.log('THIS IS THE ARTIST MSGS: ');
+	//console.log(artistMsgs);
+
+	_.each(artistMsgs, function(x){
+		//console.log('analyzing this message ') ;
+		//console.log(x);
+		if(x.from !== Meteor.user().services.facebook.id && _.isUndefined(_.findWhere(userListForArtist, {uid: x.from})))
+		{
+			//console.log('FOUND THIS USER TO ADD TO the list: ') ;
+			//console.log(x);
+			var chatterUser = {
+				_id: x.fromProfileID,
+				uid: x.from,
+				uname: x.fromName
+			};
+			userListForArtist.push(chatterUser)
+		}
+	});
+
+	Session.set(Router.current().params._name+'_ausers', userListForArtist);
 }
 
 function getMutualListenHistory(lh, uid)

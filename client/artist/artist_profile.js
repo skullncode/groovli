@@ -12,7 +12,7 @@ Template.artistProfile.helpers({
   },
   artistImage: function() {
     if(!_.isUndefined(this.largeImage['#text']) && !_.isEmpty(this.largeImage['#text']))
-      return '<img src="'+this.largeImage['#text']+'" style="float:left;width:100%;height:100%;">';
+      return '<img class="artistProfileImage" src="'+this.largeImage['#text']+'">';
     else
       return '<h4>NO ARTIST IMAGE AVAILABLE</h4>';
   },
