@@ -18,5 +18,15 @@
 		{{/if}}
 		<!--{{>signupCount}} removed out signup count for now-->
 	</div>
+	<ul class="cb-slideshow">
+		{{#each landingPageSongList}}
+			<li>
+				<span style='background-image: url({{LFMLargeAlbumArt}});'>{{sa}}</span>
+				<div>
+					<h3><small>someone just listened to <br></small><i>{{st}} </i><br><small>by</small><i> {{sa}}</i></h3>
+				</div>
+			</li>
+		{{/each}}
+	</ul>
   </div>
 </template>

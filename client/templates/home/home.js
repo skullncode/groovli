@@ -4,6 +4,7 @@ Template.home.rendered = function() {
   	Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
     Meteor.call('setUserBaseLocation', Meteor.user().services.facebook.id);
   }
+  getLast20Songs();
   return $('#request-beta-invite').validate({
     rules: {
       emailAddress: {
@@ -46,8 +47,28 @@ Template.home.rendered = function() {
   });
 };
 
+Template.home.helpers({
+  landingPageSongList: function() {
+    return Session.get('lp_slide_list');
+  }
+});
+
 Template.home.events({
   'submit form': function(e) {
     return e.preventDefault();
   }
 });
+
+function getLast20Songs(){
+  Meteor.call('getLast20SongsForLandingPage', function(error,result){
+      if(error){
+          console.log(error.reason);
+      }
+      else{
+          // do something with result
+        //console.log('GOT THIS BACK From the server: ');
+        //console.log(result);
+        Session.set('lp_slide_list', result)
+      }
+  });
+}
