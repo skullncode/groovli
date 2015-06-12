@@ -771,16 +771,6 @@ ul.artistChatter {
     overflow-x: hidden;
 }
 
-.wrapper ul li {
-  padding: 10px 15px;
-  background-color: rgba(135, 206, 235, 0.3);
-  position: relative;
-  border-radius: 10px;
-  clear: both;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
-  list-style-type: none;
-}
-
 .wrapper ul li:before, .wrapper ul li:after {
   position: absolute;
   content: "";
@@ -795,18 +785,6 @@ ul.artistChatter {
   background-repeat: no-repeat;
 }
 
-.otherMessage {
-  float: left;
-  margin-left: 60px;
-  top: -60px;
-  color: darkred;
-}
-
-.otherMessage:after {
-  left: -15px;
-  border-left: 15px solid transparent;
-}
-
 .otherMessageHeadImage {
   float: left;
   width: 45px;
@@ -817,20 +795,6 @@ ul.artistChatter {
   background-repeat: no-repeat;
   position: relative;
   content: "";
-}
-
-.myMessage {
-  float: right;
-  margin-right: 60px;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.75);
-  top: -60px;
-  color: darkblue;
-}
-
-.myMessage:after {
-  right: -15px;
-  border-top-color: rgba(255, 255, 255, 0.3);
-  border-right: 15px solid transparent;
 }
 
 .myMessageHeadImage {
@@ -845,13 +809,58 @@ ul.artistChatter {
   content: "";
 }
 
-.wrapper ul li:after {
+/*chat bubble common*/
+.wrapper ul li {
+  padding: 10px 15px;
+  /*background-color: rgba(135, 206, 235, 0.3);*/
+  position: relative;
+  border-radius: 10px;
+  clear: both;
+  /*text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);*/
+  list-style-type: none;
+}
+
+/*chat bubble for other message*/
+.otherMessage {
+  float: left;
+  margin-left: 60px;
+  top: -60px;
+  color: rgba(255,255,255, 1);
+  background-color: rgba(218, 126, 0, 1);
+}
+
+/*chat bubble for my message*/
+.myMessage {
+  float: right;
+  margin-right: 60px;
+  /*text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.75);*/
+  top: -60px;
+  color: rgba(255,255,255, 1);
+  background-color: rgba(10, 82, 141, 1);
+}
+
+/*chat bubble pointer*/
+.otherMessage:after {
   width: 0;
   height: 0;
   top: 15px;
-  border-top: 15px solid rgba(135, 206, 235, 0.3);
+  border-top: 15px solid rgba(218, 126, 0, 1);
   position: absolute;
   content: "";
+  left: -15px;
+  border-left: 15px solid transparent;
+}
+
+/*chat bubble pointer*/
+.myMessage:after {
+  width: 0;
+  height: 0;
+  top: 15px;
+  border-top: 15px solid rgba(10, 82, 141, 1);
+  position: absolute;
+  content: "";
+  right: -15px;
+  border-right: 15px solid transparent;
 }
 /*end simpler chat css*/
 /*artist pages*/
