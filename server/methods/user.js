@@ -174,7 +174,10 @@ Meteor.methods({
 	},
 	unfollowUser: function(userToUnfollow, isUserFriend) {
 		var currentTastemakerList = Meteor.user().tastemakers;
-
+		//console.log('REACHED UNFOLLOW USER method on server, with this user object: ');
+		//console.log(userToUnfollow);
+		//console.log('and this is the ID:')
+		//console.log(userToUnfollow.services.facebook.id);
 		//find user to unfollow, within tastemaker list
 		var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.services.facebook.id});
 		var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);

@@ -1,13 +1,22 @@
 <template name="artistPerson">
-	<a href="/profile/{{_id}}" target='blank'>
 		<div class='thumbnail songBrowserItem'>
-			<div class="col-md-1 column" style="float:left;width:100px;">
-				<img class="img-rounded headerProfileImage" src="{{userThumbnail}}">
-			</div>
-			<div class="col-md-5 column" align="left">
-				<h4>{{uname}}{{{currentStatus}}}</h4>
+			<a id='artistPersonProfileLink' href="/profile/{{_id}}" target='blank'>
+				<div class="col-md-1 column" style="float:left;width:100px;">
+					<img class="img-rounded headerProfileImage" src="{{userThumbnail}}">
+				</div>
+				<div class="col-md-5 column" align="left">
+					<h4>{{uname}}{{{currentStatus}}}</h4>
+				</div>
+			</a>
+			<div class="col-md-2 column" align="right">
+				<h4>
+					{{#if alreadyFollowed}}
+					  <button class="btn btn-warning btn-xs" id="unfollowUser"><span class="fa fa-minus-circle"></span> Unfollow</button>
+					{{else}}
+					  <button class="btn btn-success btn-xs" id="followUser"><span class="fa fa-plus-circle"></span> Follow</button>
+					{{/if}}
+				</h4>
 			</div>
 			<div style="clear:both;"></div>
 		</div>
-	</a>
 </template>

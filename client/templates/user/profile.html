@@ -20,7 +20,8 @@
                             <!--<p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>-->
                             <p><strong>Top {{topBandLength}} Bands: </strong>
                             {{#each topTenBands services.facebook.id}}
-                                <a href='#'><span class="tags">{{sa}}</span></a>
+                                <!--<a href='#'><span class="tags">{{sa}}</span></a>-->
+                                {{{validatedTop10Band}}}
                             {{/each}}
                             </p>
                             <p><strong>Top {{topGenreLength}} Genres: </strong>

@@ -126,6 +126,22 @@ Template.profile.helpers({
 		return topTenb;
 	},
 
+	validatedTop10Band: function() {
+		var cleaned = this.sa.replace(',', ' ');
+		//cleaned = cleaned.replace(' . ', ' '); doesn't work with S. Carey
+		cleaned = cleaned.replace(/\s{2,}/g, ' ');
+		//replace ampersand with AND so that check works correctly
+		if(cleaned.indexOf('&') >= 0)
+		{
+		  cleaned = cleaned.replace(/&/g, 'and');
+		}
+		doesArtistHavePage(cleaned);
+		if(Session.get(cleaned+'_hasPage'))
+		  return '<a href="/artist/'+cleaned+'"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="'+cleaned+' page""><b>'+cleaned+'</b></span></a>';
+		else
+		  return '<span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="No music of this artist has been brought into Groovli yet; be the first! Share some music of '+cleaned+'!">'+cleaned+'</span>';
+	},
+
 	topBandLength: function() {
 		return Session.get(Router.current().params._id+'topBandsLength');
 	},
@@ -242,4 +258,18 @@ function isUserKing()
 {
 	//return ((Meteor.user().services.facebook.id === '721431527969807') && isUserProfileYou()) ; // only check with Sandeep's FB ID
 	return ((Meteor.user().services.facebook.email === 'reverieandreflection@gmail.com') && isUserProfileYou()) ; // only check with Sandeep's FB email id
+}
+
+function doesArtistHavePage(artName) {
+  //console.log('CLIENT METHOD: SEARCHING TO SEE IF THIS SIMILAR ARTIST HAS A PAGE: ' + artName);
+  Meteor.call('doesArtistHavePage', artName, function(error,result){
+        if(error){
+          console.log('Encountered error while trying to check if artist has page: ' + error)
+        }
+        else{
+            // do something with result
+          //console.log('received artist page result: ' + result);
+          Session.set(artName+'_hasPage', result);
+        };
+    });
 }

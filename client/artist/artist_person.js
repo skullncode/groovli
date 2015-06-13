@@ -18,5 +18,65 @@ Template.artistPerson.helpers({
         }
         else
           return '<i><p style="float:right" class="small">'+lastLogin+'</p></i>';
+  },
+  alreadyFollowed: function() {
+    var artistPersonUserObj = {
+      'services' : { 'facebook': { 'id': this.uid}}
+    };
+    Session.set(this._id+'_uObj', artistPersonUserObj);
+    if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': this.uid})))
+      return false;
+    else
+      return true;
   }
+});
+
+Template.artistPerson.events({
+    "click #unfollowUser": function (event) {
+    //console.log('UNFOLLOW user button clicked!');
+    //console.log(event);
+    var x = $(event.currentTarget.parentElement.parentElement.parentElement).find('#artistPersonProfileLink').prop('href');
+    var beginOfProfileID = x.indexOf('profile/') + 8; //length of 'profile/'
+    var profileId = x.substring(beginOfProfileID);
+
+    var userObj = Session.get(profileId+'_uObj');
+    var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: this.uid}));
+
+    //console.log('UNFOLLOW user button clicked!');
+    //console.log('and this user is a friend: ' + isUserAFriend);
+
+    Meteor.call('unfollowUser', userObj, isUserAFriend, function(error,result){
+        if(error){
+            console.log(error.reason);
+        }
+        else{
+            // do something with result
+          //console.log('SUCCESSFULLY unfollowed user!');
+          toastr.success('Unfollowed user!');
+        };
+    });
+    return true;
+    },
+    "click #followUser": function (event) {
+    //console.log('Follow user button clicked!');
+    var x = $(event.currentTarget.parentElement.parentElement.parentElement).find('#artistPersonProfileLink').prop('href');
+    var beginOfProfileID = x.indexOf('profile/') + 8; //length of 'profile/'
+    var profileId = x.substring(beginOfProfileID);
+
+    var userObj = Session.get(profileId+'_uObj');
+    var isUserAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: this.uid}));
+
+    //console.log('and this user is a friend: ' + isUserAFriend);
+
+    Meteor.call('followUser', userObj, isUserAFriend, function(error,result){
+        if(error){
+            console.log(error.reason);
+        }
+        else{
+            // do something with result
+          toastr.success('Followed user!');
+        };
+    });
+    return true;
+    }
 });
