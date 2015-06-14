@@ -25,6 +25,10 @@ Template.reviewArtists.events({
 
 function getArtistsForReview()
 {
+	var result = Artists.find({}).fetch();
+	Session.set('artistsReview', result);
+	Session.set('artistsReviewCount', result.length);
+	/*
 	Meteor.call('reviewExistingArtists', function(error, result) {
 		if(error){
 	        console.log(error.reason);
@@ -35,6 +39,6 @@ function getArtistsForReview()
 	    	Session.set('artistsReview', result);
 	    	Session.set('artistsReviewCount', result.length);
 	    }
-	});
+	});*/
 }
 
