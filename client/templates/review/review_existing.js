@@ -35,7 +35,10 @@ Template.reviewExisting.events({
 
 function getExistingSongsForReview()
 {
-	Meteor.call('reviewExistingSongs', function(error, result) {
+	var result = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
+	Session.set('esReview', result);
+	Session.set('esReviewCount', result.length);
+	/*Meteor.call('reviewExistingSongs', function(error, result) {
 		if(error){
 	        console.log(error.reason);
 	    }
@@ -45,6 +48,6 @@ function getExistingSongsForReview()
 	    	Session.set('esReview', result);
 	    	Session.set('esReviewCount', result.length);
 	    }
-	});
+	});*/
 }
 
