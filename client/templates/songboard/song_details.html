@@ -21,7 +21,12 @@
 								<br>Genre: {{currentSong.genre}}
 						{{/if}}
 						{{#if cover}}
-							<br><i>as covered by <b>{{coveredBy}}</b></i>
+							{{checkIfCoveringArtistHasPage currentSong.coveredBy}}
+							{{#if coveringArtistHasPage}}
+								<br><i>as covered by <b><a href="{{pathFor 'artist' _name=ampersandRemovedCoveringArtistName }}" target='blank' title="artist page">{{coveredBy}}</a></b></i>
+							{{else}}
+								<br><i>as covered by <b>{{coveredBy}}</b></i>
+							{{/if}}
 						{{/if}}
 						{{#if live}}
 							<br><b><i>performed live</i></b>

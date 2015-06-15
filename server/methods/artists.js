@@ -3,40 +3,41 @@ lfmArtistAPI = "http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&artist=#
 Meteor.methods({
 	//if Artist doesn't already exist in DB insert and return ID
   setDetailsForUnsetArtists: function() {
-    //console.log('reached the artist method');
-    var allSongs = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'aid': { $exists: false }}, {fields: {'sa':1}}).fetch();
-    //console.log('FOUND THESE MANY SONGS without AID and that are valid: ' + allSongs.length);
-    var uniqueArtists = _.uniq(allSongs, function(x){
-	    return x.sa;
-	});
-	//console.log('unique artist lenght is: ' + uniqueArtists.length);
-    //console.log('UNIQUE artists are: ');
-    //console.log(uniqueArtists);
+	    //console.log('reached the artist method');
+	    var allSongs = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'aid': { $exists: false }}, {fields: {'sa':1}}).fetch();
+	    //console.log('FOUND THESE MANY SONGS without AID and that are valid: ' + allSongs.length);
+	    var uniqueArtists = _.uniq(allSongs, function(x){
+		    return x.sa;
+		});
+		//console.log('unique artist lenght is: ' + uniqueArtists.length);
+	    //console.log('UNIQUE artists are: ');
+	    //console.log(uniqueArtists);
 
-    //getInfoForNonexistentArtistAndInsert('Limp Bizkit - Thieves');
+	    //getInfoForNonexistentArtistAndInsert('Limp Bizkit - Thieves');
 
-    //console.log('starting to set unset artist details');
-    var unsetArtists = 0;
-    _.each(uniqueArtists, function(y){
-    	//console.log('this is the original artist name: ' + y.sa)
-    	y.sa = cleanArtistQuery(y.sa);
-    	//console.log('this is the cleaned artist name: ' + y.sa);
-    	var foundArtist = Artists.findOne({'name': y.sa});
-    	var foundBadArtist = BadArtists.findOne({'sa': y.sa});
-    	
-    	if(_.isUndefined(foundArtist) && _.isUndefined(foundBadArtist))//haven't found artist in db
-    	{
-    		//console.log('have not found artist in the DB: ' + y.sa);
-    		//console.log('GOING to search and insert')
-    		getInfoForNonexistentArtistAndInsert(y.sa);
-    		unsetArtists++;
-    		//console.log('currently unset number of artists: ' + unsetArtists);
-    	}
-    	else
-    		console.log('already found this artist in the DB: ' + y.sa);
-    });
-    console.log('FINISHED setting unset artist details');
-  },
+	    //console.log('starting to set unset artist details');
+	    var unsetArtists = 0;
+	    _.each(uniqueArtists, function(y){
+	    	//console.log('this is the original artist name: ' + y.sa)
+	    	y.sa = cleanArtistQuery(y.sa);
+	    	//console.log('this is the cleaned artist name: ' + y.sa);
+	    	var foundArtist = Artists.findOne({'name': y.sa});
+	    	var foundBadArtist = BadArtists.findOne({'sa': y.sa});
+	    	
+	    	if(_.isUndefined(foundArtist) && _.isUndefined(foundBadArtist))//haven't found artist in db
+	    	{
+	    		//console.log('have not found artist in the DB: ' + y.sa);
+	    		//console.log('GOING to search and insert')
+	    		getInfoForNonexistentArtistAndInsert(y.sa);
+	    		unsetArtists++;
+	    		//console.log('currently unset number of artists: ' + unsetArtists);
+	    	}
+	    	else
+	    		console.log('already found this artist in the DB: ' + y.sa);
+	    });
+	    console.log('FINISHED setting unset artist details');
+	    setDetailsForCoverArtists();
+  	},
   	reviewExistingArtists: function() {
 		//console.log('GOING TO GET ALL EXISTING SONGS in the DB for review: ');
 		var x = Artists.find({}).fetch()
@@ -88,6 +89,40 @@ Meteor.methods({
     	}
   	}
 });
+
+function setDetailsForCoverArtists(){
+	var coverSongs = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'cover': true}, {fields: {'sa':1, 'cover': 1, 'coveredBy': 1, 'sl': 1}}).fetch();
+    //console.log('FOUND THESE MANY SONGS without AID and that are valid: ' + allSongs.length);
+    var coverArtists = _.uniq(coverSongs, function(x){
+	    return x.coveredBy;
+	});
+
+	_.each(coverArtists, function(y){
+		if(y.cover)
+		{
+			//console.log('THIS IS THE COVERED BY artist: '+ y.coveredBy);
+			//console.log('this is the link: ' + y.sl);
+			if(!_.isUndefined(y.coveredBy))
+			{
+				//console.log('actually found a covered by artist: ' + y.coveredBy);
+				//console.log('GOING TO SEARCH AND SEE IF DETAILS already exist for this artist or not')
+				foundArtist = Artists.findOne({'name': y.coveredBy});
+				foundBadArtist = BadArtists.findOne({'sa': y.coveredBy});
+				
+				if(_.isUndefined(foundArtist) && _.isUndefined(foundBadArtist))//haven't found artist in db
+				{
+					//console.log('have not found artist in the DB: ' + y.coveredBy);
+					//console.log('GOING to search and insert')
+					getInfoForNonexistentArtistAndInsert(y.coveredBy);
+					//unsetArtists++;
+					//console.log('currently unset number of artists: ' + unsetArtists);
+				}
+				else
+					console.log('already found this artist in the DB: ' + y.coveredBy);
+			}
+		}
+	});
+}
 
 
 function getInfoForNonexistentArtistAndInsert(artistName)

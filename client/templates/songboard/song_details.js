@@ -90,8 +90,33 @@ Template.songDetails.helpers({
     else
       return false;
   },
+  coveringArtistHasPage: function() {
+    if(Session.get('coveringArtistHasPage'))
+    {
+      currentSong.coveredBy = currentSong.coveredBy.replace(/&/g, 'and');
+      return true;
+    }
+    else
+      return false;
+  },
+  ampersandRemovedCoveringArtistName: function() {
+    var cs = Session.get('CS');
+    if(!_.isUndefined(cs) && !_.isEmpty(cs) && !_.isUndefined(cs.coveredBy))
+    {
+      var coveringArtistName = cs.coveredBy;
+      if(coveringArtistName.indexOf('&') >= 0)
+      {
+        coveringArtistName = coveringArtistName.replace(/&/g, 'and');
+      }
+
+      return coveringArtistName;
+    }
+  },
   checkIfArtistHasPage: function(artistName) {
     doesArtistHavePage(artistName);
+  },
+  checkIfCoveringArtistHasPage: function(artistName) {
+    doesCoveringArtistHavePage(artistName);
   }
 });
 
@@ -144,6 +169,19 @@ function doesArtistHavePage(artName) {
             // do something with result
           //console.log('received artist page result: ' + result);
           Session.set('artistHasPage', result);
+        };
+    });
+}
+
+function doesCoveringArtistHavePage(artName) {
+  Meteor.call('doesArtistHavePage', artName, function(error,result){
+        if(error){
+          console.log('Encountered error while trying to check if artist has page: ' + error)
+        }
+        else{
+            // do something with result
+          //console.log('received artist page result: ' + result);
+          Session.set('coveringArtistHasPage', result);
         };
     });
 }
