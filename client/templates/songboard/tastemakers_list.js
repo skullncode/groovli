@@ -131,9 +131,16 @@ function animateListToCurrentlyPlayingSong()
   //console.log('ANIMATING LIST WITHIN TASTEMAKERSSSSSSS TAB');
   //$('#songTabs a[href="#tastemakers"]').tab('show'); 
   var currentScrollOffset = $('#tastemakersList').scrollTop();//$("#personalVidList").scrollTop();
-  $('#tastemakersList').animate({scrollTop: $(".thumbnail.tastemakersongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
-  //$('#tastemakersList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
-  Session.set('animatedToSong', true);
+  if(!_.isUndefined($(".thumbnail.tastemakersongItem.selected").offset()))
+  {
+    $('#tastemakersList').animate({scrollTop: $(".thumbnail.tastemakersongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+    //$('#tastemakersList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+    Session.set('animatedToSong', true);
+  }
+  else
+  {
+    Session.set('animatedToSong', false);
+  }
 }
 
 

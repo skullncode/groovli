@@ -38,7 +38,14 @@ Meteor.publish(null, function (){
 });
 
 Meteor.publish('artists', function (){ 
-  return Artists.find({})
+  return Artists.find({},
+     {
+      fields: 
+        {
+          "name": 1,
+          "genres": 1
+        }
+     })
 });
 
 Meteor.publish('messages', function(userID) {

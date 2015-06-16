@@ -100,9 +100,16 @@ function animateListToCurrentlyPlayingSong()
 {
   //console.log('ANIMATING TO THe currentLY SELECTED SONG IN THE GLOBAL LIST!!!!');
   var currentScrollOffset = $('#globalList').scrollTop();//$("#personalVidList").scrollTop();
-  $('#globalList').animate({scrollTop: $(".thumbnail.globalsongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
-  //$('#globalList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
-  Session.set('animatedToSong', true);
+  if(!_.isUndefined($(".thumbnail.globalsongItem.selected").offset()))
+  {
+    $('#globalList').animate({scrollTop: $(".thumbnail.globalsongItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+    //$('#globalList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
+    Session.set('animatedToSong', true);
+  }
+  else
+  {
+    Session.set('animatedToSong', false);
+  }
 }
 
 

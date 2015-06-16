@@ -13,6 +13,91 @@ Template.songDetails.helpers({
 		return cs;
   },
 
+  extendedGenres: function() {
+    if(!_.isUndefined(currentSong.sa))
+    {
+      var artName = currentSong.sa;
+      if(artName.indexOf('&') >= 0)
+      {
+        artName = artName.replace(/&/g, 'and');
+      }
+
+      var artGenres = [];
+
+      var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+      //console.log("GOT THIS: ");
+      //console.log(x);
+      if(_.isEmpty(x) || _.isUndefined(x.genres))
+      {
+        //console.log('1st case');
+        currentSong.genre = currentSong.genre.replace(/-/g, ' ');
+        currentSong.genre = currentSong.genre.replace(/'n'/g, ' and ');
+        var justItunesGenres = currentSong.genre.split('/');
+        return justItunesGenres;
+      }
+      else if(!_.isUndefined(x.genres))
+      {
+        //console.log('2nd case');
+
+        //console.log('BEFORE CLEANING: ');
+        //console.log(x.genres);
+        x.genres = _.map(x.genres, function(z){
+          return z.replace(/-/g, ' ');
+        });
+
+        x.genres = _.uniq(x.genres);
+
+        //console.log('AFTER CLEANING: ');
+        //console.log(x.genres);
+
+        if(!_.contains(x.genres,null) && !_.contains(x.genres,'all'))
+        {
+          //console.log('NO INSTANCE OF NULL or ALL, so returning as is:');
+          //console.log(x.genres);
+          return x.genres;
+        }
+        else
+        {
+          //console.log('In SECOND CASE');
+          var cleaned = x.genres;
+          //console.log('BEFORE SPLICE 1:');
+          //console.log(cleaned);
+          //console.log("INDEX OF NULL:");
+          //console.log(x.genres.indexOf(null));
+          if(cleaned.indexOf(null) >= 0)
+          {
+            while(cleaned.indexOf(null) >= 0)
+            {
+              cleaned.splice(x.genres.indexOf(null), 1);
+            }
+          }
+          //console.log('BEFORE SPLICE 2:');
+          //console.log(cleaned);
+          if(cleaned.indexOf('all') >= 0)
+          {
+            while(cleaned.indexOf('all') >= 0)
+            {
+              cleaned.splice(x.genres.indexOf('all'), 1);
+            }
+          }
+          //console.log('BEFORE RETURNING:');
+          //console.log(cleaned);
+          if(!_.isEmpty(cleaned))
+          {
+            //console.log('cleaned is EMPTY!!!');
+            return cleaned;
+          }
+          else
+          {
+            //console.log('cleaned is NOT EEEEEMPTY!!!');
+            currentSong.genre = currentSong.genre.replace(/-/g, ' ');
+            return currentSong.genre;
+          }
+        }
+      }
+    }
+  },
+
   ampersandRemovedArtistName: function() {
     var cs = Session.get('CS');
     if(!_.isUndefined(cs) && !_.isEmpty(cs) && !_.isUndefined(cs.sa))
@@ -84,7 +169,9 @@ Template.songDetails.helpers({
   artistHasPage: function() {
     if(Session.get('artistHasPage'))
     {
-      currentSong.sa = currentSong.sa.replace(/&/g, 'and');
+      if(!_.isUndefined(currentSong.sa))
+        currentSong.sa = currentSong.sa.replace(/&/g, 'and');
+
       return true;
     }
     else
@@ -93,7 +180,8 @@ Template.songDetails.helpers({
   coveringArtistHasPage: function() {
     if(Session.get('coveringArtistHasPage'))
     {
-      currentSong.coveredBy = currentSong.coveredBy.replace(/&/g, 'and');
+      if(!_.isUndefined(currentSong.sa))
+        currentSong.coveredBy = currentSong.coveredBy.replace(/&/g, 'and');
       return true;
     }
     else
@@ -113,10 +201,10 @@ Template.songDetails.helpers({
     }
   },
   checkIfArtistHasPage: function(artistName) {
-    doesArtistHavePage(artistName);
+    doesArtistHavePage(artistName, 'original');
   },
   checkIfCoveringArtistHasPage: function(artistName) {
-    doesCoveringArtistHavePage(artistName);
+    doesArtistHavePage(artistName, 'cover');
   }
 });
 
@@ -160,7 +248,30 @@ Template.songDetails.events({
   }
 });
 
-function doesArtistHavePage(artName) {
+function doesArtistHavePage(artName, mode) {
+  if(artName.indexOf('&') >= 0)
+  {
+    artName = artName.replace(/&/g, 'and');
+  }
+
+  var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+  //console.log("GOT THIS: ");
+  //console.log(x);
+  if(_.isEmpty(x))
+  {
+    if(mode === 'original')
+      Session.set('artistHasPage', false);
+    else if(mode === 'cover')
+      Session.set('coveringArtistHasPage', false);
+  }
+  else
+  {
+    if(mode === 'original')
+      Session.set('artistHasPage', true);
+    else if(mode === 'cover')
+      Session.set('coveringArtistHasPage', true);
+  }
+  /*
   Meteor.call('doesArtistHavePage', artName, function(error,result){
         if(error){
           console.log('Encountered error while trying to check if artist has page: ' + error)
@@ -170,18 +281,5 @@ function doesArtistHavePage(artName) {
           //console.log('received artist page result: ' + result);
           Session.set('artistHasPage', result);
         };
-    });
-}
-
-function doesCoveringArtistHavePage(artName) {
-  Meteor.call('doesArtistHavePage', artName, function(error,result){
-        if(error){
-          console.log('Encountered error while trying to check if artist has page: ' + error)
-        }
-        else{
-            // do something with result
-          //console.log('received artist page result: ' + result);
-          Session.set('coveringArtistHasPage', result);
-        };
-    });
+    });*/
 }

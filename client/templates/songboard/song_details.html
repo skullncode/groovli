@@ -18,7 +18,10 @@
 								Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
 								<br>from the album <b>{{currentSong.album}}</b>
 								<br>released <b>{{formattedReleaseDate}}</b>
-								<br>Genre: {{currentSong.genre}}
+								<br>Genre: 
+								{{#each extendedGenres}}
+									<span class="btn btn-default btn-xs">{{this}}</span>
+								{{/each}}
 						{{/if}}
 						{{#if cover}}
 							{{checkIfCoveringArtistHasPage currentSong.coveredBy}}

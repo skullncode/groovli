@@ -105,8 +105,15 @@ function animateListToCurrentlyPlayingSong() {
   //console.log('animating this list to the currently playing song!!!!');
   //$('#songTabs a[href="#mygroovs"]').tab('show'); 
   var currentScrollOffset = $('#mygroovsList').scrollTop();//$("#personalVidList").scrollTop();
-  $('#mygroovsList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
-  Session.set('animatedToSong', true);
+  if(!_.isUndefined($(".thumbnail.songBrowserItem.selected").offset()))
+  {
+    $('#mygroovsList').animate({scrollTop: $(".thumbnail.songBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);
+    Session.set('animatedToSong', true);
+  }
+  else
+  {
+    Session.set('animatedToSong', false);
+  }
   //$('#mygroovsList').animate({scrollTop: $(selectedRandomSongObject).offset().top - $(firstSongObject).offset().top}, 800);
 }
 
