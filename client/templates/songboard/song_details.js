@@ -42,7 +42,8 @@ Template.songDetails.helpers({
         //console.log('BEFORE CLEANING: ');
         //console.log(x.genres);
         x.genres = _.map(x.genres, function(z){
-          return z.replace(/-/g, ' ');
+          if(!_.isNull(z) && !_.isUndefined(z) && !_.isEmpty(z))
+            return z.replace(/-/g, ' ');
         });
 
         x.genres = _.uniq(x.genres);
@@ -50,7 +51,7 @@ Template.songDetails.helpers({
         //console.log('AFTER CLEANING: ');
         //console.log(x.genres);
 
-        if(!_.contains(x.genres,null) && !_.contains(x.genres,'all'))
+        if(!_.contains(x.genres,null) && !_.contains(x.genres,'all') && !_.contains(x.genres,undefined))
         {
           //console.log('NO INSTANCE OF NULL or ALL, so returning as is:');
           //console.log(x.genres);
@@ -62,36 +63,21 @@ Template.songDetails.helpers({
           var cleaned = x.genres;
           //console.log('BEFORE SPLICE 1:');
           //console.log(cleaned);
-          //console.log("INDEX OF NULL:");
-          //console.log(x.genres.indexOf(null));
-          if(cleaned.indexOf(null) >= 0)
-          {
-            while(cleaned.indexOf(null) >= 0)
-            {
-              cleaned.splice(x.genres.indexOf(null), 1);
-            }
-          }
-          //console.log('BEFORE SPLICE 2:');
-          //console.log(cleaned);
-          if(cleaned.indexOf('all') >= 0)
-          {
-            while(cleaned.indexOf('all') >= 0)
-            {
-              cleaned.splice(x.genres.indexOf('all'), 1);
-            }
-          }
+          cleaned = _.without(cleaned, null, undefined, 'all'); 
           //console.log('BEFORE RETURNING:');
           //console.log(cleaned);
           if(!_.isEmpty(cleaned))
           {
-            //console.log('cleaned is EMPTY!!!');
+            //console.log('cleaned is NOT EEEEEMPTY!!!');
             return cleaned;
           }
           else
           {
-            //console.log('cleaned is NOT EEEEEMPTY!!!');
+            //console.log('cleaned is EMPTY!!!');
             currentSong.genre = currentSong.genre.replace(/-/g, ' ');
-            return currentSong.genre;
+            currentSong.genre = currentSong.genre.replace(/'n'/g, ' and ');
+            var justItunesGenres = currentSong.genre.split('/');
+            return justItunesGenres;
           }
         }
       }
