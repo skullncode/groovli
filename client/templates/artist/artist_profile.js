@@ -3,7 +3,12 @@ Template.artistProfile.helpers({
     getArtistForRouting();
   },
   artistObject: function() {
-    return Session.get(Router.current().params._name+'_artObj');
+    var artObj = Session.get(Router.current().params._name+'_artObj');
+    if(!_.isEmpty(artObj.genres) && !_.isUndefined(artObj.genres))
+    {
+      artObj.genres = _.without(artObj.genres, null, undefined, 'all');
+    }
+    return artObj;    
   },
 
   songsForArtist: function() {
