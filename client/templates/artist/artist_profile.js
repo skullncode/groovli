@@ -43,6 +43,15 @@ Template.artistProfile.helpers({
     else
       return false;
   },
+  cleanedGenre: function() {
+    //console.log('THIS IS GENRE pre-cleansing:');
+    //console.log(this);
+    var cleaned = this.replace(/-/g, ' ');
+    cleaned = cleaned.replace(/'n'/g, ' and ');
+    //console.log('THIS IS GENRE post-cleansing:');
+    //console.log(cleaned);
+    return cleaned;
+  },
   hasCoverSongs: function() {
     if(Session.get(Router.current().params._name+'_acs_count') > 0)
       return true;

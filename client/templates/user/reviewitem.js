@@ -179,7 +179,7 @@ if (Meteor.isClient) {
       console.log('SOMETHING HAS BEEN UDPATED!!!!!');
       Meteor.call('updateSongWithManualApproval', songLink, newArtist, newTitle, updatedLink, songValidity, checkItunes, isSongLive, isSongCover, isSongMashup, coveredBy, isSongRemix, remixedBy);
       //if update is actually done refresh page
-      location.reload();
+      //location.reload();
     }
     else
     {

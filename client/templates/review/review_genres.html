@@ -1,0 +1,19 @@
+<template name="reviewGenres">
+	<h1>Review Verified Genres</h1>
+	{{retrieveGenresForReview}}
+	<ul id='reviewExisting' class="reviewItems">
+		<li>
+			{{#each existingGenresForReview}}
+				{{> genreItem}}
+			{{/each}}
+		</li>
+	</ul>
+	<div class="col-md-2 column">
+		<h2><strong>{{existingCount}}</strong></h2>                    
+		<p><small>genres in total</small></p>
+	</div>
+	<div class="col-md-8 column">
+		<br>
+		<button class="btn btn-warning btn-lg" id="getGenreDetails"> get Details for All Genres</button>
+	</div>
+</template>

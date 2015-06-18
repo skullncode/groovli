@@ -1,0 +1,46 @@
+<template name="genreTabs">
+	<!--{{getSongsForGenre}}-->
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs listenHistoryTab" role="tablist" id="profileTabs">
+			<li role="presentation" class="active"><a href="#songsForArtist" aria-controls="songsForArtist" role="tab" data-toggle="tab" title="All songs of this artist, that are currently on Groovli">songs</a></li>
+			{{#if hasUsers}}
+				<li role="presentation"><a href="#usersForArtist" aria-controls="usersForArtist" role="tab" data-toggle="tab" title="All users that have shared this artist's music or active in chatter">people</a></li>
+			{{/if}}
+			<li role="presentation"><a href="#artistChatter" aria-controls="artistChatter" role="tab" data-toggle="tab" title="chatter related to this artist">chatter</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="songsForArtist">
+				<ul id='songsForArtist' class="listenHistory">
+				<li>
+					{{#each songsForGenre}}
+						{{> genreSongItem}}
+					{{/each}}
+				</li>
+				</ul>
+				<!--{{{songCount}}}-->
+			</div>
+			{{#if hasUsers}}
+				<div role="tabpanel" class="tab-pane fade" id="usersForArtist">
+					<ul id='usersForArtist' class="listenHistory">
+						<li>
+							{{#each genreSpecificActivePeople}}
+								{{> artistPerson}}
+							{{/each}}
+						</li>
+					</ul>
+					<!--<h2><strong>{{mutualListenHistoryMatchCount}}</strong></h2>                    
+	            	<p><small>song matches</small></p>-->
+				</div>
+			{{/if}}
+			<div role="tabpanel" class="tab-pane fade" id="artistChatter">
+				<!--{{> artistChatter}}-->
+				<ul id='usersForArtist' class="artistChatter">
+					{{> artistChatter}}
+				</ul>
+			</div>
+		</div>
+	</div>
+</template>

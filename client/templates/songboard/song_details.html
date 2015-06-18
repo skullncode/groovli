@@ -20,7 +20,8 @@
 								<br>released <b>{{formattedReleaseDate}}</b>
 								<br>Genre: 
 								{{#each extendedGenres}}
-									<span class="btn btn-default btn-xs">{{this}}</span>
+									<!--<span class="btn btn-default btn-xs">{{this}}</span>-->
+									<a href="/genre/{{this}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this}} page"><b>{{this}}</b></span></a>
 								{{/each}}
 						{{/if}}
 						{{#if cover}}

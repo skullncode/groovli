@@ -1,0 +1,23 @@
+<template name="genreSongItem">
+	<a class='thumbnail songBrowserItem' href={{songID}} data-toggle="tooltip" data-placement="top" title={{songItemMessageForUser}}>
+		<div style="float:left;width:100px;">
+			<div style="background-image: url({{youtubeThumbnail}});position:relative;top:0px;width:120px;height:90px;">
+			</div>
+		</div>
+		<center>
+			{{#if songIsCover}}
+				<div class='historyItemText'>{{songArtist}}'s <b>{{songTitle}}</b> <i>as covered by<b> {{songObj.coveredBy}}</b></i></div>
+			{{else}}
+				<div class='historyItemText'><b>{{songTitle}}</b> by <b>{{songArtist}}</b></div>
+			{{/if}}
+			{{#if albumDeetsNotEmpty}}
+				<div class='historyItemText'><small class='text-muted'><i>from the album <b>{{songObj.album}}</b></i></small></div>
+				<div class='historyItemText'><small class='text-muted'><i>released <b>{{formattedReleaseDate}}</b></i></small></div>
+			{{/if}}
+			<center>
+			<div class='historyItemText'><small class='text-muted'><i>{{sharedByHowMany}}</i></small></div>
+			</center>
+		</center>
+		<div style="clear:both;"></div>
+	</a>
+</template>

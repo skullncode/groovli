@@ -59,6 +59,57 @@ Meteor.methods({
 	          }
 	      })
   	},
+  	getArtistsForGenres: function(genreName) {
+  		var artistsForGenre = [];
+  		var originalGenreName = genreName;
+
+  		//GET WITH ORIGINAL GENRE NAME from ARTISTS table
+  		var x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
+  		//console.log('1 - GOT THESE MANY Artists with this genre name: ' + genreName);
+  		//console.log(x.length);
+  		if(!_.isEmpty(x)){
+  			_.each(x, function(artistObj){
+  				//console.log('THIS IS WHAT IS GETTING PUSHED');
+  				//console.log(artistObj);
+  				artistsForGenre.push(artistObj);
+  			})
+  		}
+  		
+  		//GET WITH UPDATED GENRE NAME REPLACING space with dash, still from ARTISTS table
+  		genreName = genreName.replace(/ /g, '-');
+  		x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
+  		if(!_.isEmpty(x)){
+  			_.each(x, function(artistObj){
+  				//console.log('THIS IS WHAT IS GETTING PUSHED');
+  				//onsole.log(artistObj);
+  				artistsForGenre.push(artistObj);
+  			})
+  		}
+
+  		//FINALLY LOOK FOR GENRE IN SONG TABLE and RETURN ARTIST Details
+
+  		x = Songs.find({'genre': {$regex: new RegExp(originalGenreName, 'i')}}, {fields: {'sa':1, 'iTunesMediumAlbumArt': 1}}).fetch();
+		//console.log('3 - GOT THESE MANY SONGS with this genre name: ' + originalGenreName);
+		//console.log(x.length);
+
+		if(!_.isEmpty(x)){
+  			_.each(x, function(artistObj){
+  				//console.log('THIS IS WHAT IS GETTING PUSHED');
+  				//onsole.log(artistObj);
+  				artistsForGenre.push(artistObj);
+  			})
+  		}
+
+  		//REMOVE ANY DUPLICATE ARTISTS
+  		var uniqArtistsForGenre = _.uniq(artistsForGenre, function(z){
+	      if(_.has(z, 'name'))
+	        return z.name;
+	      else if(_.has(z, 'sa'))
+	        return z.sa;
+	    });
+		
+  		return uniqArtistsForGenre;
+  	},
   	doesArtistHavePage: function(artistName) {
   		//replace ampersand with AND so that check works correctly
 		if(artistName.indexOf('&') >= 0)

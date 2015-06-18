@@ -1,0 +1,25 @@
+<template name='genreChatter'>
+	<div id="artistChatContainer" class="wrapper">
+		<ul id="chatbox">
+			{{#each messages}}
+		        {{#if messageIsFromCurrentLoggedInUser}}
+		          <li class="myMessageHeadImage" style="background-image: url({{userImageForThisMessage}})"></li>
+		          <li class="myMessage" title="{{formattedTimestamp}}">
+						{{content}}
+		          </li>
+		        {{else}}
+		          <a href="/profile/{{fromProfileID}}" target='blank' title="{{fromName}}"><li class="otherMessageHeadImage" style="background-image: url({{userImageForThisMessage}})"></li></a>
+		          <li class="otherMessage" title="{{formattedTimestamp}}">
+		            	{{content}}
+		          </li>
+		        {{/if}}
+			{{/each}}
+		</ul>
+		<div id="btn-input" class="input-group" style="position: absolute;bottom: 0;left: 0;">
+			<input id="input-chatMessage" type="text" class="form-control" placeholder="Type your message here...hit 'Enter' or click button to Send -->">
+			<span class="input-group-btn">
+			  <button type="button" class="btn btn-primary" id="btn-sendMessage">Send</button>
+			</span>
+		</div>
+	</div>
+</template>

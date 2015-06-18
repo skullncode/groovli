@@ -26,14 +26,14 @@
                               {{/each}}
                               </p>
                             {{/if}}
-                            <!--
                             {{#if hasGenres}}
                               <p><strong>Genres: </strong>
                               {{#each genres}}
-                                  <a href='#'><span class="tags">{{this}}</span></a>
+                                  <!--<a href='#'><span class="tags">{{this}}</span></a>-->
+                                  <a href="/genre/{{cleanedGenre}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{cleanedGenre}} page"><b>{{cleanedGenre}}</b></span></a>
                               {{/each}}
                               </p>
-                            {{/if}}-->
+                            {{/if}}
                         </div>         
                         <div class="col-xs-12 col-sm-4 text-center">
                           {{{artistImage}}}
