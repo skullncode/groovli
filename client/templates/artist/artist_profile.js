@@ -6,7 +6,7 @@ Template.artistProfile.helpers({
     var artObj = Session.get(Router.current().params._name+'_artObj');
     if(!_.isEmpty(artObj.genres) && !_.isUndefined(artObj.genres))
     {
-      artObj.genres = _.without(artObj.genres, null, undefined, 'all');
+      artObj.genres = _.without(artObj.genres, null, undefined, 'all', 'under 2000 listeners');
     }
     return artObj;    
   },

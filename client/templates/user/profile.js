@@ -179,7 +179,7 @@ Template.profile.helpers({
 			
 			if(!_.isUndefined(x) && !_.isUndefined(x.genres))
 			{
-				if(!_.isUndefined(x.genres[0]) && _.isUndefined(_.findWhere(topTeng, {'genre': x.genres[0]})) && x.genres[0]!== 'all')
+				if(!_.isUndefined(x.genres[0]) && _.isUndefined(_.findWhere(topTeng, {'genre': x.genres[0]})) && x.genres[0]!== 'all' && x.genres[0] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[0]);
@@ -187,7 +187,7 @@ Template.profile.helpers({
 	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
 					topTeng.push({'genre': currentGenre});
 				}
-				else if(!_.isUndefined(x.genres[1]) && !_.contains(topTeng, x.genres[1]) && x.genres[1]!== 'all')
+				else if(!_.isUndefined(x.genres[1]) && !_.contains(topTeng, x.genres[1]) && x.genres[1]!== 'all' && x.genres[1] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[1]);
@@ -195,7 +195,7 @@ Template.profile.helpers({
 	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
 					topTeng.push({'genre': currentGenre});
 				}
-				else if(!_.isUndefined(x.genres[2]) && !_.contains(topTeng, x.genres[2]) && x.genres[2]!== 'all')
+				else if(!_.isUndefined(x.genres[2]) && !_.contains(topTeng, x.genres[2]) && x.genres[2]!== 'all' && x.genres[2] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[2]);
@@ -203,7 +203,7 @@ Template.profile.helpers({
 	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
 					topTeng.push({'genre': currentGenre});
 				}
-				else if(!_.isUndefined(x.genres[3]) && !_.contains(topTeng, x.genres[3]) && x.genres[3]!== 'all')
+				else if(!_.isUndefined(x.genres[3]) && !_.contains(topTeng, x.genres[3]) && x.genres[3]!== 'all' && x.genres[3] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[3]);
