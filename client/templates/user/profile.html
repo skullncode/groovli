@@ -24,9 +24,10 @@
                                 {{{validatedTop10Band}}}
                             {{/each}}
                             </p>
-                            <p><strong>Top {{topGenreLength}} Genres: </strong>
-                            {{#each topTenGenres services.facebook.id}}
-                                <a href='#'><span class="tags">{{genre}}</span></a>
+                            <p><strong>Top Genres: </strong>
+                            {{#each topTenGenres}}
+                                <!--<a href='#'><span class="tags">{{genre}}</span></a>-->
+                                <a href="/genre/{{this.genre}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this.genre}} page"><b>{{this.genre}}</b></span></a>
                             {{/each}}
                             </p>
                         </div>             

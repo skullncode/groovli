@@ -1,3 +1,5 @@
+var localTopTenB;
+
 Template.profile.helpers({
 
 	userObjectForRoute: function() {
@@ -117,12 +119,15 @@ Template.profile.helpers({
 	},
 
 	topTenBands: function(uid) {
-		var b = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'}]}]}, {fields: {'sa':1}}).fetch();
+		var b = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{'manualApproval':'VALID'}]}]}, {fields: {'sa':1}}).fetch();
+		//console.log('FOUND THESE SONGS:');
+		//console.log(b);
 		var t = _.chain(b).countBy("sa").pairs().sortBy(function(pair) {return -pair[1];}).first(10).pluck(0).value();
 		var topTenb = [];
 		_.chain(t).map(function(value){topTenb.push({'sa': value})});
 		//console.log(topTen);
 		Session.set(Router.current().params._id+'topBandsLength', topTenb.length);
+		localTopTenB = topTenb;  
 		return topTenb;
 	},
 
@@ -146,16 +151,78 @@ Template.profile.helpers({
 		return Session.get(Router.current().params._id+'topBandsLength');
 	},
 
-	topTenGenres: function(uid) {
-		var g = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'}]}]}, {fields: {'genre':1}}).fetch();
+	topTenGenres: function() {
+		/*OLD VERSION OF GETTING TOP 10 GENRES
+		var g = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{'manualApproval':'VALID'}]}]}, {fields: {'genre':1}}).fetch();
 		var t = _.chain(g).countBy("genre").pairs().sortBy(function(pair) {return -pair[1];}).pluck(0).value();//.first(20).pluck(0).value();
+		//console.log('these are the top ten bands');
+		//console.log(localTopTenB);
 		var topTeng = [];
 		//console.log(t);
 		var gCounter = 0;
 		_.chain(t).map(function(value){if(value !== 'undefined' && gCounter < 10){gCounter++;topTeng.push({'genre': value})}});
 		//console.log(topTeng);
+
 		Session.set(Router.current().params._id+'topGenresLength', topTeng.length);
-		return topTeng;
+		return topTeng;*/
+
+		var topTeng = [];
+		var currentGenre = '';
+		_.each(localTopTenB, function(z){
+			var artName = z.sa;
+			if(artName.indexOf('&') >= 0)
+			{
+				artName = artName.replace(/&/g, 'and');
+			}
+
+			var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+			
+			if(!_.isUndefined(x) && !_.isUndefined(x.genres))
+			{
+				if(!_.isUndefined(x.genres[0]) && _.isUndefined(_.findWhere(topTeng, {'genre': x.genres[0]})) && x.genres[0]!== 'all')
+				{
+					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
+					//console.log(x.genres[0]);
+					currentGenre = x.genres[0].replace(/-/g, ' ');
+	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+					topTeng.push({'genre': currentGenre});
+				}
+				else if(!_.isUndefined(x.genres[1]) && !_.contains(topTeng, x.genres[1]) && x.genres[1]!== 'all')
+				{
+					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
+					//console.log(x.genres[1]);
+					currentGenre = x.genres[1].replace(/-/g, ' ');
+	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+					topTeng.push({'genre': currentGenre});
+				}
+				else if(!_.isUndefined(x.genres[2]) && !_.contains(topTeng, x.genres[2]) && x.genres[2]!== 'all')
+				{
+					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
+					//console.log(x.genres[2]);
+					currentGenre = x.genres[2].replace(/-/g, ' ');
+	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+					topTeng.push({'genre': currentGenre});
+				}
+				else if(!_.isUndefined(x.genres[3]) && !_.contains(topTeng, x.genres[3]) && x.genres[3]!== 'all')
+				{
+					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
+					//console.log(x.genres[3]);
+					currentGenre = x.genres[3].replace(/-/g, ' ');
+	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+					topTeng.push({'genre': currentGenre});
+				}
+			}
+			else
+			{
+				//console.log('Didnt find anything for this artist: ');
+				//console.log(x);
+			}	
+		});
+
+		//console.log('THI SIS THE TOP TEN GENRES: ');
+		//console.log(topTeng);
+
+		return topTeng;		
 	},
 	getTotalListenCountForUser: function() {
 		
@@ -182,9 +249,9 @@ Template.profile.helpers({
 			return "<h2><strong>0</strong></h2><p><small>listens</small></p>";
 	},
 
-	topGenreLength: function() {
+	/*topGenreLength: function() {
 		return Session.get(Router.current().params._id+'topGenresLength');
-	},
+	},*/
 
 	userProfileIsNotYou: function() {
 		return Router.current().params._id !== Meteor.user()._id;
