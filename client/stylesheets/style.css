@@ -115,7 +115,8 @@ ul.horizontal-slide {
 }
 
 ul.horizontal-slide li a:hover {
-  background-color:red; 
+  text-decoration: none;
+  background-color:#7AE751; 
   color:#FFF;
 }
 
@@ -126,7 +127,7 @@ ul.horizontal-slide li a:hover {
  }
 
  .songBrowserItem.selected {
-   background-color: yellow;
+   background-color: #FFCD5A;
  }
 
  .tastemakersongItem {
@@ -136,7 +137,7 @@ ul.horizontal-slide li a:hover {
  }
 
  .tastemakersongItem.selected {
-   background-color: yellow;
+   background-color: #FFCD5A;
  }
 
   .globalsongItem {
@@ -146,7 +147,7 @@ ul.horizontal-slide li a:hover {
  }
 
  .globalsongItem.selected {
-   background-color: yellow;
+   background-color: #FFCD5A;
  }
 
   .overlay{ 
@@ -184,6 +185,15 @@ ul.horizontal-slide li[class*="span"] {
    width:200px;
 }
 
+.songItemTextMin {
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+   /*float:right;*/
+   width:280px;
+}
+
 .genreItemText{
   white-space: pre-wrap;      /* CSS3 */   
   white-space: -moz-pre-wrap; /* Firefox */   
@@ -195,13 +205,13 @@ ul.horizontal-slide li[class*="span"] {
 /*END SONG OBJECT STYLING*/
 
   .tastemakerFriendSharedByContainer {
-    float:right;
+    /*float:right;*/
     width:200px;
     height:20px;
   }
 
   .globalSharedByContainer {
-    float:right;
+    /*float:right;*/
     width:200px;
     height:20px;
   }

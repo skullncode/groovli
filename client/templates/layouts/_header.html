@@ -10,7 +10,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-          <a class="navbar-brand" href="{{pathFor 'home'}}" title="beta">Groovli</a>
+          <a class="navbar-brand" href="{{pathFor 'home'}}" title="beta">
+            <img alt="Brand" height="19px" width="64px" src="../images/logo/groovliLogo_S_1.png">
+          </a>
         {{#if currentUser}}
           {{>playerControls}}
         {{/if}}
@@ -21,15 +23,15 @@
         {{> slidePanel}}
         <ul class="nav navbar-nav navbar-right">
           {{#if currentUser}}
-            <li class="{{ isActiveRoute regex='poll' }}" data-toggle="tooltip" data-placement="top" title="Tell us what you think of Groovli!"><a href="#" id='pollButton'><i class="fa fa-bar-chart"></i> Poll</a></li>
-            <li class="{{ isActiveRoute regex='contact' }}" data-toggle="tooltip" data-placement="top" title="Have any feedback?  Facing any issues?  Please let us know!"><a href="#" id='contactButton'><i class="fa fa-bullhorn"></i> Issues?</a></li>
+            <li class="{{ isActiveRoute regex='poll' }}" data-toggle="tooltip" data-placement="top" title="Tell us what you think of Groovli!"><a href="#" id='pollButton'><i class="fa fa-bar-chart"></i> poll</a></li>
+            <li class="{{ isActiveRoute regex='contact' }}" data-toggle="tooltip" data-placement="top" title="Have any feedback?  Facing any issues?  Please let us know!"><a href="#" id='contactButton'><i class="fa fa-bullhorn"></i> issues?</a></li>
           {{/if}}
           {{#unless currentUser}}
-            <li class="{{ isActiveRoute regex='home' }}"><a href="{{ pathFor 'home' }}"><i class="fa fa-home"></i> Home</a></li>
+            <li class="{{ isActiveRoute regex='home' }}"><a href="{{ pathFor 'home' }}"><i class="fa fa-home"></i> home</a></li>
           {{/unless}}
           <!--<li class="{{ isActiveRoute regex='dashboard' }}"><a href="{{ pathFor 'dashboard' }}"><i class="fa fa-gear"></i> Dashboard</a></li>-->
           {{#if currentUser}}
-            <li class="{{ isActiveRoute regex='songboard' }}"><a href="{{ pathFor 'songboard' }}"><i class="fa fa-music"></i> Songboard</a></li>
+            <li class="{{ isActiveRoute regex='songboard' }}"><a href="{{ pathFor 'songboard' }}"><i class="fa fa-music"></i> songboard</a></li>
           {{/if}}
         </ul>
       </div>
