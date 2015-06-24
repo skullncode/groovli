@@ -29,7 +29,7 @@ Template.reviewExisting.events({
       	}
       	x++;	
       }
-      location.reload();
+      //location.reload();
     }
 });
 

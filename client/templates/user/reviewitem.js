@@ -218,7 +218,7 @@ if (Meteor.isClient) {
       console.log('clicked ITUNES CHECK BUTTON');
       var songLink = $(event.currentTarget.parentElement.parentElement.parentElement.parentElement).find("#externalSongLink").attr('href');
       Meteor.call('doManualItunesValidationForLink', songLink, 'YT');
-      location.reload();
+      //location.reload();
     },
     "click #lfmCheck": function (event) {
       console.log('clicked LastFM CHECK BUTTON');
@@ -230,7 +230,7 @@ if (Meteor.isClient) {
       console.log('and with this Artist: ' + originalArtist);
       console.log('and with this song title: ' + originalTitle);
       Meteor.call('doManualLFMValidationForLink', songLink, originalArtist, originalTitle, 'YT');
-      location.reload();
+      //location.reload();
     }
 
   });
