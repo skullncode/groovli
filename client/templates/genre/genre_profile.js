@@ -158,6 +158,25 @@ Template.genreProfile.helpers({
         return '<h2><strong>'+albumList.length+'</strong></h2><p><small>album</small></p>';
     }
   },
+  artistCount: function()
+  {
+    var allArtistsForGenre = _.uniq(Session.get(Router.current().params._name+'_arts'), function(x){
+      if(_.has(x, 'name'))
+        return x.name;
+      else if(_.has(x, 'sa'))
+        return x.sa;
+    });
+    if(allArtistsForGenre.length > 1 || allArtistsForGenre.length === 0)
+    {
+      return '<h2><strong>'+allArtistsForGenre.length+'</strong></h2><p><small>artists</small></p>';
+    }
+    else if(allArtistsForGenre.length = 1)
+    {
+      return '<h2><strong>'+allArtistsForGenre.length+'</strong></h2><p><small>artist</small></p>';
+    }
+    else
+      return '';
+  },
   coverSongCount: function() 
   {
     //console.log('checking cover songs!!');

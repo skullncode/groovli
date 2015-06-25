@@ -275,6 +275,11 @@ function getInfoForNonexistentArtistAndInsert(artistName)
 					{
 						Artists.insert(newArtist);
 					}
+
+					//get details for any unset / new genres coming in with this artist / song
+					_.each(newArtist.genres, function(z){
+						Meteor.call('checkAndSetDetailsForSpecificGenre', z);
+					});
 					/*else
 					{
 						console.log('FOUND IN DB SO WILL BE SKIPPED: ' + artistName);
