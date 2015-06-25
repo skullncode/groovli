@@ -183,33 +183,45 @@ Template.profile.helpers({
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[0]);
-					currentGenre = x.genres[0].replace(/-/g, ' ');
-	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
-					topTeng.push({'genre': currentGenre});
+					if(!_.isNull(x.genres[0]))
+					{
+						currentGenre = x.genres[0].replace(/-/g, ' ');
+		        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+						topTeng.push({'genre': currentGenre});
+					}
 				}
 				else if(!_.isUndefined(x.genres[1]) && !_.contains(topTeng, x.genres[1]) && x.genres[1]!== 'all' && x.genres[1] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[1]);
-					currentGenre = x.genres[1].replace(/-/g, ' ');
-	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
-					topTeng.push({'genre': currentGenre});
+					if(!_.isNull(x.genres[1]))
+					{
+						currentGenre = x.genres[1].replace(/-/g, ' ');
+		        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+						topTeng.push({'genre': currentGenre});
+					}
 				}
 				else if(!_.isUndefined(x.genres[2]) && !_.contains(topTeng, x.genres[2]) && x.genres[2]!== 'all' && x.genres[2] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[2]);
-					currentGenre = x.genres[2].replace(/-/g, ' ');
-	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
-					topTeng.push({'genre': currentGenre});
+					if(!_.isNull(x.genres[2]))
+					{
+						currentGenre = x.genres[2].replace(/-/g, ' ');
+		        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+						topTeng.push({'genre': currentGenre});
+					}
 				}
 				else if(!_.isUndefined(x.genres[3]) && !_.contains(topTeng, x.genres[3]) && x.genres[3]!== 'all' && x.genres[3] !== 'under 2000 listeners')
 				{
 					//console.log('FOUND THIS ARTIST GENRE and pushing this: ');
 					//console.log(x.genres[3]);
-					currentGenre = x.genres[3].replace(/-/g, ' ');
-	        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
-					topTeng.push({'genre': currentGenre});
+					if(!_.isNull(x.genres[3]))
+					{
+						currentGenre = x.genres[3].replace(/-/g, ' ');
+		        		currentGenre = currentGenre.replace(/'n'/g, ' and ');
+						topTeng.push({'genre': currentGenre});
+					}
 				}
 			}
 			else
