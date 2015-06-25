@@ -74,17 +74,30 @@ Meteor.methods({
   				artistsForGenre.push(artistObj);
   			})
   		}
+  		//console.log('1 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+  		//console.log(artistsForGenre);
   		
   		//GET WITH UPDATED GENRE NAME REPLACING space with dash, still from ARTISTS table
-  		genreName = genreName.replace(/ /g, '-');
-  		x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
-  		if(!_.isEmpty(x)){
-  			_.each(x, function(artistObj){
-  				//console.log('THIS IS WHAT IS GETTING PUSHED');
-  				//onsole.log(artistObj);
-  				artistsForGenre.push(artistObj);
-  			})
+  		//genreName = genreName.replace(/ /g, '-');
+  		//search for artists replacing each space with a dash and then searching again rather than a global replacement
+  		while(_.contains(genreName, ' '))
+  		{
+  			genreName = genreName.replace(' ', '-');
+	  		x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
+	  		if(!_.isEmpty(x)){
+	  			_.each(x, function(artistObj){
+	  				//console.log('THIS IS WHAT IS GETTING PUSHED');
+	  				//console.log(artistObj);
+	  				artistsForGenre.push(artistObj);
+	  			})
+	  		}
   		}
+
+  		//console.log('2 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+  		//console.log(artistsForGenre);
+
+  		//console.log('2 - GOT THESE MANY SONGS with this genre name: ' + genreName);
+		//console.log(x.length);
 
   		//FINALLY LOOK FOR GENRE IN SONG TABLE and RETURN ARTIST Details
 
@@ -95,10 +108,13 @@ Meteor.methods({
 		if(!_.isEmpty(x)){
   			_.each(x, function(artistObj){
   				//console.log('THIS IS WHAT IS GETTING PUSHED');
-  				//onsole.log(artistObj);
+  				//console.log(artistObj);
   				artistsForGenre.push(artistObj);
   			})
   		}
+
+  		//console.log('3 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+  		//console.log(artistsForGenre);
 
   		//REMOVE ANY DUPLICATE ARTISTS
   		var uniqArtistsForGenre = _.uniq(artistsForGenre, function(z){
@@ -107,6 +123,9 @@ Meteor.methods({
 	      else if(_.has(z, 'sa'))
 	        return z.sa;
 	    });
+
+	    //console.log('4 - FINAL UNIQUE ARTISTS FOR GENRES RIGHT NOW IS: ');
+  		//console.log(uniqArtistsForGenre);
 		
   		return uniqArtistsForGenre;
   	},

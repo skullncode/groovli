@@ -1,5 +1,6 @@
 Template.genreProfile.helpers({
   getGenre: function() {
+    Session.set(Router.current().params._name+'_genObj', null); //so that not found template isn't intermittently shown before getting genre
     getGenreForRouting();
     getArtistsForGenres();
   },
@@ -168,12 +169,19 @@ Template.genreProfile.helpers({
       else if(Session.get(Router.current().params._name+'_acs_count') === 1)
         return '<h2><strong>'+Session.get(Router.current().params._name+'_acs_count')+'</strong></h2><p><small>cover</small></p>';
     }
+  },
+  genrePageExists: function()
+  {
+    if(!_.isUndefined(Session.get(Router.current().params._name+'_genObj')))
+      return true;
+    else
+      return false;
   }
 });
 
 function getGenreForRouting()
 {
-  //console.log('GETTING artist for routing now: ' + Router.current().params._name);.
+  console.log('GETTING artist for routing now: ' + Router.current().params._name);
   /*Meteor.call('checkAndSetDetailsForSpecificGenre', Router.current().params._name);*/
   Meteor.call('findGenreForRouting', Router.current().params._name, function(error,result){
       if(error){
@@ -181,18 +189,23 @@ function getGenreForRouting()
       }
       else{
           // do something with result
-        Session.set(Router.current().params._name+'_genObj', result);
+          //console.log('GOT THIS BACK for GENRE OBJECT: ' + Router.current().params._name);
+          //console.log(result);
+          Session.set(Router.current().params._name+'_genObj', result);
       }
   });
 }
 
 function getArtistsForGenres() {
+  console.log('GETTING ARTISTS FOR GENRES NOW!');
   Meteor.call('getArtistsForGenres', Router.current().params._name, function(error, result){
     if(error){
         console.log(error.reason);
     }
     else{
         // do something with result
+      //console.log('GOT THIS BACK for ARTISTS of genre: ' + Router.current().params._name);
+      //console.log(result);
       Session.set(Router.current().params._name+'_arts', result);
     }
   });
@@ -200,7 +213,7 @@ function getArtistsForGenres() {
 
 function getSongsForSpecificGenre(genreSpecificArtistList)
 {
-  //console.log('GOING TO GET SPECIFIC SONGS FOR THIS GENRE: ' + Router.current().params._name);
+  console.log('GOING TO GET SPECIFIC SONGS FOR THIS GENRE: ' + Router.current().params._name);
   Meteor.call('getSongsForSpecificGenreArtistList', genreSpecificArtistList, function(error,result){
       if(error){
           console.log(error.reason);

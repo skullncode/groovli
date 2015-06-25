@@ -1,5 +1,6 @@
 Template.artistProfile.helpers({
   getArtist: function() {
+    Session.set(Router.current().params._name+'_artObj', null)
     getArtistForRouting();
   },
   artistObject: function() {
@@ -87,9 +88,6 @@ Template.artistProfile.helpers({
     //console.log(urlArtistText);
     return this.bio.replace(textToRemove, '');
   },
-  artistHasPage: function() {
-    return Session.get('artistHasPage');
-  },
   songCount: function()
   {
     //console.log('CHECKING SONG COUNT!!!');
@@ -123,6 +121,13 @@ Template.artistProfile.helpers({
       else if(Session.get(Router.current().params._name+'_acs_count') === 1)
         return '<h2><strong>'+Session.get(Router.current().params._name+'_acs_count')+'</strong></h2><p><small>cover</small></p>';
     }
+  },
+  artistPageExists: function() 
+  {
+    if(!_.isUndefined(Session.get(Router.current().params._name+'_artObj')))
+      return true;
+    else
+      return false;
   }
 });
 
