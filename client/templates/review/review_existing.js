@@ -35,7 +35,8 @@ Template.reviewExisting.events({
 
 function getExistingSongsForReview()
 {
-	var result = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
+	//var result = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
+	var result = Songs.find({}).fetch();
 	Session.set('esReview', result);
 	Session.set('esReviewCount', result.length);
 	/*Meteor.call('reviewExistingSongs', function(error, result) {
