@@ -36,5 +36,55 @@ Template.artistItem.events({
           return toastr.success('Successfully deleted data for: ' + artName);
         };
     });
+  },
+
+  'click #deleteGenreForArtist': function(e) {
+    console.log('CLICKED delete genre for artist button:');
+    //console.log(e);
+    var artName = $(e.currentTarget.parentElement.parentElement).find('#artistName').text()
+    var genreName = $(e.currentTarget).text();
+    if(_.isEmpty(genreName))
+      genreName = null;
+    var genreObjectDiv = $(e.currentTarget)[0];
+    console.log('FOR THIS GENRE: ' + genreName);
+    //console.log(genreObjectDiv);
+    var genreDeleteCheck = confirm("Are you sure you want to delete the '"+genreName+"' genre for this artist?");
+    if(genreDeleteCheck == true) {
+        console.log('WILL GO AHEAD AND DELETE THE '+genreName+' FOR THis ARTIST!');
+        Meteor.call('deleteGenreForArtist', genreName, artName, function(error,result){
+            if(error){
+              return toastr.error(error.reason);
+            }
+            else{
+                // do something with result
+              $(genreObjectDiv).hide();
+              return toastr.success('Successfully deleted the "'+genreName+'" genre for the artist: ' + artName);
+            };
+        });
+    } 
+    else {
+      console.log('NOTHING WILL BE DELETED!!!');
+    }
+  },
+
+  'click #addGenreForArtist': function(e) {
+    //console.log(e);
+    var artName = $(e.currentTarget.parentElement.parentElement).find('#artistName').text();
+    //console.log('CLICKED add genre for artist button: ' + artName);
+    var genreName = $(e.currentTarget.parentElement).find('#txtNewGenreForArtist').val();
+    var genreObjectDiv = $(e.currentTarget)[0];
+    //console.log('FOR THIS GENRE: ' + genreName);
+    //console.log(genreObjectDiv);
+    Meteor.call('addGenreForArtist', genreName, artName, function(error,result){
+            if(error){
+              return toastr.error(error.reason);
+            }
+            else{
+                // do something with result
+              //$(genreObjectDiv).hide();
+              $(e.currentTarget.parentElement).find('#txtNewGenreForArtist').val('');
+              location.reload();
+            };
+        });
   }
 });

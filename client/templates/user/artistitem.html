@@ -6,8 +6,14 @@
 		<div class="col-md-2 column">
 			<h3 id='artistName'>{{name}}</h3>
 			{{#each genres}}
-				<h5>{{this}}</h5>
+				<!--<h5>{{this}}</h5>-->
+				<button class="btn btn-danger btn-xs" id="deleteGenreForArtist">{{this}}</button>
+				<br>
 			{{/each}}
+			<br>
+			<input type="text" class='reviewItemText' size="30" id="txtNewGenreForArtist" placeholder="new genre for this artist">
+			<button class="btn btn-success btn-xs" id="addGenreForArtist"><i class="fa fa-plus"></i></button>
+			<br><br>
 			<button class="btn btn-danger btn-xs" id="deleteArtistEntry">Delete Artist Entry</button>
 		</div>
 		<div style="clear:both;"></div>

@@ -59,6 +59,30 @@ Meteor.methods({
 	          }
 	      })
   	},
+  	deleteGenreForArtist: function(genreName, artistName) {
+  		console.log('REACHED SERVER METHOD for DELETION OF GENRE '+genreName+' for this artist: '+ artistName);
+	    Artists.update({ name: artistName },{ $pull: { genres: genreName } },{ multi: false }, function(error) {
+	          if (error) {
+	            // display the error to the user
+	            return error;
+	          }
+	          else{
+	            //console.log('DELETED GENRE FOR ARTIST!!');
+	          }
+	    })
+  	},
+  	addGenreForArtist: function(genreName, artistName) {
+  		console.log('REACHED SERVER METHOD for ADDITION OF GENRE '+genreName+' for this artist: '+ artistName);
+	    Artists.update({ name: artistName },{ $push: { genres: genreName } }, function(error) {
+	          if (error) {
+	            // display the error to the user
+	            return error;
+	          }
+	          else{
+	            //console.log('DELETED GENRE FOR ARTIST!!');
+	          }
+	    })
+  	},
   	getArtistsForGenres: function(genreName) {
   		var artistsForGenre = [];
   		var originalGenreName = genreName;
