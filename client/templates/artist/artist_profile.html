@@ -30,8 +30,13 @@
                               {{#if hasGenres}}
                                 <p><strong>Genres: </strong>
                                 {{#each genres}}
+                                    {{checkForGenre cleanedGenre}}
                                     <!--<a href='#'><span class="tags">{{this}}</span></a>-->
-                                    <a href="/genre/{{cleanedGenre}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{cleanedGenre}} page"><b>{{cleanedGenre}}</b></span></a>
+                                    {{#if genreExists cleanedGenre}}
+                                      <a href="/genre/{{cleanedGenre}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{cleanedGenre}} page"><b>{{cleanedGenre}}</b></span></a>
+                                    {{else}}
+                                      <span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="no page exists for the {{cleanedGenre}} genre">{{cleanedGenre}}</span>
+                                    {{/if}}
                                 {{/each}}
                                 </p>
                               {{/if}}

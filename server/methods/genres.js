@@ -42,7 +42,7 @@ Meteor.methods({
 		return Genres.findOne({'name': {$regex: new RegExp('^' + genreName + '$', 'i')}});
 	},
 	deleteGenreEntry: function(genreName) {
-	    Artists.remove({name: genreName}, function(error) {
+	    Genres.remove({name: genreName}, function(error) {
 	          if (error) {
 	            // display the error to the user
 	            return error;

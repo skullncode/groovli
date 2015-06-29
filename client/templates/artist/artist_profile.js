@@ -5,7 +5,7 @@ Template.artistProfile.helpers({
   },
   artistObject: function() {
     var artObj = Session.get(Router.current().params._name+'_artObj');
-    if(!_.isUndefined(artObj) && !_.isEmpty(artObj.genres) && !_.isUndefined(artObj.genres))
+    if(!_.isNull(artObj) && !_.isUndefined(artObj) && !_.isEmpty(artObj.genres) && !_.isUndefined(artObj.genres))
     {
       artObj.genres = _.without(artObj.genres, null, undefined, 'all', 'under 2000 listeners');
     }
@@ -57,6 +57,12 @@ Template.artistProfile.helpers({
     //console.log('THIS IS GENRE post-cleansing:');
     //console.log(cleaned);
     return cleaned;
+  },
+  checkForGenre: function(genreName) {
+    doesGenreHavePage(genreName);
+  },
+  genreExists: function(cleaned) {
+    return Session.get(cleaned+'_hasPage');
   },
   hasCoverSongs: function() {
     if(Session.get(Router.current().params._name+'_acs_count') > 0)
@@ -143,6 +149,21 @@ function getArtistForRouting()
         Session.set(Router.current().params._name+'_artObj', result);
       }
   });
+}
+
+
+function doesGenreHavePage(genreName) {
+  console.log('CHECKING IF THIS GENRE has a page or not: ' + genreName);
+  Meteor.call('doesGenreHavePage', genreName, function(error,result){
+        if(error){
+          console.log('Encountered error while trying to check if artist has page: ' + error)
+        }
+        else{
+            // do something with result
+          console.log('received genre page result: ' + result);
+          Session.set(genreName+'_hasPage', result);
+        };
+    });
 }
 
 function doesArtistHavePage(artName) {

@@ -10,19 +10,19 @@ Template.genreItem.helpers({
 Template.genreItem.events({
   'click #deleteGenreEntry': function(e) {
     console.log('CLICKED delete artist button:');
-    var artName = $(e.currentTarget.parentElement.parentElement).find('#artistName').text()
+    var genreName = $(e.currentTarget.parentElement.parentElement).find('#genreName').text()
     //console.log(e);
-    var artistObjectDiv = $(e.currentTarget.parentElement.parentElement);
+    var genreObjectDiv = $(e.currentTarget.parentElement.parentElement);
     //console.log('FOR THIS ARTIST: ' + artName);
     //console.log(artistObjectDiv);
-    Meteor.call('deleteArtistEntry', artName, function(error,result){
+    Meteor.call('deleteGenreEntry', genreName, function(error,result){
         if(error){
           return toastr.error(error.reason);
         }
         else{
             // do something with result
-          $(artistObjectDiv).hide();
-          return toastr.success('Successfully deleted data for: ' + artName);
+          $(genreObjectDiv).hide();
+          return toastr.success('Successfully deleted entry for: ' + genreName);
         };
     });
   }
