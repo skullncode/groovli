@@ -147,7 +147,20 @@ function getArtistForRouting()
 
 function doesArtistHavePage(artName) {
   //console.log('CLIENT METHOD: SEARCHING TO SEE IF THIS SIMILAR ARTIST HAS A PAGE: ' + artName);
-  Meteor.call('doesArtistHavePage', artName, function(error,result){
+  var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+  //console.log("GOT THIS: ");
+  //console.log(x);
+  if(_.isEmpty(x))
+  {
+    //return false;
+    Session.set(artName+'_hasPage', false);
+  }
+  else
+  {
+    //return true;
+    Session.set(artName+'_hasPage', true);
+  }
+  /*Meteor.call('doesArtistHavePage', artName, function(error,result){
         if(error){
           console.log('Encountered error while trying to check if artist has page: ' + error)
         }
@@ -156,5 +169,5 @@ function doesArtistHavePage(artName) {
           //console.log('received artist page result: ' + result);
           Session.set(artName+'_hasPage', result);
         };
-    });
+    });*/
 }

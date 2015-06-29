@@ -125,7 +125,7 @@ Template.profile.helpers({
 		var t = _.chain(b).countBy("sa").pairs().sortBy(function(pair) {return -pair[1];}).first(10).pluck(0).value();
 		var topTenb = [];
 		_.chain(t).map(function(value){topTenb.push({'sa': value})});
-		//console.log(topTen);
+		console.log(b);
 		Session.set(Router.current().params._id+'topBandsLength', topTenb.length);
 		localTopTenB = topTenb;  
 		return topTenb;
@@ -341,7 +341,20 @@ function isUserKing()
 
 function doesArtistHavePage(artName) {
   //console.log('CLIENT METHOD: SEARCHING TO SEE IF THIS SIMILAR ARTIST HAS A PAGE: ' + artName);
-  Meteor.call('doesArtistHavePage', artName, function(error,result){
+	var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+	//console.log("GOT THIS: ");
+	//console.log(x);
+	if(_.isEmpty(x))
+	{
+		//return false;
+		Session.set(artName+'_hasPage', false);
+	}
+	else
+	{
+		//return true;
+		Session.set(artName+'_hasPage', true);
+	}
+  /*Meteor.call('doesArtistHavePage', artName, function(error,result){
         if(error){
           console.log('Encountered error while trying to check if artist has page: ' + error)
         }
@@ -350,5 +363,5 @@ function doesArtistHavePage(artName) {
           //console.log('received artist page result: ' + result);
           Session.set(artName+'_hasPage', result);
         };
-    });
+    });*/
 }
