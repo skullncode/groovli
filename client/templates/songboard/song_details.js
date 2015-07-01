@@ -13,6 +13,24 @@ Template.songDetails.helpers({
 		return cs;
   },
 
+  /*checkForGenre: function(genreName) {
+    doesGenreHavePage(genreName);
+  },
+  genreExists: function(cleaned) {
+    return Session.get(cleaned+'_hasPage');
+  },*/
+  hasGenres: function() {
+    if(!_.isEmpty(currentSong))
+    {
+      var ca = Artists.findOne({name: currentSong.sa})
+      if((!_.isUndefined(currentSong.genre) && !_.isEmpty(currentSong.genre)) || (!_.isUndefined(ca.genres) && !_.isEmpty(ca.genres)))
+        return true;
+      else
+        return false;
+    }
+    else
+      return false;
+  },
   extendedGenres: function() {
     if(!_.isUndefined(currentSong.sa))
     {
@@ -233,6 +251,21 @@ Template.songDetails.events({
     return true;
   }
 });
+
+/*
+function doesGenreHavePage(genreName) {
+  console.log('CHECKING IF THIS GENRE has a page or not: ' + genreName);
+  Meteor.call('doesGenreHavePage', genreName, function(error,result){
+        if(error){
+          console.log('Encountered error while trying to check if artist has page: ' + error)
+        }
+        else{
+            // do something with result
+          console.log('received genre page result: ' + result);
+          Session.set(genreName+'_hasPage', result);
+        };
+    });
+}*/
 
 function doesArtistHavePage(artName, mode) {
   if(artName.indexOf('&') >= 0)

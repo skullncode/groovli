@@ -18,11 +18,22 @@
 								Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
 								<br>from the album <b>{{currentSong.album}}</b>
 								<br>released <b>{{formattedReleaseDate}}</b>
-								<br>Genre: 
+								<!--<br>Genre: 
 								{{#each extendedGenres}}
-									<!--<span class="btn btn-default btn-xs">{{this}}</span>-->
 									<a href="/genre/{{this}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this}} page"><b>{{this}}</b></span></a>
+								{{/each}}-->
+						{{/if}}
+						{{#if hasGenres}}
+							<p><strong>Genres: </strong>
+								{{#each extendedGenres}}
+								    <!--{{checkForGenre this}}-->
+								    <!--{{#if genreExists this}}-->
+								      <a href="/genre/{{this}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this}} page"><b>{{this}}</b></span></a>
+								    <!--{{else}}
+								      <span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="no page exists for the {{this}} genre">{{this}}</span>
+								    {{/if}}-->
 								{{/each}}
+							</p>
 						{{/if}}
 						{{#if cover}}
 							{{checkIfCoveringArtistHasPage currentSong.coveredBy}}
