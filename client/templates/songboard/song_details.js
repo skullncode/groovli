@@ -23,7 +23,7 @@ Template.songDetails.helpers({
     if(!_.isEmpty(currentSong))
     {
       var ca = Artists.findOne({name: currentSong.sa})
-      if((!_.isUndefined(currentSong.genre) && !_.isEmpty(currentSong.genre)) || (!_.isUndefined(ca.genres) && !_.isEmpty(ca.genres)))
+      if((!_.isUndefined(currentSong.genre) && !_.isEmpty(currentSong.genre)) || (!_.isUndefined(ca) && !_.isUndefined(ca.genres) && !_.isEmpty(ca.genres)))
         return true;
       else
         return false;
@@ -268,27 +268,30 @@ function doesGenreHavePage(genreName) {
 }*/
 
 function doesArtistHavePage(artName, mode) {
-  if(artName.indexOf('&') >= 0)
+  if(!_.isUndefined(artName))
   {
-    artName = artName.replace(/&/g, 'and');
-  }
+    if(artName.indexOf('&') >= 0)
+    {
+      artName = artName.replace(/&/g, 'and');
+    }
 
-  var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
-  //console.log("GOT THIS: ");
-  //console.log(x);
-  if(_.isEmpty(x))
-  {
-    if(mode === 'original')
-      Session.set('artistHasPage', false);
-    else if(mode === 'cover')
-      Session.set('coveringArtistHasPage', false);
-  }
-  else
-  {
-    if(mode === 'original')
-      Session.set('artistHasPage', true);
-    else if(mode === 'cover')
-      Session.set('coveringArtistHasPage', true);
+    var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+    //console.log("GOT THIS: ");
+    //console.log(x);
+    if(_.isEmpty(x))
+    {
+      if(mode === 'original')
+        Session.set('artistHasPage', false);
+      else if(mode === 'cover')
+        Session.set('coveringArtistHasPage', false);
+    }
+    else
+    {
+      if(mode === 'original')
+        Session.set('artistHasPage', true);
+      else if(mode === 'cover')
+        Session.set('coveringArtistHasPage', true);
+    }
   }
   /*
   Meteor.call('doesArtistHavePage', artName, function(error,result){

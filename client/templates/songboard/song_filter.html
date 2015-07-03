@@ -2,17 +2,26 @@
 	<div id="filter" class="col-md-4 column" style="margin-top:10px">
 		<div class="panel panel-default songFilter">
 			<div class="panel-heading">
-				<h2 class="panel-title"><i class="fa fa-filter"></i>&nbsp;filters</h2>
+				<h2 class="panel-title" title="playlists on the fly"><i class="fa fa-filter"></i><i>&nbsp;flylist filters</i></h2>
 				<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
 			</div>
 			<div class="panel-body">
-			<div class="panel-heading">
-				<h3 class="panel-title"><i><i class="glyphicon glyphicon-headphones"></i>&nbsp;selected tabs</i></h3>
-			</div>
+				<!--<div class="panel-heading">
+					<h3 class="panel-title"><i><i class="glyphicon glyphicon-headphones"></i>&nbsp;selected tabs</i></h3>
+				</div>
                {{#each playableTabs}}
                	{{{this}}}
                	&nbsp;&nbsp;&nbsp;
                {{/each}}
+               <br><br>-->
+				<div class="panel-heading">
+					<h3 class="panel-title"><i><i class="fa fa-music"></i>&nbsp;selected genres<br></i></h3>
+				</div>
+				<select class="multipleGenreSelections" multiple="multiple" style="width:200px;">
+					{{#each allGenres}}
+						<option value="{{this}}">{{this}}</option>
+					{{/each}}
+				</select>
 			</div>
 		</div>
 	</div>

@@ -34,6 +34,9 @@ Meteor.methods({
 		//console.log('THIS IS THE LENGTH : ' + x.length);
 		return x;
 	},
+	getSongsForGenres: function(genreList){
+		return getSongsForSpecificGenreList(genreList);
+	},
 	getSongsForSpecificGenreArtistList: function(artistsForGenre) {
 		return getSongsForArtistList(artistsForGenre);
 	},
@@ -83,8 +86,98 @@ Meteor.methods({
   	}
 });
 
+function getSongsForSpecificGenreList(genreList){
+	var songList = getArtistsForGenreList(genreList);
+	//console.log('THIS IS THE RETURNED SERVER SONG LIST: ');
+	//console.log(songList);
+	return songList;
+	/*var artList = getArtistsForGenreList(genreList);
+	console.log('THIS IS THE ARTIST LIST FOR THE SELECTED GENRES: ');
+	console.log(artList);
+	return getSongsForArtistList(artList);*/
+}
+
+function getArtistsForGenreList(genreList){
+
+	//console.log('REACHED SERVER WITH THIS GENRE LIST: ');
+	//console.log(genreList);
+	var artistsForGenre = [];
+	
+	var originalGenreList = genreList;
+
+	//GET WITH ORIGINAL GENRE NAME from ARTISTS table
+	var x = Artists.find({genres: {$in: genreList}}, {fields: {'name':1}}).fetch();
+	//console.log('1 - GOT THESE MANY Artists with this genre name: ' + genreName);
+	//console.log(x.length);
+	//console.log('1 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+	//console.log(artistsForGenre);
+
+	_.each(x, function(z){
+		artistsForGenre.push(z);
+	});
+
+	//console.log('1 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+	//console.log(artistsForGenre);
+	
+	//GET WITH UPDATED GENRE NAME REPLACING space with dash, still from ARTISTS table
+	//genreName = genreName.replace(/ /g, '-');
+	//search for artists replacing each space with a dash and then searching again rather than a global replacement
+
+	var uniqArtistsForGenre = [];
+
+	_.each(genreList, function(genreName){
+		while(_.contains(genreName, ' '))
+		{
+			genreName = genreName.replace(' ', '-');
+			var y = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1}}).fetch();
+			if(!_.isEmpty(y)){
+				_.each(y, function(artistObj){
+					//console.log('THIS IS WHAT IS GETTING PUSHED');
+					//console.log(artistObj);
+					artistsForGenre.push(artistObj);
+				})
+			}
+		}
+
+		//console.log('2 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+		//console.log(artistsForGenre);
+		
+		x = Songs.find({'genre': {$regex: new RegExp(genreName, 'i')}}, {fields: {'sa':1, 'iTunesMediumAlbumArt': 1}}).fetch();
+
+		if(!_.isEmpty(x))
+		{
+			_.each(x, function(artistObj){
+				//console.log('THIS IS WHAT IS GETTING PUSHED');
+				//console.log(artistObj);
+				artistsForGenre.push(artistObj);
+			})
+		}
+
+		//console.log('3 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+		//console.log(artistsForGenre);
+
+		//REMOVE ANY DUPLICATE ARTISTS
+		uniqArtistsForGenre = _.uniq(artistsForGenre, function(z){
+		  if(_.has(z, 'name'))
+		    return z.name;
+		  else if(_.has(z, 'sa'))
+		    return z.sa;
+		});
+
+		//console.log('4 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+		//console.log(uniqArtistsForGenre);
+
+		//return uniqArtistsForGenre;
+	});
+	
+	var songList = getSongsForArtistList(uniqArtistsForGenre);
+	//console.log('THIS IS THE RETURNED SONG LIST: ');
+	//console.log(songList);
+	return songList;
+}
+
 function getSongsForArtistList(artistList){
-	//console.log('THIS IS THE ARTIST LIST in the SERVER METHOD: ');
+	//console.log('*********************THIS IS THE ARTIST LIST in the SERVER METHOD: ');
 	//console.log(artistList);
 	var cleanedArtistList = [];
 	var tempArtistName = '';
@@ -122,7 +215,13 @@ function getSongsForArtistList(artistList){
 	});
 	//console.log('WITH THIS ARTIST LIST: ');
 	//console.log(cleanedArtistList);
-	var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
+	var songsForThoseArtists = [];
+	var tempSongs = [];
+	_.each(cleanedArtistList, function(x){
+		tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}}).fetch();
+		songsForThoseArtists.push.apply(songsForThoseArtists, tempSongs);
+	});
+	//var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
 	//console.log('FOUND these many songs for those artists:' + songsForThoseArtists.length);
 	return songsForThoseArtists;
 }

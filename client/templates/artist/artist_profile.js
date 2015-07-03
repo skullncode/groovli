@@ -153,14 +153,14 @@ function getArtistForRouting()
 
 
 function doesGenreHavePage(genreName) {
-  console.log('CHECKING IF THIS GENRE has a page or not: ' + genreName);
+  //console.log('CHECKING IF THIS GENRE has a page or not: ' + genreName);
   Meteor.call('doesGenreHavePage', genreName, function(error,result){
         if(error){
           console.log('Encountered error while trying to check if artist has page: ' + error)
         }
         else{
             // do something with result
-          console.log('received genre page result: ' + result);
+          //console.log('received genre page result: ' + result);
           Session.set(genreName+'_hasPage', result);
         };
     });

@@ -200,7 +200,7 @@ Template.genreProfile.helpers({
 
 function getGenreForRouting()
 {
-  console.log('GETTING artist for routing now: ' + Router.current().params._name);
+  //console.log('GETTING artist for routing now: ' + Router.current().params._name);
   /*Meteor.call('checkAndSetDetailsForSpecificGenre', Router.current().params._name);*/
   Meteor.call('findGenreForRouting', Router.current().params._name, function(error,result){
       if(error){
@@ -216,7 +216,7 @@ function getGenreForRouting()
 }
 
 function getArtistsForGenres() {
-  console.log('GETTING ARTISTS FOR GENRES NOW!');
+  //console.log('GETTING ARTISTS FOR GENRES NOW!');
   Meteor.call('getArtistsForGenres', Router.current().params._name, function(error, result){
     if(error){
         console.log(error.reason);
@@ -232,7 +232,7 @@ function getArtistsForGenres() {
 
 function getSongsForSpecificGenre(genreSpecificArtistList)
 {
-  console.log('GOING TO GET SPECIFIC SONGS FOR THIS GENRE: ' + Router.current().params._name);
+  //console.log('GOING TO GET SPECIFIC SONGS FOR THIS GENRE: ' + Router.current().params._name);
   Meteor.call('getSongsForSpecificGenreArtistList', genreSpecificArtistList, function(error,result){
       if(error){
           console.log(error.reason);

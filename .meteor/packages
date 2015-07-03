@@ -16,7 +16,6 @@ natestrauser:font-awesome
 http
 momentjs:moment
 less
-aldeed:collection2
 meteorhacks:kadira
 ryw:blog
 alanning:roles
@@ -30,3 +29,4 @@ rosh93:slide-panel
 chrismbeckett:toastr
 mizzao:user-status
 brentjanderson:buzz
+natestrauser:select2

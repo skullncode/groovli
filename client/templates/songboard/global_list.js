@@ -4,7 +4,7 @@ Template.globalList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     var sel = getMongoSelectorForGlobal();
-    globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
+    globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 300});
     var songCollection = globalSongList.fetch();
     songCollectionLength = songCollection.length;
     //console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
