@@ -94,11 +94,12 @@ Template.profile.helpers({
 	},
 
 	personalSongCount: function(uid) {
-		var c = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{manualApproval:'VALID'}]}]}).fetch();
-		if(!_.isUndefined(c))
-			return c.length;
+		var x = Songs.find({'sharedBy.uid': String(uid)}).fetch();
+		//console.log('SONG LENGTH : ' + x.length);
+		if(!_.isUndefined(x))
+			return x.length;
 		else
-			return 0;	
+			return 0;
 	},
 
 	ratingCount: function(uid) {
