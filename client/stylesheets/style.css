@@ -429,7 +429,7 @@ ul.reviewItems {
     margin: 0;
     padding: 0;
     /*width: 480px;*/
-    height: 700px;
+    height: 600px;
     white-space: nowrap;
     overflow-y: auto;
     overflow-x: hidden;
