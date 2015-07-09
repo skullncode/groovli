@@ -120,7 +120,8 @@ Template.profile.helpers({
 	},
 
 	topTenBands: function(uid) {
-		var b = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{'manualApproval':'VALID'}]}]}, {fields: {'sa':1}}).fetch();
+		//var b = Songs.find({$and: [{'sharedBy.uid': uid}, {$or: [{'iTunesValid': 'VALID'},{'LFMValid': 'VALID'},{'manualApproval':'VALID'}]}]}, {fields: {'sa':1}}).fetch();
+		var b = Songs.find({'sharedBy.uid': String(uid)}, {fields: {'sa':1}}).fetch();
 		//console.log('FOUND THESE SONGS:');
 		//console.log(b);
 		var t = _.chain(b).countBy("sa").pairs().sortBy(function(pair) {return -pair[1];}).first(10).pluck(0).value();
