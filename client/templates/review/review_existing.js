@@ -39,7 +39,7 @@ Template.reviewExisting.helpers({
 });
 
 Template.reviewExisting.events({
-	"click #getMissingAlbumArt": function (event) {
+	/*"click #getMissingAlbumArt": function (event) {
       console.log('CLICKED get missing album art button!!');
       var songList = Session.get('esReview');
       var x = 0;
@@ -53,7 +53,7 @@ Template.reviewExisting.events({
       	x++;	
       }
       //location.reload();
-    },
+    },*/
 	"click .previous": function (event) {
 		if(Number(Session.get('existingCursor')) > 19)
 		{
