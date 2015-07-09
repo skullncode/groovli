@@ -54,13 +54,19 @@ Template.reviewExisting.events({
       }
       //location.reload();
     },*/
-	"click .previous": function (event) {
+    "click #first": function (event) {
+		Session.set('existingCursor', 0);
+    },
+    "click #last": function (event) {
+		Session.set('existingCursor', Number(Session.get('esReviewCount')) - (Number(Session.get('esReviewCount')) % 20));
+    },
+	"click #previous": function (event) {
 		if(Number(Session.get('existingCursor')) > 19)
 		{
       		Session.set('existingCursor', Number(Session.get('existingCursor')) - 20);
 		}
     },
-    "click .next": function (event) {
+    "click #next": function (event) {
     	if(Number(Session.get('existingCursor')) < Number(Session.get('esReviewCount') - 20))
 			Session.set('existingCursor', Number(Session.get('existingCursor')) + 20);
     }

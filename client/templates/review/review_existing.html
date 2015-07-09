@@ -9,8 +9,10 @@
 		</li>
 	</ul>
 	<ul class='pager'>
-		<li class='previous'><a href='#'>&larr; {{prevText}}</a></li>
-		<li class='next'><a href='#'>{{nextText}} &rarr;</a></li>
+		<li id='first' class='previous'><a href='#'>|&larr; First</a></li>
+		<li id='previous' class='previous'><a href='#'>&larr; {{prevText}}</a></li>
+		<li id='last' class='next'><a href='#'>Last &rarr;|</a></li>
+		<li id='next' class='next'><a href='#'>{{nextText}} &rarr;</a></li>
 	</ul>
 	<div class="col-md-2 column">
 		<h2><strong>{{existingCount}}</strong></h2>                    
