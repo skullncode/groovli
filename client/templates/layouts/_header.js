@@ -1,3 +1,8 @@
+Template._header.helpers({
+  currentlyOnHomePage: function(){
+    return Router.current().route.path() === '/';
+  }
+});
 Template._header.events({
     'click #contactButton': function(event) {
     	//console.log('CLICKED contact form link!!!!');
