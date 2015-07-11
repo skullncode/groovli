@@ -1,6 +1,6 @@
 <template name="userLogin">
 	{{#if currentUser}}
-	  <ul class="nav navbar-nav navbar-right">
+	  <!--<ul class="nav navbar-nav navbar-right">-->
 		<li>
 			<a class='headerProfileImageLink' href="/profile/{{currentUser._id}}" target='blank' data-toggle="tooltip" data-placement="top" title="Your profile page"><img class="img-rounded headerProfileImage" style="width:40px;height:40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></a>
 		</li>
@@ -15,10 +15,10 @@
 		 </li>
 	    <li class="dropdown">
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	        <i class="fa fa-user"></i> {{ currentUser.profile.name }} <i class="fa fa-caret-down"></i>
+	        <i class="fa fa-user"></i> {{ currentUser.profile.name }} <b class="caret"></b>
 	        <!--<i class="fa fa-user"></i> {{ currentUser._id }} <i class="fa fa-caret-down"></i>-->
 	      </a>
-	      <ul class="dropdown-menu" role="menu">
+	      <ul class="dropdown-menu">
 			<!--<li>
 				<a href="/editprofile">Edit Profile</a>
 			</li>
@@ -32,7 +32,7 @@
 	        <li><a href="#" data-action="logout" id="logout"><i class="fa fa-lock"></i> Sign Out</a></li>
 	      </ul>
 	    </li>
-	  </ul>
+	  <!--</ul>-->
 	{{else}}
 		{{#if notOnSignUpPage}}
 		  <div class="navbar-right">

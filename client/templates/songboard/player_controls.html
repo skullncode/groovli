@@ -1,10 +1,10 @@
 <template name='playerControls'>
 	{{#if currentlyOnSongboard}}
-		<ul class='nav navbar-nav'>
-			<li title='Previous' class='vidControls'>
+		<ul class='nav navbar-nav vidControls pull-left'>
+			<li title='Previous'>
 				<a id='previousButton' href='#'><i class='glyphicon glyphicon-step-backward'></i></a>
 			</li> 
-			<li id='playButton' title='Play' class='vidControls'>
+			<li id='playButton' title='Play'>
 				<a onClick='playpauseVideo();' href='#'>
 					<i class='glyphicon glyphicon-play'></i>
 				</a>
