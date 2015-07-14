@@ -464,6 +464,35 @@ setShareByLinkID = function(linkID) {
     setShare(songObj);
 }
 
+function getSongObjectForSongLink(tab, songLink) {
+  if(tab == 'me')
+  {
+    var foundSong = _.findWhere(mySongs,{sl: songLink});
+    if(!_.isNull(foundSong))
+      return foundSong;
+    else
+      return null;
+  }
+  else if(tab == 'friends')
+  {
+    var foundSong = _.findWhere(friendSongs,{sl: songLink});
+    if(!_.isNull(foundSong))
+      return foundSong;
+    else
+      return null;
+  }
+  else if(tab == 'global')
+  {
+    var foundSong = _.findWhere(globalSongs,{sl: songLink});
+    if(!_.isNull(foundSong))
+      return foundSong;
+    else
+      return null;
+  }
+  else
+    return null
+}
+
 //////////////////////// STOPPED HEREEEE!!!! FIX THIS part and use the newly created song items for each tab
 ///and also the new session var for playable tabs
 
@@ -809,6 +838,28 @@ function selectShareFromControls(share, shares, tab) {
     found.sourceTab = 'me';
     setCurrentSong(found);
     Meteor.setTimeout(selectAndHighlightSongAfterSharing, 500);
+   }
+
+   setSongObjectBasedOnSearchResult = function(songLink) {
+    console.log("REACHED PLayer controls with this songid: ");
+    console.log(songLink);
+
+    var searchedSongTab = getTabWhereLinkIDResides(songLink);
+    console.log('FOUND THE SONG IN THIS TAB:');
+    console.log(searchedSongTab);
+    !_.isNull(searchedSongTab)
+    {
+      var searchedSong = getSongObjectForSongLink(searchedSongTab, songLink);
+      console.log('FOUND THE SONG OBJECT:');
+      console.log(searchedSong);
+      if(!_.isNull(searchedSong))
+        selectShareFromControls(searchedSong, getSongs(searchedSongTab), searchedSongTab);
+      else
+        toastr.error("Searched song is outside current song scope!");
+    }
+    //setCurrentSong(found);
+
+    //selectShareFromControls(getSongAtIndex(selectedTab,randomChoice), getSongs(selectedTab), getSongAtIndex(selectedTab,randomChoice).sourceTab);
    }
    
    function getCurrentHistoryIndex() {

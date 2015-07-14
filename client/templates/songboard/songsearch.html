@@ -1,0 +1,25 @@
+<template name="songsearch">
+    <div>
+        {{> esInput index="songs" class='txtSongSearch' placeholder="Search for songs..." }} 
+        <a id='btnClearSearch'><span class="btn btn-info btn-xs" title="clear search"><i class="fa fa-times"></i></span></a>
+
+        <br>
+        <ul class='songboardSearchResults'>
+            {{#esEach index="songs"}}
+                {{>searchItem}}
+            {{/esEach}}
+        </ul>
+
+        <!--{{> esLoadMoreButton index="songs"}}-->
+
+        {{#ifEsHasNoResults index="songs"}}
+            <div class="no-results">No results found!</div>
+        {{/ifEsHasNoResults}}
+
+        {{#ifEsIsSearching index="songs"}}
+                <div>Loading...</div>
+        {{/ifEsIsSearching}}
+        <!--{{> esAutosuggest index="songs" renderSuggestion=suggestion }}-->
+        <!--{{> esAutosuggest index="songs" placeholder="Search for songs..."}}-->
+    </div>
+</template>

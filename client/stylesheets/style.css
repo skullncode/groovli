@@ -123,6 +123,12 @@ ul.horizontal-slide {
     overflow-x: hidden;
 }
 
+.songboardSearchResults {
+  height: 100px;
+  white-space: nowrap;
+  overflow-y: auto;
+}
+
 ul.horizontal-slide li a:hover {
   text-decoration: none;
   background-color:#7AE751; 
