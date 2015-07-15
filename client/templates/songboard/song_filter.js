@@ -140,8 +140,8 @@ Template.songFilter.events({
 		}
 	},
 	'.multipleGenreSelections select2:change': function (event) {
-		console.log('SOMETHING NEW HAS BEEN SELECTED FROM THE GENRE selector:');
-		console.log(event);
+		//console.log('SOMETHING NEW HAS BEEN SELECTED FROM THE GENRE selector:');
+		//console.log(event);
 	}
 });
 

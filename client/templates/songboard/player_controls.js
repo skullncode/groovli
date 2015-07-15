@@ -841,17 +841,17 @@ function selectShareFromControls(share, shares, tab) {
    }
 
    setSongObjectBasedOnSearchResult = function(songLink) {
-    console.log("REACHED PLayer controls with this songid: ");
-    console.log(songLink);
+    //console.log("REACHED PLayer controls with this songid: ");
+    //console.log(songLink);
 
     var searchedSongTab = getTabWhereLinkIDResides(songLink);
-    console.log('FOUND THE SONG IN THIS TAB:');
-    console.log(searchedSongTab);
+    //console.log('FOUND THE SONG IN THIS TAB:');
+    //console.log(searchedSongTab);
     !_.isNull(searchedSongTab)
     {
       var searchedSong = getSongObjectForSongLink(searchedSongTab, songLink);
-      console.log('FOUND THE SONG OBJECT:');
-      console.log(searchedSong);
+      //console.log('FOUND THE SONG OBJECT:');
+      //console.log(searchedSong);
       if(!_.isNull(searchedSong))
         selectShareFromControls(searchedSong, getSongs(searchedSongTab), searchedSongTab);
       else

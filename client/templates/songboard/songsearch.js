@@ -33,7 +33,7 @@ Template.songsearch.events({
     return true;
   },
   "click #btnClearSearch": function(event) {
-  	console.log('CLEAR this search box');
+  	//console.log('CLEAR this search box');
   	var instance = EasySearch.getComponentInstance(
         { index : 'songs' }
     );
