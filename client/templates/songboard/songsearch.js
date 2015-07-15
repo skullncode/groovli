@@ -1,6 +1,6 @@
 //setup for easy search
 Songs.initEasySearch(['st', 'sa'], {
-    'limit' : 5,
+    'limit' : 10,
     'use' : 'minimongo'
 });
 
