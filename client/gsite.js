@@ -29,11 +29,10 @@ if (Meteor.isClient) {
 		//Meteor.subscribe('songs', Session.get('ud'));
 		subMgr.subscribe('songs', Session.get('ud'));
 
-		//Meteor.subscribe('artists');
-		subMgr.subscribe('artists');
-
 		//Meteor.subscribe('messages', Session.get('ud'));
 		subMgr.subscribe('messages', Session.get('ud'));
+
+		Meteor.subscribe('artists');
 
 		var msgCount = Messages.find({'to': String(Session.get('ud')), 'read': false}).fetch();
 		//console.log('THIS IS THE MSG COUNT RESULT: ');
