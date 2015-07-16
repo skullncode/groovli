@@ -16,17 +16,24 @@ if (Meteor.isClient) {
 	});
 
   });
+
+  var subMgr = new SubsManager();
+
 	Deps.autorun(function() {
 		if(Meteor.user() && Meteor.user().services !== undefined && Meteor.user().services.facebook !== undefined)
 			Session.set('ud', Meteor.user().services.facebook.id);
 		//else
 			//console.log('STILL DONT HAVE METEOR USER!!!');
 		
-		Meteor.subscribe('songs', Session.get('ud'));
+		//STOPPED THIS subscription as it is already being done in the router
+		//Meteor.subscribe('songs', Session.get('ud'));
+		subMgr.subscribe('songs', Session.get('ud'));
 
-		Meteor.subscribe('artists');
+		//Meteor.subscribe('artists');
+		subMgr.subscribe('artists');
 
-		Meteor.subscribe('messages', Session.get('ud'));
+		//Meteor.subscribe('messages', Session.get('ud'));
+		subMgr.subscribe('messages', Session.get('ud'));
 
 		var msgCount = Messages.find({'to': String(Session.get('ud')), 'read': false}).fetch();
 		//console.log('THIS IS THE MSG COUNT RESULT: ');

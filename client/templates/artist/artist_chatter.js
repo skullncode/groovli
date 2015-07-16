@@ -112,6 +112,9 @@ Template.artistChatter.helpers({
 				}
 			}
 		}
+	},
+	artistName: function() {
+		return Router.current().params._name;
 	}
 });
 
