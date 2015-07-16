@@ -17,7 +17,7 @@ if (Meteor.isClient) {
 
   });
 
-  var subMgr = new SubsManager();
+  //var subMgr = new SubsManager();
 
 	Deps.autorun(function() {
 		if(Meteor.user() && Meteor.user().services !== undefined && Meteor.user().services.facebook !== undefined)
@@ -26,11 +26,11 @@ if (Meteor.isClient) {
 			//console.log('STILL DONT HAVE METEOR USER!!!');
 		
 		//STOPPED THIS subscription as it is already being done in the router
-		//Meteor.subscribe('songs', Session.get('ud'));
-		subMgr.subscribe('songs', Session.get('ud'));
+		Meteor.subscribe('songs', Session.get('ud'));
+		//subMgr.subscribe('songs', Session.get('ud'));
 
-		//Meteor.subscribe('messages', Session.get('ud'));
-		subMgr.subscribe('messages', Session.get('ud'));
+		Meteor.subscribe('messages', Session.get('ud'));
+		//subMgr.subscribe('messages', Session.get('ud'));
 
 		Meteor.subscribe('artists');
 
