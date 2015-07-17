@@ -199,7 +199,7 @@ Meteor.publish("genreObjectForProfilePage", function (genreName) {
 });
 
 Meteor.publish("artistsForGenre", function(genreName) {
-  return Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}});
+  return Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1}});
 });
 
 Meteor.publish("userData", function () {
@@ -253,7 +253,8 @@ Meteor.publish('artists', function (){
       fields: 
         {
           "name": 1,
-          "genres": 1
+          "genres": 1,
+          'mediumImage': 1
         }
      })
 });
