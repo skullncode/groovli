@@ -61,14 +61,22 @@ function getListenHistoryForUser(uid)
 	    }
 	    else{
 	        // do something with result
-	      //console.log(result);
-	      //update listen history with song object and timestamp
-	      getMutualListenHistory(result, Router.current().params._id);
-	      var lh = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
-	      //console.log('GOT history BACK and modified it to be this: ' );
-	      //console.log(lh);
-	      Session.set(uid+'_lh', lh);
-	      Session.set(uid+'_lh_count', lh.length);
+			//console.log(result);
+			//update listen history with song object and timestamp
+
+			/*var lh = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+			//console.log('GOT history BACK and modified it to be this: ' );
+			//console.log(lh);*/
+
+			if(!_.isEmpty(result))
+			{
+				//second object in result array is the mapped listen history which was previously done on client side
+				Session.set(uid+'_lh', result[1]);
+				Session.set(uid+'_lh_count', result[1].length);
+
+				//first object in result array is the cleaned listen history that was used to do the mapping previously on the client side
+				getMutualListenHistory(result[0], Router.current().params._id);
+			}
 	    }
 	});
 }

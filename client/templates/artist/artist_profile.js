@@ -1,7 +1,10 @@
 Template.artistProfile.helpers({
   getArtist: function() {
     Session.set(Router.current().params._name+'_artObj', null)
-    getArtistForRouting();
+    //getArtistForRouting();
+    var artistForPage = Artists.findOne({'name': {$regex: new RegExp('^' + Router.current().params._name + '$', 'i')}});
+    if(!_.isEmpty(artistForPage))
+      Session.set(Router.current().params._name+'_artObj', artistForPage);
   },
   artistObject: function() {
     var artObj = Session.get(Router.current().params._name+'_artObj');
@@ -17,10 +20,15 @@ Template.artistProfile.helpers({
       return Session.get(Router.current().params._name+'_as');
   },
   artistImage: function() {
-    if(!_.isUndefined(this.largeImage['#text']) && !_.isEmpty(this.largeImage['#text']))
-      return '<img class="artistProfileImage" src="'+this.largeImage['#text']+'">';
-    else
-      return '<h4>NO ARTIST IMAGE AVAILABLE</h4>';
+    //console.log('THIS IS THE ARTIST IMAGE OBJECT: ');
+    //console.log(this.largeImage);
+    if(!_.isUndefined(this.largeImage))
+    {
+      if(!_.isUndefined(this.largeImage['#text']) && !_.isEmpty(this.largeImage['#text']))
+        return '<img class="artistProfileImage" src="'+this.largeImage['#text']+'">';
+      else
+        return '<h4>NO ARTIST IMAGE AVAILABLE</h4>';
+    }
   },
   cleanedSimilarURL: function() {
     var cleaned = this.replace(',', ' ');
@@ -28,7 +36,7 @@ Template.artistProfile.helpers({
     cleaned = cleaned.replace(/\s{2,}/g, ' ');
     //replace ampersand with AND so that check works correctly
     if(cleaned.indexOf('&') >= 0)
-    {
+    {  
       cleaned = cleaned.replace(/&/g, 'and');
     }
     doesArtistHavePage(cleaned);
@@ -74,25 +82,28 @@ Template.artistProfile.helpers({
     return _.isEmpty(this.bio);
   },
   cleanedBio: function() {
-    this.bio = this.bio.replace(/(\r\n|\n|\r)/gm,"");//remove extra line breaks
-    this.bio = this.bio.replace(/\s{2,}/g, ' '); //remove extra whitespace
-    var textToRemove = '<a href=\"http:\/\/www.last.fm\/music\/###ARTIST_NAME###\">Read more about ###ARTIST_NAME### on Last.fm<\/a>.\n    \n    \nUser-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.';
-    textToRemove = textToRemove.replace(/(\r\n|\n|\r)/gm,"");//remove extra line breaks
-    textToRemove = textToRemove.replace(/\s{2,}/g, ' '); //remove extra whitespace
-    var urlArtistText = Router.current().params._name;
-    while(urlArtistText.indexOf(' ') >= 0)
+    if(!_.isUndefined(this.bio))
     {
-      urlArtistText = urlArtistText.replace(' ', '+');
+      this.bio = this.bio.replace(/(\r\n|\n|\r)/gm,"");//remove extra line breaks
+      this.bio = this.bio.replace(/\s{2,}/g, ' '); //remove extra whitespace
+      var textToRemove = '<a href=\"http:\/\/www.last.fm\/music\/###ARTIST_NAME###\">Read more about ###ARTIST_NAME### on Last.fm<\/a>.\n    \n    \nUser-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.';
+      textToRemove = textToRemove.replace(/(\r\n|\n|\r)/gm,"");//remove extra line breaks
+      textToRemove = textToRemove.replace(/\s{2,}/g, ' '); //remove extra whitespace
+      var urlArtistText = Router.current().params._name;
+      while(urlArtistText.indexOf(' ') >= 0)
+      {
+        urlArtistText = urlArtistText.replace(' ', '+');
+      }
+      textToRemove = textToRemove.replace('###ARTIST_NAME###', urlArtistText);
+      textToRemove = textToRemove.replace('###ARTIST_NAME###', Router.current().params._name);
+      //console.log('this is the bio:');
+      //console.log(this.bio);
+      //console.log('this is the bio text to remove: ');
+      //console.log(textToRemove);
+      //console.log('this is the urlArtistText: ');
+      //console.log(urlArtistText);
+      return this.bio.replace(textToRemove, '');
     }
-    textToRemove = textToRemove.replace('###ARTIST_NAME###', urlArtistText);
-    textToRemove = textToRemove.replace('###ARTIST_NAME###', Router.current().params._name);
-    //console.log('this is the bio:');
-    //console.log(this.bio);
-    //console.log('this is the bio text to remove: ');
-    //console.log(textToRemove);
-    //console.log('this is the urlArtistText: ');
-    //console.log(urlArtistText);
-    return this.bio.replace(textToRemove, '');
   },
   songCount: function()
   {
@@ -102,7 +113,7 @@ Template.artistProfile.helpers({
     else if(Session.get(Router.current().params._name+'_as_count') === 1)
       return '<h2><strong>'+Session.get(Router.current().params._name+'_as_count')+'</strong></h2><p><small>song on Groovli</small></p>';
   },
-  albumCount: function() 
+  /*albumCount: function() 
   {
     if(!_.isUndefined(Session.get(Router.current().params._name+'_as')) && !_.isEmpty(Session.get(Router.current().params._name+'_as')))
     {
@@ -115,7 +126,7 @@ Template.artistProfile.helpers({
       else if(albumList.length === 1)
         return '<h2><strong>'+albumList.length+'</strong></h2><p><small>album</small></p>';
     }
-  },
+  },*/
   coverSongCount: function() 
   {
     //console.log('checking cover songs!!');
@@ -130,13 +141,15 @@ Template.artistProfile.helpers({
   },
   artistPageExists: function() 
   {
-    if(!_.isUndefined(Session.get(Router.current().params._name+'_artObj')))
+    //if(!_.isUndefined(Session.get(Router.current().params._name+'_artObj')))
+    if(!_.isEmpty(Session.get(Router.current().params._name+'_artObj')))
       return true;
     else
       return false;
   }
 });
 
+/*
 function getArtistForRouting()
 {
   //console.log('GETTING artist for routing now: ' + Router.current().params._name);
@@ -149,7 +162,7 @@ function getArtistForRouting()
         Session.set(Router.current().params._name+'_artObj', result);
       }
   });
-}
+}*/
 
 
 function doesGenreHavePage(genreName) {

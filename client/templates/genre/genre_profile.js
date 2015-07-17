@@ -1,8 +1,15 @@
 Template.genreProfile.helpers({
   getGenre: function() {
-    Session.set(Router.current().params._name+'_genObj', null); //so that not found template isn't intermittently shown before getting genre
-    getGenreForRouting();
-    getArtistsForGenres();
+    Session.set(Router.current().params._name+'_genObj', 'initial_blank'); //so that not found template isn't intermittently shown before getting genre
+    //getGenreForRouting();
+    var genreForPage = Genres.findOne({'name': {$regex: new RegExp('^' + Router.current().params._name + '$', 'i')}})
+    if(!_.isEmpty(genreForPage))
+    {
+      Session.set(Router.current().params._name+'_genObj', genreForPage);
+      getArtistsForGenres();
+    }
+    else
+      Session.set(Router.current().params._name+'_genObj', null);
   },
   genreObject: function() {
     return Session.get(Router.current().params._name+'_genObj');
@@ -132,7 +139,8 @@ Template.genreProfile.helpers({
     //console.log('CHECKING SONG COUNT!!!');
     if(Session.get(Router.current().params._name+'_gs_count') >= 1)
     {
-      var x = (Session.get(Router.current().params._name+'_gs_count') / Songs.find({}).count()) * 100;
+      //var x = (Session.get(Router.current().params._name+'_gs_count') / Songs.find({}).count()) * 100;
+      var x = (Session.get(Router.current().params._name+'_gs_count') / Session.get('tsc')) * 100;
       //console.log('THIS IS THE PERCENTAGE');
       //console.log(x);
       if(x >= 1)
@@ -191,17 +199,20 @@ Template.genreProfile.helpers({
   },
   genrePageExists: function()
   {
-    if(!_.isUndefined(Session.get(Router.current().params._name+'_genObj')))
+    //if(!_.isUndefined(Session.get(Router.current().params._name+'_genObj')))
+    //console.log('GENRE OBJECT CURRENTLY IS: ');
+    //console.log(Session.get(Router.current().params._name+'_genObj'));
+    if(!_.isEmpty(Session.get(Router.current().params._name+'_genObj')))
       return true;
     else
       return false;
   }
 });
 
+/*
 function getGenreForRouting()
 {
   //console.log('GETTING artist for routing now: ' + Router.current().params._name);
-  /*Meteor.call('checkAndSetDetailsForSpecificGenre', Router.current().params._name);*/
   Meteor.call('findGenreForRouting', Router.current().params._name, function(error,result){
       if(error){
           console.log(error.reason);
@@ -213,11 +224,71 @@ function getGenreForRouting()
           Session.set(Router.current().params._name+'_genObj', result);
       }
   });
-}
+}*/
 
 function getArtistsForGenres() {
   //console.log('GETTING ARTISTS FOR GENRES NOW!');
-  Meteor.call('getArtistsForGenres', Router.current().params._name, function(error, result){
+  var genreName = Router.current().params._name;
+  var artistsForGenre = [];
+  var originalGenreName = genreName;
+
+  var x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
+  //console.log('1 - GOT THESE MANY Artists with this genre name: ' + genreName);
+  //console.log(x.length);
+  if(!_.isEmpty(x)){
+    _.each(x, function(artistObj){
+      //console.log('THIS IS WHAT IS GETTING PUSHED');
+      //console.log(artistObj);
+      artistsForGenre.push(artistObj);
+    })
+  }
+  //GET WITH UPDATED GENRE NAME REPLACING space with dash, still from ARTISTS table
+  //genreName = genreName.replace(/ /g, '-');
+  //search for artists replacing each space with a dash and then searching again rather than a global replacement
+  while(_.contains(genreName, ' '))
+  {
+    genreName = genreName.replace(' ', '-');
+    x = Artists.find({'genres': {$regex: new RegExp(genreName, 'i')}}, {fields: {'name':1, 'mediumImage': 1}}).fetch();
+    if(!_.isEmpty(x)){
+      _.each(x, function(artistObj){
+        //console.log('THIS IS WHAT IS GETTING PUSHED');
+        //console.log(artistObj);
+        artistsForGenre.push(artistObj);
+      })
+    }
+  }
+
+  //FINALLY LOOK FOR GENRE IN SONG TABLE and RETURN ARTIST Details
+
+  x = Songs.find({'genre': {$regex: new RegExp(originalGenreName, 'i')}}, {fields: {'sa':1, 'iTunesMediumAlbumArt': 1}}).fetch();
+  //console.log('3 - GOT THESE MANY SONGS with this genre name: ' + originalGenreName);
+  //console.log(x.length);
+
+  if(!_.isEmpty(x)){
+    _.each(x, function(artistObj){
+      //console.log('THIS IS WHAT IS GETTING PUSHED');
+      //console.log(artistObj);
+      artistsForGenre.push(artistObj);
+    })
+  }
+
+  //console.log('3 - ARTISTS FOR GENRES RIGHT NOW IS: ');
+  //console.log(artistsForGenre);
+
+  //REMOVE ANY DUPLICATE ARTISTS
+  var uniqArtistsForGenre = _.uniq(artistsForGenre, function(z){
+    if(_.has(z, 'name'))
+      return z.name;
+    else if(_.has(z, 'sa'))
+      return z.sa;
+  });
+
+  //console.log('4 - FINAL UNIQUE ARTISTS FOR GENRES RIGHT NOW IS: ');
+  //console.log(uniqArtistsForGenre);
+
+  Session.set(Router.current().params._name+'_arts', uniqArtistsForGenre);
+
+  /*Meteor.call('getArtistsForGenres', Router.current().params._name, function(error, result){
     if(error){
         console.log(error.reason);
     }
@@ -227,7 +298,7 @@ function getArtistsForGenres() {
       //console.log(result);
       Session.set(Router.current().params._name+'_arts', result);
     }
-  });
+  });*/
 }
 
 function getSongsForSpecificGenre(genreSpecificArtistList)
@@ -241,14 +312,15 @@ function getSongsForSpecificGenre(genreSpecificArtistList)
           // do something with result
         
         //update listen history with song object and timestamp
-        var genreArtSongs = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
-        //console.log('GOT history BACK and modified it to be this: ' );
-        //console.log(lh);
-        //console.log('GOT a result BACK!');
-        //console.log(genreArtSongs.length);
-        Session.set(Router.current().params._name+'_gs', genreArtSongs);
-        Session.set(Router.current().params._name+'_gs_count', genreArtSongs.length);
-        getUsersFromSongList(genreArtSongs);
+        //console.log('THIS IS THE RESULT OF SONGS FOR THE SPECIFIC GENRE: ' + Router.current().params._name);
+        //console.log(result);
+        //var genreArtSongs = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+        
+        Session.set(Router.current().params._name+'_gs', result[0]);
+        Session.set(Router.current().params._name+'_gs_count', result[0].length);
+        Session.set('tsc', result[1]);
+
+        getUsersFromSongList(result[0]);
         //getCoverSongsForSpecificArtist();
       }
   });

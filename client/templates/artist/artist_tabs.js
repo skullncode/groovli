@@ -1,5 +1,9 @@
 Template.artistTabs.helpers({
 	getSongsForArtist: function() {
+		/*Session.setDefault(Router.current().params._name+'_as', null);
+		Session.setDefault(Router.current().params._name+'_as_count', 0);
+		Session.set(Router.current().params._name+'_acs', null);
+		Session.set(Router.current().params._name+'_acs_count', 0);*/
 		getSongsForSpecificArtist();
 	},
 
@@ -61,29 +65,107 @@ function isUserKing()
 function getSongsForSpecificArtist()
 {
 	//console.log('GOING TO GET SPECIFIC SONGS FOR THIS ARTIST: ' + Router.current().params._name);
+
+	var artistName = Router.current().params._name;
+	var songResult = [];
+
+	if(artistName.indexOf(' & ') >= 0)
+	{
+		//console.log('IN FIRST IF CONDITION');
+		//console.log(artistName);
+		var x = Songs.find({sa: {$regex: new RegExp('^' + artistName + '$', 'i')}, cover: {'$ne': true}}).fetch();
+		if(!_.isEmpty(x))
+		{
+			//console.log('THIS IS THE artist specific song LENGTH : ' + x.length);
+			songResult = x;
+		}
+		else
+		{
+			artistName = artistName.replace(/ & /g, ' and ');
+			//console.log('DID not find anything with just &; replaced with AND and now searching again!');
+			//console.log(artistName);
+			x = Songs.find({sa: {$regex: new RegExp('^' + artistName + '$', 'i')}, cover: {'$ne': true}}).fetch();
+			songResult = x;
+		}
+	}
+	else if(artistName.indexOf(' and ') >= 0)
+	{
+		//console.log('IN SECOND IF CONDITION');
+		//console.log(artistName);
+		var x = Songs.find({sa: {$regex: new RegExp('^' + artistName + '$', 'i')}, cover: {'$ne': true}}).fetch();
+		if(!_.isEmpty(x))
+		{
+			//console.log('THIS IS THE artist specific song LENGTH : ' + x.length);
+			songResult = x;
+		}
+		else
+		{
+			artistName = artistName.replace(/ and /g, ' & ');
+			//console.log('DID not find anything with just AND; replaced with & and now searching again!');
+			//console.log(artistName);
+			x = Songs.find({sa: {$regex: new RegExp('^' + artistName + '$', 'i')}, cover: {'$ne': true}}).fetch();
+			songResult = x;
+		}
+	}
+	else
+	{
+		//console.log('IN ELSE CONDITION');
+		var x = Songs.find({sa: {$regex: new RegExp('^' + artistName + '$', 'i')}, cover: {'$ne': true}}).fetch();
+		songResult = x;
+	}
+
+	//console.log("GOT SPECIFIC SONG RESULT FOR ARTIST : " +  Router.current().params._name);
+	//console.log(songResult);
+
+	if(!_.isEmpty(songResult))
+	{
+		var artSongs = _.map(songResult, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+
+		//console.log('THIS IS THE SONG RESULT AFTER MAPPING: ' );
+		//console.log(artSongs);
+		Session.set(Router.current().params._name+'_as', artSongs);
+		Session.set(Router.current().params._name+'_as_count', artSongs.length);
+		getUsersFromSongList(artSongs);
+		getCoverSongsForSpecificArtist();
+	}
+
+	/*
+
 	Meteor.call('getSongsForSpecificArtist', Router.current().params._name, function(error,result){
 	    if(error){
 	        console.log(error.reason);
 	    }
 	    else{
 	        // do something with result
+	      //console.log("GOT SPECIFIC SONGS FOR ARTIST : " +  Router.current().params._name);
 	      //console.log(result);
 	      //update listen history with song object and timestamp
 	      var artSongs = _.map(result, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
-	      //console.log('GOT history BACK and modified it to be this: ' );
-	      //console.log(lh);
+	      
+	      //console.log('THIS IS THE SONG RESULT AFTER MAPPING: ' );
+	      //console.log(artSongs);
 	      Session.set(Router.current().params._name+'_as', artSongs);
 	      Session.set(Router.current().params._name+'_as_count', artSongs.length);
 	      getUsersFromSongList(artSongs);
 	      getCoverSongsForSpecificArtist();
 	    }
-	});
+	});*/
 }
 
 function getCoverSongsForSpecificArtist()
 {
+	var coverResult = Songs.find({$or: [{sa: {$regex: new RegExp('^' + Router.current().params._name + '$', 'i')}, cover: true}, {'coveredBy': Router.current().params._name}]}).fetch();
+	//console.log("GOT SPECIFIC COVER SONG RESULT FOR ARTIST : " +  Router.current().params._name);
+	//console.log(coverResult);
+	if(!_.isEmpty(coverResult))
+	{
+		var coverSongs = _.map(coverResult, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+		Session.set(Router.current().params._name+'_acs', coverSongs);
+		Session.set(Router.current().params._name+'_acs_count', coverSongs.length);
+		getUsersFromSongList(coverSongs);
+	}
 	//console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
-	Meteor.call('getCoverSongsForSpecificArtist', Router.current().params._name, function(error,result){
+	/*Meteor.call('getCoverSongsForSpecificArtist', Router.current().params._name, function(error,result){
 	    if(error){
 	        console.log(error.reason);
 	    }
@@ -98,7 +180,7 @@ function getCoverSongsForSpecificArtist()
 	      Session.set(Router.current().params._name+'_acs_count', coverSongs.length);
 	      getUsersFromSongList(coverSongs);
 	    }
-	});
+	});*/
 }
 
 function getUsersFromSongList(songList)

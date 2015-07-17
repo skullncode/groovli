@@ -26,7 +26,7 @@ if (Meteor.isClient) {
 			//console.log('STILL DONT HAVE METEOR USER!!!');
 		
 		//STOPPED THIS subscription as it is already being done in the router
-		Meteor.subscribe('songs', Session.get('ud'));
+		//Meteor.subscribe('songs', Session.get('ud'));
 		//subMgr.subscribe('songs', Session.get('ud'));
 
 		Meteor.subscribe('messages', Session.get('ud'));

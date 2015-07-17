@@ -38,7 +38,8 @@ Meteor.methods({
 		return getSongsForSpecificGenreList(genreList);
 	},
 	getSongsForSpecificGenreArtistList: function(artistsForGenre) {
-		return getSongsForArtistList(artistsForGenre);
+		//return getSongsForArtistList(artistsForGenre);
+		return getSongsForArtistListForGenrePage(artistsForGenre);		
 	},
 	findGenreForRouting: function(genreName)
 	{
@@ -107,7 +108,7 @@ function getArtistsForGenreList(genreList){
 
 	//GET WITH ORIGINAL GENRE NAME from ARTISTS table
 	var x = Artists.find({genres: {$in: genreList}}, {fields: {'name':1}}).fetch();
-	//console.log('1 - GOT THESE MANY Artists with this genre name: ' + genreName);
+	//console.log('1 - GOT THESE MANY Artists with this genre name: ' + genreList);
 	//console.log(x.length);
 	//console.log('1 - ARTISTS FOR GENRES RIGHT NOW IS: ');
 	//console.log(artistsForGenre);
@@ -120,7 +121,6 @@ function getArtistsForGenreList(genreList){
 	//console.log(artistsForGenre);
 	
 	//GET WITH UPDATED GENRE NAME REPLACING space with dash, still from ARTISTS table
-	//genreName = genreName.replace(/ /g, '-');
 	//search for artists replacing each space with a dash and then searching again rather than a global replacement
 
 	var uniqArtistsForGenre = [];
@@ -224,6 +224,65 @@ function getSongsForArtistList(artistList){
 	//var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
 	//console.log('FOUND these many songs for those artists:' + songsForThoseArtists.length);
 	return songsForThoseArtists;
+}
+
+function getSongsForArtistListForGenrePage(artistList){
+	//console.log('*********************THIS IS THE ARTIST LIST in the SERVER METHOD: ');
+	//console.log(artistList);
+	var cleanedArtistList = [];
+	var tempArtistName = '';
+	_.each(artistList, function(z){
+		if(_.has(z, 'name') && !_.isUndefined(z.name))
+		{
+			//console.log('THIS IS THE NAME: ');
+			//console.log(z.name);
+			if(z.name.indexOf(' and ') >= 0)
+			{
+				tempArtistName = z.name.replace(/ and /g, ' & ');
+				cleanedArtistList.push(tempArtistName);
+			}
+			else
+			{
+				//console.log('ELSE CASE');
+				cleanedArtistList.push(z.name);
+			}
+		}
+		else if(_.has(z, 'sa') && !_.isUndefined(z.sa))
+		{
+			//console.log('THIS IS THE NAME: ');
+			//console.log(z.sa);
+			if(z.sa.indexOf(' and ') >= 0)
+			{
+				tempArtistName = z.sa.replace(/ and /g, ' & ');
+				cleanedArtistList.push(tempArtistName);
+			}
+			else
+			{
+				//console.log('ELSE CASE');
+				cleanedArtistList.push(z.sa);
+			}
+		}
+	});
+	//console.log('WITH THIS ARTIST LIST: ');
+	//console.log(cleanedArtistList);
+	var songsForThoseArtists = [];
+	var tempSongs = [];
+	_.each(cleanedArtistList, function(x){
+		tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}}).fetch();
+		songsForThoseArtists.push.apply(songsForThoseArtists, tempSongs);
+	});
+	//var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
+	//console.log('FOUND these many songs for those artists:' + songsForThoseArtists.length);
+	//return songsForThoseArtists;
+
+	var genreArtSongs = _.map(songsForThoseArtists, function(lis){ return {timestamp: lis.timestamp, songObj: Songs.findOne({'sl': lis.sl})}});
+    //console.log('GOT history BACK and modified it to be this: ' );
+    //console.log(lh);
+    //console.log('GOT a result BACK!');
+    //console.log(genreArtSongs.length);
+    var totalSongCount = Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch().length;
+
+    return [genreArtSongs, totalSongCount];
 }
 
 function getUniqueGenresFromArtistList(){

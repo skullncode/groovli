@@ -3,11 +3,12 @@ var localTopTenB;
 Template.profile.helpers({
 
 	userObjectForRoute: function() {
-		getUserForRouting();
-		var x = Session.get(Router.current().params._id+'_uObj')
+		/*getUserForRouting();
+		var x = Session.get(Router.current().params._id+'_uObj')*/
 		//console.log('THIS IS THE USER FOUND FOR: ');
 		//console.log(x);
-		return x;
+		//return x;
+		return Session.get(Router.current().params._id+'_uObj');
 	},
 
 	isUserAFBFriend: function() {
@@ -84,6 +85,8 @@ Template.profile.helpers({
 	},
 
 	memberSince: function(createdDate) {
+		console.log('THIS IS THE MEMBER SINCE DATE: ');
+		console.log(createdDate);
 		return new moment(createdDate).format('llll');
 	},
 
@@ -127,7 +130,7 @@ Template.profile.helpers({
 		var t = _.chain(b).countBy("sa").pairs().sortBy(function(pair) {return -pair[1];}).first(10).pluck(0).value();
 		var topTenb = [];
 		_.chain(t).map(function(value){topTenb.push({'sa': value})});
-		console.log(b);
+		//console.log(b);
 		Session.set(Router.current().params._id+'topBandsLength', topTenb.length);
 		localTopTenB = topTenb;  
 		return topTenb;
@@ -272,6 +275,14 @@ Template.profile.helpers({
 	},
 	userIsKing: function() {
 		return isUserKing();
+	},
+	userProfileExists: function() {
+		console.log('THIS IS THE USER PROFILE:');
+		console.log(Meteor.users.findOne(Router.current().params._id));
+		console.log('CHECKING IF USER PROFILE EXISTS OR NOT:');
+		console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
+		Session.set(Router.current().params._id+'_uObj', Meteor.users.findOne(Router.current().params._id));
+		return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
 	}
 });
 
@@ -314,7 +325,7 @@ Template.profile.events({
     }
 
   });
-
+/*
 function getUserForRouting()
 {
 	Meteor.call('findUserForRouting', Router.current().params._id, function(error,result){
@@ -328,7 +339,7 @@ function getUserForRouting()
 	      Session.set(Router.current().params._id+'_uObj', result);
 	    }
 	});
-}
+}*/
 
 function isUserProfileYou()
 {
