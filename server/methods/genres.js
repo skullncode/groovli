@@ -268,7 +268,7 @@ function getSongsForArtistListForGenrePage(artistList){
 	var songsForThoseArtists = [];
 	var tempSongs = [];
 	_.each(cleanedArtistList, function(x){
-		tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}}).fetch();
+		tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}, $or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
 		songsForThoseArtists.push.apply(songsForThoseArtists, tempSongs);
 	});
 	//var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
