@@ -1,16 +1,28 @@
 var globalSongList = {};
 
+/*var subMgr = new SubsManager();
+
+Tracker.autorun(function () {
+  if(Session.get("playerStarted")) // if the player has started then get everything
+  {
+    console.log('SONGS STARTED and PLAYER has started - going to refresh subscription now!');
+    //subMgr.subscribe('allSongsForSongBoard', Meteor.user().services.facebook.id, null);
+    //initializePlayableTabs();
+  }
+});*/
+
 Template.globalList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     var sel = getMongoSelectorForGlobal();
-    globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 300});
+    globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
     var songCollection = globalSongList.fetch();
     songCollectionLength = songCollection.length;
     //console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
     //console.log(globalSongList);
     Session.set('globalSongsLength', songCollection.length);
     updateMySongs(songCollection, 'global');
+    //initializePlayableTabs(); NOT required if publication is not being initially limited
     updatePlayableTabsIfNecessary();
     return globalSongList;
   },

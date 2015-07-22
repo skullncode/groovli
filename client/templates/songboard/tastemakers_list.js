@@ -1,18 +1,31 @@
 var tastemakerSongList = {};
 
+/*var subMgr = new SubsManager();
+
+Tracker.autorun(function () {
+  if(Session.get("playerStarted")) // if the player has started then get everything
+  {
+    console.log('SONGS STARTED and PLAYER has started - going to refresh subscription now!');
+    //subMgr.subscribe('allSongsForSongBoard', Meteor.user().services.facebook.id, null);
+    //initializePlayableTabs();
+  }
+});*/
+
 Template.tastemakersList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     //if(!_.isUndefined(Meteor.user().fbFriends) || !_.isUndefined(Meteor.user().tastemakers)) {
     if(!_.isUndefined(Meteor.user().tastemakers)) {
       var sel = getMongoSelectorForFriendSongs();
-      tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
+      //tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }});
+      tastemakerSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200}); //ADDED limitation to reduce amount of data being used for tastemakers list
       var songCollection = tastemakerSongList.fetch();
       songCollectionLength = songCollection.length;
       //console.log('THIS IS THE TASTMAKERS SONG LIST!!!!!!!!');
       //console.log(tastemakerSongList);
       Session.set('tastemakersSongsLength', songCollection.length);
       updateMySongs(songCollection, 'friends');
+      //initializePlayableTabs(); NOT required if publication is not being initially limited
       updatePlayableTabsIfNecessary();
       return tastemakerSongList;
     }

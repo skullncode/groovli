@@ -1,6 +1,18 @@
 var fullSongList = {};
 Session.set('playerStarted', false);
 
+/*var subMgr = new SubsManager();
+
+Tracker.autorun(function () {
+  if(Session.get("playerStarted")) // if the player has started then get everything
+  {
+    //console.log('SONGS STARTED and PLAYER has started - going to refresh subscription now!');
+    Meteor.setTimeout(updateSongSubscriptionTabSelectionAfterPlayerStarts, 10000)
+  }
+});*/
+
+
+
 Template.mygroovsList.helpers({
   songs: function() {
     fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
@@ -56,6 +68,11 @@ Template.mygroovsList.helpers({
   }
 });
 
+function updateSongSubscriptionTabSelectionAfterPlayerStarts(){
+  subMgr.subscribe('allSongsForSongBoard', Meteor.user().services.facebook.id, null);
+  initializePlayableTabs();
+}
+
 function updatePlayableTabsIfNecessary() {
   var temp = Session.get('playableTabs');
   if(!_.isUndefined(temp))
@@ -72,7 +89,8 @@ function updatePlayableTabsIfNecessary() {
   }
 }
 
-function initializePlayableTabs()
+//function initializePlayableTabs()
+initializePlayableTabs = function()
 {
   //console.log('INITIALIZING PLAYABLE TABS');
   Session.set('playableTabs', []);

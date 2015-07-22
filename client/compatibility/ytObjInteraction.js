@@ -12,6 +12,39 @@ var playerStarted = false;
   console.log(player);
 }*/
 
+function setupPlayerAndCommentsPriorToLoading()
+{
+  $(function() {
+    //console.log('JQUERY says page is ready!!!!');
+      //Youtube iFrame API inclusion
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    tag.type = "text/javascript";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    //console.log('FINISHEd script insertion!!!!');
+
+    //MUUT JS inclusion
+    tag = document.createElement('script');
+    tag.src = "//cdn.muut.com/1/moot.min.js";
+    tag.type = "text/javascript";
+    firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    //MUUT CSS inclusion
+    tag = document.createElement('link');
+    tag.src = "//cdn.muut.com/1/moot.css";
+    tag.type = "text/css";
+    firstScriptTag = document.getElementsByTagName('link')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubePlayerAPIReady = function() {
+      playerLoaded();
+    };
+
+  });
+}
+
 function playerLoaded()
 {
   //console.log('INSIDE THE PLAYER Loaded method!!!!!');

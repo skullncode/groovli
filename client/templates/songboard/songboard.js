@@ -1,14 +1,15 @@
 Template.songboard.rendered = function() {
 
 	//Youtube iFrame API inclusion
-	var tag = document.createElement('script');
+	/*var tag = document.createElement('script');
 	tag.src = "https://www.youtube.com/iframe_api";
 	tag.type = "text/javascript";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	console.log('FINISHEd script insertion!!!!');*/
 
 	//MUUT JS inclusion
-	tag = document.createElement('script');
+	/*tag = document.createElement('script');
 	tag.src = "//cdn.muut.com/1/moot.min.js";
 	tag.type = "text/javascript";
 	firstScriptTag = document.getElementsByTagName('script')[0];
@@ -19,7 +20,7 @@ Template.songboard.rendered = function() {
 	tag.src = "//cdn.muut.com/1/moot.css";
 	tag.type = "text/css";
 	firstScriptTag = document.getElementsByTagName('link')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
 
 
 	var updateFBFriendListFunction = function () {
