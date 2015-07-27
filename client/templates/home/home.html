@@ -1,13 +1,42 @@
 <template name="home">
   <div>
-    <div class="jumbotron">
+    <!--<div class="jumbotron">-->
+
+    <!-- NEWER VERSION of home page with more details around the SITE
+    {{#if currentUser}}
+	    <div class='jumbotron'>
+	    	<h2>your social jukebox. clean. simple. groovy!</h2>
+			<i><h3 class="page-header">Thank you for joining the Groovli Beta! We look forward to your feedback!</h3></i>
+		</div>
+	{{else}}
+		<div class='jumbotron col-md-7 column'>
+			<h2>your social jukebox</h2>
+			<h3><i>Groovli is a social jukebox powered purely by music shared within your social circles as well as outside; in this way you can connect with people sharing similar tastes in music, while also being able to easily listen / discover / appreciate / discuss new music and artists.</i></h3>
+		</div>
+		<div class='col-md-1 column'>
+		</div>
+		<div class='panel panel-primary col-md-4 column'>
+			<h3 class="panel-heading">Sign up for a Groovli beta invite now!</h3>
+			<form id="request-beta-invite" class="form-horizontal panel-body">
+				<input type="email" id="betaEmail" name="emailAddress" class="form-control" placeholder="your email address; e.g. john.doe@beta.com">
+				<br>
+				<input type="text" id="fbID" name="facebookID" class="form-control" placeholder="your facebook ID; e.g. johnDoe">
+				<br>
+				<center>
+					<button type="submit" class="btn btn-lg btn-success">Request Beta Invite</button>
+				</center>	
+			</form>
+		</div>
+	{{/if}}-->
+
+	<!--TEMPORARILY commented out - OLD version of landing page-->
+	<div class="jumbotron">
 		<h1>your social jukebox. clean. simple. groovy!</h1>
 		{{#if currentUser}}
 			<i><h3 class="page-header">Thank you for joining the Groovli Beta! We look forward to your feedback!</h3></i>
 			<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
 		{{else}}
 			<h3 class="page-header">Enter your email address and your facebook ID to get on Groovli's beta list.</h3>
-			<!--<img class="urkel-gif" src="http://media.giphy.com/media/TaFTuXWTJf2iA/giphy.gif" alt="Steve urkel making faces.">-->
 			<form id="request-beta-invite" class="form-horizontal">
 				<input type="email" id="betaEmail" name="emailAddress" class="form-control" placeholder="e.g. john.doe@beta.com">
 				<br>
@@ -16,7 +45,7 @@
 				<button type="submit" class="btn btn-success">Request Beta Invite</button>
 			</form>
 		{{/if}}
-		<!--{{>signupCount}} removed out signup count for now-->
+		<!--//{{>signupCount}} removed out signup count for now-->
 	</div>
 	<ul class="cb-slideshow">
 		{{#each landingPageSongList}}
