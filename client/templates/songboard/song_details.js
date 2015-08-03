@@ -171,8 +171,8 @@ Template.songDetails.helpers({
         
         shareCounter++;
       }
-      console.log('THIS IS THE SHARED BY DETAILS: ');
-      console.log(globalIDsThatSharedThisSong);
+      //console.log('THIS IS THE SHARED BY DETAILS: ');
+      //console.log(globalIDsThatSharedThisSong);
       //globalIDsThatSharedThisSong = _.uniq(Session.get('CS').sharedBy, function(x){return x._id;})
       return globalIDsThatSharedThisSong;
     },
