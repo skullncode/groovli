@@ -48,6 +48,15 @@ Template.songboard.rendered = function() {
 			console.log('Refreshing and getting latest tracks from social networks.');
 			Meteor.call('getLatestStoriesFromDBAndFB');
 		}, 60000);*/
+
+	mixpanel.identify(Meteor.user()._id);
+	mixpanel.people.set({
+	    "$first_name": Meteor.user().services.facebook.first_name,
+	    "$last_name": Meteor.user().services.facebook.last_name,
+	    "$created": Meteor.user().createdAt,
+	    "$email": Meteor.user().services.facebook.email,
+	    "$ip": Meteor.user().status.lastLogin.ipAddr
+	});
 };
 
 Template.songboard.helpers({
