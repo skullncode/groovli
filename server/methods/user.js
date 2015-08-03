@@ -83,8 +83,8 @@ function setLocationForUser(uid)
 			});
 		}
 	}
-	else
-		console.log('Base location already exists for this user; so not doing anything!');
+	//else
+		//console.log('Base location already exists for this user; so not doing anything!');
 }
 
 Meteor.methods({

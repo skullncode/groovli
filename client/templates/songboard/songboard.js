@@ -21,7 +21,7 @@ Template.songboard.rendered = function() {
 	tag.type = "text/css";
 	firstScriptTag = document.getElementsByTagName('link')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
-
+	mixpanel.init("1e7492b8c08e3a410424e0698a55df03");
 
 	var updateFBFriendListFunction = function () {
 		Meteor.call('updateFBFriendList');

@@ -15,7 +15,19 @@ if (Meteor.isClient) {
 		}
 	});
 
+	//analytics.load("CDGLDNcbyBEBdoLtea3ZcQq5PbI48oIz");
+
+	mixpanel.init("50bbe12ca3b86338fddb7eb652267601");
   });
+
+	/*Tracker.autorun(function() {
+	    var user = Meteor.user();
+	    if (!user) return;
+	    analytics.identify(user._id, {
+			name: user.profile.name,
+			email: user.profile.name
+		});
+	});*/
 
   //var subMgr = new SubsManager();
 

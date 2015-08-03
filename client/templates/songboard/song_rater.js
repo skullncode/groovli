@@ -125,6 +125,16 @@ Template.songRater.events({
     {
       var sid = currentSong.sl.substring(currentSong.sl.indexOf("v=")+2);
       Meteor.call('updateSongRating', sid, 'yt', event.toElement.value)
+      /*analytics.track('rate song', {
+        songID: sid,
+        rating: event.toElement.value,
+        type: 'yt'
+      });*/
+      mixpanel.track('rate song', {
+        songID: sid,
+        rating: event.toElement.value,
+        type: 'yt'
+      });
     }
     getPersonalRatingForSong();
     // allow radio button checking to happen - return true

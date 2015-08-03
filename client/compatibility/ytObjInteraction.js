@@ -96,7 +96,8 @@ function playerLoaded()
 	  var selectedTime = selectedPosition * ytplayer.getDuration();
 
 	  ytplayer.seekTo(selectedTime, true)
-    //mixpanel.track("seeked thru song");
+    //analytics.track("seeked thru song");
+    mixpanel.track("seeked thru song");
     
 	}, false);
   
@@ -116,7 +117,8 @@ function onPlayerStateChange(event) {
   if(event.data === 0) {  //video finished playing, so move to next video      
       //console.log("VID DONE!");
       var nextBtn = $('.glyphicon-step-forward');
-      //mixpanel.track("reached end of song");
+      //analytics.track("reached end of song");
+      mixpanel.track("reached end of song");
       nextBtn.click();
 	}
   else if(event.data === -1 || event.data === 3) { //if buffering show loader 
@@ -129,7 +131,8 @@ function onPlayerStateChange(event) {
 }
 
 function onPlayerError(errorCode) {
-  //mixpanel.track("auto error");
+  //analytics.track("auto error");
+  mixpanel.track("auto error");
   Session.set('SongErroneous', true);
   Session.set('YTErrorCode', errorCode.target.e);
   //console.log('ERROR CODE IS: ');
@@ -225,7 +228,8 @@ function playpauseVideo() {
   if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
   {
     //console.log('GOING TO PAUSE now!!!');
-    //mixpanel.track("pause song");
+    //analytics.track("pause song");
+    mixpanel.track("pause song");
     playpauseButton = $('.glyphicon-pause');
     if (ytplayer) {
       ytplayer.pauseVideo();
@@ -235,7 +239,8 @@ function playpauseVideo() {
   else
   { 
     //console.log('GOING TO PLAY now!!!');
-    //mixpanel.track("play song");
+    //analytics.track("play song");
+    mixpanel.track("play song");
     if (ytplayer) {
       ytplayer.playVideo();
     }
@@ -296,6 +301,7 @@ function loadVideoById(soundID, currentSong) {
   //console.log('CURRENT TIMEOUT VALUE ID: ' + x);
   //console.log('DURATION OF song is: ' + ytplayer.getDuration());
   //console.log('40% of song duration is: ' + 0.40 * ytplayer.getDuration());
-  //mixpanel.track("load new YT song");
+  //analytics.track("load new YT song");
+  mixpanel.track("load new YT song");
   //makeMuutCommentRelatedUpdates(soundID, currentSong);
 }
