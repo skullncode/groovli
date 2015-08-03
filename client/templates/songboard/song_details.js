@@ -164,7 +164,7 @@ Template.songDetails.helpers({
         //console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
         //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
         //console.log('FRIEND COUNTER IS:  '+ friendCounter);
-        if(_.isUndefined(_.findWhere(globalIDsThatSharedThisSong, {personid_sysdate: this.sharedBy[shareCounter].uid + "_" + this.sharedBy[shareCounter].systemDate})))
+        if(_.isUndefined(_.findWhere(globalIDsThatSharedThisSong, {p_id: this.sharedBy[shareCounter]._id})) && _.isUndefined(_.findWhere(globalIDsThatSharedThisSong, {personid_sysdate: this.sharedBy[shareCounter].uid + "_" + this.sharedBy[shareCounter].systemDate})))
         {
           globalIDsThatSharedThisSong.push({personID: this.sharedBy[shareCounter].uid, personName: this.sharedBy[shareCounter].uname, personTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll'), p_id: this.sharedBy[shareCounter]._id, personid_sysdate: this.sharedBy[shareCounter].uid + "_" + this.sharedBy[shareCounter].systemDate});
         }
