@@ -82,5 +82,11 @@ Template.songboard.helpers({
 		}
 		else
 			return "";
+	},
+	songLoaded: function(){
+		if(Session.get('playerStarted'))
+			return true;
+		else
+			return false;
 	}
 });

@@ -119,12 +119,19 @@ Template.songRater.events({
     //console.log('RATING CLICKED!!!');
     //console.log(event.toElement.value);
 
-    setSongRater(event.toElement.value);
-
     if(currentSong.sl.indexOf('youtube.com') >= 0)
     {
       var sid = currentSong.sl.substring(currentSong.sl.indexOf("v=")+2);
-      Meteor.call('updateSongRating', sid, 'yt', event.toElement.value)
+      Meteor.call('updateSongRating', sid, 'yt', event.toElement.value, function(error, result) {
+        if(error)
+          console.log('Encountered error while trying to set personal rating for current song!');
+        else
+        {
+          //console.log('GOT THIS LISTEN COUNT FROM THE SERVER: ' + result);
+          setSongRater(event.toElement.value);
+          getAverageRatingForSong();
+        }
+      });
       /*analytics.track('rate song', {
         songID: sid,
         rating: event.toElement.value,
@@ -136,7 +143,7 @@ Template.songRater.events({
         type: 'yt'
       });
     }
-    getPersonalRatingForSong();
+    //getPersonalRatingForSong(); //DOUBLE CALL to get personal rating for song - NOT REQUIRED
     // allow radio button checking to happen - return true
     return true;
   }
@@ -165,6 +172,7 @@ function getTotalSongListens()
 
 function setSongRater(rating) 
 {
+  //console.log('IN Set SONG RATER METHOD with this rating: '+ rating);
   starName = '#star' + rating;
   //console.log($(starName));
   $(starName).prop('checked',true);
@@ -175,12 +183,48 @@ function getAverageRatingForSong()
   if(currentSong.sl.indexOf('youtube.com') >= 0)
   {
     var sid = currentSong.sl.substring(currentSong.sl.indexOf("v=")+2);
-    Meteor.call('getAverageRatingForSong', sid, 'yt');
+    var avg = 0;
+    Meteor.call('getAverageRatingForSong', sid, 'yt', function(error, result) {
+        if(error)
+          console.log('Encountered error while trying to get AVERAGE rating for current song!');
+        else
+        {
+          //console.log('THIS IS THE AVERRAGE RATING GOT from the DB: ');
+          //console.log(result);
+          if(result === undefined)
+          {
+            Session.set('numrtrs', 0);
+            Session.set('avgrtg', 0);
+          }
+          else
+          {
+            //console.log('calculating average rating as there are: ' + result.length + '');
+            var counter = 0;
+
+            //console.log('this is the initial averageRating : ' + avg)
+            while(counter < result.length)
+            {
+              avg += parseInt(result[counter].rating);
+              counter++;
+            }
+
+            avg = avg / result.length;
+            avg = avg.toFixed(1); //rounding to nearest 1 decimal place for rating or its too long
+            Session.set('numrtrs', result.length);
+
+            //console.log('THIS IS THE AVERAGE rating: ' + avg);
+            Session.set('avgrtg', avg);
+          }
+          
+          //setSongRater(personalRatingForSong);
+        }
+      });
   }
 }
 
 function getPersonalRatingForSong()
 {
+  //console.log("get PERSONAL RATING METHOD Called!!!!!!!!!");
   if(currentSong.sl.indexOf('youtube.com') >= 0)
   {
     var sid = currentSong.sl.substring(currentSong.sl.indexOf("v=")+2);

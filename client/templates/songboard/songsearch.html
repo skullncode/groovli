@@ -1,7 +1,7 @@
 <template name="songsearch">
     <div>
         {{> esInput index="songs" class='txtSongSearch' placeholder="Search for songs..." }} 
-        <a id='btnClearSearch'><span class="btn btn-info btn-xs" title="clear search"><i class="fa fa-times"></i></span></a>
+        <a id='btnClearSearch'><span class="btn btn-info btn-xs" title="clear search (results)"><i class="fa fa-times"></i></span></a>
 
         <br><br>
         {{#ifEsIsSearching index="songs"}}

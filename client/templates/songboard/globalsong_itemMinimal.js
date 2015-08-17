@@ -48,7 +48,7 @@ if (Meteor.isClient) {
       //console.log('CALLING JQUERY EVENT CLASS METHOD!!!!');
       removeAndAddSelectedClassToSelectedSong(event.currentTarget);
       loadVideoById(ytLinkID, this);
-      makeMuutCommentRelatedUpdates(ytLinkID, this);
+      //makeMuutCommentRelatedUpdates(ytLinkID, this);
       setShareByLinkID(ytLinkID);
       // Prevent default form submit
       return false;

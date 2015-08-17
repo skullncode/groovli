@@ -99,6 +99,38 @@ Meteor.publish('allSongsForSpecificArtist', function(artistName) {
   }
 });
 
+Meteor.publish('commentsForSpecificSong', function(songID) {
+  //console.log('METHOD 1 - FROM THE PUBLISHing CODE; this is the SONG ID to get data for: ' + songID);
+  if(songID !== null)
+  {
+    /*var options = {
+      fields: {
+      "songSearchText": 0, 
+      "aeCount": 0, 
+      "meCount": 0, 
+      "iTunesValid": 0, 
+      "LFMValid": 0, 
+      "cleanedTrackSearchQuery": 0, 
+      "wuzzyFactor": 0, 
+      "error": 0, 
+      "iTunesMediumAlbumArt": 0, 
+      "iTunesLargeAlbumArt": 0, 
+      "iTunesAlbumURL": 0, 
+      "iTunesAlbumPrice": 0,
+      "iTunesPriceCurrency": 0,
+      "iTunesTrackPrice": 0,
+      "iTunesTrackURL": 0,
+      "discCount": 0,
+      "discNumber": 0
+    }};*/
+
+    //need to return only comments for that song
+    return Comments.find({'referenceId': String(songID)});
+  }
+});
+
+
+
 Meteor.publish('allSongsForSpecificUser', function(userID) {
   //console.log('METHOD 1 - FROM THE PUBLISHing CODE; this is the USER ID to get data for: ' + userID);
   if(userID !== null)

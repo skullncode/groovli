@@ -215,6 +215,15 @@ Template.songDetails.helpers({
   },
   checkIfCoveringArtistHasPage: function(artistName) {
     doesArtistHavePage(artistName, 'cover');
+  },
+  currentSongID: function() {
+    if(!_.isUndefined(Session.get('CS')))
+    {
+      console.log('GOT A CURRENT SONG ID: ' + Session.get('CS').sl);
+      return Session.get('CS').sl;
+    }
+    else
+      return '';
   }
 });
 

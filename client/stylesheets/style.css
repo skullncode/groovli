@@ -614,6 +614,29 @@ body {
   padding-top: 30px;
 }
 
+.songCommentList {
+  height: 175px;
+  overflow-y: auto;
+}
+
+.commentBox {
+  resize: none;
+  margin: 0 auto;
+  min-height:50px;
+  width:300px;
+}
+
+.commentArea {
+  position: relative;
+  display: inline-block;
+}
+
+.commentButton{
+  display: inline-block;
+  text-align: right;
+  float: right;
+}
+
 ul.artistChatter {
     margin: 0;
     padding: 0;

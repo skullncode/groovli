@@ -840,7 +840,7 @@ function selectShareFromControls(share, shares, tab) {
     var found = _.findWhere(musicHistory, {'sl': updatedSong.storyLink});
     found.sourceTab = 'me';
     setCurrentSong(found);
-    Meteor.setTimeout(selectAndHighlightSongAfterSharing, 500);
+    Meteor.setTimeout(selectAndHighlightSongAfterSharing, 10000); //was originally 500 milliseconds ; changed it to 10 seconds so that song is pulled in by then
    }
 
    setSongObjectBasedOnSearchResult = function(songLink) {

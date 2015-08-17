@@ -25,7 +25,7 @@ function setupPlayerAndCommentsPriorToLoading()
     //console.log('FINISHEd script insertion!!!!');
 
     //MUUT JS inclusion
-    tag = document.createElement('script');
+    /*tag = document.createElement('script');
     tag.src = "//cdn.muut.com/1/moot.min.js";
     tag.type = "text/javascript";
     firstScriptTag = document.getElementsByTagName('script')[0];
@@ -36,7 +36,7 @@ function setupPlayerAndCommentsPriorToLoading()
     tag.src = "//cdn.muut.com/1/moot.css";
     tag.type = "text/css";
     firstScriptTag = document.getElementsByTagName('link')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
 
     window.onYouTubePlayerAPIReady = function() {
       playerLoaded();
@@ -248,7 +248,8 @@ function playpauseVideo() {
   }  
 }
 
-function makeMuutCommentRelatedUpdates(soundID, currentSong) {
+ /*function makeMuutCommentRelatedUpdates(soundID, currentSong) {
+ 
   //UPDATE MUUT COMMENTS BOX
   var commentsUniqueID = "https://muut.com/i/groovli/music/comments:" + soundID;
   var pageTitle = '';
@@ -269,7 +270,7 @@ function makeMuutCommentRelatedUpdates(soundID, currentSong) {
   $("#muut-custom").muut(conf);
   //UPDATE PAGE TITLE
   $(document).prop('title', pageTitle);
-}
+}*/
 
 
 //this is required in order to push a listen only once the user has listened thru 40% of the song, or the listen does not qualify
