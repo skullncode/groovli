@@ -219,7 +219,7 @@ Template.songDetails.helpers({
   currentSongID: function() {
     if(!_.isUndefined(Session.get('CS')))
     {
-      console.log('GOT A CURRENT SONG ID: ' + Session.get('CS').sl);
+      //console.log('GOT A CURRENT SONG ID: ' + Session.get('CS').sl);
       return Session.get('CS').sl;
     }
     else

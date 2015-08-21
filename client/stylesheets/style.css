@@ -984,3 +984,7 @@ ul.artistChatter {
     .cb-slideshow li div h3 { font-size: 80px }
 }
 /*end landing page slide show styling*/
+
+.favorited{
+  color: red; 
+}

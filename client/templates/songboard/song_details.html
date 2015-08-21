@@ -65,6 +65,8 @@
 					{{#each sharedByDetailsForCurrentSong}}
 						<a href="/profile/{{p_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:20px;height:20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
 					{{/each}}
+					<br>
+					{{>favoriter}}
 				</div>
 				<div class="col-md-4 column" align="right">
 					{{>songRater}}
@@ -73,7 +75,6 @@
 					<i class="fa fa-facebook"></i>&nbsp;&nbsp;&nbsp;&nbsp;Share on Facebook</a>
 					<br>
 					<a id="shareTwitterButton" href="http://twitter.com/?status={{currentSong.sl}} %23groovli %23nowplaying" title="Share on Twitter" target="_blank" class="btn btn-twitter"><i class="fa fa-twitter"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tweet this song</a>
-					<br>
 				</div>
 				<br>
 				<div class="col-md-12 column">

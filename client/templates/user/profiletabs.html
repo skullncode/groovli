@@ -7,6 +7,7 @@
 			{{#if userProfileIsYou}}
 				<li role="presentation"><a href="#mutualListen" aria-controls="mutualListen" role="tab" data-toggle="tab">mutual</a></li>
 			{{/if}}
+			<li role="presentation"><a href="#favoriteSongs" aria-controls="favoriteSongs" role="tab" data-toggle="tab">favorites</a></li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -35,6 +36,21 @@
 	            	<p><small>song matches</small></p>
 				</div>
 			{{/if}}
+			<div role="tabpanel" class="tab-pane fade" id="favoriteSongs">
+				<ul id='listenHistory' class="listenHistory">
+				<li>
+					{{#each favoritesForUser}}
+						{{> faveItem}}
+					{{/each}}
+				</li>
+				</ul>
+				<h2><strong>{{faveCount}}</strong></h2>
+				{{#if pluralFaves}}               
+	            	<p><small>favorite songs</small></p>
+	            {{else}}
+	            	<p><small>favorite song</small></p>
+	            {{/if}}
+			</div>
 		</div>
 	</div>
 </template>

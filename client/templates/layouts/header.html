@@ -1,0 +1,59 @@
+<template name="header">
+  <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        {{#if currentlyOnHomePage}}
+          <a class="navbar-brand" title="beta">
+            <img height="20" alt="Brand" src="../images/logo/groovliLogo_S_1.png">
+          </a>
+        {{else}}
+          <a class="navbar-brand" href="{{pathFor 'home'}}" target="blank" title="beta">
+            <img height="20" alt="Brand" src="../images/logo/groovliLogo_S_1.png">
+          </a>
+        {{/if}}
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active">
+            <a href="#">Sign in</a>
+          </li>
+          <li>
+            <a href="#">Join</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+      <div class="navbar-header">
+          {{#if currentlyOnHomePage}}
+            <a class="navbar-brand" title="beta">
+              <img alt="Brand" height="19px" width="64px" src="../images/logo/groovliLogo_S_1.png">
+            </a>
+          {{else}}
+            <a class="navbar-brand" href="{{pathFor 'home'}}" target="blank" title="beta">
+              <img alt="Brand" height="19px" width="64px" src="../images/logo/groovliLogo_S_1.png">
+            </a>
+          {{/if}}
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navHeaderCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {{#if currentUser}}
+          {{>playerControls}}
+        {{/if}}
+      </div>
+    </div>
+  </nav>
+
+</template>

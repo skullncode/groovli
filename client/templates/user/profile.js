@@ -85,8 +85,8 @@ Template.profile.helpers({
 	},
 
 	memberSince: function(createdDate) {
-		console.log('THIS IS THE MEMBER SINCE DATE: ');
-		console.log(createdDate);
+		//console.log('THIS IS THE MEMBER SINCE DATE: ');
+		//console.log(createdDate);
 		return new moment(createdDate).format('llll');
 	},
 
@@ -277,10 +277,10 @@ Template.profile.helpers({
 		return isUserKing();
 	},
 	userProfileExists: function() {
-		console.log('THIS IS THE USER PROFILE:');
-		console.log(Meteor.users.findOne(Router.current().params._id));
-		console.log('CHECKING IF USER PROFILE EXISTS OR NOT:');
-		console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
+		//console.log('THIS IS THE USER PROFILE:');
+		//console.log(Meteor.users.findOne(Router.current().params._id));
+		//console.log('CHECKING IF USER PROFILE EXISTS OR NOT:');
+		//console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
 		Session.set(Router.current().params._id+'_uObj', Meteor.users.findOne(Router.current().params._id));
 		return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
 	}

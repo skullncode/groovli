@@ -24,6 +24,19 @@ function setupPlayerAndCommentsPriorToLoading()
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     //console.log('FINISHEd script insertion!!!!');
 
+    /*    
+    tag = document.createElement('link');
+    tag.src = "http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css";
+    tag.type = "text/css";
+    firstScriptTag = document.getElementsByTagName('link')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    tag = document.createElement('script');
+    tag.src = "http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js";
+    tag.type = "text/javascript";
+    firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
+
     //MUUT JS inclusion
     /*tag = document.createElement('script');
     tag.src = "//cdn.muut.com/1/moot.min.js";
