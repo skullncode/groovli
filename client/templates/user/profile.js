@@ -1,7 +1,6 @@
 //var localTopTenB;
 
 Template.profile.helpers({
-
 	userObjectForRoute: function() {
 		/*getUserForRouting();
 		var x = Session.get(Router.current().params._id+'_uObj')*/
@@ -295,8 +294,41 @@ Template.profile.helpers({
 		//console.log(Meteor.users.findOne(Router.current().params._id));
 		//console.log('CHECKING IF USER PROFILE EXISTS OR NOT:');
 		//console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
+		
+		//console.log('RESULT OF SEARCHING FOR METEOR USER: ');
+		//console.log(Meteor.users.findOne(Router.current().params._id));
+
 		Session.set(Router.current().params._id+'_uObj', Meteor.users.findOne(Router.current().params._id));
-		return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
+
+		if(Session.get(Router.current().params._id+'_uObj_pageLoaded'))
+		{
+			//console.log("1 - CHECK FOR USER PROFILE EXISTENCE!!!");
+			//console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
+			//console.log('CURRENT SESSION OBJECT: ');
+			//console.log(Session.get(Router.current().params._id+'_uObj'));
+			if(!_.isNull(Session.get(Router.current().params._id+'_uObj')))
+			{
+				if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')))
+				{
+					//console.log('session user object is currently not undefined!!!');
+					//console.log('RETURNING TRUE');
+					return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
+				}
+				else
+				{
+					//console.log('session user object is currently UNDEFINED!!!');
+					//console.log('RETURNING FALSE');
+					return false;
+				}
+			}
+			else
+				return true;
+		}
+		else
+		{
+			//console.log("2 - CHECK FOR USER PROFILE EXISTENCE!!!");
+			return true;
+		}
 	}
 });
 
@@ -339,6 +371,19 @@ Template.profile.events({
     }
 
   });
+
+Template.profile.onCreated(function () {
+	Session.set(Router.current().params._id+'_uObj_pageLoaded', false);
+  	//console.log('TEMPLATE CREATED NOW!!!');
+  	//console.log(Session.get(Router.current().params._id+'_uObj_pageLoaded'));
+  	Session.set(Router.current().params._id+'_uObj', null);
+});
+
+Template.profile.onRendered(function () {
+	Session.set(Router.current().params._id+'_uObj_pageLoaded', true);
+	//console.log('TEMPLATE RENDERED NOW!!!');
+  	//console.log(Session.get(Router.current().params._id+'_uObj_pageLoaded'));
+});
 /*
 function getUserForRouting()
 {
