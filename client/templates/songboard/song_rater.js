@@ -27,7 +27,7 @@ Template.songRater.helpers({
 
   listenCountMoreThanOne: function() {
     var lc = Session.get(currentID+'_lc');
-    if(lc > 1)
+    if(lc > 1 || lc == 0)
       return true;
     else
       return false;

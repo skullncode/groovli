@@ -5,7 +5,7 @@ Template.favoriter.helpers({
     //console.log('CHECKING FOR FAVE!!!');
     if(!_.isEmpty(Session.get('ffts')))
     {
-      console.log('THERE ARE FAVES!!!');
+      //console.log('THERE ARE FAVES!!!');
       if(_.isUndefined(_.findWhere(favesForThisSong, {userId: Meteor.user()._id})))
         return false;
       else
@@ -40,7 +40,7 @@ Template.favoriter.onCreated(function () {
 
 Template.favoriter.events({
   "click .favoriteSong": function (event) {
-    console.log('Favorite CLICKED!!!');
+    //console.log('Favorite CLICKED!!!');
     //console.log(event.toElement.value);
     //songFavorited = !songFavorited;
     Meteor.call('favoriteSong', Meteor.user()._id, Meteor.user().profile.name, Meteor.user().services.facebook.id, currentSong.sl, currentSong.sa, currentSong.st, function(error, result) {
