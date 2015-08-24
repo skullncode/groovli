@@ -159,7 +159,7 @@ Meteor.publish('favoritesForSpecificSong', function(songID) {
   }
 });
 Meteor.publish('favoritesForSpecificUser', function(userID) {
-  //console.log('METHOD 1 - FROM THE PUBLISHing CODE; this is the SONG ID to get data for: ' + songID);
+  //console.log('METHOD 1 - FROM THE PUBLISHing CODE; TO GET FAVORITES FOR THIS USER: ' + userID);
   if(userID !== null)
   {
     /*var options = {
@@ -190,7 +190,7 @@ Meteor.publish('favoritesForSpecificUser', function(userID) {
 
 
 Meteor.publish('allSongsForSpecificUser', function(userID) {
-  //console.log('METHOD 1 - FROM THE PUBLISHing CODE; this is the USER ID to get data for: ' + userID);
+  //console.log('METHOD 1 - FROM THE PUBLISHing CODE; this is the USER ID to get ALL SONGS for: ' + userID);
   if(userID !== null)
   {
     var options = {

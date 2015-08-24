@@ -11,22 +11,25 @@ Template.profile.helpers({
 	},
 
 	isUserAFBFriend: function() {
-		var userObj = Session.get(Router.current().params._id+'_uObj')
-		var userIsAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: userObj.services.facebook.id}));
-		//console.log('USER IS A FRIEND!!!!!: ' + userIsAFriend);
-    	if(userIsAFriend)
-    		return '<i class="fa fa-facebook-official"></i> friend<br><br>';
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')))
+		{
+			var userObj = Session.get(Router.current().params._id+'_uObj')
+			var userIsAFriend = !_.isUndefined(_.findWhere(Meteor.user().fbFriends, {fbid: userObj.services.facebook.id}));
+			//console.log('USER IS A FRIEND!!!!!: ' + userIsAFriend);
+	    	if(userIsAFriend)
+	    		return '<i class="fa fa-facebook-official"></i> friend<br><br>';
+    	}
 	},
 
 	locationDetailsExist: function() {
-		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')) && !_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
 			return true;
 		else
 			return false;
 	},
 
 	locationCountry: function() {
-		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')) && !_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
 			return Session.get(Router.current().params._id+'_uObj').baseLocation.country;
 		else
 			return 'Unknown'
@@ -45,11 +48,14 @@ Template.profile.helpers({
 	},
 
 	alreadyFollowed: function() {
-		var x = Session.get(Router.current().params._id+'_uObj')
-		if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': x.services.facebook.id})))
-			return false;
-		else
-			return true;
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')))
+		{
+			var x = Session.get(Router.current().params._id+'_uObj')
+			if(_.isUndefined(_.findWhere(Meteor.user().tastemakers, {'fbid': x.services.facebook.id})))
+				return false;
+			else
+				return true;
+		}
 	},
 
 	followerCount: function() {
@@ -63,16 +69,19 @@ Template.profile.helpers({
 	},
 
 	getFollowerCount: function() {
-		var x = Session.get(Router.current().params._id+'_uObj');
-		Meteor.call('getFollowerCount', x, function(error,result){
-		    if(error){
-		        console.log(error.reason);
-		    }
-		    else{
-		        // do something with result
-			  	Session.set(Router.current().params._id+'_followerCount',result);
-		    };
-		});
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')))
+		{
+			var x = Session.get(Router.current().params._id+'_uObj');
+			Meteor.call('getFollowerCount', x, function(error,result){
+			    if(error){
+			        console.log(error.reason);
+			    }
+			    else{
+			        // do something with result
+				  	Session.set(Router.current().params._id+'_followerCount',result);
+			    };
+			});
+		}
 	},
 
 	favoriteCount: function() {
@@ -84,11 +93,14 @@ Template.profile.helpers({
 	},
 
 	followingCount: function() {
-		var x = Session.get(Router.current().params._id+'_uObj')
-		if(!_.isUndefined(x.tastemakers))
-			return "<h2><strong>"+x.tastemakers.length+"</strong></h2><p><small>Following</small></p>";
-		else
-			return "<h2><strong>0</strong></h2><p><small>Following</small></p>";
+		if(!_.isUndefined(Session.get(Router.current().params._id+'_uObj')))
+		{
+			var x = Session.get(Router.current().params._id+'_uObj')
+			if(!_.isUndefined(x.tastemakers))
+				return "<h2><strong>"+x.tastemakers.length+"</strong></h2><p><small>Following</small></p>";
+			else
+				return "<h2><strong>0</strong></h2><p><small>Following</small></p>";
+		}
 	},
 
 	memberSince: function(createdDate) {
@@ -289,15 +301,34 @@ Template.profile.helpers({
 	userIsKing: function() {
 		return isUserKing();
 	},
-	userProfileExists: function() {
+	setUserProfileObject: function() { //used to be userProfileExists
 		//console.log('THIS IS THE USER PROFILE:');
 		//console.log(Meteor.users.findOne(Router.current().params._id));
 		//console.log('CHECKING IF USER PROFILE EXISTS OR NOT:');
 		//console.log(!_.isEmpty(Meteor.users.findOne(Router.current().params._id)));
 		Session.set(Router.current().params._id+'_uObj', Meteor.users.findOne(Router.current().params._id));
-		return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
+		//return !_.isEmpty(Meteor.users.findOne(Router.current().params._id));
 	}
 });
+
+/*
+Template.profile.onCreated(function () {
+  var self = this;
+  //self.ready = new ReactiveVar();
+  
+  // Use self.subscribe with the data context reactively
+  self.autorun(function () {
+    //var dataContext = Template.currentData();
+    //console.log("THIS IS THE SONG ID for faves: ");
+    //console.log(dataContext.sl);
+    //var subMgr = new SubsManager();
+    self.subscribe('allSongsForSpecificUser', Router.current().params._id);
+    self.subscribe("favoritesForSpecificUser", String(Router.current().params._id));
+    self.subscribe('userObjectForProfilePage', Router.current().params._id);
+    //console.log('THIS IS THE RESULT OF FAVES FOR CURRENT SONG ');
+    //console.log(favesForThisSong);
+  });
+});*/
 
 Template.profile.events({
     "click #unfollowUser": function (event) {

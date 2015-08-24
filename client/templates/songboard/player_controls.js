@@ -21,7 +21,10 @@ availableSongs = [];
 
 Template.playerControls.helpers({
   currentlyOnSongboard: function(){
-    return Router.current().route.path() === '/songboard';
+    //if(!_.isUndefined(Router.current().route))
+      return Router.current().route.path() === '/songboard';
+    //else
+      //return FlowRouter.current().route.path === '/songboard';
   },
   encounteredErroneousSong: function() {
     if(Session.get('SongErroneous'))

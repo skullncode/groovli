@@ -1,0 +1,46 @@
+FlowRouter.route('/profile/:_id', {
+  // calls just before the action
+  triggersEnter: [requireLogin],
+  action: function(params) {
+        BlazeLayout.render('appLayout', {
+        	content: 'profile',
+        	params: params
+        });
+    },
+  // calls when when we decide to move to another route
+  // but calls before the next route started
+  //triggersExit: [trackRouteClose]
+});
+
+
+function requireLogin() {
+  if (! Meteor.user()) {
+    if (Meteor.loggingIn()) {
+      BlazeLayout.render('appLayout', {content: 'loading'});
+    } else {
+      //this.render('accessDenied');
+      FlowRouter.go('/');
+    }
+  } /*else {
+    this.next();
+  }*/
+}
+
+function mustBeAdmin() {
+  var isAdmin, loggedInUser;
+  loggedInUser = Meteor.user();
+  isAdmin = Roles.userIsInRole(loggedInUser, ['admin']);
+  if (! Meteor.user()) {
+    if (Meteor.loggingIn()) {
+      this.render(this.loadingTemplate);
+    } else {
+      BlazeLayout.render('appLayout', {content: 'accessDenied'});
+      FlowRouter.go('/');
+    }
+  } /*else if (isAdmin) {
+    this.next();
+  }*/
+  else if (!isAdmin){
+    FlowRouter.go('/');
+  }
+}
