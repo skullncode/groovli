@@ -2,7 +2,7 @@ var favesForThisSong = {};
 
 Template.favoriter.helpers({
   songFavoritedByThisUser: function() {
-    console.log('CHECKING FOR FAVE!!!');
+    //console.log('CHECKING FOR FAVE!!!');
     if(!_.isEmpty(Session.get('ffts')))
     {
       console.log('THERE ARE FAVES!!!');
@@ -13,7 +13,7 @@ Template.favoriter.helpers({
     }
     else
     {
-      console.log('THERE ARE noooooo FAVES!!!');
+      //console.log('THERE ARE noooooo FAVES!!!');
       return false;
     }
   },
@@ -28,8 +28,8 @@ Template.favoriter.onCreated(function () {
   // Use self.subscribe with the data context reactively
   self.autorun(function () {
     var dataContext = Template.currentData();
-    console.log("THIS IS THE SONG ID for faves: ");
-    console.log(dataContext.sl);
+    //console.log("THIS IS THE SONG ID for faves: ");
+    //console.log(dataContext.sl);
     self.subscribe("favoritesForSpecificSong", dataContext.sl);
     favesForThisSong = Favorites.find({'referenceId': String(dataContext.sl)}).fetch();
     Session.set('ffts', favesForThisSong)
@@ -45,10 +45,10 @@ Template.favoriter.events({
     //songFavorited = !songFavorited;
     Meteor.call('favoriteSong', Meteor.user()._id, Meteor.user().profile.name, Meteor.user().services.facebook.id, currentSong.sl, currentSong.sa, currentSong.st, function(error, result) {
       if(error)
-        console.log('Encountered error while trying to post comment for song!');
+        console.log('Encountered error while trying to favorite song!');
       else
       {
-        console.log('SUCCESSFULLY favorited this song!!');
+        //console.log('SUCCESSFULLY favorited this song!!');
         //$("#commentContent").val("");
       }
     });
