@@ -51,10 +51,15 @@ Template.profileTabs.helpers({
 			return true;
 		else
 			return false;
-	}
+	},
+
+	hasFaves: function()
+	{
+		return Favorites.find({'userId': String(Router.current().params._id)}).fetch().length > 0;
+	},
 });
 
-Template.profileTabs.onCreated(function () {
+/*Template.profileTabs.onCreated(function () {
   var self = this;
 
   // Use self.subscribe with the data context reactively
@@ -62,13 +67,11 @@ Template.profileTabs.onCreated(function () {
     /*var dataContext = Template.currentData();
     console.log("THIS IS THE SONG ID for faves: ");
     console.log(dataContext);*/
-    self.subscribe("favoritesForSpecificUser", String(Router.current().params._id));
+    //self.subscribe("favoritesForSpecificUser", String(Router.current().params._id));
     /*var favesForThisUser = Favorites.find({'referenceId': String(Router.current().params._id)}).fetch();
     Session.set('fftu', favesForThisUser)*/
-    //console.log('THIS IS THE RESULT OF FAVES FOR CURRENT SONG ');
-    //console.log(favesForThisSong);
-  });
-});
+  //});
+//});
 
 Template.profileTabs.onRendered(function () {
   // Use the Packery jQuery plugin

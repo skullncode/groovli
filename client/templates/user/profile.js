@@ -1,4 +1,4 @@
-var localTopTenB;
+//var localTopTenB;
 
 Template.profile.helpers({
 
@@ -76,6 +76,14 @@ Template.profile.helpers({
 		});
 	},
 
+	favoriteCount: function() {
+		var y = Favorites.find({}).fetch().length;
+		if(y === 0 || y > 1) 
+			return "<h2><strong>"+y+"</strong></h2><p><small>Favorites</small></p>"
+		else if(y === 1)
+			return "<h2><strong>"+y+"</strong></h2><p><small>Favorite</small></p>"
+	},
+
 	followingCount: function() {
 		var x = Session.get(Router.current().params._id+'_uObj')
 		if(!_.isUndefined(x.tastemakers))
@@ -132,7 +140,8 @@ Template.profile.helpers({
 		_.chain(t).map(function(value){topTenb.push({'sa': value})});
 		//console.log(b);
 		Session.set(Router.current().params._id+'topBandsLength', topTenb.length);
-		localTopTenB = topTenb;  
+		//localTopTenB = topTenb;
+		Session.set('ttb', topTenb);
 		return topTenb;
 	},
 
@@ -170,10 +179,15 @@ Template.profile.helpers({
 
 		Session.set(Router.current().params._id+'topGenresLength', topTeng.length);
 		return topTeng;*/
+		//console.log('THIS IS THE TOP TEN BANDS: ');
+		//console.log(localTopTenB);
+
+		//console.log('this is the SESSION top ten bands');
+		//console.log(Session.get('ttb'));
 
 		var topTeng = [];
 		var currentGenre = '';
-		_.each(localTopTenB, function(z){
+		_.each(Session.get('ttb'), function(z){
 			var artName = z.sa;
 			if(artName.indexOf('&') >= 0)
 			{
