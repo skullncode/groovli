@@ -311,24 +311,19 @@ Template.profile.helpers({
 	}
 });
 
-/*
+/*NOT USING TEMPLATE LEVEL SUBSCRIPTIONS
 Template.profile.onCreated(function () {
-  var self = this;
-  //self.ready = new ReactiveVar();
-  
-  // Use self.subscribe with the data context reactively
-  self.autorun(function () {
-    //var dataContext = Template.currentData();
-    //console.log("THIS IS THE SONG ID for faves: ");
-    //console.log(dataContext.sl);
-    //var subMgr = new SubsManager();
-    self.subscribe('allSongsForSpecificUser', Router.current().params._id);
-    self.subscribe("favoritesForSpecificUser", String(Router.current().params._id));
-    self.subscribe('userObjectForProfilePage', Router.current().params._id);
-    //console.log('THIS IS THE RESULT OF FAVES FOR CURRENT SONG ');
-    //console.log(favesForThisSong);
-  });
-});*/
+	var self = this;
+	self.subscribe('allSongsForSpecificUser', Router.current().params._id, {onError: onErrorWithSubscription});
+	self.subscribe('userObjectForProfilePage', Router.current().params._id, {onError: onErrorWithSubscription});
+	self.subscribe('favoritesForSpecificUser', String(Router.current().params._id), {onError: onErrorWithSubscription});
+});
+
+function onErrorWithSubscription(subError) {
+  console.log('INSIDE THE subscription ERROR FUNCTION');
+  console.log(subError);
+  Router.go('/404');
+}*/
 
 Template.profile.events({
     "click #unfollowUser": function (event) {
