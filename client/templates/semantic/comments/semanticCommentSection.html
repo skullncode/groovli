@@ -1,0 +1,9 @@
+<template name="semanticCommentSection">
+	{{#if songPlaying}}
+		<div id="commentSection" class="ui comments">
+			{{>semanticPostComment}}
+			<h3 class="ui dividing header">Comments</h3>
+		  	{{>semanticCommentList}}
+		</div>
+	{{/if}}
+</template>

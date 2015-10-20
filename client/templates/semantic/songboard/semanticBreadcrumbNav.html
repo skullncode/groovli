@@ -1,0 +1,29 @@
+<template name="semanticBreadcrumbNav">
+	{{#if currentlyOnMyGroovsPath}}
+		<div class="ui large breadcrumb">
+		  <a class="active section">My Groovs</a>
+		  <span class="divider">/</span>
+		  <a class="section">My Playlists</a>
+		</div>
+	{{else}}
+		<div class="ui large breadcrumb"></div>
+	{{/if}}
+	<!--{{#if currentlyOnTastemakersPath}}
+		<div class="ui large breadcrumb">
+		  <a class="active section">Tastemakers</a>
+		  <span class="divider">/</span>
+		  <a href="/followers" class="section">My Followers</a>
+		</div>
+	{{else}}
+		<div class="ui large breadcrumb"></div>
+	{{/if}}
+	{{#if currentlyOnMyFollowersPath}}
+		<div class="ui large breadcrumb">
+		  <a href="/tastemakers" class="section">Tastemakers</a>
+		  <span class="divider">/</span>
+		  <a class="active section">My Followers</a>
+		</div>
+	{{else}}
+		<div class="ui large breadcrumb"></div>
+	{{/if}}-->
+</template>

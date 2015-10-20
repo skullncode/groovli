@@ -1,10 +1,11 @@
 Template.userLogin.rendered = function() {
-    //Session.set('umc', 0);  
+    //Session.set('umc', 0);
 };
 
 Template.userLogin.helpers({
     notOnSignUpPage: function() {
-        var currentRoute = Router.current().route.getName();
+        //var currentRoute = Router.current().route.getName();
+        var currentRoute = FlowRouter.current().route.name;
         if(currentRoute !== "signup/:token" && currentRoute !== "signup")
             return true;
         else
@@ -34,18 +35,31 @@ Template.userLogin.events({
             {
                 //after logging in update FB friend list
                 Meteor.call('updateFBFriendList');
-                Router.go('/songboard');
+                //Router.go('/songboard');
+                FlowRouter.go('/songboard');
             }
         });
     },
  
     'click #logout': function(event) {
+        //console.log("GOING to log out now!!");
         Meteor.logout(function(err){
             if (err) {
                 throw new Meteor.Error("Logout failed");
             }
             else
-                Router.go('/')
-        })
+            {
+                //Router.go('/')
+                //if(FlowRouter.current().path !== "/")
+                //{
+                    //console.log("NOT on homepage so will redirect to HOME!");
+                    Session.set('ud', null);
+                    FlowRouter.go('/');
+                //}
+                //else
+                //    console.log('NOT DOING ANYTHING!!');
+            }
+        });
+        return false;
     }
 });

@@ -20,7 +20,9 @@
             <span class="icon-bar"></span>
           </button>
         {{#if currentUser}}
-          {{>playerControls}}
+          {{#if currentlyOnSongBoard}}
+            {{>playerControls}}
+          {{/if}}
         {{/if}}
       </div>
 

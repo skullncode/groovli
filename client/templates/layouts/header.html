@@ -1,59 +1,130 @@
 <template name="header">
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+  <!--BOOTPLY NAVBAR BEGIN-->
+  <div class="navbar navbar-inverse navbar-fixed-top" data-role="navigation">
+    <div class="navbar-header navbar-left">
+      {{#if currentlyOnHomePage}}
+        <a class="navbar-brand" title="beta">
+          <img alt="Brand" height="20" src="../images/logo/groovliLogo_S_1.png">
+        </a>
+      {{else}}
+        <a class="navbar-brand" href="{{pathFor 'home'}}" target="blank" title="beta"><img alt="Brand" height="20" src="../images/logo/groovliLogo_S_1.png"></a>
+      {{/if}}
+      {{#if currentlyOnSongBoard}}
+        <button type="button" class="collapsed navbar-toggle navbar-left left pull-left collapsed"
+        data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        {{#if currentlyOnHomePage}}
-          <a class="navbar-brand" title="beta">
-            <img height="20" alt="Brand" src="../images/logo/groovliLogo_S_1.png">
-          </a>
-        {{else}}
-          <a class="navbar-brand" href="{{pathFor 'home'}}" target="blank" title="beta">
-            <img height="20" alt="Brand" src="../images/logo/groovliLogo_S_1.png">
-          </a>
+      {{else}}
+        <button type="button" class="collapsed hidden-xs navbar-toggle navbar-left left pull-left collapsed"
+        data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      {{/if}}
+      <button type="button" class="navbar-toggle navbar-right right pull-right collapsed navbar-link"
+      data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <i class="fa fa-fw fa-user"></i>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      {{#if currentlyOnSongBoard}}
+        <ul class="nav navbar-nav navbar-left">
+            <li>
+              <a href="#">My Groovs</a>
+            </li>
+            <li>
+              <a href="#">Tastemakers</a>
+            </li>
+            <li>
+              <a href="#">Global</a>
+            </li>
+        </ul>
+      {{/if}}
+      <ul class="navbar-nav nav navbar-right hidden-xs" style="margin-right: 10px">
+        {{#if currentlyOnSongBoard}}
+          <form class="hidden-sm hidden-xs navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input class="input-xs" placeholder="Search for songs" type="text">
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">
+              <i class="fa fa-fw fa-search"></i>
+            </button>
+          </form>
         {{/if}}
-      </div>
-      <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="active">
-            <a href="#">Sign in</a>
+        {{#if currentUser}}
+        <li class="{{ isActiveRoute regex='songboard' }}">
+          <a href="{{ pathFor 'songboard' }}" title="songboard">
+                <span class="badge"></span>
+            <i class="fa fa-music"></i></a>
+        </li>
+        <li class="{{ isActiveRoute regex='profile' }}">
+          <a href="{{ pathFor 'profile' }}" target="blank" title="profile">
+                <span class="badge"></span>
+            <i class="fa fa-fw fa-user"></i></a>
+        </li>
+        <li class="{{ isActiveRoute regex='messages' }}">
+          <a href="{{ pathFor 'messages' }}" target="blank" title="messages">
+                <span class="badge"></span>
+            <i class="fa fa-fw fa-comment"></i></a>
+        </li> 
+        <li class="dropdown headerProfileImageLink">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square" class="img-circle special-img headerProfileImage"> {{currentUser.services.facebook.first_name}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#"><i class="fa fa-cog"></i> Profile</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="#"><i class="fa fa-sign-out"></i> Sign-out</a>
+            </li>
+          </ul>
+        </li>
+        {{else}}
+          <li>
+            <a href="songboard.html">Sign in</a>
+          </li>  
+        {{/if}}
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="navbar-nav nav navbar-right hidden-sm hidden-md hidden-lg">
+        {{#if currentlyOnSongBoard}}
+          <form class="hidden-sm hidden-xs navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input class="input-xs" placeholder="Search for songs" type="text">
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">
+              <i class="fa fa-fw fa-search"></i>
+            </button>
+          </form>
+        {{/if}}
+        {{#if currentUser}}
+          <li class="{{ isActiveRoute regex='messages' }}">
+            <a href="{{ pathFor 'messages' }}" target="blank" title="messages">
+                  <span class="badge"></span>
+              <i class="fa fa-fw fa-user"></i>Profile</a>
+          </li>
+          <li class="{{ isActiveRoute regex='messages' }}">
+            <a href="{{ pathFor 'messages' }}" target="blank" title="messages">
+                  <span class="badge"></span>
+              <i class="fa fa-fw fa-comment"></i>Messages</a>
           </li>
           <li>
-            <a href="#">Join</a>
+            <a href="#"><i class="fa fa-sign-out"></i> Sign-out</a>
           </li>
-        </ul>
-      </div>
+        {{else}}
+          <li>
+            <a href="songboard.html">Sign in</a>
+          </li>  
+        {{/if}}
+      </ul>
     </div>
   </div>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-
-      <div class="navbar-header">
-          {{#if currentlyOnHomePage}}
-            <a class="navbar-brand" title="beta">
-              <img alt="Brand" height="19px" width="64px" src="../images/logo/groovliLogo_S_1.png">
-            </a>
-          {{else}}
-            <a class="navbar-brand" href="{{pathFor 'home'}}" target="blank" title="beta">
-              <img alt="Brand" height="19px" width="64px" src="../images/logo/groovliLogo_S_1.png">
-            </a>
-          {{/if}}
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navHeaderCollapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        {{#if currentUser}}
-          {{>playerControls}}
-        {{/if}}
-      </div>
-    </div>
-  </nav>
-
+  <!--BOOTPLY NAVBAR END-->
 </template>

@@ -1,0 +1,27 @@
+<template name="globalTabs">
+	{{#if currentUser}}
+		{{getDateRange}}
+		{{#if dateRangeLoaded}}
+			<div class="ui top attached tabular menu">
+			  <a id="globalTabHeader" class="item active" data-tab="global">Global</a>
+			  <a id="sresultsTabHeader" class="item" data-tab="sresults">Search</a>
+			</div>
+			<div class="ui icon menu orangeHeaderMenu" style="margin:0px;">
+				<!--<a class="item">
+					<i class="tiny step backward icon orangeHeaderMenuItem"></i>
+				</a>
+				<a class="item">
+					<i class="tiny play icon playInControls orangeHeaderMenuItem"></i>
+				</a>
+				<a class="item">
+					<i class="tiny step forward icon orangeHeaderMenuItem"></i>
+				</a>-->
+				{{>flylistFilter}}
+			</div>
+			{{> globalPage}}
+			{{> sresultslist}}
+		{{/if}}
+	{{/if}}
+
+	{{>newFlylistModal}}
+</template>

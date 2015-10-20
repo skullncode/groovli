@@ -1,0 +1,45 @@
+<template name="smglist">
+	<div class="ui bottom attached tab segment active" data-tab="mygroovs">
+		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+		{{#if myGroovsExist}}
+	    	<div class="ui label"><i class="music icon"></i> {{mgLength}}</div>
+	    {{/if}}
+	  	<div id="mgList" class="songLists">
+	  		{{fixMGSongCursor}}
+	  		{{#if songsLoaded}}
+				{{startPlayer}}
+				{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+			{{/if}}
+			{{#each songs}}
+				{{> semanticSongItem}}
+			{{/each}}
+			{{#if flylistLoadedAndNoMatchingSongs}}
+				No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music! :D
+			{{else}}
+				{{#unless myGroovsExist}}
+					No music shared to Facebook yet!
+				{{/unless}}
+			{{/if}}
+		</div>
+		<div class="ui grid">
+			<div class="computer large screen widescreen mobile only row">
+				<div class="ui one item secondary menu">
+					<div class="ui tiny buttons">
+						<button id="previousMGS" class="ui {{#unless moreThan30SongsForGenList}}disabled{{/unless}} button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextMGS" class="ui {{#unless moreThan30SongsForGenList}}disabled{{/unless}} button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+			<div class="tablet only row">
+				<div class="ui one item secondary menu">
+					<div class="ui mini buttons">
+						<button id="previousMGS" class="ui {{#unless moreThan30SongsForGenList}}disabled{{/unless}} button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextMGS" class="ui {{#unless moreThan30SongsForGenList}}disabled{{/unless}} button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</template>

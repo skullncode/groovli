@@ -18,7 +18,7 @@ Meteor.methods({
 	      	//console.log('################ song rating succesfully updated for: ' + searchString);
 	      //}
 		});
-	},
+	},/*
 	getPersonalRatingForSong: function(linkSID, linktype){
 		var userID = Meteor.user().services.facebook.id;
 		var searchString = '';
@@ -35,30 +35,6 @@ Meteor.methods({
 			//console.log(personalRating);
 			return personalRating;
 		}
-		//else
-			//console.log('NOT returning anything as no personal rating exists for this song!');
-		
-		//console.log('GOT THIS PERSONAL RATING for linK: ' + searchString);
-		//console.log(personalRating);
-		
-		/*if(personalRating.length > 0)
-		{
-			console.log('$$$$$$$$$$$$$$$$FOUND PERSONAL RATING FOR THIS SONG: ' + searchString);
-			
-			var comboRatingSID = ratings[0].rating + '|||' + linkSID;
-			var socketio = socketObject; // tacke out socket instance from the app container
-			socketio.sockets.emit('song.personalRatingForSong', comboRatingSID); // emit an event for all connected clients
-		}
-		else
-		{
-			console.log('DID NOT FIND ANY PERSONAL RATINGS FOR THIS SONG: ' + searchString);
-			console.log(err);
-
-			var comboRatingSID = 0 + '|||' + linkSID;
-
-			var socketio = socketObject; // tacke out socket instance from the app container
-			socketio.sockets.emit('song.personalRatingForSong', comboRatingSID); // emit an event for all connected clients
-		}*/
 	},
 	getAverageRatingForSong: function(linkSID, linktype){
 		var searchString = '';
@@ -76,9 +52,9 @@ Meteor.methods({
 			//console.log(listOfRatings);
 			return listOfRatings;
 		}
-	},
+	},*/
 	getRatingCountForUser: function(uid) {
-		//console.log('REACHED THE GET RATING METHOD: ' + uid);
+		console.log('REACHED THE GET RATING METHOD: ' + uid);
 		var ratingsForUser = Ratings.find({'uid': uid}).fetch();
 		return ratingsForUser.length;
 	}

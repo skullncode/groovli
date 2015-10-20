@@ -1,0 +1,78 @@
+<template name="messagesForUser">
+  {{#if userSelected}}
+    {{#with selectedUser}}
+      <div class="ui inverted segment" style="background-color:#f68e15">
+        <h3 class="ui header">Messages - between you and {{this.profile.name}}</h3>
+      </div>
+      <div class="ui segment">
+          <div id="masterMessages" class="masterMessages">
+            {{#if messagesLoaded}}
+              {{#if hasMessages}}
+                <div class="ui list">
+                  {{#each messagesWithCurrentlySelectedUser}}
+                    {{#if messageIsFromCurrentLoggedInUser}}
+                      <div class="item">
+                        <div class="ui right floated basic segment">
+                          <div class="ui icon message">
+                            <div class="content">
+                              <h4 class="ui header">
+                                <a>
+                                  <img class="ui avatar image" src="{{userImageForThisMessage}}" title="{{formattedTimestamp}}">
+                                </a>
+                              </h4>
+                              <p>
+                                {{content}}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {{else}}
+                      <div class="item">
+                        <div class="ui left floated basic segment">
+                          <div class="ui icon message">
+                            <div class="content">
+                              <h4 class="ui header">
+                                <a>
+                                  <img class="ui avatar image" src="{{userImageForThisMessage}}" title="{{formattedTimestamp}}">
+                                </a>
+                              </h4>
+                              <p>
+                                {{content}}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {{/if}}
+                  {{/each}}
+                </div>
+              {{else}}
+                <div class="ui basic segment">
+                  <p><i>You and {{this.services.facebook.first_name}} have not yet chatted on Groovli...Be the first...don't be shy...say something :-)</i></p>
+                </div>
+              {{/if}}
+            {{/if}}
+          </div>
+          <!--</div>-->
+          <div class="ui bottom attached label">
+            <div class="ui fluid action input">
+              <input id="master-input-chatMessage" type="text" placeholder="Type your message here...hit 'Enter' or click the button to Send...duh -->">
+              <button id="master-btn-sendMessage" class="ui teal right labeled icon button">
+              <i class="send icon"></i>
+              Send
+              </button>
+            </div>
+          </div>
+      </div>
+    {{/with}}
+  {{else}}
+    <div class="ui inverted segment" style="background-color:#f68e15">
+      <h3 class="ui header">Messages</h3>
+    </div>
+    <div class="ui segment">
+      No user currently selected. Select someone from the user list to start chatting.
+    </div>
+  {{/if}}
+  {{navigateToMessageRootIfDirectlyNavigatedToThread}}
+</template>

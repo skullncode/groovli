@@ -1,0 +1,13 @@
+<template name="splayer">
+	<div class="ui grid">
+		<div class="column">
+		{{#if currentUser}}
+			{{>semanticControls}}
+			{{>semanticVideoPlayer}}
+			{{>semanticActionsBar}}
+			{{>semanticDetailSection}}
+			{{>semanticCommentSection}}
+		{{/if}}
+		</div>
+	</div>
+</template>

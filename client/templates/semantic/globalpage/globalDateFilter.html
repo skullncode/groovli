@@ -1,0 +1,22 @@
+<template name='globalDateFilter'>
+	  <div class="ui label">
+	  	<i class="history icon"></i>
+	  	{{#if globalYearRangeOnlyHasOneYear}}
+	  		Only have songs from
+	  	{{else}}
+	    	Show me songs from
+		{{/if}}	    	
+	    <div class="ui inline dropdown globalYearSelector">
+	      <div class="text">{{selectedYearForGlobal}}</div>
+	      {{#unless globalYearRangeOnlyHasOneYear}}
+	      	<i class="dropdown icon"></i>
+	      {{/unless}}
+	      <div class="menu">
+	        <div class="header">Choose Year</div>
+	        {{#each globalYearRange}}
+	        	<div class="item {{globalActiveYearHelper this}}" data-text="{{this}}">{{this}}</div>
+	        {{/each}}
+	      </div>
+	    </div>
+	  </div>
+</template>

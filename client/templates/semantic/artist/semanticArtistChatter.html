@@ -1,0 +1,59 @@
+<template name="semanticArtistChatter">
+		<!--<div class='ui grid'>-->
+		<div id="artistChatterMessages" class="ui minimal comments artistChatterMessages">
+			{{#if messagesLoaded}}
+				{{#if hasMessages}}
+					{{#each messagesForArtistChatter}}
+						<!--{{#if messageIsFromCurrentLoggedInUser}}-->
+						<div class="comment singleChatterMessage">
+							<a href="/profile/{{fromProfileID}}" title="{{firstNameFromName}}'s profile" class="avatar">
+							  <img src="{{userImageForThisMessage}}">
+							</a>
+							<div class="content">
+							  <a class="author">{{firstNameFromName}}</a>
+							  <div class="metadata">
+							    <span class="date">{{formattedTimestamp}}</span>
+							  </div>
+							  <div class="text">
+							    {{content}}
+							  </div>
+							  <!--<div class="actions">
+							    <a class="reply">Reply</a>
+							  </div>-->
+							</div>
+						</div>
+				        <!--{{else}}
+							<div class="comment singleChatterMessage">
+								<a class="avatar">
+								  <img src="{{userImageForThisMessage}}">
+								</a>
+								<div class="content">
+								  <a class="author">{{firstNameFromName}}</a>
+								  <div class="metadata">
+								    <span class="date">{{formattedTimestamp}}</span>
+								  </div>
+								  <div class="text">
+								    {{content}}
+								  </div>
+								</div>
+							</div>
+				        {{/if}}-->
+					{{/each}}
+				{{else}}
+			    	<div class="ui basic segment">
+					  <p><i>Nobody has said anything yet...Be the first...don't be shy...say something :-)</i></p>
+					</div>
+		        {{/if}}
+			{{/if}}
+		</div>
+		<!--</div>-->
+		<div class="ui bottom attached label">
+			<div class="ui fluid action input">
+				<input id="ac-input-chatMessage" type="text" placeholder="Type your message here...hit 'Enter' or click button to Send -->">
+				<button id="ac-btn-sendMessage" class="ui teal right labeled icon button">
+				<i class="send icon"></i>
+				Send
+				</button>
+			</div>
+		</div>		
+</template>

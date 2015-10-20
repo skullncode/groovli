@@ -1,0 +1,41 @@
+<template name="stmlist">
+	<div class="ui bottom attached tab segment" data-tab="tastemakers">
+		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+		{{#if tastemakerSongsExist}}
+	    	<div class="ui label"><i class="music icon"></i> {{tmLength}}</div>
+	    {{/if}}
+	  	<div id="tmList" class="songLists">
+	  		{{fixTMSongCursor}}
+			{{#each songs}}
+				{{> semanticTastemakerItem}}
+			{{/each}}
+			{{#unless tastemakerSongsExist}}
+				{{#if genresSelected}}
+					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music from your tastemakers! :D
+				{{else}}
+					Not following anyone yet; check the Global list and follow someone to see their music here!
+				{{/if}}
+			{{/unless}}
+		</div>
+		<div class="ui grid">
+			<div class="computer large screen widescreen mobile only row">
+				<div class="ui one item secondary menu">
+					<div class="ui tiny buttons">
+						<button id="previousTMS" class="ui button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextTMS" class="ui button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+			<div class="tablet only row">
+				<div class="ui one item secondary menu">
+					<div class="ui mini buttons">
+						<button id="previousTMS" class="ui button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextTMS" class="ui button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+		</div>			
+	</div>
+</template>

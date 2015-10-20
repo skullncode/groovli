@@ -84,21 +84,28 @@ Meteor.methods({
     		getInfoForNonexistentGenreAndInsert(genreName);
     		//console.log('currently unset number of artists: ' + unsetArtists);
     	}
+  	},
+  	getArtistListForGenres: function(genlist){
+  		var x = cleanListOfArtistsFromDB(getArtistsForGenreList(genlist));
+  		console.log("THIS IS THE artist list of genres: ");
+  		console.log(x);
+  		return x;
   	}
 });
 
 function getSongsForSpecificGenreList(genreList){
-	var songList = getArtistsForGenreList(genreList);
+	var songList = getSongsForArtistList(getArtistsForGenreList(genreList));
 	//console.log('THIS IS THE RETURNED SERVER SONG LIST: ');
 	//console.log(songList);
 	return songList;
+	//return songList.length; //RETURN ONLY THE song genre list length rather than all the songs
 	/*var artList = getArtistsForGenreList(genreList);
 	console.log('THIS IS THE ARTIST LIST FOR THE SELECTED GENRES: ');
 	console.log(artList);
 	return getSongsForArtistList(artList);*/
 }
 
-function getArtistsForGenreList(genreList){
+getArtistsForGenreList = function(genreList){
 
 	//console.log('REACHED SERVER WITH THIS GENRE LIST: ');
 	//console.log(genreList);
@@ -170,18 +177,17 @@ function getArtistsForGenreList(genreList){
 		//return uniqArtistsForGenre;
 	});
 	
-	var songList = getSongsForArtistList(uniqArtistsForGenre);
+	return uniqArtistsForGenre;
+	/*var songList = getSongsForArtistList(uniqArtistsForGenre); stop returning list of songs; do only WHAT THE METHOD ASKS FOR
 	//console.log('THIS IS THE RETURNED SONG LIST: ');
 	//console.log(songList);
-	return songList;
+	return songList;*/
 }
 
-function getSongsForArtistList(artistList){
-	//console.log('*********************THIS IS THE ARTIST LIST in the SERVER METHOD: ');
-	//console.log(artistList);
-	var cleanedArtistList = [];
+cleanListOfArtistsFromDB = function (artList){
+	var cleansedArtistList = [];
 	var tempArtistName = '';
-	_.each(artistList, function(z){
+	_.each(artList, function(z){
 		if(_.has(z, 'name') && !_.isUndefined(z.name))
 		{
 			//console.log('THIS IS THE NAME: ');
@@ -189,12 +195,12 @@ function getSongsForArtistList(artistList){
 			if(z.name.indexOf(' and ') >= 0)
 			{
 				tempArtistName = z.name.replace(/ and /g, ' & ');
-				cleanedArtistList.push(tempArtistName);
+				cleansedArtistList.push(tempArtistName);
 			}
 			else
 			{
 				//console.log('ELSE CASE');
-				cleanedArtistList.push(z.name);
+				cleansedArtistList.push(z.name);
 			}
 		}
 		else if(_.has(z, 'sa') && !_.isUndefined(z.sa))
@@ -204,15 +210,23 @@ function getSongsForArtistList(artistList){
 			if(z.sa.indexOf(' and ') >= 0)
 			{
 				tempArtistName = z.sa.replace(/ and /g, ' & ');
-				cleanedArtistList.push(tempArtistName);
+				cleansedArtistList.push(tempArtistName);
 			}
 			else
 			{
 				//console.log('ELSE CASE');
-				cleanedArtistList.push(z.sa);
+				cleansedArtistList.push(z.sa);
 			}
 		}
 	});
+	return cleansedArtistList;
+}
+
+function getSongsForArtistList(artistList){
+	//console.log('*********************THIS IS THE ARTIST LIST in the SERVER METHOD: ');
+	//console.log(artistList);
+	var cleanedArtistList = [];
+	cleanedArtistList = cleanListOfArtistsFromDB(artistList);
 	//console.log('WITH THIS ARTIST LIST: ');
 	//console.log(cleanedArtistList);
 	var songsForThoseArtists = [];
@@ -223,6 +237,8 @@ function getSongsForArtistList(artistList){
 	});
 	//var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
 	//console.log('FOUND these many songs for those artists:' + songsForThoseArtists.length);
+	//console.log("THIS IS THE ACTUAL SONG LIST: ");
+	//console.log(songsForThoseArtists);
 	return songsForThoseArtists;
 }
 

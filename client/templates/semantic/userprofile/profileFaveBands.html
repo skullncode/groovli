@@ -1,0 +1,35 @@
+<template name="profileFaveBands">
+	<div class="ui sitewideOrange inverted icon top attached menu">
+		<div class="header item">
+			Favorite Bands
+		</div>
+		<div class="right menu">
+			<a id="firstSixFaves" class="item">
+				<i class="caret left icon {{#if viewingFirst6Faves}}disabled{{/if}}"></i>
+			</a>
+			<a id="lastSixFaves" class="item">
+				<i class="caret right icon {{#if viewingLast6Faves}}disabled{{/if}}"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ui bottom attached tertiary segment">
+		<!--<div class="ui items">-->
+		<div class="ui two column doubling grid container">
+		{{#each topTenBands}}
+			{{#if artistHasPage sa}}
+				<div class="column">
+					<div class="item">
+						<a href="/artist/{{artistIDForName sa}}" title="{{cleanedArtName sa}} page">
+							<img class="ui tiny rounded image" src="{{bandImage sa}}">
+							<div class="middle aligned content">
+						      {{sa}}
+						    </div>
+					    </a>
+					</div>
+				</div>
+			{{/if}}
+		{{/each}}
+		</div>
+	</div>
+	<!--</div>-->
+</template>

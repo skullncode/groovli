@@ -129,7 +129,9 @@ function onPlayerStateChange(event) {
   var loader = $('img#songLoader');
   if(event.data === 0) {  //video finished playing, so move to next video      
       //console.log("VID DONE!");
-      var nextBtn = $('.glyphicon-step-forward');
+      //var nextBtn = $('.glyphicon-step-forward');
+      //var nextBtn = $('.fa-step-forward');
+      var nextBtn = $('.step.forward.icon');
       //analytics.track("reached end of song");
       mixpanel.track("reached end of song");
       nextBtn.click();
@@ -236,18 +238,24 @@ function updatePlayerInfo() {
 }
 
 function playpauseVideo() {
-  var playpauseButton = $('.glyphicon-play');
+  //var playpauseButton = $('.glyphicon-play');
+  //var playpauseButton = $('.fa-play');
+  var playpauseButton = $('.play.icon.playInControls');
   //ytplayer = document.getElementById("sharePlayer");
   if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
   {
     //console.log('GOING TO PAUSE now!!!');
     //analytics.track("pause song");
     mixpanel.track("pause song");
-    playpauseButton = $('.glyphicon-pause');
+    //playpauseButton = $('.glyphicon-pause');
+    //playpauseButton = $('.fa-pause');
+    playpauseButton = $('.pause.icon');
     if (ytplayer) {
       ytplayer.pauseVideo();
     }
-    playpauseButton.toggleClass('glyphicon-pause glyphicon-play');
+    //playpauseButton.toggleClass('glyphicon-pause glyphicon-play');
+    //playpauseButton.toggleClass('fa-pause fa-play');
+    playpauseButton.toggleClass('pause play');
   }
   else
   { 
@@ -257,7 +265,9 @@ function playpauseVideo() {
     if (ytplayer) {
       ytplayer.playVideo();
     }
-    playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
+    //playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
+    //playpauseButton.toggleClass('fa-play fa-pause');
+    playpauseButton.toggleClass('play pause');
   }  
 }
 
@@ -298,9 +308,13 @@ function setupListenIncrementMethod(){
   //incrementListenCount();
 }
 
-function loadVideoById(soundID, currentSong) {
-  var playpauseButton = $('.glyphicon-play');
-  playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
+function loadVideoById(soundID){ //WAS USING currentSong previously but not anymore//, currentSong) {
+  //var playpauseButton = $('.glyphicon-play');
+  //playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
+  //var playpauseButton = $('.fa-play');
+  var playpauseButton = $('.play.icon.playInControls');
+  //playpauseButton.toggleClass('fa-play fa-pause');
+  playpauseButton.toggleClass('play pause');
   //console.log('inside the video loader!!!');
 	if(ytplayer) {
 	  ytplayer.loadVideoById(soundID,0,"large")

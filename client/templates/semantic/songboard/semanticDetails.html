@@ -1,0 +1,56 @@
+<template name="semanticDetails">
+	<div class="twelve wide column">
+	{{#if songPlaying}}
+    	{{#with currentSong}}
+    		{{checkIfArtistHasPage currentSong.sa}}
+			<div class="ui list">
+				{{#if artistTrackAreNotSame}}
+		          {{#if artistHasPage}}
+		            <!--<a href="{{pathFor 'artist' _name=ampersandRemovedArtistName }}" target='blank' title="artist page">-->
+		            <a href="{{pathFor 'artist' _id=artistIDForName }}" target='blank' title="artist page">
+		            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div></a>
+		          {{else}}
+		            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div>
+		          {{/if}}
+		          <div class="item"><div class="content"><h5>{{currentSong.st}}</h5></div></div>
+		          {{#if albumDeetsNotEmpty}}
+		              <div class="item"><div class="content">Track {{currentSong.trackNumber}} of {{currentSong.trackCount}},</div></div>
+		              <div class="item"><div class="content">from the album <b>{{currentSong.album}}</b></div></div>
+		              <div class="item"><div class="content">released <b>{{formattedReleaseDate}}</b></div></div>
+		          {{/if}}
+		          {{#if hasGenres}}
+		          	{{#if extendedGenresLoaded}}
+			            <div class="item"><div class="content"><b>Genres:</b></div></div>
+			            	<div class="item"><div class="content">
+				              {{#each extendedGenres}}
+				                    <a href="/genre/{{this._id}}" target="blank" class="ui green label"><b>{{this.name}}</b></a>
+				              {{/each}}
+		            		</div></div>
+	            	{{/if}}
+		          {{/if}}
+		          {{#if cover}}
+		            {{checkIfCoveringArtistHasPage currentSong.coveredBy}}
+		            {{#if coveringArtistHasPage}}
+		            	<div class="item"><div class="content"><i>as covered by <b><a href="{{pathFor 'artist' _name=ampersandRemovedCoveringArtistName }}" target='blank' title="artist page">{{coveredBy}}</a></b></i></div></div>
+		            {{else}}
+		            	<div class="item"><div class="content"><i>as covered by <b>{{coveredBy}}</b></i></div></div>
+		            {{/if}}
+		          {{/if}}
+		          {{#if live}}
+		            <div class="item"><div class="content"><b><i>performed live</i></b></div></div>
+		          {{/if}}
+		          {{#if mashup}}
+		            <div class="item"><div class="content"><b><i>mashup of two or more songs</i></b></div></div>
+		          {{/if}}
+		          {{#if remix}}
+		            <div class="item"><div class="content"><i>remixed by <b>{{remixedByDeets}}</b></i></div></div>
+		          {{/if}}
+			  	{{else}}
+		          <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div>
+		        {{/if}}
+		        {{>semanticSharedBySection}}
+			</div>
+		{{/with}}
+	{{/if}}
+	</div>
+</template>

@@ -1,0 +1,93 @@
+<template name="sheader">
+<div class="ui grid">
+  <div class="computer only row">
+    <div class="ui top fixed pointing menu mainHeaderMenu">
+      <div class="brand item">
+        <img class="ui small image" src="../images/logo/groovli.png">
+      </div>
+      <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink">Home</a>
+      <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink">My Groovs</a>
+      <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink">Tastemakers</a>
+      <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink">Global</a>
+      <div class="right menu orangeHeaderMenu">
+        {{>sSearch}}
+        <!--{{>semanticSearch}} NOT BEING USED FOR NOW as it does not look nice--> 
+        <!--<a class="item">
+          <i class="large user icon orangeHeaderMenuItem"></i>
+        </a>-->
+        <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item">
+          <i class="large comment icon orangeHeaderMenuItem"></i>
+          {{#if hasUnreadMsgs}}
+            <a class="ui red right corner label">{{unreadMsgCount}}</a>
+          {{/if}}
+        </a>
+        <a class="ui dropdown mainHeaderMenuDropdown item">
+        <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item"><a href="/profile/{{currentUser._id}}" target="blank">Profile</a></div>
+            <div class="ui divider"></div>
+            <div id="logout" class="item">Logout</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="tablet only row">
+    <div class="ui top fixed pointing menu mainHeaderMenu">
+      <div class="brand item">
+        <img class="ui small image" src="../images/logo/groovli.png">
+      </div>
+      <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink">Home</a>
+      <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink">My Groovs</a>
+      <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink">Tastemakers</a>
+      <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink">Global</a>
+      <div class="right menu orangeHeaderMenu">
+        <!--<a class="item">
+          <i class="user icon orangeHeaderMenuItem"></i>
+        </a>-->
+        <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item">
+          <i class="comment icon orangeHeaderMenuItem"></i>
+          {{#if hasUnreadMsgs}}
+            <a class="ui red right corner label">{{unreadMsgCount}}</a>
+          {{/if}}
+        </a>
+        <a class="ui dropdown mainHeaderMenuDropdown item">
+        <img class="img-rounded headerProfileImage" style="width:40px; height:40px;" src="http://graph.facebook.com/730866630359630/picture?type=square"> 
+        Sandeep
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item"><a href="/profile/{{currentUser._id}}" target="blank">Profile</a></div>
+            <div class="ui divider"></div>
+            <div id="logout" class="item">Logout</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="mobile only row">
+      <div class="ui top fixed sitewideOrange inverted navbar menu">
+          <a href="" class="brand item">Groovli</a>
+          <div class="right menu open">
+              <a href="" class="menu item">
+                  <i class="content icon"></i>
+              </a>
+          </div>
+      </div>
+      <div class="ui vertical navbar stackable menu mainHeaderMenu mobileHeaderMenu" style="width: 100%;display: none;">
+          <div class="ui divider"></div>
+          <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink">Home</a>
+          <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink">My Groovs</a>
+          <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink">Tastemakers</a>
+          <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink">Global</a>
+          <a href="/profile/{{currentUser._id}}" target="blank" class="ui item">Profile</a>
+          <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} ui item">Messages
+            {{#if hasUnreadMsgs}}
+              <a class="ui red right corner label">{{unreadMsgCount}}</a>
+            {{/if}}
+          </a>          
+          <a id="logout" href="" class="ui item">Logout</a>
+      </div>
+  </div>
+</div>
+</template>

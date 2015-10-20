@@ -1,0 +1,25 @@
+<template name="userProfileFavorites">
+	<div id="userFaves" class="songLists">
+		{{#each userFaves}}
+			{{>faveSongItem}}
+		{{/each}}
+	</div>
+	<!--<div class="computer large screen widescreen mobile only row">
+		<div class="ui one item secondary menu">
+			<div class="ui tiny buttons">
+				<button id="previousMGS" class="ui button">&lt; newer music</button>
+				<div class="or"></div>
+				<button id="nextMGS" class="ui button">older music &gt;</button>
+			</div>
+		</div>	
+	</div>-->
+	<div class="tablet only row">
+		<div class="ui one item secondary menu">
+			<div class="ui mini buttons">
+				<button id="previousFaves" class="ui button">&lt;-- newer music</button>
+				<div class="or"></div>
+				<button id="nextFaves" class="ui button">older music --&gt;</button>
+			</div>
+		</div>	
+	</div>
+</template>

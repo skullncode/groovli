@@ -1,0 +1,11 @@
+<template name="semanticSharedBySection">
+	{{#if songPlaying}}
+		<div class="item"><div class="content"><b>Shared by:</b></div></div>
+		<div class="item"><div class="content">
+			{{#each sharedByDetailsForCurrentSong}}
+				<a href="/profile/{{p_id}}" target='blank'><img class="ui avatar mini image" style="width:20px;height:20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+			{{/each}}
+		</div></div>
+	{{/if}}
+</template>
+

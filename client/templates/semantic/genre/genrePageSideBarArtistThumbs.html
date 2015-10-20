@@ -1,0 +1,32 @@
+<template name="genrePageSideBarArtistThumbs">
+	{{#if genreHasArtists}}
+		<div class="ui sitewideOrange inverted icon top attached menu">
+			<div class="header item">
+				Artists <!-- ({{artistCountForGenre}}) -->
+			</div>
+			<!--<div class="right menu">
+				<a id="previousFolList" class="item">
+					<i class="caret left icon {{#if followersLessThanPageLimit}}disabled{{/if}}"></i>
+				</a>
+				<a id="nextFolList" class="item">
+					<i class="caret right icon {{#if followersLessThanPageLimit}}disabled{{/if}}"></i>
+				</a>
+			</div>-->
+		</div>
+		<div class="ui bottom attached tertiary segment">
+			<div class="ui six column doubling grid container">
+		  		{{#each artistsForThisGenre}}
+					<div class="column">
+						<div class="item">
+							<a href="/artist/{{this._id}}"><img title="{{this.name}}" class="ui rounded image" src="{{artistImage}}"></a>
+						</div>
+					</div>
+				{{/each}}
+			<!--{{else}}
+				<div class="ui basic segment">
+				  <p><i>This person has not recently listened to any music...</i></p>
+				</div>-->							
+			</div>
+		</div>
+	{{/if}}
+</template>

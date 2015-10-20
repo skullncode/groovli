@@ -1,0 +1,16 @@
+<template name='mygroovsDateFilter'>
+	  <div class="ui label">
+	  	<i class="history icon"></i>
+	    Show me songs from
+	    <div class="ui inline dropdown myGroovsYearSelector">
+	      <div class="text">{{selectedYearForMyGroovs}}</div>
+	      <i class="dropdown icon"></i>
+	      <div class="menu">
+	        <div class="header">Choose Year</div>
+	        {{#each mygroovsYearRange}}
+	        	<div class="item {{activeYearHelper this}}" data-text="{{this}}">{{this}}</div>
+	        {{/each}}
+	      </div>
+	    </div>
+	  </div>
+</template>

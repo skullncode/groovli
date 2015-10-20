@@ -1,0 +1,30 @@
+<template name="singleChatterMessage">
+	<div class="comment">
+		<a class="avatar">
+		  <img src="http://graph.facebook.com/{{fbID}}/picture?type=square">
+		</a>
+		<div class="content">
+		  <a class="author">{{nameForComment}}</a>
+		  <div class="metadata">
+		    <div class="date">{{createdAgo}}</div>
+		    {{#if commentHasLikes}}
+			    <div class="rating">
+		          <i class="thumbs up icon"></i>
+		          {{likesCount}} likes
+		        </div>
+	        {{/if}}
+		  </div>
+		  <div class="text" data-id="{{commentId}}">
+		    <p>{{content}}</p>
+		  </div>
+		  <div class="actions">
+		  	{{#unless isOwnComment}}
+        		<a class="like"><i class="thumbs up icon"></i>Like</a>
+        	{{/unless}}
+        	{{#if isOwnCommentAndLessThanFiveMinutes}}
+				<a title="You only have 5 minutes to delete this comment!" id="{{_id}}" class="delete"><i class="trash icon"></i>Delete</a>
+            {{/if}}		    
+		  </div>
+		</div>
+	</div>
+</template>

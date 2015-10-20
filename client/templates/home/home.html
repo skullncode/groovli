@@ -36,14 +36,7 @@
 			<i><h3 class="page-header">Thank you for joining the Groovli Beta! We look forward to your feedback!</h3></i>
 			<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
 		{{else}}
-			<h3 class="page-header">Enter your email address and your facebook ID to get on Groovli's beta list.</h3>
-			<form id="request-beta-invite" class="form-horizontal">
-				<input type="email" id="betaEmail" name="emailAddress" class="form-control" placeholder="e.g. john.doe@beta.com">
-				<br>
-				<input type="text" id="fbID" name="facebookID" class="form-control" placeholder="your facebook ID">
-				<br>
-				<button type="submit" class="btn btn-success">Request Beta Invite</button>
-			</form>
+			{{>homeForm}}
 		{{/if}}
 		<!--//{{>signupCount}} removed out signup count for now-->
 	</div>

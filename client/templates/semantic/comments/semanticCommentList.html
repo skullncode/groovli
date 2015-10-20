@@ -1,0 +1,13 @@
+<template name="semanticCommentList">
+	{{#if songHasComments}}
+		<div class="listOfSongComments">
+			{{#each commentsForThisSong}}
+				{{>semanticComment}}
+			{{/each}}
+		</div>
+	{{else}}
+		<div class="ui basic segment">
+		  <p><i>Nobody has said anything yet...Be the first...don't be shy...say something :-)</i></p>
+		</div>
+	{{/if}}
+</template>

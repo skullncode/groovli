@@ -14,17 +14,24 @@ Tracker.autorun(function () {
 Template.globalList.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
-    var sel = getMongoSelectorForGlobal();
-    globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
-    var songCollection = globalSongList.fetch();
-    songCollectionLength = songCollection.length;
-    //console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
-    //console.log(globalSongList);
-    Session.set('globalSongsLength', songCollection.length);
-    updateMySongs(songCollection, 'global');
-    //initializePlayableTabs(); NOT required if publication is not being initially limited
-    updatePlayableTabsIfNecessary();
-    return globalSongList;
+    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
+    {
+      var sel = getMongoSelectorForGlobal();
+      globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
+      var songCollection = globalSongList.fetch();
+      songCollectionLength = songCollection.length;
+      //console.log('THIS IS THE GLOBAL SONG LIST!!!!!!!!');
+      //console.log(globalSongList);
+      Session.set('globalSongsLength', songCollection.length);
+      updateMySongs(songCollection, 'global');
+      //initializePlayableTabs(); NOT required if publication is not being initially limited
+      updatePlayableTabsIfNecessary();
+      return globalSongList;
+    }
+    else
+    {
+      return null;
+    }
   },
 
   switchTabsAndAnimateListToCurrentlyPlayingSong: function() {

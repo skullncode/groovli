@@ -83,7 +83,7 @@ Meteor.methods({
 	          }
 	    })
   	},
-  	getArtistsForGenres: function(genreName) {
+  	getArtistsForSpecificGenre: function(genreName) {
   		var artistsForGenre = [];
   		var originalGenreName = genreName;
 
@@ -148,7 +148,7 @@ Meteor.methods({
 	        return z.sa;
 	    });
 
-	    //console.log('4 - FINAL UNIQUE ARTISTS FOR GENRES RIGHT NOW IS: ');
+	    //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4 - FINAL UNIQUE ARTISTS FOR GENRES RIGHT NOW IS: ');
   		//console.log(uniqArtistsForGenre);
 		
   		return uniqArtistsForGenre;
@@ -169,7 +169,7 @@ Meteor.methods({
   			return true;
   	},
   	checkAndSetDetailsForSpecificArtist: function(artistName) {
-  		//console.log('CHECKING TO SEE IF THIS ARTIST already has details in the DB: ' + artistName);
+  		console.log('CHECKING TO SEE IF THIS ARTIST already has details in the DB: ' + artistName);
   		artistName = cleanArtistQuery(artistName);
   		var foundArtist = Artists.findOne({'name': artistName});
     	var foundBadArtist = BadArtists.findOne({'sa': artistName});
@@ -181,7 +181,181 @@ Meteor.methods({
     		getInfoForNonexistentArtistAndInsert(artistName);
     		//console.log('currently unset number of artists: ' + unsetArtists);
     	}
-  	}
+    	else
+    	{
+    		console.log("FOUND artist in DB; going to update info!!!");
+    	}
+  	},
+  	//WORKING ON THIS RIGHT NOW!!!!
+  	updateArtistDetailsFromLFMAPI: function () {
+		//console.log('INSIDE THE LAST FM UPDATE METHOD artist SERVER CONTROLLER');
+		//console.log('%%%%%%%%%%%%%%%%%%%%'+artName);
+		console.log('THIS IS THE number of found artsits: ');
+		//var res = Artists.find({}).fetch();
+		var res = Artists.find({'mediumImage.#text': /userserve/}).fetch();
+		console.log(res.length);
+
+		//console.log('GOING TO GET deets for this first artist: ');
+		//console.log(res[0].name);
+
+		_.each(res, function(artObj){
+			var artistName = artObj.name;
+			var updatedAPI = lfmArtistAPI.replace("###ARTIST_NAME###", artistName);
+			//console.log("%$$$$$$$$$$$$$$$$$$$$$$$$$$$ this is the updated LFM api link: ");
+			//console.log(updatedAPI);
+			Meteor.http.get(updatedAPI, 
+				function(error, result) {
+					if(!error && result.statusCode === 200) {
+						// this callback will be called asynchronously
+						// when the response is available
+						var lfm = result.data;
+						if(result != undefined && !_.isUndefined(lfm.artist)) // skip sifting through LFM results if there are no results
+						{
+							console.log('%%%%%%%%%%%%%%%%%REACHED LAST FM success: ');
+							//console.log(lfm);
+							//console.log('and this is the sub fields:');
+							//console.log("ARTIST NAME: ")
+							//console.log(lfm.artist.name);
+							//console.log(lfm.artist.tags);
+							//console.log(lfm.artist.bio);
+							//console.log(lfm.artist.bio.placeformed);
+							var newArtist = {};
+							newArtist.name = lfm.artist.name;
+
+
+							if(!_.isUndefined(lfm.artist.image[0]))
+							{
+								newArtist.smallImage = lfm.artist.image[0];
+							}
+
+							if(!_.isUndefined(lfm.artist.image[1]))
+							{
+								newArtist.mediumImage = lfm.artist.image[1];
+							}
+
+							if(!_.isUndefined(lfm.artist.image[2]))
+							{
+								newArtist.largeImage = lfm.artist.image[2];
+							}
+
+							if(!_.isUndefined(lfm.artist.image[3]))
+							{
+								newArtist.megaImage = lfm.artist.image[3];
+							}
+
+							if(!_.isUndefined(lfm.artist.bio) && !_.isUndefined(lfm.artist.bio.content))
+							{
+								newArtist.bio = lfm.artist.bio.content;
+							}
+
+
+							if(!_.isUndefined(lfm.artist.bio.yearformed))
+							{
+								newArtist.began = lfm.artist.bio.yearformed
+							}
+
+							if(!_.isUndefined(lfm.artist.bio.yearformed))
+							{
+								newArtist.placeBegan = lfm.artist.bio.placeformed
+							}
+
+							if(!_.isUndefined(lfm.artist.similar.artist) && !_.isEmpty(lfm.artist.similar.artist))
+							{
+								newArtist.similar = [];
+								_.each(lfm.artist.similar.artist, function(x){
+									newArtist.similar.push(x.name);
+								});
+							}
+
+							if(!_.isUndefined(lfm.artist.tags.tag) && !_.isEmpty(lfm.artist.tags.tag))
+							{
+								newArtist.genres = [];
+								_.each(lfm.artist.tags.tag, function(x){
+									newArtist.genres.push(x.name);
+								});
+							}
+
+							//console.log('%%%%%%%%%%%%%%%%%%%%%%%this is the object created for ' + artistName);
+							//console.log(newArtist);
+
+
+							
+							if(_.isUndefined(Artists.findOne({'name': artistName})) && _.isUndefined(Artists.findOne({'largeImage.#text': newArtist.largeImage['#text']})))
+							{
+								Artists.insert(newArtist);
+							}
+							else//update existing artist
+							{
+								Artists.update({'name': artistName}, {$set: newArtist}, function(error, result) {
+							      if (error) {
+							        // display the error to the user
+							        console.log('ENCOUNTERED AN ERROR WHILE TRYING TO UPDATE artist details: ' + error.reason);
+							      }
+							      else{
+							      	console.log('################ ARTIST update SUCCESSFUL!!!! ' + artistName);
+							      }
+								});
+							}
+
+							/*
+
+							//get details for any unset / new genres coming in with this artist / song
+							_.each(newArtist.genres, function(z){
+								Meteor.call('checkAndSetDetailsForSpecificGenre', z);
+							});*/
+							/*else
+							{
+								console.log('FOUND IN DB SO WILL BE SKIPPED: ' + artistName);
+							}*/
+
+							//return Artists.findOne({'_id': insertedArtist});
+							//console.log('THIS IS THE FOUND ARTIST from DB: ');
+							//console.log(foundNewArtist);
+						}
+						else
+						{
+							//console.log('ENCOUNTERED an eRROR in LFM validation method even though response was 200: '+response);
+							//console.log('LFM RESULT: ' + lfm.message);
+							//console.log('THIS WAS THE ARTIST: ' + artistName);
+							BadArtists.insert({'sa': artistName});
+						}
+					}
+					else
+					{
+						// called asynchronously if an error occurs
+						// or server returns response with an error status.
+						console.log('REACHED LAST FM ERROR: ');
+						console.log(error);
+						//insertNewErrorInLogTable('REACHED LAST FM ERROR: ', error, null);
+					}
+				});
+		});
+		/*
+		//console.log('this is the trackquery to be searched against LFM LFMLargeAlbumArt: ' + trackquery)
+		var LFMSongProperties = { 
+			//sa: LFMArtist, 
+			//st: LFMTitle, 
+			LFMLargeAlbumArt: LFMlargeAlbumArt, 
+			LFMMediumAlbumArt: LFMmediumAlbumArt,
+			LFMValid: 'VALID'
+		};
+
+		//Songs.update({LFMLargeAlbumArt: trackquery}, {$set: LFMSongProperties}, function(error, result) {
+		console.log('the MEDIUM result album art is: '+ LFMmediumAlbumArt);
+		console.log('the LARGE result album art is: '+ LFMlargeAlbumArt);
+		console.log('AND THI SLINK: ' + originalLinkToBeValidated)
+		console.log('GOING TO UPDATE THE SONG WITH THIS DETAILS: ');
+		console.log(LFMSongProperties);
+		Songs.update({sl: originalLinkToBeValidated}, {$set: LFMSongProperties}, function(error, result) {
+	      if (error) {
+	        // display the error to the user
+	        console.log(error.reason);
+	      }
+	      else{
+	      	console.log('################ LAST FM UPDATE SUCCESS for: ' + trackquery);
+	      }
+		});*/
+	}
 });
 
 function setDetailsForCoverArtists(){

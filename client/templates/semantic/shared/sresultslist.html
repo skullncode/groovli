@@ -1,0 +1,17 @@
+<template name="sresultslist">
+	<div class="ui bottom attached tab segment" data-tab="sresults">
+		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+		{{#if searchResultsExist}}
+	    	<div class="ui label"><i class="music icon"></i> {{searchResultsLength}}</div>
+	    	<!--<button id="btnClearSearchHistory" class="tiny red ui button">Clear Search History</button>-->
+	    {{/if}}
+	  	<div id="srchresultList" class="songLists">
+			{{#each songs}}
+				{{> searchResultItem}}
+			{{/each}}
+			{{#unless searchResultsExist}}
+				You haven't searched for any songs yet! <br>Any songs you play from your search results, <br>will show up here for your listen session.
+			{{/unless}}
+		</div>
+	</div>
+</template>

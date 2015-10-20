@@ -1,0 +1,11 @@
+<template name="semanticFaveAction">
+	{{#if songFavoritedByThisUser}}
+		<div class="four wide sitewideOrange column favoriteSong">
+			<i class="heart icon favorited"></i>{{faveCount}}
+		</div>
+	{{else}}
+		<div class="four wide sitewideOrange column favoriteSong">
+			<i class="empty heart icon notFavorited"></i>{{faveCount}}
+		</div>
+	{{/if}}
+</template>

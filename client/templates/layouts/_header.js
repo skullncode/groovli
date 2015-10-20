@@ -1,6 +1,15 @@
 Template._header.helpers({
   currentlyOnHomePage: function(){
-    return Router.current().route.path() === '/';
+    //return Router.current().route.path() === '/';
+    return FlowRouter.current().path === '/';
+  },
+  currentlyOnSongBoard: function() {
+    FlowRouter.watchPathChange();
+    var currentContext = FlowRouter.current();
+    //console.log('IN HELPER:');
+    //console.log("THIS IS THE currentContext");
+    //console.log(currentContext);
+    return currentContext.path === '/songboard';
   }
 });
 Template._header.events({
@@ -16,4 +25,12 @@ Template._header.events({
     	slidePanel.overlay(true);
     	slidePanel.showPanel('pollForm');
     }
+});
+
+
+Template._header.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    self.subscribe('userData');  
+  });
 });

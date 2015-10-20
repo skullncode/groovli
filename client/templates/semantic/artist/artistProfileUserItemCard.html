@@ -1,0 +1,37 @@
+<template name="artistProfileUserItemCard">
+	{{getUserIDForSocID}}
+	{{getFollowerCount this.uid}}
+	{{getSongCount this.uid}}
+	{{#if idsLoaded}}
+		<a class="ui fluid card" href='/profile/{{userIDForSocID}}'>
+			<div class="content" style="padding-bottom: 0px;">
+				<div class="left floated ui image">
+					<img src="http://graph.facebook.com/{{this.uid}}/picture?type=square">
+				</div>
+				<div class="content">
+					<div class="header">{{#if userProfileIsNotYou}}{{firstNameFromName}}{{else}}you{{/if}}</div>
+					<div class="description">
+					  <!--<p>Followers: {{followerCount}}</p>-->
+					</div>
+					<div class="left floated meta">
+				      <span class="category">Songs: {{songCount}}<br> Followers: {{followerCount}}</span>
+				    </div>
+			    </div>
+			</div>
+			<div class="extra content">
+				<!--<div class="left floated author">
+					{{{songDataSource}}}
+				</div>-->
+				{{#if userProfileIsNotYou}}
+					<div class="right floated author">
+						{{#if alreadyFollowed}}
+		                    <button id="unfollowUser" class="right floated red ui button">Unfollow</button>
+		                {{else}}
+		                    <button id="followUser" class="right floated green ui button">Follow</button>
+		                {{/if}}
+					</div>
+				{{/if}}
+			</div>
+		</a>
+	{{/if}}
+</template>

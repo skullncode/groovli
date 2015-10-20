@@ -1,0 +1,160 @@
+<template name="semanticGenreProfile">
+	{{#if gObjLoaded}}
+		{{#with genreObjectForRoute}}
+			<div class="ui stackable grid">
+				<div class="six wide computer column userProfileHeaderSecondaryColor">
+					<!--<div class="ui card">
+						<div class="content">
+						  <div class="header">{{this.name}}</div>
+						</div>
+						{{#if genreHasArtists}}
+							<div class="content">
+						    	<span class="left floated"><b>Artists:</b>
+							       	{{#each artistsForThisGenre}}
+							       			<a href="/artist/{{this._id}}" class="ui blue label" title="{{this.name}}'s page"><b>{{this.name}}</b></a>			       		
+							       	{{/each}}
+						       	</span>
+						    </div>
+						{{/if}}
+					</div>-->
+					<div class="ui piled segment">
+						<div class="ui huge header">{{this.name}}</div>
+					</div>
+				</div>
+			  	<div class="ten wide computer column userProfileHeaderSecondaryColor">
+			  		<!--{{>d3ArtistPercentageChart}}-->
+			  		{{#if hasContent}}
+			  			<h4 class="ui header">About:</h4>{{{cleanedContent}}}
+			  		{{/if}}
+
+			  		<!--
+			  		{{#if genreHasArtists}}
+			  			<h3 class="ui header"></h3>
+				  		<div class="ui six column doubling grid container">
+					  		{{#each artistsForThisGenre}}
+								<div class="column">
+									<div class="item">
+										<img title="{{this.name}}" class="ui tiny rounded image" src="{{artistImage}}">
+									</div>
+								</div>
+							{{/each}}				
+				  		</div>
+			  		{{/if}}
+					-->
+			  	</div>
+			  	<div class="ten wide computer column"><!--twelve for extra space for following / follower count-->
+			  		<div class="ui divider"></div>
+				  	<div class="ui mini statistics">
+				  		{{#if genreHasSongs}}
+						  <div class="statistic">
+						    <div class="value">
+						      {{songCount}}
+						    </div>
+						    <div class="label">
+							    {{#if moreThan1Song}}
+							      Songs
+							    {{else}}
+							      Song
+							    {{/if}}						    	
+						    </div>
+						  </div>
+						  <div class="statistic">
+						    <div class="value">
+						      {{countOfPeopleForGenre}}
+						    </div>
+						    <div class="label">
+						      {{countOfPeopleForGenreLabel}}
+						    </div>
+						  </div>
+						  <div class="statistic">
+						    <div class="value">
+						      {{genrePercentageValue}}%
+						    </div>
+						    <div class="label">
+						      of all songs on Groovli
+						    </div>
+						  </div>
+						  <div class="statistic">
+						    <div class="value">
+						      {{artistCountForThisGenre}}
+						    </div>
+						    <div class="label">
+						    	{{#if moreThan1Artist}}
+						      		artists
+						      	{{else}}
+						      		artist
+						      	{{/if}}
+						    </div>
+						  </div>
+				  		{{/if}}
+					  <!--{{getTotalListenCountForUser}}
+                      {{{listenCount}}}
+                      <div class="statistic">
+					    <div class="value">
+					      {{favoriteCount}}
+					    </div>
+					    <div class="label">
+					      favorites
+					    </div>
+					  </div>-->
+					</div>
+					<div class="ui divider"></div>
+				</div>
+			</div>
+			<!--{{>recentListens}}-->
+			<!--<div class="ui two column grid">
+				<h3 class="ui header">Recently shared ({{currentCursorPosition}} of {{songCount}}):</h3>
+				<h2 class="ui header"></h2>
+			</div>-->
+			<div class="ui stackable grid">
+				<div class="ten wide computer sixteen wide tablet sixteen wide mobile column">
+					<div class="ui pointing secondary menu userProfileSongTabs">
+					  <a class="active item" data-tab="userLibrary">Songs ({{currentCursorPosition}} of {{songCount}})</a>
+					  {{#if havePeopleToShow}}
+					  	<a class="item" data-tab="songPeople">People</a>
+					  {{/if}}
+					  <a class="item" data-tab="artistChatter">Chatter ({{genreChatterMessageCount}})</a>
+					</div>
+					<div class="ui active tab segment" data-tab="userLibrary">
+							<div id="recentShared" class="songLists">
+								{{#each songsForGenre}}
+									{{>profileSongItem}}
+								{{/each}}
+							</div>
+							<div class="tablet only row">
+								<div class="ui one item secondary menu">
+									<div class="ui mini buttons">
+										<button id="previousGS" class="ui button {{#if genreSongsDoNotNeedPaging}}disabled{{/if}}"> newer music</button>
+										<div class="or"></div>
+										<button id="nextGS" class="ui button {{#if genreSongsDoNotNeedPaging}}disabled{{/if}}">older music</button>
+									</div>
+								</div>	
+							</div>
+					</div>
+					{{#if havePeopleToShow}}
+						<div class="ui tab segment" data-tab="songPeople">
+							<div id="recentShared" class="songLists">
+								<div class="ui two column doubling grid container">
+
+								{{#each peopleForGenre}}
+									<div class="column">
+										{{>artistProfileUserItemCard}}
+									</div>
+								{{/each}}
+
+								</div>
+							</div>
+							<!--{{>userProfileFavorites}}-->
+						</div>
+					{{/if}}
+					<div class="ui tab segment artistChatterBox" data-tab="artistChatter">
+						{{> semanticGenreChatter}}
+					</div>
+				</div>	
+			</div>
+
+		  	<!--{{getFollowerCount this}}
+			{{getSongCount this}}-->
+	  	{{/with}}
+  	{{/if}}
+</template>

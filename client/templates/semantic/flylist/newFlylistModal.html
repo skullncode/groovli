@@ -1,0 +1,56 @@
+<template name="newFlylistModal">
+	{{getArtistsForFilters}}
+	<div class="ui small modal newFlylist">
+	  <i class="close icon"></i>
+	  <div class="header">
+	  	{{#if flylistCreation}}
+	    	Create New Flylist filter
+	    {{else}}
+	    	Edit your Flylist - <i>{{nameOfFlylistBeingEdited}}</i>
+	    {{/if}}
+	  </div>
+		<div class="content">
+			<!--<div class="ui medium image">
+				<img src="http://semantic-ui.com/images/avatar2/large/rachel.png">
+			</div>-->
+			<div id="createNewFlylist" class="ui small form newFlylist">
+				{{#if flylistCreation}}
+				    <div class="required six wide field">
+				    	<label>Flylist Name</label>
+						<input id="flylistName" name="flylistName" type="text" placeholder="Name for this Flylist">
+				    </div>
+			    {{/if}}
+			    <div class="required field">
+			    	<div class="ui header">Filter By:</div>
+			      	<label>Genre:</label>
+					<select id="flylistGenres" name="flylistGenres" class="ui fluid search labeled icon dropdown flylistGenres" multiple="">
+						<option value="">Genre</option>
+						{{#each genresForFilter}}
+							<option value="{{this}}">{{this}}</option>
+						{{/each}}
+					</select>
+			    </div>
+			    <div class="actions">
+					<div class="ui black deny button">
+					Cancel
+					</div>
+					<!--<div class="ui positive right labeled icon button">
+					Save this Flylist!
+					<i class="checkmark icon"></i>
+					</div>-->
+					{{#if flylistCreation}}
+						<input type="submit" value="Save this Flylist!" form="createNewFlylist" class="ui positive submit button">
+					{{else}}
+						<input type="submit" value="Update this Flylist!" form="createNewFlylist" class="ui positive submit button">
+					{{/if}}
+				</div>
+				<div class="ui error message"></div>
+			</div>
+			<!--<div class="description">
+				<div class="ui header">We've auto-chosen a profile image for you.</div>
+				<p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+				<p>Is it okay to use this photo?</p>
+			</div>-->
+		</div>
+	</div>
+</template>

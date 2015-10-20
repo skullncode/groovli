@@ -1,0 +1,48 @@
+<template name='tastemakersFilter'>
+	  <!--<div class="ui label"> OLD tastemaker filter
+	  	<i class="user icon"></i>
+	    Show me songs from
+	    <div class="ui inline dropdown tastemakerSelector">
+	      <div class="text">{{selectedTastemaker}}</div>
+	      <i class="dropdown icon"></i>
+	      <div class="menu">
+	        <div class="header">Choose Tastemaker</div>
+	        	<div class="item" data-value="everybody" data-text="everybody">
+			      <i class="users mini circular icon"></i>
+			      everybody
+			    </div>
+	        {{#each tastemakerList}}
+	        	<div class="item" data-value="{{fbid}}" data-text="{{name}}">
+			      <img class="ui mini avatar image" src="http://graph.facebook.com/{{fbid}}/picture?type=square">
+			      {{name}}
+			    </div>
+	        {{/each}}
+	      </div>
+	    </div>
+	  </div>-->
+  	<div class="ui floating dropdown tastemakerSelector labeled search icon button">
+    	<i class="user icon"></i>
+    	{{#if tastemakerCurrentlyNotEverybody}}
+    		<span class="text">
+		      {{selectedTastemaker}}
+		      <img class="ui mini avatar image" src="http://graph.facebook.com/{{selectedTastemakerFBID}}/picture?type=square">
+		    </span>
+    	{{else}}
+    		<span class="text">{{selectedTastemaker}}</span>
+    	{{/if}}
+      <!--<i class="dropdown icon"></i>-->
+      <div class="menu">
+        <div class="header">Choose Tastemaker</div>
+        	<div class="item" data-value="everybody" data-text="everybody">
+		      <i class="users mini circular icon"></i>
+		      everybody
+		    </div>
+        {{#each tastemakerList}}
+        	<div class="item" data-value="{{fbid}}" data-text="{{name}}">
+		      <img class="ui mini avatar image" src="http://graph.facebook.com/{{fbid}}/picture?type=square">
+		      {{name}}
+		    </div>
+        {{/each}}
+      </div>
+    </div>
+</template>

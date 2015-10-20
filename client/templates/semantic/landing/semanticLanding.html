@@ -1,0 +1,197 @@
+<template name="semanticLanding">
+<!-- Landing Page Menu -->
+	<div class="ui two column centered grid">
+		<div class="eleven wide column mastheadHomeOrange">
+			<div style="background-color:white;">
+				<div class="ui secondary menu">
+				  <div class="ui container">
+				    <div class="brand item">
+						<img class="ui small image" src="../images/logo/groovli.png">
+					</div>
+					<div class="right menu">
+						<div class="item">
+							{{#if currentUser}}
+								<a class="ui dropdown landingDropdownMenu item">
+									<img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
+							    	<i class="dropdown icon"></i>
+									<div class="menu">
+										<div id="clickHomeFromLanding" class="item">Home</div>
+										<div class="item">Profile</div>
+										<div class="ui divider"></div>
+										<div id="logout" class="item">Logout</div>
+									</div>
+								</a>
+							{{else}}
+						        <div id="facebook-login" class="ui facebook button">
+						        <i class="facebook icon"></i>
+						        Sign in with Facebook</div>
+					        {{/if}}
+					    </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<div class="ui grid">
+				<div class="column large screen computer tablet only">
+					<img class="ui fluid image" src="../images/masthead.png">
+				</div>
+			</div>
+			<div class="mobile only ui centered grid">
+				<div class="ui vertical masthead center aligned segment">
+				<div class="ui text container">
+			      <h1 class="ui inverted header">Your social jukebox</h1>
+			      <h2 class="ui inverted header">Make friends through music.</h2>
+			      <h2></h2>
+			      <h2></h2>
+			    </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+<!-- What's trending section-->
+	<div class="ui two column centered grid">
+		<div class="eleven wide column homePlayerTabsContainerBoxBackground">
+			<h1 class="ui header">What's trending:</h1>	
+		  <div class="ui vertical stripe segment">
+		    <div class="ui middle aligned stackable grid container">
+		      <div class="row">
+		        <div class="column">
+					<div class="ui five cards doubling grid container">
+						{{#each trendingSongs}}
+							<div class="card">
+								<div class="image">
+									<img src="{{iTunesLargeAlbumArt}}">
+								</div>
+								<div class="extra">
+									<b>{{st}}</b> <i>by</i>
+									<div class="content"><b>{{sa}}</b></div>
+								</div>
+							</div>
+						{{/each}}
+					</div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+	  </div>
+  	</div>
+
+<!-- How Groovli Works section - Mobile & Computer separate-->  	
+
+  	<div class="computer tablet only ui two column centered grid">
+		<div class="eleven wide column homeHowGroovliWorksSegment">
+			<div class="row">
+				<h1 class="ui inverted header">How Groovli works</h1>
+				<h2></h2>
+			</div>
+		  <img class="ui fluid image" src="../images/groovli_howitworks.png">
+	  </div>
+  	</div>
+
+  	<div class="mobile only ui centered grid">
+		<div class="eleven wide column grid homeHowGroovliWorksSegment">
+			<h1 class="ui inverted header">How Groovli works
+			<img class="ui tiny image floated right" src="../images/groovli_mobile_how.png"></h1>
+			<h1></h1>
+			<div class="ui list">
+			  <h3 class="ui inverted header">
+			    1. Join Groovli with your Facebook account.
+			  </h3>
+			  <h3 class="ui inverted header">
+			    2. Listen to music shared by you and people inside & outside your social circle.
+			  </h3>
+			  <h3 class="ui inverted header">
+			    3. Make friends with people that share a similar taste in music.
+			  </h3>
+			</div>
+	  </div>
+  	</div>
+
+<!-- Songs recently listened to -->  	
+
+  	<div class="ui two column centered grid">
+		<div class="eleven wide column homePlayerTabsContainerBoxBackground">
+			<div class="row">
+				<h1 class="ui red header">Someone just listened to:</h1>
+				<h2 class="ui red header"></h2>
+			</div>
+		  	<div class="ui six column doubling grid container">
+		  		{{#each songsJustListened}}
+					<div class="column">
+						<div class="item">
+							<img class="ui tiny rounded image" src="{{iTunesLargeAlbumArt}}">
+							<div class="content">
+							<div class="header">{{sa}}</div>
+								{{st}}
+							</div>
+						</div>
+					</div>
+				{{/each}}
+				<div class="column"></div>
+				<div class="column"></div>
+				<div class="column"></div>
+		  	</div>
+  		</div>
+  	</div>
+
+<!-- Landing Page Footer section-->  	
+
+  <!--<div class="ui inverted vertical grey footer segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">About</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Sitemap</a>
+            <a href="#" class="item">Contact Us</a>
+            <a href="#" class="item">Religious Ceremonies</a>
+            <a href="#" class="item">Gazebo Plans</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Services</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Banana Pre-Order</a>
+            <a href="#" class="item">DNA FAQ</a>
+            <a href="#" class="item">How To Access</a>
+            <a href="#" class="item">Favorite X-Men</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Footer Header</h4>
+          <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+        </div>
+      </div>
+    </div>
+  </div> OLD FOOTER SECTION-->
+  <div class="ui inverted vertical footer segment" style="background-color:#D9D9D9;color:black;">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui header">About</h4>
+          <div class="ui link list">
+            <a class="item" href="mailto:sandeep@groovli.com?Subject=Groovli%20-%20Enquiry">Contact Us</a>
+			<a class="item" href="{{pathFor 'terms' }}" target="blank">Terms and Conditions</a>
+			<a class="item" href="{{pathFor 'privacypolicy' }}" target="blank">Privacy Policy</a>
+          </div>
+        </div>
+        <!--<div class="three wide column">
+          <h4 class="ui inverted header">Services</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Banana Pre-Order</a>
+            <a href="#" class="item">DNA FAQ</a>
+            <a href="#" class="item">How To Access</a>
+            <a href="#" class="item">Favorite X-Men</a>
+          </div>
+        </div>-->
+        <div class="seven wide column">
+          <h4 class="ui header">Love us</h4>
+          <div class="fb-like fb_iframe_widget" data-href="https://www.facebook.com/groovli" data-width="20" data-layout="standard" data-action="like" data-show-faces="true" data-share="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=474276329353879&amp;container_width=263&amp;href=https%3A%2F%2Ffacebook.com%2Fgroovli&amp;layout=standard&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=true&amp;width=20"><span style="vertical-align: bottom; width: 225px; height: 65px;"><iframe name="f1d06192fc" width="20px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="http://www.facebook.com/v2.0/plugins/like.php?action=like&amp;app_id=474276329353879&amp;channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2Fjb3BUxkAISL.js%3Fversion%3D41%23cb%3Df2c714bb68%26domain%3Dgroovli.com%26origin%3Dhttp%253A%252F%252Fgroovli.com%252Ff1985554ec%26relation%3Dparent.parent&amp;container_width=263&amp;href=https%3A%2F%2Ffacebook.com%2Fgroovli&amp;layout=standard&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=true&amp;width=20" style="border: none; visibility: visible; width: 225px; height: 65px;" class=""></iframe></span></div>
+          <p>Copyright © Groovli 2015</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>

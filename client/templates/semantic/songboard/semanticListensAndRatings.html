@@ -1,0 +1,44 @@
+<template name="semanticListensAndRatings">
+	<div class="four wide column right aligned">
+	{{#if currentUser}}
+		{{#if songPlaying}}
+	    	{{#with currentSong}}
+	    		{{getPersonalRating}}
+				<div class="ui list">
+			    	{{#if listenCountMoreThanOne}}
+			    		<div class="ui mini horizontal statistic">
+						  <div class="value">
+						    {{totalListensForThisSong}}
+						  </div>
+						  <div class="label">
+						    listens
+						  </div>
+						</div>
+			    		<!--<div class="item"><div class="header"><h3><i>{{totalListensForThisSong}} listens</i></h3></div></div>-->
+			        {{else}}
+			        	<div class="ui mini horizontal statistic">
+						  <div class="value">
+						    {{totalListensForThisSong}}
+						  </div>
+						  <div class="label">
+						    listen
+						  </div>
+						</div>
+			        	<!--<div class="item"><div class="header"><h3><i>{{totalListensForThisSong}} listen</i></h3></div></div>-->
+			        {{/if}}
+			        {{#if ratingsExist}}
+			        	<div class="item"><div class="content">Average Rating: {{averageRating}}</div></div>
+				  		<div class="item"><div class="content">Number of Votes: {{numberOfRaters}}</div></div>
+			        {{/if}}
+			        {{#unless ratingsExist}}
+			        	<div class="item"><div class="content">Be the first to rate this song!</div></div>
+			        {{/unless}}
+				  <div class="item"><div class="content">Your rating:</div></div>
+				  <div class="ui large star rating" data-rating="0" data-max-rating="5"></div>
+				  <!--{{>songDetailAlbumArtSection}}-->
+				</div>
+			{{/with}}
+		{{/if}}
+	{{/if}}
+	</div>
+</template>

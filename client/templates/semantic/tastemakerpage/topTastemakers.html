@@ -1,0 +1,12 @@
+<template name="topTastemakers">
+	{{#if tastemakersLoaded}}
+		{{#if tastemakersExist}}
+			<h3 class="ui header">Top Tastemakers</h3>	
+			<div id="topTastemakers" class="songLists">
+				{{#each topTastemakers}}
+					{{>tastemakerProfileItemCard}}
+				{{/each}}
+			</div>
+		{{/if}}
+	{{/if}}
+</template>

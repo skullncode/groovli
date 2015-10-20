@@ -1,0 +1,52 @@
+<template name="semanticLayout">
+	<!--homePlayerTabsContainerBoxBackground
+		
+		<div class="three wide computer tablet column"></div>
+		<div class="ten wide computer tablet column homePlayerTabsContainerBoxBackground"></div>
+		<div class="ten wide mobile only column"></div>
+		<div class="three wide computer tablet column"></div>
+		<div class="three wide computer tablet column"></div>
+		<div class="ten wide computer tablet column homePlayerTabsContainerBoxBackground"></div>
+		<div class="mobile only ten wide column"></div>
+		<div class="three wide computer tablet column"></div>
+
+		WORKING layout right now:
+	-->
+	{{> Template.dynamic template=header}}
+	<div class="ui stackable grid">
+		<!--PADDING-->
+		<div class="sixteen wide column"></div>
+		<div class="sixteen wide column"></div>
+
+		<!--PADDING grey box beginning-->
+		<div class="one wide computer column"></div>
+		<div class="fourteen wide computer only column homePlayerTabsContainerBoxBackground">
+			{{>semanticBreadcrumbNav}}
+		</div>
+		<div class="one wide computer only column"></div>
+		<!--ACTUAL CONTENT - BEGIN-->
+		<div class="one wide computer only column"></div>
+		<div class="eight wide computer sixteen wide tablet sixteen wide mobile column homePlayerTabsContainerBoxBackground">
+			{{> Template.dynamic template=main}}
+		</div>
+		<div class="six wide computer sixteen wide tablet sixteen wide mobile column homePlayerTabsContainerBoxBackground">
+			{{> Template.dynamic template=sidebar}}
+		</div>
+		<div class="one wide computer column"></div>
+		<!--ACTUAL CONTENT - BEGIN-->
+	</div>
+	{{> Template.dynamic template=footer}}
+	<!--{{> Template.dynamic template=header}}
+	<div class="ui stackable grid">
+		<div class="sixteen wide column"></div>
+		<div class="sixteen wide column"></div>
+		<div class="{{dynamicScreenSizeForPlayer}}">
+			{{> Template.dynamic template=main}}
+		</div>
+		<div class="{{dynamicScreenSizeForTabs}}">
+			{{> Template.dynamic template=sidebar}}
+		</div>
+	</div>
+	{{> Template.dynamic template=footer}}
+	screen size: {{screenSize}}-->
+</template>

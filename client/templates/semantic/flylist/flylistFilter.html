@@ -1,0 +1,24 @@
+<template name="flylistFilter">
+	<div class="ui floating dropdown flylistSelector labeled search icon button">
+	  <i class="music icon"></i>
+	  <span class="text">Flylist filters{{flylistDropdownHeaderText}}
+	  </span>
+	  <div class="menu">
+	  	{{#if flylistsExist}}
+		  	{{#each flylistsForUser}}
+				<div class="item flylistItem" value="{{flylistName}}">{{flylistName}} 
+					<div class="extra">
+						<i id="playFlylist" value="{{flylistName}}" class="orange tiny play icon"></i>
+						<i id="editFlylist" value="{{flylistName}}" class="orange tiny write icon"></i>
+						<i id="deleteFlylist" value="{{flylistName}}" class="orange tiny remove icon"></i>
+					</div>
+				</div>
+			{{/each}}
+		{{/if}}
+			<div id="createFlylist" class="item" value="newFlylist"><i value="newFlylist" class="tiny plus icon"></i> New Flylist</div>
+			{{#if flylistPlaying}}
+				<div id="stopPlayingFlylist" class="item" value="stopPlayingFlylist"><i value="stopPlayingFlylist" class="tiny stop icon"></i> Stop current Flylist</div>
+			{{/if}}
+	  </div>
+	</div>
+</template>

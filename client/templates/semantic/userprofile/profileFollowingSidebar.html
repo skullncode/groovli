@@ -1,0 +1,36 @@
+<template name="profileFollowingSidebar">
+	<div class="ui sitewideOrange inverted icon top attached menu">
+		<div class="header item">
+			Tastemakers ({{followingCount}})
+		</div>
+		<div class="right menu">
+			<a id="previousFollowingList" class="item">
+				<i class="caret left icon {{#if tastemakersLessThanPagingLimit}}disabled{{/if}}"></i>
+			</a>
+			<a id="nextFollowingList" class="item">
+				<i class="caret right icon {{#if tastemakersLessThanPagingLimit}}disabled{{/if}}"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ui bottom attached tertiary segment">
+		<!--<div class="ui items">-->
+			<div class="ui six column doubling grid container">
+			{{#if notFollowingAnybody}}
+				<div class="ui basic segment">
+				  <p><i>This person is not following anyone right now...</i></p>
+				</div>
+			{{else}}
+				{{#each peopleFollowedByUser}}
+					<div class="column">
+						<div class="item">
+							<a id="userProfileFollowingLink" href="{{followingLink}}" title="{{name}}">
+								<img class="ui tiny rounded image" src="http://graph.facebook.com/{{fbid}}/picture?type=square">
+						    </a>
+						</div>
+					</div>
+				{{/each}}
+			{{/if}}
+			</div>
+		</div>
+	<!--</div>-->
+</template>

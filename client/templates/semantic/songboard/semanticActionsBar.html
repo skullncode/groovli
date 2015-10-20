@@ -1,0 +1,35 @@
+<template name="semanticActionsBar">
+	{{#if songPlaying}}
+		<div class="ui grid container">
+			{{>semanticFaveAction}}
+			<div id="hideShowComments" class="four wide sitewideOrange column">
+			  <i class="comment icon {{#if commentsVisible}}black{{else}}white{{/if}}"></i>{{commentCountForSong}}
+			</div>
+			<div class="four wide sitewideOrange column">
+			  <!--<i class="plus square outline icon"></i>-->
+			</div>
+			<!--<div class="four wide sitewideOrange column">
+			  <i class="share alternate icon"></i>
+			</div>-->
+			<div class="four wide sitewideOrange column">
+				<div class="ui move right reveal">
+				  <div class="visible content">
+				    <!--<i class="share alternate icon"></i>-->
+				    <button class="ui labeled icon button" style="background-color:#f68e15;color:white;">
+					  <i class="share alternate icon"></i>Share
+					</button>
+				  </div>
+				  <div class="hidden content">
+				    <a id='shareFbButton' class="ui circular facebook icon button">
+					  <i class="facebook icon"></i>
+					</a>
+					<a href="http://twitter.com/?status={{songLinkToBeShared}} %23groovli &#64;groovliapp %23nowplaying" title="Share on Twitter" target="_blank" class="ui circular twitter icon button">
+					  <i class="twitter icon"></i>
+					</a>
+				  </div>
+				</div>
+			</div>
+
+		</div>
+	{{/if}}
+</template>

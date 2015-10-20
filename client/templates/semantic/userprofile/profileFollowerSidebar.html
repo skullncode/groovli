@@ -1,0 +1,35 @@
+<template name="profileFollowerSidebar">
+	<div class="ui sitewideOrange inverted icon top attached menu">
+		<div class="header item">
+			Followers ({{followerCount}})
+		</div>
+		<div class="right menu">
+			<a id="previousFolList" class="item">
+				<i class="caret left icon {{#if followersLessThanPageLimit}}disabled{{/if}}"></i>
+			</a>
+			<a id="nextFolList" class="item">
+				<i class="caret right icon {{#if followersLessThanPageLimit}}disabled{{/if}}"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ui bottom attached tertiary segment">
+		<!--<div class="ui items">-->
+			<div class="ui six column doubling grid container">
+			{{#each followersForUser}}
+				<div class="column">
+					<div class="item">
+						<a id="userProfileFollowerLink" href="/profile/{{_id}}" title="{{services.facebook.first_name}}">
+							<img class="ui tiny rounded image" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square">
+					    </a>
+					</div>
+				</div>
+			{{/each}}
+			{{#if noFollowersExist}}
+				<div class="ui basic segment">
+				  <p><i>Nobody following this person right now...</i></p>
+				</div>
+		    {{/if}}
+			</div>
+	</div>
+	<!--</div>-->
+</template>

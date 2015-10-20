@@ -1,0 +1,34 @@
+<template name="searchResultItem">
+	<a class="ui fluid card searchresultItem" href="">
+		<div class="content" style="padding-bottom: 0px;">
+			<div class="left floated ui image">
+				{{#if hasAlbumArt}}
+					<img src="{{albumArtForCurrentSong}}">
+				{{else}}
+					<img src="{{youtubeThumbnail}}">
+				{{/if}}
+			</div>
+			<div class="content">
+				<div class="header">{{trimmedArtist}}</div>
+				<div class="description">
+				  <p>{{trimmedTitle}}</p>
+				</div>
+				<div class="left floated meta">
+			      <span class="category"><i>originally shared by</i>
+			      	{{#each sharedByDeetsForGlobalItem}}
+						<img class="ui avatar mini image" style="width:20px;height:20px;" src="http://graph.facebook.com/{{strangerID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{strangerName}} shared this on {{strangerTimestamp}}'>
+					{{/each}}
+			      </span>
+			    </div>
+		    </div>
+		</div>
+		<div class="extra content">
+			<div class="left floated author">
+				{{{songDataSource}}}
+			</div>
+			<div class="right floated author">
+				{{{songType}}}
+			</div>
+		</div>
+	</a>
+</template>

@@ -1,0 +1,41 @@
+<template name="sglist">
+	<div class="ui bottom attached tab segment" data-tab="global">
+		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+		{{#if globalSongsExist}}
+	    	<div class="ui label"><i class="music icon"></i> {{sgLength}}</div>
+	    {{/if}}
+	  	<div id="sgList" class="songLists">
+	  		{{fixGSongCursor}}
+			{{#each songs}}
+				{{> semanticGlobalItem}}
+			{{/each}}
+			{{#unless globalSongsExist}}
+				{{#if genresSelected}}
+					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more global matching music! :D
+				{{else}}
+					Wow! Well isn't that something!!? <br>You're currently following everyone on Groovli! <br>You apparently love everyone's taste in music!!
+				{{/if}}
+			{{/unless}}
+		</div>
+		<div class="ui grid">
+			<div class="computer large screen widescreen mobile only row">
+				<div class="ui one item secondary menu">
+					<div class="ui tiny buttons">
+						<button id="previousSGS" class="ui button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextSGS" class="ui button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+			<div class="tablet only row">
+				<div class="ui one item secondary menu">
+					<div class="ui mini buttons">
+						<button id="previousSGS" class="ui button">&lt;-- newer music</button>
+						<div class="or"></div>
+						<button id="nextSGS" class="ui button">older music --&gt;</button>
+					</div>
+				</div>	
+			</div>
+		</div>	
+	</div>
+</template>

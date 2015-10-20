@@ -4,19 +4,14 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-iron:router
 sacha:spin
 accounts-facebook
 accounts-ui
 service-configuration
-zimme:iron-router-active
 natestrauser:font-awesome
 http
 momentjs:moment
-less
 meteorhacks:kadira
-ryw:blog
 alanning:roles
 biasport:facebook-sdk
 random
@@ -24,13 +19,31 @@ cmather:handlebars-server
 themeteorchef:jquery-validation
 email
 underscore
-rosh93:slide-panel
 chrismbeckett:toastr
 mizzao:user-status
 brentjanderson:buzz
 natestrauser:select2
 matteodem:easy-search
-meteorhacks:fast-render
 meteorhacks:subs-manager
 rollick:mixpanel
-twbs:bootstrap
+kadira:flow-router
+kadira:blaze-layout
+arillo:flow-router-helpers
+tmeasday:publish-counts
+semantic:ui-css
+simple:json-routes
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+ejson
+spacebars
+check
+reactive-var
+d3js:d3

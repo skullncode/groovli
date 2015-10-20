@@ -90,6 +90,8 @@ function setLocationForUser(uid)
 Meteor.methods({
 	updateFBFriendList: function()
 	{
+		//console.log('THIS IS THE METEOR USER OBJECT!!!');
+		//console.log(Meteor.user());
 		var updatedFBGetURL = fbGraphURLforFriends.replace('#TOKEN#',Meteor.user().services.facebook.accessToken);
 		var counter = 0;
 		var fbFriends = [];
@@ -131,6 +133,11 @@ Meteor.methods({
 	getFollowerCount: function(userObj)
 	{
 		var followerList = Meteor.users.find({'tastemakers.fbid': String(userObj.services.facebook.id)}).fetch();
+		return followerList.length
+	},
+	getFollowerCountWithFBID: function(fbid)
+	{
+		var followerList = Meteor.users.find({'tastemakers.fbid': String(fbid)}).fetch();
 		return followerList.length
 	},
 	addAdminRolesToKing: function(kingEmail)
@@ -179,7 +186,12 @@ Meteor.methods({
 		//console.log('and this is the ID:')
 		//console.log(userToUnfollow.services.facebook.id);
 		//find user to unfollow, within tastemaker list
-		var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.services.facebook.id});
+
+		if(!_.isUndefined(userToUnfollow.services))
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.services.facebook.id});
+		else if(!_.isUndefined(userToUnfollow.uid))
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.uid});
+		
 		var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
 
 		//if user exists in tastemaker list, use location to splice and remove the user from the tastemaker list
@@ -231,20 +243,38 @@ Meteor.methods({
 			currentTastemakerList = [];
 		}
 
-		//find if user to follow already exists in 
-		var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToFollow.services.facebook.id})
-		//console.log('THIS IS THE IDd user in the tastemaker list: ');
-		//console.log(identifiedUserInList);
-		var userObjToAddTastemakerList = _.findWhere(Meteor.user().fbFriends, {fbid: userToFollow.services.facebook.id})
-
-		//this means that the user to follow is not a friend but an outsider / global user
-		//create the user object manually
-		if(_.isNull(userObjToAddTastemakerList) || _.isUndefined(userObjToAddTastemakerList))
+		if(!_.isUndefined(userToFollow.services) && !_.isUndefined(userToFollow.profile)) //if STANDARD User object
 		{
-			userObjToAddTastemakerList = {
-				name: userToFollow.profile.name,
-				fbid: userToFollow.services.facebook.id
-			};
+			//find if user to follow already exists in 
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToFollow.services.facebook.id})
+			//console.log('THIS IS THE IDd user in the tastemaker list: ');
+			//console.log(identifiedUserInList);
+			var userObjToAddTastemakerList = _.findWhere(Meteor.user().fbFriends, {fbid: userToFollow.services.facebook.id})
+
+			//this means that the user to follow is not a friend but an outsider / global user
+			//create the user object manually
+			if(_.isNull(userObjToAddTastemakerList) || _.isUndefined(userObjToAddTastemakerList))
+			{
+				userObjToAddTastemakerList = {
+					name: userToFollow.profile.name,
+					fbid: userToFollow.services.facebook.id
+				};
+			}
+		}
+		else if(!_.isUndefined(userToFollow.uid) && !_.isUndefined(userToFollow.name))
+		{
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToFollow.uid})
+			var userObjToAddTastemakerList = _.findWhere(Meteor.user().fbFriends, {fbid: userToFollow.name})
+
+			//this means that the user to follow is not a friend but an outsider / global user
+			//create the user object manually
+			if(_.isNull(userObjToAddTastemakerList) || _.isUndefined(userObjToAddTastemakerList))
+			{
+				userObjToAddTastemakerList = {
+					name: userToFollow.name,
+					fbid: userToFollow.uid
+				};
+			}
 		}
 		
 		//var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
@@ -341,5 +371,22 @@ Meteor.methods({
 		}
 		//console.log('this is the result: ');
 		return oneSidedCopy;
+	},
+	getUserIDsForSocIDs: function(socarray){//for use within following list as Tastemaker list does not contain USER IDs only social network ids
+		var idArray = [];
+		//console.log('%%%%%%%%%%%%%%%%%% this is the SOC array :');
+		//console.log(socarray);
+		if(!_.isEmpty(socarray))
+		{
+			_.each(socarray, function(x){
+				var foundUser = Meteor.users.findOne({'services.facebook.id': String(x.fbid)});
+				var socObject = {
+					'_id':foundUser._id,
+					'fbid':x.fbid
+				};
+				idArray.push(socObject);
+			});
+		}
+		return idArray;
 	}
 });

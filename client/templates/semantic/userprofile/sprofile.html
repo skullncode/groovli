@@ -1,0 +1,162 @@
+<template name="sprofile">
+	{{#if uObjLoaded}}
+		{{#with userObjectForRoute}}
+			<div class="ui stackable grid">
+				<div class="sixteen wide computer column userProfileHeaderSecondaryColor">
+					<div class="ui special cards">
+						<div class="card">
+						    <div class="image">
+						      <!--<div class="ui dimmer">
+						        <div class="content">
+						          <div class="center">
+						            <div class="ui inverted button">Add Friend</div>
+						          </div>
+						        </div>
+						      </div>-->
+						      <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=large">
+						    </div>
+						    <div class="content">
+						    	{{#if userProfileIsNotYou}}
+                                    <span class="header">{{services.facebook.first_name}}</span>
+                                {{else}}
+                                    <span class="header">you</span>
+                                {{/if}}						      	
+						      <div class="meta">
+						      	{{#if lastActivityExists}}
+						       		<span>Last Seen: {{lastActivity}}</span>
+						       	{{/if}}
+						      </div>
+						    </div>
+						    <div class="content">
+						    	<span class="left floated">
+						    		<i class="{{locationFlagCode}}" title='{{baseLocation.country}}'></i>
+						    	</span>
+								<span class="right floated time">
+									Joined: {{memberSince createdAt}}
+								</span>
+						    </div>
+						    <div class="content">
+						    	<div class="content">
+							       	<span class="left floated"><b>Top Genres:</b>
+								       	{{#each topTenGenres}} 
+								       		<a href="/genre/{{this._id}}" class="ui green label"><b>{{lowerCasedText this.name}}</b></a>
+								       	{{/each}}
+							       	</span>
+						       	</div>
+						    </div>
+						    <div class="extra content">
+						    	{{#if userProfileIsNotYou}}
+                                    {{{isUserAFBFriend}}}
+                                    {{#if alreadyFollowed}}
+                                        <button id="unfollowUser" class="right floated red ui button">Unfollow</button>
+                                    {{else}}
+                                        <button id="followUser" class="right floated green ui button">Follow</button>
+                                    {{/if}}
+                                {{else}}
+                                    {{{fbFriendCount}}}
+                                {{/if}}
+						    </div>
+					  	</div>
+				  	</div>
+			  	</div>
+			  	<div class="eight wide computer column"><!--twelve for extra space for following / follower count-->
+			  		<div class="ui divider"></div>
+				  	<div class="ui mini statistics">
+				  		{{#if songsShared}}
+						  <div class="statistic">
+						    <div class="value">
+						      {{songCount}}
+						    </div>
+						    <div class="label">
+						      Songs
+						    </div>
+						  </div>
+						  <div class="statistic">
+						    <div class="label">
+						      spanning
+						    </div>
+						    <div class="value">
+						      {{songsTimeSpan}}
+						    </div>
+						  </div>
+				  		{{/if}}
+					  <div class="statistic">
+					    <div class="value">
+					      {{ratingCount}}
+					    </div>
+					    <div class="label">
+					      Songs Rated
+					    </div>
+					  </div>
+					  {{getTotalListenCountForUser}}
+                      {{{listenCount}}}
+                      <div class="statistic">
+					    <div class="value">
+					      {{favoriteCount}}
+					    </div>
+					    <div class="label">
+					      favorites
+					    </div>
+					  </div>
+					  <!--<div class="statistic">
+					    <div class="value">
+					      {{followerCount}}
+					    </div>
+					    <div class="label">
+					      Followers
+					    </div>
+					  </div>
+					  <div class="statistic">
+					    <div class="value">
+					      {{followingCount}}
+					    </div>
+					    <div class="label">
+					      Following
+					    </div>
+					  </div>-->
+					</div>
+					<div class="ui divider"></div>
+				</div>
+			</div>
+			{{>recentListens}}
+			<!--<div class="ui two column grid">
+				<h3 class="ui header">Recently shared ({{currentCursorPosition}} of {{songCount}}):</h3>
+				<h2 class="ui header"></h2>
+			</div>-->
+			<div class="ui stackable grid">
+				<div class="twelve wide computer sixteen wide tablet sixteen wide mobile column">
+					<div class="ui pointing secondary menu userProfileSongTabs">
+					  <a class="active item" data-tab="userLibrary">{{#if userProfileIsNotYou}}{{services.facebook.first_name}}'s Groovs{{else}}Your Groovs{{/if}} ({{currentCursorPosition}} of {{songCount}})</a>
+					  {{#if hasFavorites}}
+					  	<a class="item" data-tab="userFavorites">Favorites</a>
+					  {{/if}}
+					</div>
+					<div class="ui active tab segment" data-tab="userLibrary">
+							<div id="recentShared" class="songLists">
+								{{#each recentSharedSongs}}
+									{{>profileSongItem}}
+								{{/each}}
+							</div>
+							<div class="tablet only row">
+								<div class="ui one item secondary menu">
+									<div class="ui mini buttons">
+										<button id="previousMGS" class="ui button">&lt;-- newer music</button>
+										<div class="or"></div>
+										<button id="nextMGS" class="ui button">older music --&gt;</button>
+									</div>
+								</div>	
+							</div>			  
+					</div>
+					{{#if hasFavorites}}
+						<div class="ui tab segment" data-tab="userFavorites">
+							{{>userProfileFavorites}}
+						</div>
+					{{/if}}
+				</div>	
+			</div>
+
+		  	<!--{{getFollowerCount this}}-->
+			{{getSongCount this}}
+	  	{{/with}}
+  	{{/if}}
+</template>
