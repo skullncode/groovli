@@ -26,7 +26,7 @@ function getAllGenres(){
 	_.each(g, function(z){
 		//console.log('THIS IS A GENRE: ');
 		_.each(z.genres, function(y){
-			if(!_.isNull(y) && !_.isEmpty(y))
+			if(!_.isNull(y) && !_.isEmpty(y) &&  !_.isUndefined(y))
 			{
 				y = y.replace(/-/g, ' ');
 				y = y.replace(/'n'/g, ' and ');

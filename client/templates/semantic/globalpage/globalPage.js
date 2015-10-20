@@ -11,12 +11,12 @@ Template.globalPage.helpers({
       {
         var sel = getMongoSelectorForGlobal();
         globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
-        console.log("THIS IS HTE global selector $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:");
-        console.log(sel);
+        //console.log("THIS IS HTE global selector $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:");
+        //console.log(sel);
         var songCollection = globalSongList.fetch();
         songCollectionLength = songCollection.length;
-        console.log('%%%%%%%%%%%^%^%^%^%^%^%^%^%^%%^%^THIS IS THE GLOBAL year based  SONG LIST!!!!!!!!');
-        console.log(songCollection);
+        //console.log('%%%%%%%%%%%^%^%^%^%^%^%^%^%^%%^%^THIS IS THE GLOBAL year based  SONG LIST!!!!!!!!');
+        //console.log(songCollection);
         Session.set('gLen', songCollection.length);
         updateMySongs(songCollection, 'global');
         initializePlayableTabs(); //NOT required if publication is not being initially limited
@@ -235,14 +235,16 @@ Template.globalPage.onCreated(function() {
       }
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {*/
+      iHist(true);
+      resetPlayedLengthSpecificToTab('global');
       if(_.isUndefined(Session.get('glSelyr')) || _.isNumber(Session.get('glSelyr')))
       {
-        console.log("**************************in Global list to refresh yr SPECIFIC subscription!!!!!");
+        //console.log("**************************in Global list to refresh yr SPECIFIC subscription!!!!!");
         //var sgSelector = getMongoSelectorForGlobal();
 
         var excludedIDsForGlobalFilter = getIDsToExcludeForGlobalFilter();
-        console.log("THESE IDS will be excluded from GLOBAL selector: ");
-        console.log(excludedIDsForGlobalFilter);
+        //console.log("THESE IDS will be excluded from GLOBAL selector: ");
+        //console.log(excludedIDsForGlobalFilter);
 
         Session.set('sgSongsLoaded', false);
 
@@ -254,7 +256,7 @@ Template.globalPage.onCreated(function() {
         self.subscribe("counterForGlobalBasedOnYearSelection", excludedIDsForGlobalFilter, Session.get('glSelyr'), Session.get('selGens'))
         Session.set('sgSongCount', Counts.get('songCountForGlobalBasedOnYearSelection'));
         self.subscribe('30songsForGlobalBasedOnYearSelection', excludedIDsForGlobalFilter, Session.get('glSelyr'), Session.get('selGens'), Session.get('existingSGCursor'), {onReady: onSGSubReady});
-        console.log("**************************in Global list - FINISHED refreshing year SPECIFIC subscription!!!!!");
+        //console.log("**************************in Global list - FINISHED refreshing year SPECIFIC subscription!!!!!");
       }
       //}
     }
@@ -263,11 +265,11 @@ Template.globalPage.onCreated(function() {
 
 function onSGSubReady()
 {
-  console.log('*******************My GLOBAL grooooooovs subscription finally ready!!!!');
-  console.log('THIS IS THE SONG COUNT NOW: ');
+  //console.log('*******************My GLOBAL grooooooovs subscription finally ready!!!!');
+  //console.log('THIS IS THE SONG COUNT NOW: ');
   var sgSelector = getMongoSelectorForGlobal();  
   var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
-  console.log(result);
+  //console.log(result);
   if(result > 0)
   {
     Session.set('sgSongsLoaded', true);

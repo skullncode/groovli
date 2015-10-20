@@ -34,8 +34,8 @@ Template.stmlist.helpers({
           var sel = getMongoSelectorForFriendSongs();
           tastemakerSongList = Songs.find(sel,{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
           var tstmkrsForSelGens = tastemakerSongList.fetch();
-          console.log("THIS IS THE Sub list length for the Tastemakers tab:");
-          console.log(tstmkrsForSelGens.length);
+          //console.log("THIS IS THE Sub list length for the Tastemakers tab:");
+          //console.log(tstmkrsForSelGens.length);
           Session.set('fLen', tstmkrsForSelGens.length);
           updateMySongs(tstmkrsForSelGens, 'friends');
           initializePlayableTabs();
@@ -111,40 +111,47 @@ function getMongoSelectorForFriendSongs() {
   //first add self ID for exclusion from tastemaker list
   query["$nor"].push(userSelf);
 
+  //console.log('##################################### this is the unfollowed friends length: ');
+  //console.log(Meteor.user().unfollowedFriends);
   //if friends are unfollowed they need to be excluded from the tastemaker list also
-  if(!_.isUndefined(Meteor.user().unfollowedFriends) && Meteor.user().unfollowedFriends.length > 0)
+  if(!_.isUndefined(Meteor.user().unfollowedFriends))
   {
-    while(counter < Meteor.user().unfollowedFriends.length)
+    if(Meteor.user().unfollowedFriends.length > 0)
     {
-      var unfollowedFriendObj = {
-        "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
-      };
-      query["$nor"].push(unfollowedFriendObj);
-      counter++;
+      while(counter < Meteor.user().unfollowedFriends.length)
+      {
+        var unfollowedFriendObj = {
+          "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
+        };
+        query["$nor"].push(unfollowedFriendObj);
+        counter++;
+      }
     }
   }
 
   counter = 0;
   //if(Meteor.user().fbFriends.length > 1)
-  if(!_.isUndefined(Meteor.user().tastemakers) && Meteor.user().tastemakers.length > 0)
+  if(!_.isUndefined(Meteor.user().tastemakers))
   {
     query["$or"] = [];
-
-    //while(counter < Meteor.user().fbFriends.length)
-    while(counter < Meteor.user().tastemakers.length)
+    if(Meteor.user().tastemakers.length > 0)
     {
-      //if(Meteor.user().fbFriends.length === 1)
-      //if(Meteor.user().tastemakers.length === 1)
-        //query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
-      //else
-      //{
-        var additional = {
-          "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
-        }
-        query["$or"].push(additional);
-      //}
+      //while(counter < Meteor.user().fbFriends.length)
+      while(counter < Meteor.user().tastemakers.length)
+      {
+        //if(Meteor.user().fbFriends.length === 1)
+        //if(Meteor.user().tastemakers.length === 1)
+          //query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
+        //else
+        //{
+          var additional = {
+            "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
+          }
+          query["$or"].push(additional);
+        //}
 
-      counter++;
+        counter++;
+      }
     }
   }
   else
@@ -242,6 +249,8 @@ Template.stmlist.onCreated(function() {
     {
       if(_.isEmpty(Session.get('selGens')))
       {
+        iHist(true);
+        resetPlayedLengthSpecificToTab('friends');
         var stmSelector = getMongoSelectorForFriendSongs();
         self.subscribe("counterForTastemakers", stmSelector)
         Session.set('tmSongCount', Counts.get('songCountForTastemakers'));
@@ -250,6 +259,8 @@ Template.stmlist.onCreated(function() {
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
         //console.log("in TASTEMAKERS list to refresh subscription!!!!!");
+        iHist(true);
+        resetPlayedLengthSpecificToTab('friends');
         var stmSelector = getMongoSelectorForFriendSongs();
         Session.set('tmSongsLoaded', false);
         self.subscribe("counterForTastemakersBasedOnGenreSelection", stmSelector, Session.get('selGens'))
@@ -271,7 +282,7 @@ function onTMSubReady()
     //var stmSelector = getMongoSelectorForGenreBasedSelectionWithinFriendSongs();
 
   var result = Songs.find(stmSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
-  console.log(result);
+  //console.log(result);
   if(result > 0)
   {
     Session.set('tmSongsLoaded', true);

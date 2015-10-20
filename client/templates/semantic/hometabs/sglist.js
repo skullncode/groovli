@@ -194,6 +194,8 @@ Template.sglist.onCreated(function() {
     {
       if(_.isEmpty(Session.get('selGens')))
       {
+        iHist(true);
+        resetPlayedLengthSpecificToTab('global');
         var sgSelector = getMongoSelectorForGlobal();
         self.subscribe("counterForGlobal", sgSelector)
         Session.set('sgSongCount', Counts.get('songCountForGlobal'));
@@ -203,13 +205,15 @@ Template.sglist.onCreated(function() {
       }
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
-        console.log("**************************in Global list to refresh GENRE SPECIFIC subscription!!!!!");
+        iHist(true);
+        resetPlayedLengthSpecificToTab('global');
+        //console.log("**************************in Global list to refresh GENRE SPECIFIC subscription!!!!!");
         var sgSelector = getMongoSelectorForGlobal();
         Session.set('sgSongsLoaded', false);
         self.subscribe("counterForGlobalBasedOnGenreSelection", sgSelector, Session.get('selGens'))
         Session.set('sgSongCount', Counts.get('songCountForGlobalBasedOnGenreSelection'));
         self.subscribe('30songsForGlobalBasedOnGenreSelection', sgSelector, Session.get('selGens'), Session.get('existingSGCursor'), {onReady: onSGSubReady});
-        console.log("**************************in Global list - FINISHED refreshing GENRE SPECIFIC subscription!!!!!");
+        //console.log("**************************in Global list - FINISHED refreshing GENRE SPECIFIC subscription!!!!!");
       }
     }
   });
@@ -217,8 +221,8 @@ Template.sglist.onCreated(function() {
 
 function onSGSubReady()
 {
-  console.log('*******************My GLOBAL grooooooovs subscription finally ready!!!!');
-  console.log('THIS IS THE SONG COUNT NOW: ');
+  //console.log('*******************My GLOBAL grooooooovs subscription finally ready!!!!');
+  //console.log('THIS IS THE SONG COUNT NOW: ');
   var sgSelector = getMongoSelectorForGlobal();  
   var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
   //console.log(result);

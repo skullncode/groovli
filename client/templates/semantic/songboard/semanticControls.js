@@ -134,7 +134,7 @@ function dealWithErroneousSong() {
   currentSong.aeCount += 1;
   Meteor.call('updateAEC', currentID, 'yt', currentSong.aeCount, Session.get('YTErrorCode'));
   Session.set('YTErrorCode', 0);
-
+  toastr.error("Encountered an error when trying to play the following song: <br> "+currentSong.st+" by " + currentSong.sa);
   Session.set('SongErroneous',false);
   if(lastAction === 'next')  
     nextSong();
@@ -158,14 +158,14 @@ function thereAreStillPlayableSongs() {
 function getRandomSongTabThatStillHasUnplayedSongs()
 {
   var playableTabsLength = Session.get('playableTabs').length;
-  console.log('@#@#@#@#@#@NUMBER OF PLAYABLE TABS: ' + playableTabsLength);
+  //console.log('@#@#@#@#@#@NUMBER OF PLAYABLE TABS: ' + playableTabsLength);
   //var selectedTabList = Session.get('selectedTabs');
   var randomlySelectedTabIndex = _.random(playableTabsLength-1);
-  console.log('THIS IS THE RANDOMLY SELECTED TAB INDEX: ' + randomlySelectedTabIndex);
+  //console.log('THIS IS THE RANDOMLY SELECTED TAB INDEX: ' + randomlySelectedTabIndex);
   var selectedTab = Session.get('playableTabs')[randomlySelectedTabIndex];
 
-  console.log('CURRENTLY SELECTED RANDOM TAB IS: ' + selectedTab);
-  console.log('CURRENT SELECTED TAB LIST IS : ');
+  //console.log('CURRENTLY SELECTED RANDOM TAB IS: ' + selectedTab);
+  //console.log('CURRENT SELECTED TAB LIST IS : ');
   //console.log(selectedTabList);
   //STOP USING SELECTEDTAB list - will not be deselecting individual tabs!!!
   /*while(_.isUndefined(_.findWhere(selectedTabList, selectedTab))) 
@@ -176,13 +176,16 @@ function getRandomSongTabThatStillHasUnplayedSongs()
     console.log('NEW TAB SELECTION TAB IS: ' + selectedTab);
   }*/
 
-  if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends') || Session.get('globalPlayedLength') < getSongsLength('global'))
+
+  //REPLACED THIS IF condition with method to check it better and fix bug found by Babu in first Semantic UI test
+  //if(Session.get('mygroovsPlayedLength') < getSongsLength('me') || Session.get('tastemakersPlayedLength') < getSongsLength('friends') || Session.get('globalPlayedLength') < getSongsLength('global'))
+  if(areThereAnyMoreSongsToPlayBasedOnCurrentlyPlayableTabs())
   {
     if(selectedTab === 'me')
     {
       if(Session.get('mygroovsPlayedLength') < getSongsLength(selectedTab))
       {
-        console.log('RETURNING THIS TAB FOR RANDOM PLAY: MY GROOVS');
+        //console.log('RETURNING THIS TAB FOR RANDOM PLAY: MY GROOVS');
         return 'me';
       }
       else
@@ -196,7 +199,7 @@ function getRandomSongTabThatStillHasUnplayedSongs()
     {
       if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
       {
-        console.log('RETURNING THIS TAB FOR RANDOM PLAY: TASTEMAKERSSSSSS');
+        //console.log('RETURNING THIS TAB FOR RANDOM PLAY: TASTEMAKERSSSSSS');
         return 'friends';
       }
       else
@@ -210,7 +213,7 @@ function getRandomSongTabThatStillHasUnplayedSongs()
     {
       if(Session.get('globalPlayedLength') < getSongsLength('global'))
       {
-        console.log('RETURNING THIS TAB FOR RANDOM PLAY: GLOBAL LIST');
+        //console.log('RETURNING THIS TAB FOR RANDOM PLAY: GLOBAL LIST');
         return 'global';
       }
       else
@@ -222,50 +225,115 @@ function getRandomSongTabThatStillHasUnplayedSongs()
   }
   else // both tabs have been played out so reset history
   {
-    console.log('$#$#$#$#$#$##$#$# NOTHING IS AVAILABLE IN  TABS TO PLAYY');
+    //console.log('$#$#$#$#$#$##$#$# NOTHING IS AVAILABLE IN  TABS TO PLAYY');
     setReachedEndOfStream(true);
     return null;
   }
 }
 
+function areThereAnyMoreSongsToPlayBasedOnCurrentlyPlayableTabs()
+{
+  //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################# currently PLAYABLE TABS are:');
+  //console.log(Session.get('playableTabs'));
+  var songsStillAvailableToPlay = false;
+  _.each(Session.get('playableTabs'), function(z){
+    if(z == 'me')
+    {
+      if(Session.get('mygroovsPlayedLength') < getSongsLength('me'))
+      {
+        songsStillAvailableToPlay = true;
+      }
+      else
+      {
+        songsStillAvailableToPlay = false;
+      }
+    }
+    else if(z == 'friends')
+    {
+      if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
+      {
+        songsStillAvailableToPlay = true;
+      }
+      else
+      {
+        songsStillAvailableToPlay = false;
+      }
+    }
+    else if(z == 'global')
+    {
+      if(Session.get('globalPlayedLength') < getSongsLength('global'))
+      {
+        songsStillAvailableToPlay = true;
+      }
+      else
+      {
+        songsStillAvailableToPlay = false;
+      }
+    }
+  });
+
+  /*if(songsStillAvailableToPlay)
+    console.log('################ THERE ARE STILL SONGS TO BE PLAYED!!!!!');
+  else
+    console.log('################ NO MORE SONGS AVAILABLE TO PLAYYYYYYYY!!!!');*/
+
+  return songsStillAvailableToPlay;
+}
+
 function selectNewRandomSongAndPush() {
-  console.log('selecting random song and pushing to playyyyyyyyyyyyyy!');
+  //console.log('selecting random song and pushing to playyyyyyyyyyyyyy!');
   //using same if condition for flylist OR even without flylist; i.e. selGens empty OR even NOT
   if(_.isUndefined(Session.get('selGens')) || _.isEmpty(Session.get('selGens')) || !_.isEmpty(Session.get('selGens')))
   {
     var selectedTab = getRandomSongTabThatStillHasUnplayedSongs();
-    console.log('***************************** THIS IS THE SELECTED TAB We GOT BACK: ' + selectedTab);
+    //console.log('***************************** THIS IS THE SELECTED TAB We GOT BACK: ' + selectedTab);
     if(!_.isNull(selectedTab) && !_.isUndefined(selectedTab))
     {
-      console.log('@#@#@#@#@#@#@#HAVE RANDOMLY SELECTED THIS TAB FOR THE NEXT SONG: ' + selectedTab);
+      //console.log('@#@#@#@#@#@#@#HAVE RANDOMLY SELECTED THIS TAB FOR THE NEXT SONG: ' + selectedTab);
       var songsLength = getSongsLength(selectedTab);
       var invalidTries = 0;
       
       var randomChoice = _.random(songsLength-1);
 
-      console.log('&&^&^&^&^^&^&^&^^&&^^&^THIS IS THE ZEROTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,0).st);
-      console.log('THIS IS THE LENGTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,songsLength-1).st);
+      //console.log('&&^&^&^&^^&^&^&^^&&^^&^THIS IS THE ZEROTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,0).st);
+      //console.log('THIS IS THE LENGTH ITEM IN THE CURRENT SELECTED TAB: ' + getSongAtIndex(selectedTab,songsLength-1).st);
 
-      console.log('ABOUT TO CHECK FOR HISTORY AND GENRES!!!');
+      //console.log('ABOUT TO CHECK FOR HISTORY AND GENRES!!!');
 
       while(songAlreadyExistsInHistory(getSongAtIndex(selectedTab,randomChoice)) && !hasReachedEndOfStream())
       {
-        console.log('INSIDE WHILE IN RANDOM AND PUSH METHOD');
+        //console.log('INSIDE WHILE IN RANDOM AND PUSH METHOD');
         randomChoice = _.random(songsLength-1);
       }
 
       updatePlayCountPerTab(selectedTab, randomChoice);
 
+      /*console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the current play length for my groovs:");
+      console.log(Session.get('mygroovsPlayedLength'));
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the current play length for tastemakers:");
+      console.log(Session.get('tastemakersPlayedLength'));
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the current play length for globalll:");
+      console.log(Session.get('globalPlayedLength'));
+      console.log("###############################!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the TOTAL LENGTH for my groovs:");
+      console.log(getSongsLength('me'));
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the TOTAL LENGTH for tastemakers:");
+      console.log(getSongsLength('friends'));
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ this is the TOTAL LENGTH for globalll:");
+      console.log(getSongsLength('global'));*/
+
+
       if(!hasReachedEndOfStream())
       {
         //console.log('#################################DECIDED on this SONG: '+ getSongAtIndex('me',randomChoice).st + '!!!!! PUSHING NOW');
-        console.log('#################################DECIDED on this SONG: '+ getSongAtIndex(selectedTab,randomChoice).st + '!!!!! PUSHING NOW');
+        //console.log('#################################DECIDED on this SONG: '+ getSongAtIndex(selectedTab,randomChoice).st + '!!!!! PUSHING NOW');
         selectShareFromControls(getSongAtIndex(selectedTab,randomChoice), getSongs(selectedTab), getSongAtIndex(selectedTab,randomChoice).sourceTab);
       }
       else
       {
         resetCurrentHistoryIndex();
-        console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
+        //console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
         selectShareFromControls(getSongInHistoryAtIndex(0), getSongs(getSongInHistoryAtIndex(0).sourceTab), getSongInHistoryAtIndex(0).sourceTab);
       }
     }
@@ -274,7 +342,7 @@ function selectNewRandomSongAndPush() {
       //setReachedEndOfStream(true);
       resetCurrentHistoryIndex();
       toastr.info("No more songs available for current page selection: <br><br><b><i> going back to the beginning of play history for current page selections! </i></b>");
-      console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
+      //console.log('REACHED END OF YOUR PLAYLIST; resetting history position');
       //selectShareFromControls(getSongInHistoryAtIndex('me',0), getSongs('me'), getSongAtIndex('me',randomChoice).sourceTab);
       selectShareFromControls(getSongInHistoryAtIndex(0), getSongs(getSongInHistoryAtIndex(0).sourceTab), getSongInHistoryAtIndex(0).sourceTab);
     }
@@ -418,7 +486,7 @@ function updatePlayCountPerTab(tab, selectedChoice)
     currentCount++;
     Session.set('tastemakersPlayedLength', currentCount);
 
-    console.log('HISTORY COUNT: CURRENT TASTEMAKERSSSSSS PLAY LENGTH IS: ' + Session.get('tastemakersPlayedLength'));
+    //console.log('HISTORY COUNT: CURRENT TASTEMAKERSSSSSS PLAY LENGTH IS: ' + Session.get('tastemakersPlayedLength'));
   }
   else if(tab === 'global')
   {

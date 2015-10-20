@@ -12,20 +12,20 @@ Template.smglist.helpers({
     {
       if(Session.get('mgSongsLoaded') && _.isEmpty(Session.get('selGens')))
       {
-        console.log("SOMETHING CHANGED - REFRESHING SONG LIST!!!!");
+        //console.log("SOMETHING CHANGED - REFRESHING SONG LIST!!!!");
         fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
         var mgsCollection = fullSongList.fetch();
-        console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + mgsCollection.length);
+        //console.log('#$#$#$#$$###$ SETTING Song LENGTH!!!!! ' + mgsCollection.length);
         Session.set('mLen', mgsCollection.length);
-        console.log('GOING TO UPDATE MY SONGS with this song Collection: ');
-        console.log(mgsCollection);
+        //console.log('GOING TO UPDATE MY SONGS with this song Collection: ');
+        //console.log(mgsCollection);
         updateMySongs(mgsCollection, 'me');
         updatePlayableTabsIfNecessary();
         return fullSongList;
       }
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
-        console.log('GENRES have been selected now SO I CAN REFRESH THE SONG list FOR your GROOVS!!!!');
+        //console.log('GENRES have been selected now SO I CAN REFRESH THE SONG list FOR your GROOVS!!!!');
         if(!_.isEmpty(Session.get('genl')))
         {
           var myGroovsForSelGens = [];
@@ -45,8 +45,8 @@ Template.smglist.helpers({
           }*/
           fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
           var myGroovsForSelGens = fullSongList.fetch();
-          console.log("THIS IS THE Sub list length for the My Groovs tab:");
-          console.log(myGroovsForSelGens.length);
+          //console.log("THIS IS THE Sub list length for the My Groovs tab:");
+          //console.log(myGroovsForSelGens.length);
           Session.set('mLen', myGroovsForSelGens.length);
           updateMySongs(myGroovsForSelGens, 'me');
 
@@ -310,12 +310,16 @@ Template.smglist.onCreated(function() {
       //self.subscribe('allSongsForSongBoard', Meteor.user().services.facebook.id);
       if(_.isEmpty(Session.get('selGens')))
       {
+        iHist(true);
+        resetPlayedLengthSpecificToTab('me');
         self.subscribe("counterForMyGroovs", Meteor.user().services.facebook.id)
         Session.set('mgSongCount', Counts.get('songCountForMyGroovs'));
         self.subscribe('30songsForMyGroovs', Meteor.user().services.facebook.id, Session.get('existingMGCursor'), {onReady: onMGSubReady});
       }
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
+        iHist(true);
+        resetPlayedLengthSpecificToTab('me');
         Session.set('mgSongsLoaded', false);
         //console.log('GENRE selection Changed gonna subscribe again!!!');
         self.subscribe("counterForMyGroovsBasedOnGenreSelection", Meteor.user().services.facebook.id, Session.get('selGens'))

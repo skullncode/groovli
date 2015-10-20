@@ -11,15 +11,15 @@ Template.mygroovList.helpers({
     {
       if(!_.isUndefined(Session.get('selyr')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%YEAR has been selected now SO I CAN REFRESH THE SONG list FOR your GROOVS!!!!');
+        //console.log('%%%%%%%%%%%%%%%%%%%%%%YEAR has been selected now SO I CAN REFRESH THE SONG list FOR your GROOVS!!!!');
         /*if(!_.isEmpty(Session.get('genl')))
         {*/
           var myGroovsForSelYear = [];
 
           fullSongListByYear = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
           var myGroovsForSelYear = fullSongListByYear.fetch();
-          console.log("THIS IS THE Sub list BY YEARRRRRRR length for the My Groovs tab:");
-          console.log(myGroovsForSelYear.length);
+          //console.log("THIS IS THE Sub list BY YEARRRRRRR length for the My Groovs tab:");
+          //console.log(myGroovsForSelYear.length);
           Session.set('mLen', myGroovsForSelYear.length);
           updateMySongs(myGroovsForSelYear, 'me');
           initializeMyGroovTabs();

@@ -57,7 +57,7 @@ function getAllGenres(){
 }
 
 function getYearRangeForMyGroovs() {
-	console.log("GOING TO GET date range for MY GROOVS!!!");
+	//console.log("GOING TO GET date range for MY GROOVS!!!");
 	if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
 	{
 		Meteor.call('getDateRangeForMyGroovs', Meteor.user().services.facebook.id, function(error, result) {
@@ -65,8 +65,8 @@ function getYearRangeForMyGroovs() {
 		    console.log('Encountered error while trying to get date range for user songs!');
 		  else
 		  {
-		    console.log("GOT back this date range: ");
-		    console.log(result);
+		    //console.log("GOT back this date range: ");
+		    //console.log(result);
 		    Session.set('mgdr', result);
 		    Session.set('selyr', result[1]);
 		    Session.set('drl', true);

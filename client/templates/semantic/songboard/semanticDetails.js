@@ -101,6 +101,8 @@ Template.semanticDetails.helpers({
   artistHasPage: function() {
     if(Session.get('artistHasPage'))
     {
+      //console.log('########################## replacement ERRRROR 1');
+      //console.log(currentSong.sa);
       if(!_.isUndefined(currentSong.sa))
         currentSong.sa = currentSong.sa.replace(/&/g, 'and');
 
@@ -112,6 +114,8 @@ Template.semanticDetails.helpers({
   coveringArtistHasPage: function() {
     if(Session.get('coveringArtistHasPage'))
     {
+      console.log('########################## replacement ERRRROR 2');
+      console.log(currentSong.coveredBy);
       if(!_.isUndefined(currentSong.sa))
         currentSong.coveredBy = currentSong.coveredBy.replace(/&/g, 'and');
       return true;
@@ -256,13 +260,19 @@ function getExtendedGenreListForCurrentSong(){
     //console.log(x);
     if(_.isEmpty(x) || _.isUndefined(x.genres))
     {
-      //console.log('1st case');
-      currentSong.genre = currentSong.genre.replace(/-/g, ' ');
-      currentSong.genre = currentSong.genre.replace(/'n'/g, ' and ');
-      var justItunesGenres = currentSong.genre.split('/');
-      //console.log(justItunesGenres);
-      //return justItunesGenres;
-      return _.first(justItunesGenres, 4);
+      //console.log('########################1st case');
+      //console.log(currentSong.genre);
+      if(!_.isUndefined(currentSong.genre))
+      {
+        currentSong.genre = currentSong.genre.replace(/-/g, ' ');
+        currentSong.genre = currentSong.genre.replace(/'n'/g, ' and ');
+        var justItunesGenres = currentSong.genre.split('/');
+        //console.log(justItunesGenres);
+        //return justItunesGenres;
+        return _.first(justItunesGenres, 4);
+      }
+      else
+        return [];
     }
     else if(!_.isUndefined(x.genres))
     {

@@ -140,39 +140,48 @@ function getMongoSelectorForFriendSongs(specificID) {
     query["$nor"].push(userSelf);
 
     //if friends are unfollowed they need to be excluded from the tastemaker list also
-    if(!_.isUndefined(Meteor.user().unfollowedFriends) && Meteor.user().unfollowedFriends.length > 0)
+    //console.log('##################################### this is the unfollowed friends length: ');
+    //console.log(Meteor.user().unfollowedFriends);
+    if(!_.isUndefined(Meteor.user().unfollowedFriends))
     {
-      while(counter < Meteor.user().unfollowedFriends.length)
+      if(Meteor.user().unfollowedFriends.length > 0)
       {
-        var unfollowedFriendObj = {
-          "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
-        };
-        query["$nor"].push(unfollowedFriendObj);
-        counter++;
+        while(counter < Meteor.user().unfollowedFriends.length)
+        {
+          var unfollowedFriendObj = {
+            "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
+          };
+          query["$nor"].push(unfollowedFriendObj);
+          counter++;
+        }
       }
     }
 
     counter = 0;
     //if(Meteor.user().fbFriends.length > 1)
-    if(!_.isUndefined(Meteor.user().tastemakers) && Meteor.user().tastemakers.length > 0)
+    //console.log('##################################### this is the tastemakers length: ');
+    //console.log(Meteor.user().tastemakers);
+    if(!_.isUndefined(Meteor.user().tastemakers))
     {
       query["$or"] = [];
-
-      //while(counter < Meteor.user().fbFriends.length)
-      while(counter < Meteor.user().tastemakers.length)
+      if(Meteor.user().tastemakers.length > 0)
       {
-        //if(Meteor.user().fbFriends.length === 1)
-        //if(Meteor.user().tastemakers.length === 1)
-          //query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
-        //else
-        //{
-          var additional = {
-            "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
-          }
-          query["$or"].push(additional);
-        //}
+        //while(counter < Meteor.user().fbFriends.length)
+        while(counter < Meteor.user().tastemakers.length)
+        {
+          //if(Meteor.user().fbFriends.length === 1)
+          //if(Meteor.user().tastemakers.length === 1)
+            //query["sharedBy.uid"] = Meteor.user().tastemakers[counter].fbid;
+          //else
+          //{
+            var additional = {
+              "sharedBy.uid": Meteor.user().tastemakers[counter].fbid
+            }
+            query["$or"].push(additional);
+          //}
 
-        counter++;
+          counter++;
+        }
       }
     }
     else
@@ -192,7 +201,7 @@ function getMongoSelectorForFriendSongs(specificID) {
   }
   else if(!_.isUndefined(specificID) && specificID !== 'everybody')
   {
-    console.log('%%%%%%%%%%%%%%%%%%%%%%%INSIDE SPECIFIC ID mongo selector code yawww');
+    //console.log('%%%%%%%%%%%%%%%%%%%%%%%INSIDE SPECIFIC ID mongo selector code yawww');
     var userSelf = {
       "sharedBy.uid": Meteor.user().services.facebook.id
     };
@@ -203,15 +212,19 @@ function getMongoSelectorForFriendSongs(specificID) {
     query["$nor"].push(userSelf);
 
     //if friends are unfollowed they need to be excluded from the tastemaker list also
-    if(!_.isUndefined(Meteor.user().unfollowedFriends) && Meteor.user().unfollowedFriends.length > 0)
+
+    if(!_.isUndefined(Meteor.user().unfollowedFriends))
     {
-      while(counter < Meteor.user().unfollowedFriends.length)
+      if(Meteor.user().unfollowedFriends.length > 0)
       {
-        var unfollowedFriendObj = {
-          "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
-        };
-        query["$nor"].push(unfollowedFriendObj);
-        counter++;
+        while(counter < Meteor.user().unfollowedFriends.length)
+        {
+          var unfollowedFriendObj = {
+            "sharedBy.uid": Meteor.user().unfollowedFriends[counter].fbid
+          };
+          query["$nor"].push(unfollowedFriendObj);
+          counter++;
+        }
       }
     }
 
@@ -331,7 +344,7 @@ Template.tasteMakersPage.onCreated(function() {
       {
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
-        console.log("in TASTEMAKERS list to refresh subscription!!!!!");
+        //console.log("in TASTEMAKERS list to refresh subscription!!!!!");
         var stmSelector = getMongoSelectorForFriendSongs(Session.get('seltstmkrid'));
         Session.set('tmSongsLoaded', false);
         self.subscribe("counterForTastemakersBasedOnGenreSelection", stmSelector, Session.get('selGens'))
@@ -344,8 +357,8 @@ Template.tasteMakersPage.onCreated(function() {
 
 function onTMSubReady()
 {
-  console.log('TM SUBS IS FINALLY DONE - tastemaker subscription finally ready!!!!');
-  console.log('THIS IS THE tastemaker SONG COUNT NOW: ');
+  //console.log('TM SUBS IS FINALLY DONE - tastemaker subscription finally ready!!!!');
+  //console.log('THIS IS THE tastemaker SONG COUNT NOW: ');
 
   //if(_.isEmpty(Session.get('selGens')))
     var stmSelector = getMongoSelectorForFriendSongs(Session.get('seltstmkrid'));  
@@ -353,7 +366,7 @@ function onTMSubReady()
     //var stmSelector = getMongoSelectorForGenreBasedSelectionWithinFriendSongs();
 
   var result = Songs.find(stmSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
-  console.log(result);
+  //console.log(result);
   if(result > 0)
   {
     Session.set('tmSongsLoaded', true);

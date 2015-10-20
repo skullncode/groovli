@@ -14,7 +14,7 @@ Template.newFlylistModal.helpers({
 });
 
 Template.newFlylistModal.onRendered(function () {
-	console.log('RENDERING of modal flylist creation screen!!!');
+	//console.log('RENDERING of modal flylist creation screen!!!');
 	$('.ui.dropdown.flylistGenres').dropdown({
 		action: 'select',
 	    onChange: function(value, text, $selectedItem) {
