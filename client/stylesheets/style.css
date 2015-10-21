@@ -95,6 +95,13 @@
 	padding:5px;
 }
 
+.genrePageArtistThumbList{
+	overflow-y:auto; 
+	overflow-x:hidden; 
+	white-space:nowrap;
+	height:900px;
+}
+
 .usersForMessaging{
 	overflow-y:auto; 
 	overflow-x:hidden; 

@@ -11,3 +11,12 @@ Template.semanticFooter.helpers({
 	}
  }
 });
+
+Template.semanticFooter.events({
+    "click #aboutFooterLink": function (event) {
+      console.log('CLICKED ABOUT link');
+      $('.ui.modal.aboutPage').modal({
+          transition: 'horizontal flip'
+      }).modal('show');
+    }
+});

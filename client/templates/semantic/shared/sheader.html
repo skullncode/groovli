@@ -25,7 +25,7 @@
         <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div class="item"><a href="/profile/{{currentUser._id}}" target="blank">Profile</a></div>
+            <a href="/profile/{{currentUser._id}}" target="blank"><div class="item">Profile</div></a>
             <div class="ui divider"></div>
             <div id="logout" class="item">Logout</div>
           </div>
@@ -53,11 +53,11 @@
           {{/if}}
         </a>
         <a class="ui dropdown mainHeaderMenuDropdown item">
-        <img class="img-rounded headerProfileImage" style="width:40px; height:40px;" src="http://graph.facebook.com/730866630359630/picture?type=square"> 
-        Sandeep
+        <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> 
+        {{currentUser.services.facebook.first_name}}
           <i class="dropdown icon"></i>
           <div class="menu">
-            <div class="item"><a href="/profile/{{currentUser._id}}" target="blank">Profile</a></div>
+            <a href="/profile/{{currentUser._id}}" target="blank"><div class="item">Profile</div></a>
             <div class="ui divider"></div>
             <div id="logout" class="item">Logout</div>
           </div>

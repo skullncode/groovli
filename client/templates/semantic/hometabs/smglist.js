@@ -328,7 +328,7 @@ Template.smglist.onCreated(function() {
       }
     }
   });
-  var y = setInterval(checkToSeeIfPlayerHasStillNotStartedAndEncounteredAnError, 7000);
+  var y = setInterval(checkToSeeIfPlayerHasStillNotStartedAndEncounteredAnError, 45000); //changed from 7 seconds check interval to 45 seconds check
   Session.set('pcintid', y); //player check interval id
 });
 
