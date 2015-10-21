@@ -38,9 +38,13 @@
 						    <div class="content">
 						    	<div class="content">
 							       	<span class="left floated"><b>Top Genres:</b>
+							       	{{#if topTenGenresLoaded}}
 								       	{{#each topTenGenres}} 
 								       		<a href="/genre/{{this._id}}" class="ui green label"><b>{{lowerCasedText this.name}}</b></a>
 								       	{{/each}}
+								    {{else}}
+								    	<div class="ui active centered inline loader"></div>
+								    {{/if}}
 							       	</span>
 						       	</div>
 						    </div>

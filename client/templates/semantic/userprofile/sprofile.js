@@ -253,6 +253,9 @@ Template.sprofile.helpers({
     },
     pagedSongsLoaded: function() {
     	return pagedSongsLoaded.get();
+    },
+    topTenGenresLoaded: function() {
+    	return Session.get('ttgldd');
     }
 });
 

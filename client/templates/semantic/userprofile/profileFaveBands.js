@@ -1,5 +1,6 @@
 Session.setDefault('f6Faves', true); //first 6 faves
 Session.setDefault('l6Faves', false); //last 6 faves
+Session.setDefault('ttgldd', false); //top ten genres loaded - need to set as session variable as needs to be accessed in sprofile instead of this template
 var faveBandsContext = new ReactiveVar(null);
 var faveBandsLoaded = new ReactiveVar(false);
 
@@ -96,6 +97,7 @@ function getTopBandDetails(){
 			  	Session.set(faveBandsContext.get().params._id+'topBandsLength', result[0].length);
 			  	Session.set('ttg', result[1]);
 			  	faveBandsLoaded.set(true);
+			  	Session.set('ttgldd', true);
 		    };
 		});
 		

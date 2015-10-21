@@ -190,10 +190,10 @@ Meteor.methods({
   	updateArtistDetailsFromLFMAPI: function () {
 		//console.log('INSIDE THE LAST FM UPDATE METHOD artist SERVER CONTROLLER');
 		//console.log('%%%%%%%%%%%%%%%%%%%%'+artName);
-		console.log('THIS IS THE number of found artsits: ');
+		//console.log('THIS IS THE number of found artsits: ');
 		//var res = Artists.find({}).fetch();
 		var res = Artists.find({'mediumImage.#text': /userserve/}).fetch();
-		console.log(res.length);
+		//console.log(res.length);
 
 		//console.log('GOING TO GET deets for this first artist: ');
 		//console.log(res[0].name);
