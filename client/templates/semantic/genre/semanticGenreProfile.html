@@ -46,46 +46,63 @@
 			  		<div class="ui divider"></div>
 				  	<div class="ui mini statistics">
 				  		{{#if genreHasSongs}}
-						  <div class="statistic">
-						    <div class="value">
-						      {{songCount}}
-						    </div>
-						    <div class="label">
-							    {{#if moreThan1Song}}
-							      Songs
-							    {{else}}
-							      Song
-							    {{/if}}						    	
-						    </div>
-						  </div>
-						  <div class="statistic">
-						    <div class="value">
-						      {{countOfPeopleForGenre}}
-						    </div>
-						    <div class="label">
-						      {{countOfPeopleForGenreLabel}}
-						    </div>
-						  </div>
-						  <div class="statistic">
-						    <div class="value">
-						      {{genrePercentageValue}}%
-						    </div>
-						    <div class="label">
-						      of all songs on Groovli
-						    </div>
-						  </div>
-						  <div class="statistic">
-						    <div class="value">
-						      {{artistCountForThisGenre}}
-						    </div>
-						    <div class="label">
-						    	{{#if moreThan1Artist}}
-						      		artists
-						      	{{else}}
-						      		artist
-						      	{{/if}}
-						    </div>
-						  </div>
+							<div class="statistic">
+							{{#if genreSpecificSongCountLoaded}}
+								<div class="value">
+								  {{songCount}}
+								</div>
+								<div class="label">
+								    {{#if moreThan1Song}}
+								      Songs
+								    {{else}}
+								      Song
+								    {{/if}}						    	
+								</div>
+							{{else}}
+								<div class="ui active small inline loader"></div>
+						  	{{/if}}
+							</div>						  	
+							<div class="statistic">
+							{{#if genrePeopleCountLoaded}}
+								<div class="value">
+								  {{countOfPeopleForGenre}}
+								</div>
+								<div class="label">
+								  {{countOfPeopleForGenreLabel}}
+								</div>
+							{{else}}
+								<div class="ui active small inline loader"></div>
+						  	{{/if}}
+							</div>
+						  	
+							<div class="statistic">
+							{{#if genrePercentageCalculated}}
+								<div class="value">
+									{{genrePercentageValue}}%
+								</div>
+								<div class="label">
+									of all songs on Groovli
+								</div>
+							{{else}}
+						  		<div class="ui active small inline loader"></div>
+						  	{{/if}}
+							</div>						  	
+							<div class="statistic">
+							{{#if genreArtistListLoaded}}
+								<div class="value">
+									{{artistCountForThisGenre}}
+								</div>
+								<div class="label">
+									{{#if moreThan1Artist}}
+										artists
+									{{else}}
+										artist
+									{{/if}}
+								</div>
+							{{else}}
+								<div class="ui active small inline loader"></div>
+							{{/if}}
+							</div>
 				  		{{/if}}
 					  <!--{{getTotalListenCountForUser}}
                       {{{listenCount}}}
@@ -117,9 +134,13 @@
 					</div>
 					<div class="ui active tab segment" data-tab="userLibrary">
 							<div id="recentShared" class="songLists">
-								{{#each songsForGenre}}
-									{{>profileSongItem}}
-								{{/each}}
+								{{#if pagedGenreSongsLoaded}}
+									{{#each songsForGenre}}
+										{{>profileSongItem}}
+									{{/each}}
+								{{else}}
+									<div class="ui active centered large inline loader"></div>
+								{{/if}}
 							</div>
 							<div class="tablet only row">
 								<div class="ui one item secondary menu">

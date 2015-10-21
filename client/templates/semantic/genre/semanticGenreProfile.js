@@ -1,6 +1,11 @@
 var genreProfileContext = new ReactiveVar(null);
-var artistsSubLoaded = new ReactiveVar(false);
+//var artistsSubLoaded = new ReactiveVar(false);
 var genrePercentage = new ReactiveVar(0);
+var genreSpecificSongCountLoaded = new ReactiveVar(false);
+var genrePeopleCountLoaded = new ReactiveVar(false);
+var genrePercentageCalculated = new ReactiveVar(false);
+var genreArtistListLoaded = new ReactiveVar(false);
+var pagedGenreSongsLoaded = new ReactiveVar(false);
 
 Template.semanticGenreProfile.helpers({
 	artistImage: function() {
@@ -11,11 +16,11 @@ Template.semanticGenreProfile.helpers({
 		return Session.get(genreProfileContext.get().params._id+'_genObjLoaded');
 	},
 
-	artistSubLoaded: function(){
+	/*artistSubLoaded: function(){
 		//console.log('THI SI SHTHE artists sub loaded reactive var: ');
 		//console.log(artistsSubLoaded.get());
 		return artistsSubLoaded.get();
-	},
+	},*/
 
 	genreObjectForRoute: function() {
 		/*getUserForRouting();
@@ -47,7 +52,7 @@ Template.semanticGenreProfile.helpers({
     	return txtToLower.toLowerCase();
     },
 
-    artistIDForName: function() {
+    /*artistIDForName: function() {
     	if(artistsSubLoaded.get())
     	{
 	    	//console.log("THIS IS THE similar artist name: ");
@@ -63,7 +68,7 @@ Template.semanticGenreProfile.helpers({
 				return foundArtist._id;
 			}
 		}
-	},
+	},*/
 
 	genreHasArtists: function() {
 		if(!_.isUndefined(Session.get(genreProfileContext.get().params._id+'_arts')) && !_.isEmpty(Session.get(genreProfileContext.get().params._id+'_arts')))
@@ -169,6 +174,26 @@ Template.semanticGenreProfile.helpers({
     	if(y > Number(Session.get(this._id+'_sc')))
     		y = Number(Session.get(this._id+'_sc'));
     	return  x + '-' + y;
+    },
+
+    genreSpecificSongCountLoaded: function() {
+    	return genreSpecificSongCountLoaded.get();
+    },
+
+    genrePeopleCountLoaded: function() {
+    	return genrePeopleCountLoaded.get();
+    },
+
+    genrePercentageCalculated: function() {
+    	return genrePercentageCalculated.get();
+    },
+
+    genreArtistListLoaded: function() {
+    	return genreArtistListLoaded.get();
+    },
+
+    pagedGenreSongsLoaded: function() {
+    	return pagedGenreSongsLoaded.get();
     }
 });
 
@@ -189,6 +214,7 @@ Template.semanticGenreProfile.events({
       if(Number(Session.get(genreProfileContext.get().params._id+'_genCursor')) > 4)
       {
         //console.log('INSIDE if condition!!');
+        pagedGenreSongsLoaded.set(false);
         Session.set(genreProfileContext.get().params._id+'_genCursor', Number(Session.get(genreProfileContext.get().params._id+'_genCursor')) - 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -205,6 +231,7 @@ Template.semanticGenreProfile.events({
       if(Number(Session.get(genreProfileContext.get().params._id+'_genCursor')) < Number(Session.get(genreProfileContext.get().params._id+'_sc') - 5))
       {
         //console.log('INSIDE if condition!!');
+        pagedGenreSongsLoaded.set(false);
         Session.set(genreProfileContext.get().params._id+'_genCursor', Number(Session.get(genreProfileContext.get().params._id+'_genCursor')) + 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -235,10 +262,10 @@ Template.semanticGenreProfile.onCreated(function() {
 
 	    if(!_.isUndefined(Session.get(genreProfileContext.get().params._id+'_genObj')) && !_.isUndefined(Session.get(genreProfileContext.get().params._id+'_arts')))
 	    {
-	    	self.subscribe('allSongsForSpecificGenre', Session.get(genreProfileContext.get().params._id+'_arts'), Session.get(genreProfileContext.get().params._id+'_genCursor'));	    	
+	    	self.subscribe('allSongsForSpecificGenre', Session.get(genreProfileContext.get().params._id+'_arts'), Session.get(genreProfileContext.get().params._id+'_genCursor'), {onReady: songSubscriptionReady});	    	
 	    	self.subscribe("counterForGenreSpecificSongs", Session.get(genreProfileContext.get().params._id+'_arts'));
         	Session.set(genreProfileContext.get().params._id+'_sc', Counts.get('songCountForGenreSpecificSongs'));
-
+        	genreSpecificSongCountLoaded.set(true);
 			getUserListForSpecificGenre();
 
 
@@ -262,6 +289,10 @@ Template.semanticGenreProfile.onCreated(function() {
 	});
 });
 
+function songSubscriptionReady() {
+	pagedGenreSongsLoaded.set(true);
+}
+
 function totalSongCountReady(){
 	Session.set('_asc', Counts.get('songCountForAllSongs'));
 }
@@ -271,11 +302,13 @@ function calculateGenrePercentage() {
 	//console.log('##############################THIS IS THE artist percentage: ');
 	//console.log(x);
 	genrePercentage.set(x.toFixed(1));
+	genrePercentageCalculated.set(true);
 }
 
+/*
 function artistSubLoaded(){
 	artistsSubLoaded.set(true);
-}
+}*/
 
 function genreExists(){
 	//console.log("artist SUBSCRIPTION is readyyyyyyy!!");
@@ -292,6 +325,7 @@ function genreExists(){
 		    else{
 		        // do something with result
 			  	Session.set(genreProfileContext.get().params._id+'_arts', result);
+			  	genreArtistListLoaded.set(true);
 			  	//getSongsForSpecificGenre(result);
 		    };
 		});
@@ -420,6 +454,7 @@ function getUsersFromChatter()
 	});
 
 	Session.set(genreProfileContext.get().params._id+'_gusers', userListForGenre);
+	genrePeopleCountLoaded.set(true);
 }
 
 function fixSemanticGrids() {

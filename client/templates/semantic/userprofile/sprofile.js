@@ -170,23 +170,6 @@ Template.sprofile.helpers({
     songCount: function() {
       return Session.get(this._id+'_sc');
     },
-
-    getSongCount: function(uObj) {
-    	//songCountLoaded.set(false);
-		if(!_.isUndefined(uObj))
-		{
-			Meteor.call('getSongCount', uObj, function(error,result){
-			    if(error){
-			        console.log(error.reason);
-			    }
-			    else{
-			        // do something with result
-			      Session.set(uObj._id+'_sc',result);
-			      songCountLoaded.set(true);
-			    };
-			});
-		}
-    },
     locationFlagCode: function() {
     	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj').baseLocation))
     	{
@@ -354,6 +337,7 @@ Template.sprofile.onCreated(function() {
 	    //console.log("THIS IS THE PROFILE CONTEXT REACTIVE VAAAAAAAAAAAAAAAAAR: ");
 	    //console.log(profileContext.get());
 	    Session.setDefault(context.params._id+'_sCursor', 0);
+
 	    self.subscribe('userObjectForProfilePage', profileContext.get().params._id, {onReady: userObjExists});
 		//self.subscribe('userObjectForProfilePage', profileContext.get().params._id, {onReady: userObjExists});
 		self.subscribe('allSongsForSpecificUser', profileContext.get().params._id, Session.get(profileContext.get().params._id+'_sCursor'), {onReady: songSubscriptionReady});
@@ -365,6 +349,7 @@ Template.sprofile.onCreated(function() {
 		{
 			self.subscribe("counterForMyGroovs", Session.get(profileContext.get().params._id+'_uObj').services.facebook.id);
         	Session.set(profileContext.get().params._id+'_sc', Counts.get('songCountForMyGroovs'));
+        	songCountLoaded.set(true);
         }
 	});
 });
