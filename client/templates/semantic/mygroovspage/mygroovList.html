@@ -14,16 +14,17 @@
 				{{#each songs}}
 					{{> yearSpecificSongItem}}
 				{{/each}}
-				{{#if flylistLoadedAndNoMatchingSongs}}
-					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music! :D
-				{{else}}
-					{{#unless myGroovsExist}}
-						No music shared to Facebook yet!
-					{{/unless}}
-				{{/if}}
 			{{else}}
 				<div class="ui active centered large inline loader"></div>
-			{{/if}}				
+			{{/if}}	
+			{{#if flylistLoadedAndNoMatchingSongs}}
+				No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music! :D
+			{{else}}
+				{{#unless myGroovsExist}}
+					No music shared to Facebook yet!
+				{{/unless}}
+			{{/if}}
+			
 		</div>
 		<div class="ui grid">
 			<div class="computer large screen widescreen mobile only row">
