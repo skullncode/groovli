@@ -1005,19 +1005,7 @@ Meteor.publish(null, function (){
 
 
 Meteor.publish('artistObjectForProfilePage', function (artistID){
-  /*var artistForPage = Artists.findOne({'name': {$regex: new RegExp('^' + artistName + '$', 'i')}});
 
-  if(!_.isUndefined(artistForPage) && !_.isEmpty(artistForPage))
-  {
-    //console.log('FOUND A VALID ARTIST!!!');
-    return Artists.find({'name': {$regex: new RegExp('^' + artistName + '$', 'i')}});
-  }
-  else
-  {
-    //console.log('NO ARTIST FOUND!!!');
-    //this.error(new Meteor.Error("erroneous-artist", "Can't find this artist!"));
-    return Artists.find({'name': {$regex: new RegExp('^' + artistName + '$', 'i')}});
-  }*/
   return Artists.find(String(artistID));
 
 });
@@ -1336,7 +1324,8 @@ function getSongIDsForArtistListForGenrePage(artistList){
   var songsForThoseArtists = [];
   var tempSongs = [];
   _.each(cleanedArtistList, function(x){
-    tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}, $or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
+    //tempSongs = Songs.find({sa: {$regex: new RegExp(x, 'i')}, $or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
+    tempSongs = Songs.find({sa: {$regex: new RegExp('^' + x + '$', 'i')}, $or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}).fetch();
     songsForThoseArtists.push.apply(songsForThoseArtists, tempSongs);
   });
   //var songsForThoseArtists = Songs.find({'sa': {$in: cleanedArtistList}}).fetch();
