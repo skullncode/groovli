@@ -17,6 +17,7 @@ Template.sSearch.onRendered(function () {
 	$('.ui.search')
 	  .search({
 	    apiSettings: {
+	      //url: '//localhost:3000/api/ss/{query}'
 	      url: '//groovli.com/api/ss/{query}'
 	    },
 	    fields: {
@@ -37,7 +38,7 @@ Template.sSearch.onRendered(function () {
 	        /*var ytLinkID = result.sl.substring(result.sl.indexOf("v=")+2);
 	        loadVideoById(ytLinkID);*/
 	    },
-	    minCharacters : 5
+	    minCharacters : 3
 	  })
 	;
 });
