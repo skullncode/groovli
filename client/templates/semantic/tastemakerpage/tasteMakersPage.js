@@ -1,6 +1,6 @@
 Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
-
+var pagedTMlistSongsLoaded = new ReactiveVar(false);
 
 
 Template.tasteMakersPage.helpers({
@@ -91,6 +91,9 @@ Template.tasteMakersPage.helpers({
   },
   currentlyChosenTastemakerSongCount: function() {
     return Session.get('tmSongCount');
+  },
+  pagedTMlistSongsLoaded: function() {
+    return pagedTMlistSongsLoaded.get();
   }
 });
 
@@ -295,6 +298,7 @@ Template.tasteMakersPage.events({
       if(Number(Session.get('existingTMCursor')) > 29)
       {
         //console.log('INSIDE if condition!!');
+        pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) - 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
@@ -312,6 +316,7 @@ Template.tasteMakersPage.events({
       if(Number(Session.get('existingTMCursor')) < Number(Session.get('tmSongCount') - 30))
       {
         //console.log('INSIDE if condition!!');
+        pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) + 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
@@ -361,6 +366,7 @@ function onTMSubReady()
   //console.log('THIS IS THE tastemaker SONG COUNT NOW: ');
 
   //if(_.isEmpty(Session.get('selGens')))
+  pagedTMlistSongsLoaded.set(true);
     var stmSelector = getMongoSelectorForFriendSongs(Session.get('seltstmkrid'));  
   //else if(!_.isEmpty(Session.get('selGens')))
     //var stmSelector = getMongoSelectorForGenreBasedSelectionWithinFriendSongs();

@@ -1,5 +1,6 @@
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
+var pagedGlistSongsLoaded = new ReactiveVar(false);
 //Session.setDefault('sgSongCursor', undefined)
 
 Template.sglist.helpers({
@@ -52,6 +53,11 @@ Template.sglist.helpers({
       //var newCursorPosition = Session.get('tmSongCount') - 30
       Session.set('existingSGCursor', 0);
     }
+  },
+  pagedGlistSongsLoaded: function() {
+    //console.log('############## this is the paged g list songs loaded reactive var value: ');
+    //console.log(pagedGlistSongsLoaded.get());
+    return pagedGlistSongsLoaded.get();
   }
 });
 
@@ -156,6 +162,7 @@ Template.sglist.events({
       if(Number(Session.get('existingSGCursor')) > 29)
       {
         //console.log('INSIDE if condition!!');
+        pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) - 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
@@ -173,6 +180,7 @@ Template.sglist.events({
       if(Number(Session.get('existingSGCursor')) < Number(Session.get('sgSongCount') - 30))
       {
         //console.log('INSIDE if condition!!');
+        pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) + 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
@@ -225,6 +233,7 @@ function onSGSubReady()
   //console.log('THIS IS THE SONG COUNT NOW: ');
   var sgSelector = getMongoSelectorForGlobal();  
   var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
+  pagedGlistSongsLoaded.set(true);
   //console.log(result);
   if(result > 0)
   {

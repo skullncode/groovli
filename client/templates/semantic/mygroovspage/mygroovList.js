@@ -3,6 +3,7 @@ var fullSongListByYear = {};
 Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
+var pagedMGlistSongsLoaded = new ReactiveVar(false);
 
 
 Template.mygroovList.helpers({
@@ -123,6 +124,9 @@ Template.mygroovList.helpers({
     {
       return true;
     }
+  },
+  pagedMGlistSongsLoaded: function() {
+    return pagedMGlistSongsLoaded.get();
   }
 });
 
@@ -238,6 +242,7 @@ Template.mygroovList.events({
       if(Number(Session.get('existingMGCursor')) > 29)
       {
         //console.log('INSIDE if condition!!');
+        pagedMGlistSongsLoaded.set(false);
         Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
@@ -255,6 +260,7 @@ Template.mygroovList.events({
       if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - 30))
       {
         //console.log('INSIDE if condition!!');
+        pagedMGlistSongsLoaded.set(false);
         Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
@@ -301,6 +307,7 @@ function onMGSubReady()
 {
   //console.log('My grooooooovs subscription finally ready!!!!');
   //console.log('THIS IS THE SONG COUNT NOW: ');
+  pagedMGlistSongsLoaded.set(true);
   var result = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }}).count();
   //console.log(result);
   if(result > 0)

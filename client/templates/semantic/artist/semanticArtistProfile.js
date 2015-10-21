@@ -2,10 +2,14 @@ var artistProfileContext = new ReactiveVar(null);
 var artistsSubLoaded = new ReactiveVar(false);
 var artistPercentage = new ReactiveVar(0);
 var genresForArtistPageLoaded = new ReactiveVar(false);
+var pagedArtistSongsLoaded = new ReactiveVar(false);
 
 Template.semanticArtistProfile.helpers({
 	artistImage: function() {
-		return this.largeImage['#text'];
+		if(!_.isEmpty(this.largeImage['#text']))
+			return this.largeImage['#text'];
+		else
+			return "http://semantic-ui.com/images/wireframe/square-image.png";
 	},
 	aObjLoaded: function() {
 		return Session.get(artistProfileContext.get().params._id+'_artObjLoaded');
@@ -272,6 +276,9 @@ Template.semanticArtistProfile.helpers({
 	    		return '1 year';
 	    	}
     	}
+    },
+    pagedArtistSongsLoaded: function() {
+    	return pagedArtistSongsLoaded.get();
     }
 });
 
@@ -292,6 +299,7 @@ Template.semanticArtistProfile.events({
       if(Number(Session.get(artistProfileContext.get().params._id+'_aCursor')) > 4)
       {
         //console.log('INSIDE if condition!!');
+        pagedArtistSongsLoaded.set(false);
         Session.set(artistProfileContext.get().params._id+'_aCursor', Number(Session.get(artistProfileContext.get().params._id+'_aCursor')) - 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -308,6 +316,7 @@ Template.semanticArtistProfile.events({
       if(Number(Session.get(artistProfileContext.get().params._id+'_aCursor')) < Number(Session.get(artistProfileContext.get().params._id+'_sc') - 5))
       {
         //console.log('INSIDE if condition!!');
+        pagedArtistSongsLoaded.set(false);
         Session.set(artistProfileContext.get().params._id+'_aCursor', Number(Session.get(artistProfileContext.get().params._id+'_aCursor')) + 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -335,7 +344,7 @@ Template.semanticArtistProfile.onCreated(function() {
 	    //console.log(artistProfileContext.get());
 	    Session.setDefault(context.params._id+'_aCursor', 0);
 	    self.subscribe('artistObjectForProfilePage', artistProfileContext.get().params._id, {onReady: artistExists});
-		self.subscribe('allSongsForSpecificArtist', artistProfileContext.get().params._id, Session.get(artistProfileContext.get().params._id+'_aCursor'));
+		self.subscribe('allSongsForSpecificArtist', artistProfileContext.get().params._id, Session.get(artistProfileContext.get().params._id+'_aCursor'), {onReady: songSubscriptionReady});
 		self.subscribe('artistsForSite', {onReady: artistSubLoaded});
 
 		if(!_.isUndefined(Meteor.user()))
@@ -352,6 +361,12 @@ Template.semanticArtistProfile.onCreated(function() {
         }
 	});
 });
+
+function songSubscriptionReady(){
+	pagedArtistSongsLoaded.set(true);
+}
+
+
 
 function totalSongCountReady(){
 	Session.set('_asc', Counts.get('songCountForAllSongs'));

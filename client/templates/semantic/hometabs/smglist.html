@@ -10,16 +10,20 @@
 				{{startPlayer}}
 				{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 			{{/if}}
-			{{#each songs}}
-				{{> semanticSongItem}}
-			{{/each}}
-			{{#if flylistLoadedAndNoMatchingSongs}}
-				No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music! :D
+			{{#if pagedMGlistSongsLoaded}}
+				{{#each songs}}
+					{{> semanticSongItem}}
+				{{/each}}
+				{{#if flylistLoadedAndNoMatchingSongs}}
+					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music! :D
+				{{else}}
+					{{#unless myGroovsExist}}
+						No music shared to Facebook yet!
+					{{/unless}}
+				{{/if}}
 			{{else}}
-				{{#unless myGroovsExist}}
-					No music shared to Facebook yet!
-				{{/unless}}
-			{{/if}}
+				<div class="ui active centered large inline loader"></div>
+			{{/if}}	
 		</div>
 		<div class="ui grid">
 			<div class="computer large screen widescreen mobile only row">

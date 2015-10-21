@@ -1,6 +1,7 @@
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 //Session.setDefault('sgSongCursor', undefined)
+var pagedGlistSongsLoaded = new ReactiveVar(false);
 
 Template.globalPage.helpers({
   songs: function() {
@@ -68,6 +69,9 @@ Template.globalPage.helpers({
       //var newCursorPosition = Session.get('tmSongCount') - 30
       Session.set('existingSGCursor', 0);
     }
+  },
+  pagedGlistSongsLoaded: function() {
+    return pagedGlistSongsLoaded.get();
   }
 });
 
@@ -188,6 +192,7 @@ Template.globalPage.events({
       if(Number(Session.get('existingSGCursor')) > 29)
       {
         //console.log('INSIDE if condition!!');
+        pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) - 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
@@ -205,6 +210,7 @@ Template.globalPage.events({
       if(Number(Session.get('existingSGCursor')) < Number(Session.get('sgSongCount') - 30))
       {
         //console.log('INSIDE if condition!!');
+        pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) + 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
@@ -267,6 +273,7 @@ function onSGSubReady()
 {
   //console.log('*******************My GLOBAL grooooooovs subscription finally ready!!!!');
   //console.log('THIS IS THE SONG COUNT NOW: ');
+  pagedGlistSongsLoaded.set(true);
   var sgSelector = getMongoSelectorForGlobal();  
   var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
   //console.log(result);

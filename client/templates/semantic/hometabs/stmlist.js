@@ -1,7 +1,7 @@
 Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
 //Session.setDefault('tmSongCursor', undefined)
-
+var pagedTMlistSongsLoaded = new ReactiveVar(false);
 
 
 Template.stmlist.helpers({
@@ -76,6 +76,9 @@ Template.stmlist.helpers({
       var newCursorPosition = Session.get('tmSongCount') - 30
       Session.set('existingTMCursor', 0);
     }
+  },
+  pagedTMlistSongsLoaded: function() {
+    return pagedTMlistSongsLoaded.get();
   }
 });
 
@@ -211,6 +214,7 @@ Template.stmlist.events({
       if(Number(Session.get('existingTMCursor')) > 29)
       {
         //console.log('INSIDE if condition!!');
+        pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) - 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
@@ -228,6 +232,7 @@ Template.stmlist.events({
       if(Number(Session.get('existingTMCursor')) < Number(Session.get('tmSongCount') - 30))
       {
         //console.log('INSIDE if condition!!');
+        pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) + 30);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
@@ -276,6 +281,7 @@ function onTMSubReady()
   //console.log('TM SUBS IS FINALLY DONE - tastemaker subscription finally ready!!!!');
   //console.log('THIS IS THE tastemaker SONG COUNT NOW: ');
 
+  pagedTMlistSongsLoaded.set(true);
   //if(_.isEmpty(Session.get('selGens')))
     var stmSelector = getMongoSelectorForFriendSongs();  
   //else if(!_.isEmpty(Session.get('selGens')))

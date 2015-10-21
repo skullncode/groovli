@@ -3,7 +3,12 @@ var genrePageSidebarContext = new ReactiveVar(null);
 Template.genrePageSideBarArtistThumbs.helpers({
 	artistImage: function() {
 		if(!_.isUndefined(this.mediumImage))
-			return this.mediumImage['#text'];
+		{
+			if(!_.isEmpty(this.mediumImage['#text']))
+				return this.mediumImage['#text'];
+			else
+				return "http://semantic-ui.com/images/wireframe/square-image.png";
+		}
 	},	
 	genreHasArtists: function() {
 		if(!_.isUndefined(Session.get(genrePageSidebarContext.get().params._id+'_arts')) && !_.isEmpty(Session.get(genrePageSidebarContext.get().params._id+'_arts')))

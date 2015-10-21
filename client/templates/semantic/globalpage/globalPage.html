@@ -10,16 +10,20 @@
 	  		{{#if globalSongsExist}}
 				{{startPlayer}}
 			{{/if}}
-			{{#each songs}}
-				{{> semanticGlobalItem}}
-			{{/each}}
-			{{#unless globalSongsExist}}
-				{{#if genresSelected}}
-					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more global matching music! :D
-				{{else}}
-					Wow! Well isn't that something!!? <br>You're currently following everyone on Groovli! <br>You apparently love everyone's taste in music!!
-				{{/if}}
-			{{/unless}}
+			{{#if pagedGlistSongsLoaded}}
+				{{#each songs}}
+					{{> semanticGlobalItem}}
+				{{/each}}
+				{{#unless globalSongsExist}}
+					{{#if genresSelected}}
+						No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more global matching music! :D
+					{{else}}
+						Wow! Well isn't that something!!? <br>You're currently following everyone on Groovli! <br>You apparently love everyone's taste in music!!
+					{{/if}}
+				{{/unless}}
+			{{else}}
+				<div class="ui active centered large inline loader"></div>
+			{{/if}}	
 		</div>
 		<div class="ui grid">
 			<div class="computer large screen widescreen mobile only row">

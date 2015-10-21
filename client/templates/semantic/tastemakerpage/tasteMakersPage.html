@@ -15,16 +15,20 @@
 	  		{{#if tastemakerSongsExist}}
 				{{startPlayer}}
 			{{/if}}
-			{{#each songs}}
-				{{> semanticTastemakerItem}}
-			{{/each}}
-			{{#unless tastemakerSongsExist}}
-				{{#if genresSelected}}
-					No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music from your tastemakers! :D
-				{{else}}
-					Not following anyone yet; check the Global list and follow someone to see their music here!
-				{{/if}}
-			{{/unless}}
+			{{#if pagedTMlistSongsLoaded}}
+				{{#each songs}}
+					{{> semanticTastemakerItem}}
+				{{/each}}
+				{{#unless tastemakerSongsExist}}
+					{{#if genresSelected}}
+						No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more matching music from your tastemakers! :D
+					{{else}}
+						Not following anyone yet; check the Global list and follow someone to see their music here!
+					{{/if}}
+				{{/unless}}
+			{{else}}
+				<div class="ui active centered large inline loader"></div>
+			{{/if}}	
 		</div>
 		<div class="ui grid">
 			<div class="computer large screen widescreen mobile only row">

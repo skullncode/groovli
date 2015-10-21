@@ -71,6 +71,8 @@
 			  		<!--{{>d3ArtistPercentageChart}}-->
 			  		{{#if hasBio}}
 			  			<b>About:<br></b>{{{cleanedBio}}}
+		  			{{else}}
+			  			<h4 class="ui header">No bio exists for this artist.</h4>
 			  		{{/if}}
 			  	</div>
 			  	<div class="eight wide computer column"><!--twelve for extra space for following / follower count-->
@@ -136,9 +138,13 @@
 					</div>
 					<div class="ui active tab segment" data-tab="userLibrary">
 							<div id="recentShared" class="songLists">
-								{{#each songsForArtist}}
-									{{>profileSongItem}}
-								{{/each}}
+								{{#if pagedArtistSongsLoaded}}
+									{{#each songsForArtist}}
+										{{>profileSongItem}}
+									{{/each}}
+								{{else}}
+									<div class="ui active centered large inline loader"></div>
+								{{/if}}
 							</div>
 							<div class="tablet only row">
 								<div class="ui one item secondary menu">
