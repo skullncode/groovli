@@ -1,4 +1,9 @@
 var profileContext = new ReactiveVar(null);
+var songTimeSpanLoaded = new ReactiveVar(false);
+var listenCountLoaded = new ReactiveVar(false);
+var ratingCountLoaded = new ReactiveVar(false);
+var songCountLoaded = new ReactiveVar(false);
+var pagedSongsLoaded = new ReactiveVar(false);
 
 Template.sprofile.helpers({
 	uObjLoaded: function() {
@@ -99,20 +104,24 @@ Template.sprofile.helpers({
 	},
 
 	ratingCount: function(uid) {
-		var r = Session.get(profileContext.get().params._id+'personalRC');
-	  	Meteor.call('getRatingCountForUser', this.services.facebook.id, function(error,result){
+		if(!_.isUndefined(Session.get(profileContext.get().params._id+'personalRC')))
+			return Session.get(profileContext.get().params._id+'personalRC');
+		else
+			return 0;
+	},
+
+	getRatingCountForUser: function(){
+		//ratingCountLoaded.set(false);
+		Meteor.call('getRatingCountForUser', this.services.facebook.id, function(error,result){
 		    if(error){
 		        console.log(error.reason);
 		    }
 		    else{
 		        // do something with result
 			  	Session.set(profileContext.get().params._id+'personalRC',result);
+			  	ratingCountLoaded.set(true);
 		    };
 		});
-		if(!_.isUndefined(r))
-			return r;
-		else
-			return 0;
 	},
 
 	lowerCasedText: function(txtToLowerCase){
@@ -123,7 +132,7 @@ Template.sprofile.helpers({
 		return Session.get('ttg');
 	},
 	getTotalListenCountForUser: function() {
-		
+		//listenCountLoaded.set(false);
 		Meteor.call('getTotalListenHistoryCountForUser', profileContext.get().params._id, function(error,result){
 		    if(error){
 		        console.log(error.reason);
@@ -133,6 +142,7 @@ Template.sprofile.helpers({
 			  	//console.log('SUCCESSFULLY got listen count user!');
 			  	//console.log(result);
 			  	Session.set(profileContext.get().params._id+'_lhCount', result);
+			  	listenCountLoaded.set(true);
 		    };
 		});
 	},
@@ -162,18 +172,20 @@ Template.sprofile.helpers({
     },
 
     getSongCount: function(uObj) {
-      if(!_.isUndefined(uObj))
-      {
-        Meteor.call('getSongCount', uObj, function(error,result){
-            if(error){
-                console.log(error.reason);
-            }
-            else{
-                // do something with result
-              Session.set(uObj._id+'_sc',result);
-            };
-        });
-      }
+    	//songCountLoaded.set(false);
+		if(!_.isUndefined(uObj))
+		{
+			Meteor.call('getSongCount', uObj, function(error,result){
+			    if(error){
+			        console.log(error.reason);
+			    }
+			    else{
+			        // do something with result
+			      Session.set(uObj._id+'_sc',result);
+			      songCountLoaded.set(true);
+			    };
+			});
+		}
     },
     locationFlagCode: function() {
     	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj').baseLocation))
@@ -226,6 +238,21 @@ Template.sprofile.helpers({
 	    		return '1 year';
 	    	}
     	}
+    },
+    songTimeSpanLoaded: function() {
+    	return songTimeSpanLoaded.get();
+    },
+    listenCountLoaded: function() {
+    	return listenCountLoaded.get();
+    },
+    ratingCountLoaded: function() {
+    	return ratingCountLoaded.get();
+    },
+    songCountLoaded: function() {
+    	return songCountLoaded.get();
+    },
+    pagedSongsLoaded: function() {
+    	return pagedSongsLoaded.get();
     }
 });
 
@@ -243,6 +270,7 @@ Template.sprofile.events({
       if(Number(Session.get(profileContext.get().params._id+'_sCursor')) > 4)
       {
         //console.log('INSIDE if condition!!');
+        pagedSongsLoaded.set(false);
         Session.set(profileContext.get().params._id+'_sCursor', Number(Session.get(profileContext.get().params._id+'_sCursor')) - 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -259,6 +287,7 @@ Template.sprofile.events({
       if(Number(Session.get(profileContext.get().params._id+'_sCursor')) < Number(Session.get(profileContext.get().params._id+'_sc') - 5))
       {
         //console.log('INSIDE if condition!!');
+        pagedSongsLoaded.set(false);
         Session.set(profileContext.get().params._id+'_sCursor', Number(Session.get(profileContext.get().params._id+'_sCursor')) + 5);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
@@ -324,7 +353,7 @@ Template.sprofile.onCreated(function() {
 	    Session.setDefault(context.params._id+'_sCursor', 0);
 	    self.subscribe('userObjectForProfilePage', profileContext.get().params._id, {onReady: userObjExists});
 		//self.subscribe('userObjectForProfilePage', profileContext.get().params._id, {onReady: userObjExists});
-		self.subscribe('allSongsForSpecificUser', profileContext.get().params._id, Session.get(profileContext.get().params._id+'_sCursor'));
+		self.subscribe('allSongsForSpecificUser', profileContext.get().params._id, Session.get(profileContext.get().params._id+'_sCursor'), {onReady: songSubscriptionReady});
 		//self.subscribe('favoritesForSpecificUser', profileContext.get().params._id);
 		self.subscribe("favoriteCountForSpecificUser", profileContext.get().params._id);
 		Session.set(profileContext.get().params._id+'_faveCount', Counts.get('faveCounterForUser'));
@@ -337,20 +366,9 @@ Template.sprofile.onCreated(function() {
 	});
 });
 
-/*
-Template.sprofile.onCreated(function () {
-	var self = this;
-	self.subscribe('allSongsForSpecificUser', Router.current().params._id, {onError: onErrorWithSubscription});
-	self.subscribe('userObjectForProfilePage', Router.current().params._id, {onError: onErrorWithSubscription});
-	self.subscribe('favoritesForSpecificUser', String(Router.current().params._id), {onError: onErrorWithSubscription});
-});
-
-function subscriptionError(serr) {
-	console.log('thI IS THE errorneous subscription!!!!!');
-  console.log('INSIDE THE subscription ERROR FUNCTION');
-  console.log(serr);
-  FlowRouter.go('/404');
-}*/
+function songSubscriptionReady() {
+	pagedSongsLoaded.set(true);
+}
 
 function userObjExists(){
 	//console.log("SUBSCRIPTION is readyyyyyyy!!");
@@ -389,7 +407,9 @@ function getYearRangeForMyGroovs() {
 	//console.log("GOING TO GET date range for MY GROOVS!!!");
 	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj')))
 	{
-		Meteor.call('getDateRangeForMyGroovs', Session.get(FlowRouter.current().params._id+'_uObj').services.facebook.id, function(error, result) {
+		//songTimeSpanLoaded.set(false);
+		//Meteor.call('getDateRangeForMyGroovs', Session.get(FlowRouter.current().params._id+'_uObj').services.facebook.id, function(error, result) {
+		Meteor.call('getSongDateRangeForSpecificUser', Session.get(FlowRouter.current().params._id+'_uObj').services.facebook.id, function(error, result) {
 		  if(error)
 		    console.log('Encountered error while trying to get date range for user songs!');
 		  else
@@ -398,6 +418,7 @@ function getYearRangeForMyGroovs() {
 		    //console.log(result);
 		    Session.set(profileContext.get().params._id+'_sdr', result);
 		    Meteor.setTimeout(initiateSongTabsForUserProfile, 800);
+		    songTimeSpanLoaded.set(true);
 		    //Session.set('selyr', result[1]);
 		    //Session.set('drl', true);
 		  }

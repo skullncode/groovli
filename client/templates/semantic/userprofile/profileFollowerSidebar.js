@@ -1,26 +1,31 @@
-Session.setDefault('folLd', false); //followers loaded.
+//Session.setDefault('folLd', false); //followers loaded.
+var followersLoaded = new ReactiveVar(false);
 var followerContext = new ReactiveVar(null);
 
 Template.profileFollowerSidebar.helpers({
 	followersForUser: function() {
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')))
 		{
 			//return Session.get(Session.get(followerContext.get().params._id+'_uObj')._id+'_fclist');
 			return Meteor.users.find({'tastemakers.fbid': String(Session.get(followerContext.get().params._id+'_uObj').services.facebook.id)});
 		}
 	},
 	followerCount: function(){
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')))
 			return Meteor.users.find({'tastemakers.fbid': String(Session.get(followerContext.get().params._id+'_uObj').services.facebook.id)}).count();
 	},
 
 	noFollowersExist: function() {
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')))
 			return Meteor.users.find({'tastemakers.fbid': String(Session.get(followerContext.get().params._id+'_uObj').services.facebook.id)}).count() == 0;
 	},
 
-	viewingFirst6Faves: function() {
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+	followersLoaded: function() {
+		return followersLoaded.get();
+	},
+
+	/*viewingFirst6Faves: function() {
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && followersLoaded.get())
 		{
 			if(Session.get(Session.get(followerContext.get().params._id+'_uObj')._id+'_fc') < 6)
 				return true;
@@ -30,17 +35,17 @@ Template.profileFollowerSidebar.helpers({
 	},
 
 	viewingLast6Faves: function() {
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && followersLoaded.get())
 		{
 			if(Session.get(Session.get(followerContext.get().params._id+'_uObj')._id+'_fc') < 6)
 				return true;
 			else
 				return Session.get('l6Faves');
 		}
-	},
+	},*/
 	//not enough followers to require enabling page buttons
 	followersLessThanPageLimit: function() {
-		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && Session.get('folLd'))
+		if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')) && followersLoaded.get())
 			return Meteor.users.find({'tastemakers.fbid': String(Session.get(followerContext.get().params._id+'_uObj').services.facebook.id)}).count() <= 12;
 	}
 });
@@ -56,7 +61,8 @@ Template.profileFollowerSidebar.onCreated(function() {
     	var context = FlowRouter.current();
     	followerContext.set(context);
     	Session.setDefault(followerContext.get().params._id+'_folcurs', 0);
-		Session.set('folLd',false);
+		//Session.set('folLd',false);
+		followersLoaded.set(false);
 		//console.log('GOING TO SUBSCRIBE TO FOLLOWERS NOW!!!!');
 		self.subscribe('followersForUser', Session.get(followerContext.get().params._id+'_uObj'), Session.get(followerContext.get().params._id+'_folcurs'), {onReady: setUpFollowerList});
 		//}
@@ -66,7 +72,8 @@ Template.profileFollowerSidebar.onCreated(function() {
 function setUpFollowerList(){
 	if(!_.isUndefined(Session.get(followerContext.get().params._id+'_uObj')))
 	{
-		Session.set('folLd',true);
+		//Session.set('folLd',true);
+		followersLoaded.set(true);
 	}
 }
 

@@ -15,20 +15,24 @@
 	<div class="ui bottom attached tertiary segment">
 		<!--<div class="ui items">-->
 		<div class="ui two column doubling grid container">
-		{{#each topTenBands}}
-			{{#if artistHasPage sa}}
-				<div class="column">
-					<div class="item">
-						<a href="/artist/{{artistIDForName sa}}" title="{{cleanedArtName sa}} page">
-							<img class="ui tiny rounded image" src="{{bandImage sa}}">
-							<div class="middle aligned content">
-						      {{sa}}
-						    </div>
-					    </a>
+		{{#if faveBandsLoaded}}
+			{{#each topTenBands}}
+				{{#if artistHasPage sa}}
+					<div class="column">
+						<div class="item">
+							<a href="/artist/{{artistIDForName sa}}" title="{{cleanedArtName sa}} page">
+								<img class="ui tiny rounded image" src="{{bandImage sa}}">
+								<div class="middle aligned content">
+							      {{sa}}
+							    </div>
+						    </a>
+						</div>
 					</div>
-				</div>
-			{{/if}}
-		{{/each}}
+				{{/if}}
+			{{/each}}
+		{{else}}
+			<div class="ui active centered large inline loader"></div>
+		{{/if}}
 		</div>
 	</div>
 	<!--</div>-->

@@ -1,6 +1,7 @@
 Session.setDefault('f6Faves', true); //first 6 faves
 Session.setDefault('l6Faves', false); //last 6 faves
 var faveBandsContext = new ReactiveVar(null);
+var faveBandsLoaded = new ReactiveVar(false);
 
 Template.profileFaveBands.helpers({
     topTenBands: function() {
@@ -57,6 +58,9 @@ Template.profileFaveBands.helpers({
 			return true;
 		else
 			return Session.get('l6Faves');
+	},
+	faveBandsLoaded: function() {
+		return faveBandsLoaded.get()
 	}
 });
 
@@ -77,6 +81,7 @@ Template.profileFaveBands.onCreated(function() {
 });
 
 function getTopBandDetails(){
+	//faveBandsLoaded.set(false);
 	if(!_.isUndefined(Session.get(faveBandsContext.get().params._id+'_uObj')))
 	{
 		var uid = Session.get(faveBandsContext.get().params._id+'_uObj').services.facebook.id;
@@ -90,6 +95,7 @@ function getTopBandDetails(){
 			  	Session.set('ttb', result[0]);
 			  	Session.set(faveBandsContext.get().params._id+'topBandsLength', result[0].length);
 			  	Session.set('ttg', result[1]);
+			  	faveBandsLoaded.set(true);
 		    };
 		});
 		

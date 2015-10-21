@@ -29,7 +29,7 @@ Template.semanticLanding.onRendered(function() {
   //$('.ui.dropdown.landingDropdownMenu').dropdown();
   Session.set("playerLoaded", false);
   Session.set("playerStarted", false);
-  Meteor.setTimeout(enableDropdown, 800);
+  //Meteor.setTimeout(enableDropdown, 800);
 });
 
 Template.semanticLanding.onCreated(function() {
@@ -113,6 +113,6 @@ Template.semanticLanding.events({
     }
 });
 
-function enableDropdown(){
+/*function enableDropdown(){
   $('.ui.dropdown.landingDropdownMenu').dropdown();
-}
+}*/

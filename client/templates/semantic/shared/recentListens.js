@@ -1,3 +1,5 @@
+var recentListensLoaded = new ReactiveVar(false);
+
 Template.recentListens.helpers({
 	getListenHistory: function() {
 		getListenHistoryForUser(FlowRouter.current().params._id);
@@ -20,6 +22,9 @@ Template.recentListens.helpers({
 			return true;
 		else
 			return false;
+	},
+	recentListensLoaded: function() {
+		return recentListensLoaded.get();
 	}
 });
 
@@ -27,6 +32,7 @@ Template.recentListens.helpers({
 function getListenHistoryForUser(uid)
 {
 	//console.log('GOING TO GET LISTEN HISTORY FOR THIS USER: ' + uid);
+	//recentListensLoaded.set(false);
 	Meteor.call('getListenHistoryForUser', uid, function(error,result){
 	    if(error){
 	        console.log(error.reason);
@@ -45,15 +51,15 @@ function getListenHistoryForUser(uid)
 				//second object in result array is the mapped listen history which was previously done on client side
 				Session.set(uid+'_lh', _.first(result[1],6));
 				Session.set(uid+'_lh_count', result[1].length);
-
+				recentListensLoaded.set(true);
 				//first object in result array is the cleaned listen history that was used to do the mapping previously on the client side
-				getMutualListenHistory(result[0], FlowRouter.current().params._id);
+				//getMutualListenHistory(result[0], FlowRouter.current().params._id);
 			}
 	    }
 	});
 }
 
-function getMutualListenHistory(lh, uid)
+/*function getMutualListenHistory(lh, uid)
 {
 	if(isUserProfileYou())
 	{
@@ -96,4 +102,4 @@ function getMutualListenHistory(lh, uid)
 		    }
 		});
 	}
-}
+}*/

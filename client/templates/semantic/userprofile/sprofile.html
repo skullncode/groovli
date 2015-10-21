@@ -63,33 +63,50 @@
 			  		<div class="ui divider"></div>
 				  	<div class="ui mini statistics">
 				  		{{#if songsShared}}
+				  			{{#if songCountLoaded}}
+								<div class="statistic">
+									<div class="value">
+									  {{songCount}}
+									</div>
+									<div class="label">
+									  Songs
+									</div>
+								</div>
+							{{else}}
+								<div class="ui active small inline loader"></div>
+						  	{{/if}}
 						  <div class="statistic">
-						    <div class="value">
-						      {{songCount}}
-						    </div>
-						    <div class="label">
-						      Songs
-						    </div>
-						  </div>
-						  <div class="statistic">
-						  	<div class="value">
-						      {{songsTimeSpan}}
-						    </div>
-						    <div class="label">
-						      spanning
-						    </div>						    
+						  	{{#if songTimeSpanLoaded}}
+							  	<div class="value">
+							      {{songsTimeSpan}}
+							    </div>
+							    <div class="label">
+							      spanning
+							    </div>
+							{{else}}
+								<div class="ui active small inline loader"></div>
+						    {{/if}}					    
 						  </div>
 				  		{{/if}}
 					  <div class="statistic">
-					    <div class="value">
-					      {{ratingCount}}
-					    </div>
-					    <div class="label">
-					      Songs Rated
-					    </div>
+					  	{{getRatingCountForUser}}
+					  	{{#if ratingCountLoaded}}
+						    <div class="value">
+						      {{ratingCount}}
+						    </div>
+						    <div class="label">
+						      Songs Rated
+						    </div>
+						{{else}}
+							<div class="ui active small inline loader"></div>
+					    {{/if}}
 					  </div>
 					  {{getTotalListenCountForUser}}
-                      {{{listenCount}}}
+					  {{#if listenCountLoaded}}
+                      	{{{listenCount}}}
+                      {{else}}
+                      	<div class="ui active small inline loader"></div>
+                      {{/if}}
                       <div class="statistic">
 					    <div class="value">
 					      {{favoriteCount}}
@@ -133,9 +150,13 @@
 					</div>
 					<div class="ui active tab segment" data-tab="userLibrary">
 							<div id="recentShared" class="songLists">
+							{{#if pagedSongsLoaded}}
 								{{#each recentSharedSongs}}
 									{{>profileSongItem}}
 								{{/each}}
+							{{else}}
+								<div class="ui active centered large inline loader"></div>
+							{{/if}}
 							</div>
 							<div class="tablet only row">
 								<div class="ui one item secondary menu">

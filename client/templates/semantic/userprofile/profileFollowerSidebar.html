@@ -15,19 +15,23 @@
 	<div class="ui bottom attached tertiary segment">
 		<!--<div class="ui items">-->
 			<div class="ui six column doubling grid container">
-			{{#each followersForUser}}
-				<div class="column">
-					<div class="item">
-						<a id="userProfileFollowerLink" href="/profile/{{_id}}" title="{{services.facebook.first_name}}">
-							<img class="ui tiny rounded image" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square">
-					    </a>
+			{{#if followersLoaded}}
+				{{#each followersForUser}}
+					<div class="column">
+						<div class="item">
+							<a id="userProfileFollowerLink" href="/profile/{{_id}}" title="{{services.facebook.first_name}}">
+								<img class="ui tiny rounded image" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square">
+						    </a>
+						</div>
 					</div>
-				</div>
-			{{/each}}
-			{{#if noFollowersExist}}
-				<div class="ui basic segment">
-				  <p><i>Nobody following this person right now...</i></p>
-				</div>
+				{{/each}}
+				{{#if noFollowersExist}}
+					<div class="ui basic segment">
+					  <p><i>Nobody following this person right now...</i></p>
+					</div>
+			    {{/if}}
+			{{else}}
+				<div class="ui active centered inline loader"></div>
 		    {{/if}}
 			</div>
 	</div>

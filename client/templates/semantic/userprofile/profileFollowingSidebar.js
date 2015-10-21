@@ -1,6 +1,7 @@
 //Session.setDefault('followingLd', false); //followers loaded.
 var followingContext = new ReactiveVar(null);
 var userIDsForTastemakers = new ReactiveVar(null);
+var tastemakerDetailsLoaded = new ReactiveVar(false);
 
 Template.profileFollowingSidebar.helpers({
 	peopleFollowedByUser: function() {
@@ -48,7 +49,7 @@ Template.profileFollowingSidebar.helpers({
 				return 0;
 		}
 	},
-
+	/*
 	viewingFirst6Faves: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
 		{
@@ -67,7 +68,7 @@ Template.profileFollowingSidebar.helpers({
 			else
 				return Session.get('l6Faves');
 		}
-	},
+	},*/
 	//less tastemakers than having to enable the paging buttons
 	tastemakersLessThanPagingLimit: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
@@ -79,6 +80,9 @@ Template.profileFollowingSidebar.helpers({
 				return true;
 		}
 	},
+	tastemakerDetailsLoaded:function() {
+		return tastemakerDetailsLoaded.get();
+	}
 });
 
 
@@ -94,6 +98,7 @@ Template.profileFollowingSidebar.onCreated(function() {
     	Session.setDefault(followingContext.get().params._id+'_followingcurs', 0);
     	//console.log("$$$$$$$$$$$$$$$$$ this is the tastemakers object!!");
     	//console.log(Session.get(followingContext.get().params._id+'_uObj').tastemakers);
+    	tastemakerDetailsLoaded.set(false);
     	if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
     	{
 	    	Meteor.call('getUserIDsForSocIDs', Session.get(followingContext.get().params._id+'_uObj').tastemakers, function(error,result){
@@ -105,6 +110,7 @@ Template.profileFollowingSidebar.onCreated(function() {
 				  	//console.log('GOT BACK A RESULT FROM THE SERVER:');
 				  	//console.log(result);
 				  	userIDsForTastemakers.set(result);
+				  	tastemakerDetailsLoaded.set(true);
 			    };
 			});
     	}

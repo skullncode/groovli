@@ -388,5 +388,53 @@ Meteor.methods({
 			});
 		}
 		return idArray;
+	},
+	getSongDateRangeForSpecificUser: function(fbid){
+		//console.log("################reached date method to get date range for user: " + fbid);
+
+		var pipeline = [{$unwind:"$sharedBy"},
+ 						{$match:{"sharedBy.uid":String(fbid)}},
+ 						{$sort:{'sharedBy.systemDate':1}},
+ 						{$limit:1}];
+
+ 		var dateRangeResult = Songs.aggregate(pipeline);
+ 		var beginYear = 0;
+
+ 		if(!_.isEmpty(dateRangeResult))
+ 		{
+ 			_.each(dateRangeResult, function(z){
+ 				if(z.sharedBy.uid === String(fbid))
+ 				{
+ 					beginYear = z.sharedBy.systemDate;
+ 				}
+ 			})
+ 		}
+
+ 		pipeline = [{$unwind:"$sharedBy"},
+ 						{$match:{"sharedBy.uid":String(fbid)}},
+ 						{$sort:{'sharedBy.systemDate':-1}},
+ 						{$limit:1}];
+
+ 		dateRangeResult = Songs.aggregate(pipeline);
+ 		var endYear = 0;
+
+ 		if(!_.isEmpty(dateRangeResult))
+ 		{
+ 			_.each(dateRangeResult, function(z){
+ 				if(z.sharedBy.uid === String(fbid))
+ 				{
+ 					endYear = z.sharedBy.systemDate;
+ 				}
+ 			})
+ 		}
+
+ 		var dateRange = [];
+ 		dateRange.push(new Date(beginYear * 1000).getFullYear());
+ 		dateRange.push(new Date(endYear * 1000).getFullYear());
+
+ 		//console.log('###############$$$$$$$$$$$$$$$$$$$$$$$$$ THIS IS THE DATE RANGE:')
+ 		//console.log(dateRange);
+
+ 		return dateRange;
 	}
 });

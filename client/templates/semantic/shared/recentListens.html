@@ -1,35 +1,39 @@
 <template name="recentListens">
 	{{getListenHistory}}
-	{{#if recentListenHistoryExists}}
-		<div class="ui two column grid">
-			<div class="eleven wide column homePlayerTabsContainerBoxBackground">
-				<h3 class="ui header">Recently listened to:</h3>
-				<h2 class="ui header"></h2>
-			  	<div class="ui six column doubling grid container">
-			  		{{#each songsJustListened}}
-						<div class="column">
-							<div class="item" title="listened to {{listenedTimestamp}}">
-								{{#if imageActuallyExists}}
-									<img class="ui tiny rounded image" src="{{songObj.iTunesLargeAlbumArt}}">
-								{{else}}
-									<img class="ui tiny rounded image" src="http://semantic-ui.com/images/wireframe/square-image.png">
-								{{/if}}
-								<div class="content">
-								<div class="header">{{songObj.st}} <i>by</i> {{songObj.sa}}</div>
-									
+	{{#if recentListensLoaded}}
+		{{#if recentListenHistoryExists}}
+			<div class="ui two column grid">
+				<div class="eleven wide column homePlayerTabsContainerBoxBackground">
+					<h3 class="ui header">Recently listened to:</h3>
+					<h2 class="ui header"></h2>
+				  	<div class="ui six column doubling grid container">
+				  		{{#each songsJustListened}}
+							<div class="column">
+								<div class="item" title="listened to {{listenedTimestamp}}">
+									{{#if imageActuallyExists}}
+										<img class="ui tiny rounded image" src="{{songObj.iTunesLargeAlbumArt}}">
+									{{else}}
+										<img class="ui tiny rounded image" src="http://semantic-ui.com/images/wireframe/square-image.png">
+									{{/if}}
+									<div class="content">
+									<div class="header">{{songObj.st}} <i>by</i> {{songObj.sa}}</div>
+										
+									</div>
 								</div>
 							</div>
-						</div>
-					{{/each}}
-					<!--{{else}}
-						<div class="ui basic segment">
-						  <p><i>This person has not recently listened to any music...</i></p>
-						</div>-->				
-					<div class="column"></div>
-					<div class="column"></div>
-					<div class="column"></div>
-			  	</div>
+						{{/each}}
+						<!--{{else}}
+							<div class="ui basic segment">
+							  <p><i>This person has not recently listened to any music...</i></p>
+							</div>-->				
+						<div class="column"></div>
+						<div class="column"></div>
+						<div class="column"></div>
+				  	</div>
+				</div>
 			</div>
-		</div>
+		{{/if}}
+	{{else}}
+		<div class="ui active centered large inline loader"></div>
 	{{/if}}
 </template>
