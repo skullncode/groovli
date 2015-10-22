@@ -2,7 +2,7 @@
 	{{#if uObjLoaded}}
 		{{#with userObjectForRoute}}
 			<div class="ui stackable grid">
-				<div class="sixteen wide computer column userProfileHeaderSecondaryColor">
+				<div class="four wide computer column userProfileHeaderSecondaryColor">
 					<div class="ui special cards">
 						<div class="card">
 						    <div class="image">
@@ -63,6 +63,19 @@
 					  	</div>
 				  	</div>
 			  	</div>
+			  	<div class="five wide computer four wide tablet sixteen wide mobile column userProfileHeaderSecondaryColor">
+				  	{{> profileFaveBands}}
+			  	</div>
+			  	<div class="six wide computer column userProfileHeaderSecondaryColor">
+				  	<div class="ui stackable grid">
+				  		<div class="sixteen wide column">
+							{{> profileFollowerSidebar}}
+						</div>
+						<div class="sixteen wide column">
+							{{> profileFollowingSidebar}}
+						</div>
+					</div>
+			  	</div>			  	
 			  	<div class="eight wide computer column"><!--twelve for extra space for following / follower count-->
 			  		<div class="ui divider"></div>
 				  	<div class="ui mini statistics">
@@ -145,7 +158,7 @@
 				<h2 class="ui header"></h2>
 			</div>-->
 			<div class="ui stackable grid">
-				<div class="twelve wide computer sixteen wide tablet sixteen wide mobile column">
+				<div class="ten wide computer sixteen wide tablet sixteen wide mobile column">
 					<div class="ui pointing secondary menu userProfileSongTabs">
 					  <a class="active item" data-tab="userLibrary">{{#if userProfileIsNotYou}}{{services.facebook.first_name}}'s Groovs{{else}}Your Groovs{{/if}} ({{currentCursorPosition}} of {{songCount}})</a>
 					  {{#if hasFavorites}}
