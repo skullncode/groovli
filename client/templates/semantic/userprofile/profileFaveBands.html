@@ -16,20 +16,26 @@
 		<!--<div class="ui items">-->
 		<div class="ui two column grid container">
 		{{#if faveBandsLoaded}}
-			{{#each topTenBands}}
-				{{#if artistHasPage sa}}
-					<div class="column">
-						<div class="item">
-							<a href="/artist/{{artistIDForName sa}}" title="{{cleanedArtName sa}} page">
-								<img class="ui tiny rounded image" src="{{bandImage sa}}">
-								<div class="middle aligned content">
-							      {{sa}}
-							    </div>
-						    </a>
+			{{#if hasTopTenBands}}
+				{{#each topTenBands}}
+					{{#if artistHasPage sa}}
+						<div class="column">
+							<div class="item">
+								<a href="/artist/{{artistIDForName sa}}" title="{{cleanedArtName sa}} page">
+									<img class="ui tiny rounded image" src="{{bandImage sa}}">
+									<div class="middle aligned content">
+								      {{sa}}
+								    </div>
+							    </a>
+							</div>
 						</div>
-					</div>
-				{{/if}}
-			{{/each}}
+					{{/if}}
+				{{/each}}
+			{{else}}
+				<div class="ui basic segment">
+				  <p><i>{{userFirstName}} hasn't yet shared enough music, to know their favorite bands.</i></p>
+				</div>
+			{{/if}}
 		{{else}}
 			<div class="ui active centered large inline loader"></div>
 		{{/if}}

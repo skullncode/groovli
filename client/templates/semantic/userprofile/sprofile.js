@@ -29,6 +29,10 @@ Template.sprofile.helpers({
     	}
 	},
 
+	userFirstName: function() {
+		return Session.get(profileContext.get().params._id+'_uObj').services.facebook.first_name;
+	},
+
 	locationDetailsExist: function() {
 		if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj')) && !_.isUndefined(Session.get(Router.current().params._id+'_uObj').baseLocation))
 			return true;
@@ -173,10 +177,8 @@ Template.sprofile.helpers({
     locationFlagCode: function() {
     	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj').baseLocation))
     	{
-    		//console.log('returning this FLAG CODE: ');
-    		//var x = Session.get(profileContext.get().params._id+'_uObj').baseLocation.countryInternetCode.toLowerCase() + ' flag'; 
-    		//console.log(x);
-    		return Session.get(profileContext.get().params._id+'_uObj').baseLocation.countryInternetCode.toLowerCase() + ' flag';
+    		//return Session.get(profileContext.get().params._id+'_uObj').baseLocation.countryInternetCode.toLowerCase() + ' flag';
+    		return Session.get(profileContext.get().params._id+'_uObj').baseLocation.country.toLowerCase() + ' flag';
     	}
     },
     recentSharedSongs: function() {

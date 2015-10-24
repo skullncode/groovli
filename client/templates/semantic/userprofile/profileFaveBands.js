@@ -14,6 +14,13 @@ Template.profileFaveBands.helpers({
 			return _.first(Session.get('ttb'), 6);
 	},
 
+	hasTopTenBands: function() {
+		if(!_.isEmpty(Session.get('ttb')))
+			return true;
+		else
+			return false;
+	},
+
 	cleanedArtName: function(artName) {
 		return cleanedArtistName(artName)
 	},
@@ -62,6 +69,10 @@ Template.profileFaveBands.helpers({
 	},
 	faveBandsLoaded: function() {
 		return faveBandsLoaded.get()
+	},
+
+	userFirstName: function() {
+		return Session.get(faveBandsContext.get().params._id+'_uObj').services.facebook.first_name;
 	}
 });
 

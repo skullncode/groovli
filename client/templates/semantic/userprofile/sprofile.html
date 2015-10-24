@@ -160,7 +160,11 @@
 			<div class="ui stackable grid">
 				<div class="ten wide computer sixteen wide tablet sixteen wide mobile column">
 					<div class="ui pointing secondary menu userProfileSongTabs">
-					  <a class="active item" data-tab="userLibrary">{{#if userProfileIsNotYou}}{{services.facebook.first_name}}'s Groovs{{else}}Your Groovs{{/if}} ({{currentCursorPosition}} of {{songCount}})</a>
+					  {{#if songsShared}}
+					  	<a class="active item" data-tab="userLibrary">{{#if userProfileIsNotYou}}{{services.facebook.first_name}}'s Groovs{{else}}Your Groovs{{/if}} ({{currentCursorPosition}} of {{songCount}})</a>
+					  {{else}}
+					  	<a class="active item" data-tab="userLibrary">{{#if userProfileIsNotYou}}{{services.facebook.first_name}}'s Groovs{{else}}Your Groovs{{/if}} (0)</a>
+					  {{/if}}
 					  {{#if hasFavorites}}
 					  	<a class="item" data-tab="userFavorites">Favorites</a>
 					  {{/if}}
@@ -168,9 +172,15 @@
 					<div class="ui active tab segment" data-tab="userLibrary">
 							<div id="recentShared" class="songLists">
 							{{#if pagedSongsLoaded}}
-								{{#each recentSharedSongs}}
-									{{>profileSongItem}}
-								{{/each}}
+								{{#if songsShared}}
+									{{#each recentSharedSongs}}
+										{{>profileSongItem}}
+									{{/each}}
+								{{else}}
+									<div class="ui basic segment">
+									  <p><i>{{userFirstName}} sadly hasn't yet shared any music.</i></p>
+									</div>
+								{{/if}}
 							{{else}}
 								<div class="ui active centered large inline loader"></div>
 							{{/if}}
