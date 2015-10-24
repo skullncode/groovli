@@ -3,8 +3,8 @@
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if globalSongsExist}}
 	    	<div class="ui label"><i class="music icon"></i> {{sgLength}}</div>
-	    	{{>globalDateFilter}}
 	    {{/if}}
+	    {{>globalDateFilter}}
 	  	<div id="sgList" class="songLists">
 	  		{{fixGSongCursor}}
 	  		{{#if globalSongsExist}}
@@ -18,7 +18,7 @@
 					{{#if genresSelected}}
 						No matching songs for current flylist / genre selection! <br>change your flylist settings and maybe get more global matching music! :D
 					{{else}}
-						Wow! Well isn't that something!!? <br>You're currently following everyone on Groovli! <br>You apparently love everyone's taste in music!!
+						No songs found within the global community for that year!
 					{{/if}}
 				{{/unless}}
 			{{else}}
