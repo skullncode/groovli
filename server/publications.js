@@ -1157,6 +1157,7 @@ Meteor.publish('userStatus', function() {
 Meteor.publish('masterUserData', function(cursorSkipAmount) {
   return Meteor.users.find({},{
           limit: 10,
+          sort: {'createdAt': -1, 'status.lastLogin.date': -1},
           skip: cursorSkipAmount
        });
 });

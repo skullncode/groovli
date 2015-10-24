@@ -135,6 +135,12 @@ Template.sprofile.helpers({
 	topTenGenres: function() {
 		return Session.get('ttg');
 	},
+	hasTopTenGenres: function() {
+		if(_.isEmpty(Session.get('ttg')))
+			return false;
+		else
+			return true;
+	},
 	getTotalListenCountForUser: function() {
 		//listenCountLoaded.set(false);
 		Meteor.call('getTotalListenHistoryCountForUser', profileContext.get().params._id, function(error,result){

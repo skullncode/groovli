@@ -37,15 +37,21 @@
 						    </div>
 						    <div class="content">
 						    	<div class="content">
-							       	<span class="left floated"><b>Top Genres:</b>
-							       	{{#if topTenGenresLoaded}}
-								       	{{#each topTenGenres}} 
-								       		<a href="/genre/{{this._id}}" class="ui green label"><b>{{lowerCasedText this.name}}</b></a>
-								       	{{/each}}
-								    {{else}}
+						    		{{#if topTenGenresLoaded}}
+								       	<span class="left floated"><b>Top Genres:</b>
+								       		{{#if hasTopTenGenres}}
+										       	{{#each topTenGenres}} 
+										       		<a href="/genre/{{this._id}}" class="ui green label"><b>{{lowerCasedText this.name}}</b></a>
+										       	{{/each}}
+									       	{{else}}
+									       		<div class="ui basic segment">
+												  <p><i>{{userFirstName}} hasn't yet shared enough music, to know their top genres.</i></p>
+												</div>
+									       	{{/if}}
+								       	</span>
+							       	{{else}}
 								    	<div class="ui active centered inline loader"></div>
 								    {{/if}}
-							       	</span>
 						       	</div>
 						    </div>
 						    {{#if userIsKing}}<!--ADMIN SECTION-->
