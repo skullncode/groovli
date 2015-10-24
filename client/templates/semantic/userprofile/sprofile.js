@@ -375,6 +375,10 @@ function userObjExists(){
 		Session.set(profileContext.get().params._id+'_uObj', Meteor.users.findOne(profileContext.get().params._id));
 		Session.set(profileContext.get().params._id+'_uObjLoaded', true);
 		getYearRangeForMyGroovs();
+		mixpanel.track('view user profile', {
+	        userProfile: profileContext.get().params._id,
+	       	viewee: Meteor.user()._id
+	      });
 	}
 	else
 	{

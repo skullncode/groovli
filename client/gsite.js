@@ -9,6 +9,7 @@ if (Meteor.isClient) {
      Session.set('MyGroovsSkipCount', 50);
      Session.set('playlistLoadAmount', 2);
      Session.set('initialMyGroovsLoaded', false);
+
     //blog client configuration
 	//console.log('Blog: configuring comments.');
 	/*Blog.config({
@@ -62,7 +63,7 @@ if (Meteor.isClient) {
 		}, 60000);*/
 
 	//if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
-	if(userCheck())
+	/*if(userCheck())
 	{
 		mixpanel.identify(Meteor.user()._id);
 		mixpanel.people.set({
@@ -72,19 +73,12 @@ if (Meteor.isClient) {
 		    "$email": Meteor.user().services.facebook.email,
 		    "$ip": Meteor.user().status.lastLogin.ipAddr
 		});
-	}
+	}*/
+
+	identifyUserWithMixPanel();
   });
 
-	/*Tracker.autorun(function() {
-	    var user = Meteor.user();
-	    if (!user) return;
-	    analytics.identify(user._id, {
-			name: user.profile.name,
-			email: user.profile.name
-		});
-	});*/
 
-  //var subMgr = new SubsManager();
 
 	Deps.autorun(function() {
 		//if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
@@ -127,4 +121,18 @@ if (Meteor.isClient) {
 
 function userCheck(){
 	return Meteor.user() && !_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook);
+}
+
+function identifyUserWithMixPanel(){
+	if(userCheck())
+	{
+		mixpanel.identify(Meteor.user()._id);
+		mixpanel.people.set({
+		    "$first_name": Meteor.user().services.facebook.first_name,
+		    "$last_name": Meteor.user().services.facebook.last_name,
+		    "$created": Meteor.user().createdAt,
+		    "$email": Meteor.user().services.facebook.email,
+		    "$ip": Meteor.user().status.lastLogin.ipAddr
+		});
+	}
 }
