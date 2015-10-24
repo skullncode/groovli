@@ -389,7 +389,10 @@ isUserProfileYou = function()
 function isUserKing()
 {
 	//return ((Meteor.user().services.facebook.id === '721431527969807') && isUserProfileYou()) ; // only check with Sandeep's FB ID
-	return ((Meteor.user().services.facebook.email === 'reverieandreflection@gmail.com') && isUserProfileYou()) ; // only check with Sandeep's FB email id
+	if(!_.isUndefined(Meteor.user())  && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
+		return ((Meteor.user().services.facebook.email === 'reverieandreflection@gmail.com') && isUserProfileYou()) ; // only check with Sandeep's FB email id
+	else
+		return false;
 }
 
 

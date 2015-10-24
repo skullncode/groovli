@@ -1148,6 +1148,20 @@ Meteor.publish('userStatus', function() {
   });
 });
 
+Meteor.publish('masterUserData', function(cursorSkipAmount) {
+  return Meteor.users.find({},{
+          limit: 10,
+          skip: cursorSkipAmount
+       });
+});
+
+Meteor.publish('masterUserCount', function(loggedInUser) {
+   if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForAllUsers', Meteor.users.find({}));
+  }
+});
+
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");
   //console.log(this.userId);

@@ -1,42 +1,71 @@
 <template name="semanticUserMaster">
-	{{getUD}}
-	<table class="table">
-      <thead>
-        <tr>
-          <th width="5%"></th>
-          <th width="10%">Name</th>
-          <th width="10%" class="text-center">FB ID</th>
-          <th width="20%" class="text-center">Joined</th>
-          <th width="10%" class="text-center">Location</th>
-          <th width="15%" class="text-center">Last Login</th>
-          <th width="10%" class="text-center">Status</th>
-          <th width="5%" class="text-center">Songs</th>
-          <th width="5%" class="text-center">Total Listens</th>
-          <th width="5%" class="text-center">FB Friends</th>
-          <th width="5%" class="text-center">Following</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each userData}}
-        <tr>
-          {{getTotalListenCountForUser _id}}
-          <td class="vertical-align"><a href="/profile/{{_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:20px;height:20px;" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square"></a></td>
-          <td class="vertical-align"><span class="label {{statusClass}}">{{profile.name}}</span></td>
-          <td class="text-center vertical-align">{{services.facebook.id}}</td>
-          <td class="text-center vertical-align">{{memberSince}}</td>
-          <td class="text-center vertical-align">{{locationCountry}}</td>
-          <td class="text-center vertical-align">{{lastLogin}}</td>
-          <td class="text-center vertical-align">{{currentStatus}}</td>
-          <td class="text-center vertical-align">{{songCount}}</td>
-          <td class="text-center vertical-align">{{listenCount}}</td>
-          <td class="text-center vertical-align">{{fbFriends.length}}</td>
-          <td class="text-center vertical-align">{{tastemakers.length}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-	<div class="col-md-2 column">
-		<h2><strong>{{userCount}}</strong></h2>                    
-		<p><small>users</small></p>
-	</div>
+  {{#if currentUser}}
+    {{#if userIsAnAdmin}}
+      <h1 class="ui header">EagleEye - User Masterlist</h1>
+      <table class="ui celled table">
+        <thead>
+          <tr><th>Name</th>
+          <th>FB ID</th>
+          <th>Joined</th>
+          <th>Location</th>
+          <th>Last Login</th>
+          <th>Stories</th>
+          <th>Songs</th>
+          <th>Total Listens</th>
+          <th>FB Friends</th>
+          <th>Following</th>
+        </tr></thead>
+        <tbody>
+        {{#if userListLoaded}}
+          {{#each userData}}
+            <tr>
+              {{getTotalListenCountForUser _id}}
+              {{getSongCountForUser services.facebook.id}}
+              {{getStoryCountForUser services.facebook.id}}
+              <td>
+                <a href="/profile/{{_id}}" target='blank'><h4 class="ui image header">
+                  <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square" class="ui mini rounded image">
+                  <div class="content">
+                    {{profile.name}}
+                    <div class="sub header">{{{currentStatus}}}
+                  </div>
+                </div>
+              </h4></a></td>
+              <td>{{services.facebook.id}}</td>
+              <td>{{memberSince}}</td>
+              <td>{{locationCountry}}</td>
+              <td>{{lastLogin}}</td>
+              <td>{{storyCount}}</td>
+              <td>{{songCount}}</td>
+              <td>{{listenCount}}</td>
+              <td>{{fbFriends.length}}</td>
+              <td>{{tastemakers.length}}</td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <div class="ui active centered large inline loader"></div>
+        {{/if}}
+        </tbody>
+        <tfoot>
+          <tr>
+          <th colspan="2">
+            <p><strong>{{currentCursorPosition}} of {{userCount}} users</strong></p>                    
+          </th>
+          <th colspan="8">
+            <div class="ui right floated pagination menu">
+              <button id="previousUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+                <i class="left chevron icon"></i>
+              </button>
+              <button id="nextUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+                <i class="right chevron icon"></i>
+              </button>
+            </div>
+          </th>
+        </tr></tfoot>
+      </table>
+    {{/if}}
+  {{/if}}
+  {{#if loggingIn}}
+    <div class="ui active centered large inline loader"></div>
+  {{/if}}
 </template>

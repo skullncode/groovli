@@ -48,6 +48,15 @@
 							       	</span>
 						       	</div>
 						    </div>
+						    {{#if userIsKing}}<!--ADMIN SECTION-->
+					       	<div class="content">
+					       		<div class="content">
+							       	<span class="left floated"><b>Admin:</b>
+						       		<a href="/ee_users" class="ui mini purple button">User Masterlist</a>
+						       		</span>
+						       	</div>
+					       	</div>
+					       	{{/if}}
 						    <div class="extra content">
 						    	{{#if userProfileIsNotYou}}
                                     {{{isUserAFBFriend}}}
