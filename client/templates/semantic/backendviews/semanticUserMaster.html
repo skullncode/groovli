@@ -1,0 +1,42 @@
+<template name="semanticUserMaster">
+	{{getUD}}
+	<table class="table">
+      <thead>
+        <tr>
+          <th width="5%"></th>
+          <th width="10%">Name</th>
+          <th width="10%" class="text-center">FB ID</th>
+          <th width="20%" class="text-center">Joined</th>
+          <th width="10%" class="text-center">Location</th>
+          <th width="15%" class="text-center">Last Login</th>
+          <th width="10%" class="text-center">Status</th>
+          <th width="5%" class="text-center">Songs</th>
+          <th width="5%" class="text-center">Total Listens</th>
+          <th width="5%" class="text-center">FB Friends</th>
+          <th width="5%" class="text-center">Following</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each userData}}
+        <tr>
+          {{getTotalListenCountForUser _id}}
+          <td class="vertical-align"><a href="/profile/{{_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:20px;height:20px;" src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square"></a></td>
+          <td class="vertical-align"><span class="label {{statusClass}}">{{profile.name}}</span></td>
+          <td class="text-center vertical-align">{{services.facebook.id}}</td>
+          <td class="text-center vertical-align">{{memberSince}}</td>
+          <td class="text-center vertical-align">{{locationCountry}}</td>
+          <td class="text-center vertical-align">{{lastLogin}}</td>
+          <td class="text-center vertical-align">{{currentStatus}}</td>
+          <td class="text-center vertical-align">{{songCount}}</td>
+          <td class="text-center vertical-align">{{listenCount}}</td>
+          <td class="text-center vertical-align">{{fbFriends.length}}</td>
+          <td class="text-center vertical-align">{{tastemakers.length}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+	<div class="col-md-2 column">
+		<h2><strong>{{userCount}}</strong></h2>                    
+		<p><small>users</small></p>
+	</div>
+</template>
