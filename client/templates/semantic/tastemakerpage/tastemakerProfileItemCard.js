@@ -35,6 +35,12 @@ if (Meteor.isClient) {
             };
         });
       }
+    },
+    songCountMoreThan5: function() {
+      if(Session.get(this._id+'_sc') > 5) //should have shared a minimum of 5 songs to show up as a suggested tastemaker
+        return true;
+      else
+        return false;
     }
   });
 
