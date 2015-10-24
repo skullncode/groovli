@@ -307,6 +307,8 @@ Meteor.publish('counterForTastemakersBasedOnGenreSelection', function(sel, selGe
 Meteor.publish('30songsForTastemakers', function(sel, cursorSkipAmount) {
   if(sel !== null)
   {
+    sel = addSongValidatorsToSelector(sel, "tastemakers"); //added it as it was returning and playing invalid songs too! NOT GOOD!
+
     var options = {
       fields: {
       "songSearchText": 0, 
@@ -342,6 +344,7 @@ Meteor.publish('30songsForTastemakers', function(sel, cursorSkipAmount) {
 Meteor.publish('counterForTastemakers', function(sel) {
   if(sel !== null)
   {
+    sel = addSongValidatorsToSelector(sel, "tastemakers"); //added it as it was returning and playing invalid songs too! NOT GOOD!
     Counts.publish(this, 'songCountForTastemakers', Songs.find(sel));
   }
 });
@@ -521,6 +524,8 @@ Meteor.publish('counterForGlobalBasedOnGenreSelection', function(sel, selGen) {
 Meteor.publish('30songsForGlobal', function(sel, cursorSkipAmount) {
   if(sel !== null)
   {
+    sel = addSongValidatorsToSelector(sel, "global"); //added it as it was returning and playing invalid songs too! NOT GOOD!
+
     var options = {
       fields: {
       "songSearchText": 0, 
@@ -556,6 +561,7 @@ Meteor.publish('30songsForGlobal', function(sel, cursorSkipAmount) {
 Meteor.publish('counterForGlobal', function(sel) {
   if(sel !== null)
   {
+    sel = addSongValidatorsToSelector(sel, "global"); //added it as it was returning and playing invalid songs too! NOT GOOD!
     Counts.publish(this, 'songCountForGlobal', Songs.find(sel));
   }
 });
@@ -1272,6 +1278,36 @@ function addSongValidatorsAndGenArtistListToQuery(query, artlist, mode)
   //query["sa"].push(saObject);
 
   return query;
+}
+
+function addSongValidatorsToSelector(sel, mode){
+  if(_.isUndefined(sel["$and"]) && mode === 'tastemakers') //only initialize it if not already initialized!
+    sel["$and"] = [];
+
+  if(mode === 'tastemakers')
+  {
+    if(_.isUndefined(sel["$or"])) //only initialize it if not already initialized!
+      sel["$or"] = [];
+
+    var orObject = {};
+    orObject["$or"] = [];
+    orObject["$or"].push({iTunesValid:'VALID'});
+    orObject["$or"].push({LFMValid:'VALID'});
+    orObject["$or"].push({manualApproval:'VALID'});
+    //VALID song selectors 
+    sel["$and"].push(orObject);
+  }
+  else if(mode === 'global')
+  {
+    if(_.isUndefined(sel["$or"])) //only initialize it if not already initialized!
+      sel["$or"] = [];
+
+    sel["$or"].push({iTunesValid:'VALID'});
+    sel["$or"].push({LFMValid:'VALID'});
+    sel["$or"].push({manualApproval:'VALID'});
+  }
+
+  return sel;
 }
 
 function getLatestYearForMyGroovs(fbid)
