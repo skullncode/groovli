@@ -1184,6 +1184,38 @@ Meteor.publish('existingSongCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('reviewPendingSongs', function(cursorSkipAmount) {
+  return Songs.find({$and: [{iTunesValid:'PENDING'},{LFMValid:'PENDING'}], manualApproval: {'$ne': 'VALID'}},{
+          limit: 10,
+          sort: {'sharedBy.systemDate': -1},
+          skip: cursorSkipAmount
+       });
+});
+
+Meteor.publish('pendingSongCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForPendingSongs', Songs.find({$and: [{iTunesValid:'PENDING'},{LFMValid:'PENDING'}], manualApproval: {'$ne': 'VALID'}}));
+  }
+});
+
+Meteor.publish('reviewInvalidSongs', function(cursorSkipAmount) {
+  return Songs.find({$or: [{iTunesValid:'INVALID'},{LFMValid:'INVALID'},{manualApproval:'INVALID'}], manualApproval: {'$ne': 'VALID'}},{
+          limit: 10,
+          sort: {'sharedBy.systemDate': -1},
+          skip: cursorSkipAmount
+       });
+});
+
+Meteor.publish('invalidSongCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForInvalidSongs', Songs.find({$or: [{iTunesValid:'INVALID'},{LFMValid:'INVALID'},{manualApproval:'INVALID'}], manualApproval: {'$ne': 'VALID'}}));
+  }
+});
+
+
+
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");
   //console.log(this.userId);

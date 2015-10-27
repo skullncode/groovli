@@ -1,32 +1,32 @@
 var reviewExistingContext = new ReactiveVar(null);
-var existingSongListLoaded = new ReactiveVar(false);
-var existingSongCursor = new ReactiveVar(0);
-var existingSongCount = new ReactiveVar(0);
+var pendingSongListLoaded = new ReactiveVar(false);
+var pendingSongCursor = new ReactiveVar(0);
+var pendingSongCount = new ReactiveVar(0);
 var calculatedPagingRange = new ReactiveVar(null);
 var pagingCount = 10;
 
-Template.reviewExistingSongs.helpers({
-	existingSongsForReview: function() 
+Template.reviewPendingSongs.helpers({
+	pendingSongsForReview: function() 
 	{
 		//return Session.get('esReview');
 		return Songs.find({},{sort: {'sharedBy.systemDate': -1}});
 	},
 
-	existingCount: function()
+	pendingCount: function()
 	{
-		return existingSongCount.get();
+		return pendingSongCount.get();
 	},
 
 	currentCursorPosition: function() {
-		console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + existingSongCursor.get());
-    	var x = Number(existingSongCursor.get()) + 1; 
-    	var y = Number(existingSongCursor.get()) + pagingCount;
-    	if(y > Counts.get('counterForExistingSongs'))
-    		y = Counts.get('counterForExistingSongs');
+		console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + pendingSongCursor.get());
+    	var x = Number(pendingSongCursor.get()) + 1; 
+    	var y = Number(pendingSongCursor.get()) + pagingCount;
+    	if(y > Counts.get('counterForPendingSongs'))
+    		y = Counts.get('counterForPendingSongs');
     	return  x + '-' + y;
     },
     pagingRange: function() {
-    	var x = _.range(0, Counts.get('counterForExistingSongs'), pagingCount);
+    	var x = _.range(0, Counts.get('counterForPendingSongs'), pagingCount);
     	calculatedPagingRange.set(x);
     	return calculatedPagingRange.get();
     },
@@ -54,25 +54,25 @@ Template.reviewExistingSongs.helpers({
 		  }
 	},
 	songsLoaded: function() {
-		return existingSongListLoaded.get();
+		return pendingSongListLoaded.get();
 	},
 	songListDoesNotRequirePaging: function() {
-		return (Counts.get('counterForExistingSongs') <= pagingCount)
+		return (Counts.get('counterForPendingSongs') <= pagingCount)
 	}
 });
 
-Template.reviewExistingSongs.events({
+Template.reviewPendingSongs.events({
 	"click #beginningOfSongList": function(event){
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(0);
+		pendingSongListLoaded.set(false);
+		pendingSongCursor.set(0);
 	},
     "click #previousSongs": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(existingSongCursor.get()) > (pagingCount - 1))
+      if(Number(pendingSongCursor.get()) > (pagingCount - 1))
       {
         //console.log('INSIDE if condition!!');
-        existingSongListLoaded.set(false);
-        existingSongCursor.set(Number(existingSongCursor.get()) - pagingCount);
+        pendingSongListLoaded.set(false);
+        pendingSongCursor.set(Number(pendingSongCursor.get()) - pagingCount);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
       }
@@ -85,11 +85,11 @@ Template.reviewExistingSongs.events({
 
     "click #nextSongs": function (event) {
       //console.log('CLICKED next button');
-      if(Number(existingSongCursor.get()) < Number(existingSongCount.get() - pagingCount))
+      if(Number(pendingSongCursor.get()) < Number(pendingSongCount.get() - pagingCount))
       {
         //console.log('INSIDE if condition!!');
-        existingSongListLoaded.set(false);
-        existingSongCursor.set(Number(existingSongCursor.get()) + pagingCount);
+        pendingSongListLoaded.set(false);
+        pendingSongCursor.set(Number(pendingSongCursor.get()) + pagingCount);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
       }
@@ -100,32 +100,32 @@ Template.reviewExistingSongs.events({
       }
     },
     "click #endOfSongList": function(event){
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(Number(existingSongCount.get()) - (Number(existingSongCount.get())%10));
+		pendingSongListLoaded.set(false);
+		pendingSongCursor.set(Number(pendingSongCount.get()) - (Number(pendingSongCount.get())%10));
 	},
 	"change #jumpPaging": function(event){
 		//console.log('SELECTED AN OPTION!!!!!!');
 		//console.log(event);		
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(Number($('#jumpPaging').val()));
+		pendingSongListLoaded.set(false);
+		pendingSongCursor.set(Number($('#jumpPaging').val()));
 	}
 });
 
 
-Template.reviewExistingSongs.onCreated(function() {
+Template.reviewPendingSongs.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		FlowRouter.watchPathChange();
 	    var context = FlowRouter.current();
 	    reviewExistingContext.set(context);
 
-	    self.subscribe('reviewExistingSongs', existingSongCursor.get(), {onReady: existingSongsSubLoaded});
+	    self.subscribe('reviewPendingSongs', pendingSongCursor.get(), {onReady: pendingSongsSubLoaded});
 		
-		self.subscribe("existingSongCount", Meteor.user());
-		existingSongCount.set(Counts.get('counterForExistingSongs'));
+		self.subscribe("pendingSongCount", Meteor.user());
+		pendingSongCount.set(Counts.get('counterForPendingSongs'));
 	});
 });
 
-function existingSongsSubLoaded(){
-	existingSongListLoaded.set(true);
+function pendingSongsSubLoaded(){
+	pendingSongListLoaded.set(true);
 }

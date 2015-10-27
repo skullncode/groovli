@@ -1,7 +1,7 @@
-<template name="reviewExistingSongs">
+<template name="reviewPendingSongs">
 	{{#if currentUser}}
     	{{#if userIsAnAdmin}}
-			<h1 class="ui header">Review Existing Songs</h1>
+			<h1 class="ui header">Review Pending Songs</h1>
 			<table class="ui celled structured table">
 				<thead>
 				<tr>
@@ -25,7 +25,7 @@
 				</thead>
 				<tbody>
 					{{#if songsLoaded}}
-						{{#each existingSongsForReview}}
+						{{#each pendingSongsForReview}}
 							{{>semanticReviewItem}}
 						{{/each}}
 				    {{else}}
@@ -35,7 +35,7 @@
 				<tfoot>
 				  <tr>
 				  <th colspan="1">
-				    <p><strong>{{currentCursorPosition}} of {{existingCount}} songs</strong></p>                    
+				    <p><strong>{{currentCursorPosition}} of {{pendingCount}} songs</strong></p>                    
 				  </th>
 				  <th colspan="1">
 				    <select class="ui compact dropdown" id="jumpPaging">
