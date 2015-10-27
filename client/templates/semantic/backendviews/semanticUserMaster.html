@@ -1,13 +1,14 @@
 <template name="semanticUserMaster">
   {{#if currentUser}}
     {{#if userIsAnAdmin}}
-      <h1 class="ui header">EagleEye - User Masterlist</h1>
+      <h1 class="ui header">User Masterlist</h1>
       <table class="ui celled table">
         <thead>
           <tr><th>Name</th>
           <th>FB ID</th>
           <th>Joined</th>
-          <th>Location</th>
+          <th>Country</th>
+          <th>City</th>
           <th>Last Login</th>
           <th>Stories</th>
           <th>Songs</th>
@@ -34,6 +35,7 @@
               <td>{{services.facebook.id}}</td>
               <td>{{memberSince}}</td>
               <td>{{locationCountry}}</td>
+              <td>{{locationCity}}</td>              
               <td>{{lastLogin}}</td>
               <td>{{storyCount}}</td>
               <td>{{songCount}}</td>
@@ -48,10 +50,10 @@
         </tbody>
         <tfoot>
           <tr>
-          <th colspan="2">
+          <th colspan="1">
             <p><strong>{{currentCursorPosition}} of {{userCount}} users</strong></p>                    
           </th>
-          <th colspan="8">
+          <th colspan="10">
             <div class="ui right floated pagination menu">
               <button id="previousUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
                 <i class="left chevron icon"></i>

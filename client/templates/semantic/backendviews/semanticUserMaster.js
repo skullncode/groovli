@@ -26,6 +26,12 @@ Template.semanticUserMaster.helpers({
 		else
 			return 'Unknown'
 	},
+	locationCity: function() {
+		if(!_.isUndefined(this.baseLocation))
+			return this.baseLocation.city;
+		else
+			return 'Unknown'
+	},
 	statusClass: function() {
 		var matchedUserObj = Meteor.users.find({'_id': this._id}).fetch();
 		if(matchedUserObj.length > 0 && !_.isUndefined(matchedUserObj[0].status))
@@ -217,19 +223,3 @@ Template.semanticUserMaster.onCreated(function() {
 function userSubLoaded(){
 	userListLoaded.set(true);
 }
-
-function getAllUsers()
-{
-	Meteor.call('getMasterUserData', function(error, result) {
-		if(error){
-	        console.log(error.reason);
-	    }
-	    else{
-	    	//console.log('REVIEW EXISTING SUCCESS: ');
-	    	//console.log(result);
-	    	Session.set('masterud', result);
-	    	Session.set('masterudCount', result.length);
-	    }
-	});
-}
-

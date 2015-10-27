@@ -1169,6 +1169,21 @@ Meteor.publish('masterUserCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('reviewExistingSongs', function(cursorSkipAmount) {
+  return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{
+          limit: 10,
+          sort: {'sharedBy.systemDate': -1},
+          skip: cursorSkipAmount
+       });
+});
+
+Meteor.publish('existingSongCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForExistingSongs', Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]}));
+  }
+});
+
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");
   //console.log(this.userId);

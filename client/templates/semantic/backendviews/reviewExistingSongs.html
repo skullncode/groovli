@@ -1,0 +1,68 @@
+<template name="reviewExistingSongs">
+	{{#if currentUser}}
+    	{{#if userIsAnAdmin}}
+			<h1 class="ui header">Review Existing Songs</h1>
+			<table class="ui celled structured table">
+			  <thead>
+			    <tr>
+			    	<th rowspan="2">Actions</th>
+					<th rowspan="2">Song</th>
+					<th rowspan="2">Artist</th>
+					<th rowspan="2">Title</th>
+					<th rowspan="2">Shared By</th>     
+					<th colspan="3">Validity</th>
+					<th colspan="4">Extra Deets</th>	 
+			    </tr>
+			    <tr>
+					<th>iTunes</th>
+					<th>LFM</th>
+					<th>Manual</th>
+					<th>Live</th>
+					<th>Mashup</th>
+					<th>Cover</th>
+					<th>Remix</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	{{#each existingSongsForReview}}
+				   {{>semanticReviewItem}}
+			    {{/each}}
+			  </tbody>
+			  <tfoot>
+		          <tr>
+		          <th colspan="1">
+		            <p><strong>{{currentCursorPosition}} of {{existingCount}} songs</strong></p>                    
+		          </th>
+		          <th colspan="1">
+		            <select class="ui compact dropdown" id="jumpPaging">
+					  <option value="">Jump To</option>
+					  {{#each pagingRange}}
+					  	<option value="{{this}}">{{this}}</option>
+					  {{/each}}
+					</select>
+		          </th>
+		          <th colspan="10">
+		          	
+		            <div class="ui right floated pagination menu">
+						<button id="beginningOfSongList" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="angle double left icon"></i>
+						</button>
+						<button id="previousSongs" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="left chevron icon"></i>
+						</button>
+						<button id="nextSongs" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="right chevron icon"></i>
+						</button>
+						<button id="endOfSongList" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="angle double right icon"></i>
+						</button>
+		            </div>
+		          </th>
+		        </tr></tfoot>
+			</table>
+		{{/if}}
+  	{{/if}}
+	{{#if loggingIn}}
+		<div class="ui active centered large inline loader"></div>
+	{{/if}}
+</template>

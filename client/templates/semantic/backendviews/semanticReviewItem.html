@@ -1,0 +1,155 @@
+<template name="semanticReviewItem">
+	<tr>
+		{{#if thisItemIsCurrentlyBeingEdited}}
+			<td>
+				<button id="cancelEditing" class="circular ui icon red button">
+				  <i class="icon remove"></i>
+				</button>
+				<button id="updateSong" class="circular ui icon green button">
+				  <i class="icon save"></i>
+				</button>		
+			</td>
+			<td>
+				<div class="inline field">
+					<input id="originalSongLink" type="text" value="{{this.sl}}" style="display:none;">
+					<input id="editedSongLink" type="text" placeholder="song link" value="{{this.sl}}">
+				</div>
+			</td>
+			<td>
+				<div class="inline field">
+					<input id="originalSongArtist" type="text" value="{{this.sa}}" style="display:none;">
+					<input id="editedSongArtist" type="text" placeholder="artist" value="{{this.sa}}">
+				</div>
+			</td>
+			<td>
+				<div class="inline field">
+					<input id="originalSongTitle" type="text" value="{{this.st}}" style="display:none;">
+					<input id="editedSongTitle" type="text" placeholder="title" value="{{this.st}}">
+				</div>
+			</td>
+			<td class="disabled center aligned">
+				{{#each sharedByDetailsForCurrentSong}}
+					{{personName}}
+					<a href="/profile/{{p_id}}" target="blank"><img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+					<br>
+				{{/each}}
+			</td>
+			<td colspan="3">
+				<select class="ui compact dropdown" id="songManualItunesCheck">
+				  <option value="">iTunes</option>
+				  <option value="CHECK ITUNES">CHECK ITUNES</option>
+				  <option value="NO HOPE IN ITUNES">NO HOPE IN ITUNES</option>
+				</select>
+				<select class="ui compact dropdown" id="songValiditySelect">
+				  <option value="">Validity</option>
+				  <option value="VALID">VALID</option>
+				  <option value="INVALID">INVALID</option>
+				</select>
+			</td>	      	
+			<td class="center aligned">
+				<div  class="ui checkbox {{#if isSongLive}}checked{{/if}}">
+				  <input id="check_live" type="checkbox">
+				  <label>Live:</label>
+				</div>
+			</td>
+			<td class="center aligned">
+				<div  class="ui checkbox {{#if isSongMashup}}checked{{/if}}">
+				  <input id="check_mashup" type="checkbox">
+				  <label>Mashup:</label>
+				</div>
+			</td>
+			<td class="center aligned">
+				<div  class="ui checkbox {{#if isSongCover}}checked{{/if}}">
+				  <input id="check_cover" type="checkbox">
+				  <label>Cover:</label>
+				</div>
+				<div class="inline field">
+					<input id="originalCoveredBy" type="text" value="{{this.coveredBy}}" style="display:none;">
+					<input id="txtEditCoveredBy" type="text" placeholder="covered by" value="{{this.coveredBy}}">
+				</div>
+			</td>
+			<td class="center aligned">
+				<div  class="ui checkbox {{#if isSongRemix}}checked{{/if}}">
+				  <input id="check_remix" type="checkbox">
+				  <label>Remix:</label>
+				</div>
+				<div class="inline field">
+					<input id="originalRemixedBy" type="text" value="{{this.remixedBy}}" style="display:none;">
+					<input id="txtEditRemixedBy" type="text" placeholder="remixed by" value="{{this.remixedBy}}">
+				</div>
+			</td>
+		{{else}}
+			<td>
+				<button id="editSong" class="circular ui icon button">
+				  <i class="icon edit"></i>
+				</button>
+			</td>
+			<td>
+				<h4 class="ui image header">
+				<img src="{{youtubeThumbnail}}" class="ui tiny rounded image">
+				<div class="content">
+					<div class="sub header"><a href="{{this.sl}}" target="blank">Link</a></div>
+				</div>
+				</h4>
+			</td>
+			<td>{{this.sa}}</td>
+			<td>{{this.st}}</td>
+			<td class="center aligned">
+			{{#each sharedByDetailsForCurrentSong}}
+				{{personName}}
+				<a href="/profile/{{p_id}}" target="blank"><img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+				<br>
+			{{/each}}
+			</td>
+		  	{{#if iTunesValid}}
+		  		<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+		  	{{else}}
+		  		<td></td>
+		  	{{/if}}		      	
+		  	{{#if LFMValid}}
+		  		<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+		  	{{else}}
+		  		<td></td>
+		  	{{/if}}		      	
+		  	{{#if manuallyValid}}
+		  		<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+		  	{{else}}
+		  		<td></td>
+		  	{{/if}}
+			{{#if isSongLive}}
+				<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+			{{else}}
+				<td></td>
+			{{/if}}
+			{{#if isSongMashup}}
+				<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+			{{else}}
+				<td></td>
+			{{/if}}
+			{{#if isSongCover}}
+				<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+			{{else}}
+				<td></td>
+			{{/if}}
+			{{#if isSongRemix}}
+				<td class="center aligned">
+					<i class="large green checkmark icon"></i>
+				</td>
+			{{else}}
+				<td></td>
+			{{/if}}
+		{{/if}}
+	</tr>
+</template>
