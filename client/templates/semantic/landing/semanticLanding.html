@@ -1,7 +1,8 @@
 <template name="semanticLanding">
 <!-- Landing Page Menu -->
 	<div class="ui two column centered grid">
-		<div class="eleven wide column mastheadHomeOrange">
+		<div class="three wide computer column mastheadHomeOrange"></div>
+		<div class="ten wide column mastheadHomeOrange">
 			<div style="background-color:white;">
 				<div class="ui secondary menu">
 				  <div class="ui container">
@@ -11,8 +12,7 @@
 					<div class="right menu">
 						<div class="item">
 							{{#if currentUser}}
-								<a id="clickHomeFromLanding" class="item">Home</a>
-								<div class="header item">logged in as {{currentUser.services.facebook.first_name}} <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"></div> (<a id="logout" class="item">Logout</a>)
+								<a id="clickHomeFromLanding" class="item">Home</a><img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"><a id="logout" class="item">Logout</a>
 								<!--
 								<a class="ui simple dropdown landingDropdownMenu item">
 									<img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
@@ -50,51 +50,61 @@
 			    </div>
 			</div>
 		</div>
+		<div class="three wide computer column mastheadHomeOrange"></div>
 	</div>
 
 <!-- What's trending section-->
 	<div class="ui two column centered grid">
-		<div class="eleven wide column homePlayerTabsContainerBoxBackground">
-			<h1 class="ui header">What's trending:</h1>	
+		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+		<div class="ten wide column landingPageTrendingBoxBackground">
 		  <div class="ui vertical stripe segment">
 		    <div class="ui middle aligned stackable grid container">
-		      <div class="row">
-		        <div class="column">
-					<div class="ui five cards doubling grid container">
-						{{#each trendingSongs}}
-							<div class="card">
-								<div class="image">
-									<img src="{{iTunesLargeAlbumArt}}">
-								</div>
-								<div class="extra">
-									<b>{{st}}</b> <i>by</i>
-									<div class="content"><b>{{sa}}</b></div>
-								</div>
+	        	<h2 class="landingPageHeaderFont">What's trending</h2>
+				<div class="doubling five column row">
+					{{#each trendingSongs}}
+						<div class="column">
+							<img class="ui small image" src="{{iTunesLargeAlbumArt}}">
+							<div class="content">
+								<b>{{st}}</b> <i>by</i>
+								<div class="content"><b>{{sa}}</b></div>
 							</div>
-						{{/each}}
-					</div>
-		        </div>
-		      </div>
+						</div>
+						<!--<div class="card">
+							<div class="image">
+								<img src="{{iTunesLargeAlbumArt}}">
+							</div>
+							<div class="content">
+								<b>{{st}}</b> <i>by</i>
+								<div class="content"><b>{{sa}}</b></div>
+							</div>
+						</div>-->
+
+					{{/each}}
+				</div>
 		    </div>
 		  </div>
 	  </div>
+	  <div class="three wide computer column landingPageTrendingBoxBackground"></div>
   	</div>
 
 <!-- How Groovli Works section - Mobile & Computer separate-->  	
 
   	<div class="computer tablet only ui two column centered grid">
-		<div class="eleven wide column homeHowGroovliWorksSegment">
+  		<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+		<div class="ten wide column homeHowGroovliWorksSegment">
 			<div class="row">
-				<h1 class="ui inverted header">How Groovli works</h1>
+				<h2 class="landingPageHeaderFont" style="color:white;">How Groovli works</h2>
 				<h2></h2>
 			</div>
 		  <img class="ui fluid image" src="../images/groovli_howitworks.png">
-	  </div>
+	 	</div>
+	 	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
   	</div>
 
   	<div class="mobile only ui centered grid">
-		<div class="eleven wide column grid homeHowGroovliWorksSegment">
-			<h1 class="ui inverted header">How Groovli works
+  		<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+		<div class="ten wide column grid homeHowGroovliWorksSegment">
+			<h1 class="landingPageHeaderFont" style="color:white;">How Groovli works
 			<img class="ui tiny image floated right" src="../images/groovli_mobile_how.png"></h1>
 			<h1></h1>
 			<div class="ui list">
@@ -108,22 +118,22 @@
 			    3. Make friends with people that share a similar taste in music.
 			  </h3>
 			</div>
-	  </div>
+	  	</div>
+	  	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
   	</div>
 
 <!-- Songs recently listened to -->  	
 
   	<div class="ui two column centered grid">
-		<div class="eleven wide column homePlayerTabsContainerBoxBackground">
-			<div class="row">
-				<h1 class="ui red header">Someone just listened to:</h1>
-				<h2 class="ui red header"></h2>
-			</div>
-		  	<div class="ui six column doubling grid container">
+  		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+		<div class="ten wide column landingPageTrendingBoxBackground">
+			<h2 class="landingPageHeaderFont" style="color: #df455f">Someone just listened to...</h2>
+		  	<div class="ui four column doubling grid container">
+
 		  		{{#each songsJustListened}}
 					<div class="column">
 						<div class="item">
-							<img class="ui tiny rounded image" src="{{iTunesLargeAlbumArt}}">
+							<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
 							<div class="content">
 							<div class="header">{{sa}}</div>
 								{{st}}
@@ -136,6 +146,7 @@
 				<div class="column"></div>
 		  	</div>
   		</div>
+  		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
   	</div>
 
 <!-- Landing Page Footer section-->  	

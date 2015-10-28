@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+
 .sitewideOrange{
 	background-color:#f68e15;
 	color:white;
@@ -61,6 +63,15 @@
 
 .homePlayerTabsContainerBoxBackground{
 	background-color:#D9D9D9;
+}
+
+.landingPageTrendingBoxBackground{
+	background-color:#f1f0eb;
+}
+
+.landingPageHeaderFont{
+	font-family: 'Droid Sans', sans-serif;
+	font-weight: 400;
 }
 
 .homeHowGroovliWorksSegment{
