@@ -1,31 +1,31 @@
-var existingSongListLoaded = new ReactiveVar(false);
-var existingSongCursor = new ReactiveVar(0);
-var existingSongCount = new ReactiveVar(0);
+var artistListLoaded = new ReactiveVar(false);
+var artistCursor = new ReactiveVar(0);
+var artistCount = new ReactiveVar(0);
 var calculatedPagingRange = new ReactiveVar(null);
 var pagingCount = 10;
 
-Template.reviewExistingSongs.helpers({
-	existingSongsForReview: function() 
+Template.semanticReviewArtists.helpers({
+	artistsForReview: function() 
 	{
 		//return Session.get('esReview');
-		return Songs.find({},{sort: {'sharedBy.systemDate': -1}});
+		return Artists.find({});
 	},
 
-	existingCount: function()
+	artistCount: function()
 	{
-		return existingSongCount.get();
+		return artistCount.get();
 	},
 
 	currentCursorPosition: function() {
-		//console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + existingSongCursor.get());
-    	var x = Number(existingSongCursor.get()) + 1; 
-    	var y = Number(existingSongCursor.get()) + pagingCount;
-    	if(y > Counts.get('counterForExistingSongs'))
-    		y = Counts.get('counterForExistingSongs');
+		//console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + artistCursor.get());
+    	var x = Number(artistCursor.get()) + 1; 
+    	var y = Number(artistCursor.get()) + pagingCount;
+    	if(y > Counts.get('counterForArtists'))
+    		y = Counts.get('counterForArtists');
     	return  x + '-' + y;
     },
     pagingRange: function() {
-    	var x = _.range(0, Counts.get('counterForExistingSongs'), pagingCount);
+    	var x = _.range(0, Counts.get('counterForArtists'), pagingCount);
     	calculatedPagingRange.set(x);
     	return calculatedPagingRange.get();
     },
@@ -52,26 +52,26 @@ Template.reviewExistingSongs.helpers({
 		      FlowRouter.go('/');
 		  }
 	},
-	songsLoaded: function() {
-		return existingSongListLoaded.get();
+	artistsLoaded: function() {
+		return artistListLoaded.get();
 	},
-	songListDoesNotRequirePaging: function() {
-		return (Counts.get('counterForExistingSongs') <= pagingCount)
+	artistListDoesNotRequirePaging: function() {
+		return (Counts.get('counterForArtists') <= pagingCount)
 	}
 });
 
-Template.reviewExistingSongs.events({
-	"click #beginningOfSongList": function(event){
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(0);
+Template.semanticReviewArtists.events({
+	"click #beginningOfArtistList": function(event){
+		artistListLoaded.set(false);
+		artistCursor.set(0);
 	},
-    "click #previousSongs": function (event) {
+    "click #previousArtists": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(existingSongCursor.get()) > (pagingCount - 1))
+      if(Number(artistCursor.get()) > (pagingCount - 1))
       {
         //console.log('INSIDE if condition!!');
-        existingSongListLoaded.set(false);
-        existingSongCursor.set(Number(existingSongCursor.get()) - pagingCount);
+        artistListLoaded.set(false);
+        artistCursor.set(Number(artistCursor.get()) - pagingCount);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
       }
@@ -82,13 +82,13 @@ Template.reviewExistingSongs.events({
       }
     },
 
-    "click #nextSongs": function (event) {
+    "click #nextArtists": function (event) {
       //console.log('CLICKED next button');
-      if(Number(existingSongCursor.get()) < Number(existingSongCount.get() - pagingCount))
+      if(Number(artistCursor.get()) < Number(artistCount.get() - pagingCount))
       {
         //console.log('INSIDE if condition!!');
-        existingSongListLoaded.set(false);
-        existingSongCursor.set(Number(existingSongCursor.get()) + pagingCount);
+        artistListLoaded.set(false);
+        artistCursor.set(Number(artistCursor.get()) + pagingCount);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
       }
@@ -98,32 +98,32 @@ Template.reviewExistingSongs.events({
         toastr.info("Reached the end of the existing song list; <br><br><b><i>try moving backwards (<-) to see more songs!</i></b><br><br>");
       }
     },
-    "click #endOfSongList": function(event){
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(Number(existingSongCount.get()) - (Number(existingSongCount.get())%10));
+    "click #endOfArtistList": function(event){
+		artistListLoaded.set(false);
+		artistCursor.set(Number(artistCount.get()) - (Number(artistCount.get())%10));
 	},
 	"change #jumpPaging": function(event){
 		//console.log('SELECTED AN OPTION!!!!!!');
 		//console.log(event);		
-		existingSongListLoaded.set(false);
-		existingSongCursor.set(Number($('#jumpPaging').val()));
+		artistListLoaded.set(false);
+		artistCursor.set(Number($('#jumpPaging').val()));
 	}
 });
 
 
-Template.reviewExistingSongs.onCreated(function() {
+Template.semanticReviewArtists.onCreated(function() {
 	var self = this;
 	self.autorun(function() {
 		FlowRouter.watchPathChange();
 	    var context = FlowRouter.current();
 
-	    self.subscribe('reviewExistingSongs', existingSongCursor.get(), {onReady: existingSongsSubLoaded});
+	    self.subscribe('reviewArtists', artistCursor.get(), {onReady: artistsSubLoaded});
 		
-		self.subscribe("existingSongCount", Meteor.user());
-		existingSongCount.set(Counts.get('counterForExistingSongs'));
+		self.subscribe("artistCount", Meteor.user());
+		artistCount.set(Counts.get('counterForArtists'));
 	});
 });
 
-function existingSongsSubLoaded(){
-	existingSongListLoaded.set(true);
+function artistsSubLoaded(){
+	artistListLoaded.set(true);
 }

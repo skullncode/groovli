@@ -1,8 +1,8 @@
 //setup for easy search
-Songs.initEasySearch(['st', 'sa'], {
+/*Songs.initEasySearch(['st', 'sa'], {
     'limit' : 10,
     'use' : 'mongo-db'
-});
+});*/ //NOT USING easy search
 
 //Songs.initEasySearch(['st', 'sa']);
 //Songs.initEasySearch(['st', 'sa']);

@@ -1,4 +1,3 @@
-var reviewExistingContext = new ReactiveVar(null);
 var invalidSongListLoaded = new ReactiveVar(false);
 var invalidSongCursor = new ReactiveVar(0);
 var invalidSongCount = new ReactiveVar(0);
@@ -18,7 +17,7 @@ Template.reviewInvalidSongs.helpers({
 	},
 
 	currentCursorPosition: function() {
-		console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + invalidSongCursor.get());
+		//console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + invalidSongCursor.get());
     	var x = Number(invalidSongCursor.get()) + 1; 
     	var y = Number(invalidSongCursor.get()) + pagingCount;
     	if(y > Counts.get('counterForInvalidSongs'))
@@ -117,7 +116,6 @@ Template.reviewInvalidSongs.onCreated(function() {
 	self.autorun(function() {
 		FlowRouter.watchPathChange();
 	    var context = FlowRouter.current();
-	    reviewExistingContext.set(context);
 
 	    self.subscribe('reviewInvalidSongs', invalidSongCursor.get(), {onReady: invalidSongsSubLoaded});
 		

@@ -1,0 +1,25 @@
+<template name="semanticArtistItem">
+	<tr>
+		<td>
+			<button id="deleteArtistEntry" class="circular ui icon red button" title="delete this artist">
+			  <i class="icon remove"></i>
+			</button>
+		</td>
+		<td>
+			{{{artistImage}}}
+			<div class="content">
+				<h4 id="artistName" class="ui header">{{name}}</h4>
+				<div class="sub header">id: {{this._id}}</div>
+			</div>
+		</td>
+		<td>
+		{{#each genres}}
+			<button class="tiny ui red button" id="deleteGenreForArtist" title="delete this genre"><i class="remove icon"></i>{{this}}</button>
+		{{/each}}
+		<div class="inline field">
+			<input id="txtNewGenreForArtist" type="text" placeholder="new genre for this artist">
+			<button class="circular mini ui icon green button" id="addGenreForArtist" title="add this genre"><i class="plus icon"></i></button>
+		</div>
+		</td>
+	</tr>
+</template>

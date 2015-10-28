@@ -1,4 +1,3 @@
-var userMasterContext = new ReactiveVar(null);
 var userListLoaded = new ReactiveVar(false);
 
 Template.semanticUserMaster.helpers({
@@ -208,7 +207,6 @@ Template.semanticUserMaster.onCreated(function() {
 	    // use context to access the URL state
 	    //console.log('%%%%%%%%%%%%%%%%%%%% ROUTE HAS CHANGED!!!!');
 	    //console.log(context);
-	    userMasterContext.set(context);
 	    //console.log("THIS IS THE PROFILE CONTEXT REACTIVE VAAAAAAAAAAAAAAAAAR: ");
 	    //console.log(profileContext.get());
 	    Session.setDefault('_userCursor', 0);

@@ -1214,7 +1214,19 @@ Meteor.publish('invalidSongCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('reviewArtists', function(cursorSkipAmount) {
+  return Artists.find({},{
+          limit: 10,
+          skip: cursorSkipAmount
+       });
+});
 
+Meteor.publish('artistCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForArtists', Artists.find({}));
+  }
+});
 
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");

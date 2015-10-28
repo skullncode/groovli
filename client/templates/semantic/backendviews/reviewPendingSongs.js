@@ -1,4 +1,3 @@
-var reviewExistingContext = new ReactiveVar(null);
 var pendingSongListLoaded = new ReactiveVar(false);
 var pendingSongCursor = new ReactiveVar(0);
 var pendingSongCount = new ReactiveVar(0);
@@ -18,7 +17,7 @@ Template.reviewPendingSongs.helpers({
 	},
 
 	currentCursorPosition: function() {
-		console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + pendingSongCursor.get());
+		//console.log('THIIIIIIS IS THE EXISTING SONG CURSOR: ' + pendingSongCursor.get());
     	var x = Number(pendingSongCursor.get()) + 1; 
     	var y = Number(pendingSongCursor.get()) + pagingCount;
     	if(y > Counts.get('counterForPendingSongs'))
@@ -117,7 +116,6 @@ Template.reviewPendingSongs.onCreated(function() {
 	self.autorun(function() {
 		FlowRouter.watchPathChange();
 	    var context = FlowRouter.current();
-	    reviewExistingContext.set(context);
 
 	    self.subscribe('reviewPendingSongs', pendingSongCursor.get(), {onReady: pendingSongsSubLoaded});
 		
