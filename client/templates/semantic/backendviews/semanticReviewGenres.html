@@ -1,0 +1,58 @@
+<template name="semanticReviewGenres">
+	{{#if currentUser}}
+    	{{#if userIsAnAdmin}}
+			<h1 class="ui header">Review Genres</h1>
+			<table class="ui celled structured table">
+				<thead>
+				<tr>
+					<th colspan="1">Actions</th>
+					<th colspan="1">Genre</th>
+					<th colspan="4">Genres</th>
+				</tr>
+				</thead>
+				<tbody>
+					{{#if genresLoaded}}
+						{{#each genresForReview}}
+							{{>semanticGenreItem}}
+						{{/each}}
+				    {{else}}
+			    		<div class="ui active centered large inline loader"></div>
+			    	{{/if}}
+				</tbody>
+				<tfoot>
+				  <tr>
+				  <th colspan="1">
+				    <p><strong>{{currentCursorPosition}} of {{genreCount}} songs</strong></p>                    
+				  </th>
+				  <th colspan="1">
+				    <select class="ui compact dropdown" id="jumpPaging">
+					  <option value="">Jump To</option>
+					  {{#each pagingRange}}
+					  	<option value="{{this}}">{{this}}</option>
+					  {{/each}}
+					</select>
+				  </th>
+				  <th colspan="10">
+				    <div class="ui right floated pagination menu">
+						<button id="beginningOfGenreList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="angle double left icon"></i>
+						</button>
+						<button id="previousGenres" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="left chevron icon"></i>
+						</button>
+						<button id="nextGenres" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="right chevron icon"></i>
+						</button>
+						<button id="endOfGenreList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+							<i class="angle double right icon"></i>
+						</button>
+				    </div>
+				  </th>
+				</tr></tfoot>
+			</table>
+		{{/if}}
+  	{{/if}}
+	{{#if loggingIn}}
+		<div class="ui active centered large inline loader"></div>
+	{{/if}}
+</template>

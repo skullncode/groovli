@@ -1228,6 +1228,21 @@ Meteor.publish('artistCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('reviewGenres', function(cursorSkipAmount) {
+  return Genres.find({},{
+          limit: 10,
+          skip: cursorSkipAmount
+       });
+});
+
+Meteor.publish('genreCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForGenres', Genres.find({}));
+  }
+});
+
+
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");
   //console.log(this.userId);
