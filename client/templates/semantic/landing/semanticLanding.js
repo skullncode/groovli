@@ -22,6 +22,31 @@ Template.semanticLanding.helpers({
   trendingSongs: function() {
     //console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
     return Session.get('lp_trending');
+  },
+  trimmedTitle: function() {
+    var splitString = this.st.split(' ');
+    //console.log('this is the split string: ');
+    //console.log(splitString);
+    if(splitString.length > 3)
+    {
+      if(this.st.indexOf('(') >= 0)
+      {
+        return this.st.substring(0, this.st.indexOf('(')-1); 
+      }
+      else
+      {
+        //console.log('original: ');
+        //console.log(this.st);
+        //console.log('INDEX of last space: ');
+        var indexOfLastShortenedSpace = this.st.substring(0,30).lastIndexOf(' ')+1; //approximately first 1300 characters of bio
+        //console.log(indexOfLastShortenedSpace);
+        return this.st.substring(0,indexOfLastShortenedSpace);
+      }
+    }
+    else
+    {
+      return this.st;
+    }    
   }
 });
 

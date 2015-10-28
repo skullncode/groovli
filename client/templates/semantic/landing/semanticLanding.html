@@ -60,26 +60,28 @@
 		  <div class="ui vertical stripe segment">
 		    <div class="ui middle aligned stackable grid container">
 	        	<h2 class="landingPageHeaderFont">What's trending</h2>
-				<div class="doubling five column row">
-					{{#each trendingSongs}}
-						<div class="column">
-							<img class="ui small image" src="{{iTunesLargeAlbumArt}}">
-							<div class="content">
-								<b>{{st}}</b> <i>by</i>
-								<div class="content"><b>{{sa}}</b></div>
+	        	<div class="ui vertically divided grid">
+					<div class="doubling five column row">
+						{{#each trendingSongs}}
+							<div class="column">
+								<img class="ui small image" src="{{iTunesLargeAlbumArt}}">
+								<div class="content">
+									<b>{{trimmedTitle}}</b> <i>by</i>
+									<div class="content"><b>{{sa}}</b></div>
+								</div>
 							</div>
-						</div>
-						<!--<div class="card">
-							<div class="image">
-								<img src="{{iTunesLargeAlbumArt}}">
-							</div>
-							<div class="content">
-								<b>{{st}}</b> <i>by</i>
-								<div class="content"><b>{{sa}}</b></div>
-							</div>
-						</div>-->
+							<!--<div class="card">
+								<div class="image">
+									<img src="{{iTunesLargeAlbumArt}}">
+								</div>
+								<div class="content">
+									<b>{{st}}</b> <i>by</i>
+									<div class="content"><b>{{sa}}</b></div>
+								</div>
+							</div>-->
 
-					{{/each}}
+						{{/each}}
+					</div>
 				</div>
 		    </div>
 		  </div>
@@ -135,8 +137,8 @@
 						<div class="item">
 							<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
 							<div class="content">
-							<div class="header">{{sa}}</div>
-								{{st}}
+							<div class="header">{{trimmedTitle}}</div> <i>by</i>
+								{{sa}}
 							</div>
 						</div>
 					</div>
