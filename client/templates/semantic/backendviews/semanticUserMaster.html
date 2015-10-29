@@ -18,7 +18,35 @@
         </tr></thead>
         <tbody>
         {{#if userListLoaded}}
-          {{#each userData}}
+          <td colspan="11"><h3>Online Users</h3></td>
+          {{#each onlineUsers}}
+            <tr>
+              {{getTotalListenCountForUser _id}}
+              {{getSongCountForUser services.facebook.id}}
+              {{getStoryCountForUser services.facebook.id}}
+              <td>
+                <a href="/profile/{{_id}}" target='blank'><h4 class="ui image header">
+                  <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square" class="ui mini rounded image">
+                  <div class="content">
+                    {{profile.name}}
+                    <div class="sub header">{{{currentStatus}}}
+                  </div>
+                </div>
+              </h4></a></td>
+              <td>{{services.facebook.id}}</td>
+              <td>{{memberSince}}</td>
+              <td>{{locationCountry}}</td>
+              <td>{{locationCity}}</td>              
+              <td>{{lastLogin}}</td>
+              <td>{{storyCount}}</td>
+              <td>{{songCount}}</td>
+              <td>{{listenCount}}</td>
+              <td>{{fbFriends.length}}</td>
+              <td>{{tastemakers.length}}</td>
+            </tr>
+          {{/each}}
+          <td colspan="11"><h3>Offline Users</h3></td>
+          {{#each offlineUsers}}
             <tr>
               {{getTotalListenCountForUser _id}}
               {{getSongCountForUser services.facebook.id}}

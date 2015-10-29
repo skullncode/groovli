@@ -1,3 +1,6 @@
+var trendingSongsLoaded = new ReactiveVar(false);
+var recentSongsLoaded = new ReactiveVar(false);
+
 Template.semanticLanding.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
   {
@@ -47,6 +50,13 @@ Template.semanticLanding.helpers({
     {
       return this.st;
     }    
+  },
+  trendingSongsLoaded: function() {
+    return trendingSongsLoaded.get();
+  },
+  
+  recentSongsLoaded: function() {
+    return recentSongsLoaded.get();
   }
 });
 
@@ -76,6 +86,7 @@ function getRecentListens(){
         //console.log('GOT THIS BACK From the server: ');
         //console.log(result);
         Session.set('lp_recent', result)
+        recentSongsLoaded.set(true);
       }
   });
 }
@@ -90,6 +101,7 @@ function getTrendingSongs(){
         //console.log('GOT THIS BACK From the server FOR TRENDING SONGS: ');
         //console.log(result);
         Session.set('lp_trending', result)
+        trendingSongsLoaded.set(true);
       }
   });
 }

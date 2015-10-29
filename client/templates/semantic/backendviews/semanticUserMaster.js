@@ -1,9 +1,16 @@
 var userListLoaded = new ReactiveVar(false);
 
 Template.semanticUserMaster.helpers({
-	userData: function() 
+	offlineUsers: function()
 	{
-		return Meteor.users.find({},{sort: {'createdAt': -1}});
+		//return Meteor.users.find({},{sort: {'createdAt': -1}});
+		return Meteor.users.find({ 'status.online': { $not: true } },{sort: {'createdAt': -1}});
+	},
+
+	onlineUsers: function()
+	{
+		//return Meteor.users.find({},{sort: {'createdAt': -1}});
+		return Meteor.users.find({ 'status.online': true },{sort: {'createdAt': -1}});
 	},
 
 	userCount: function()

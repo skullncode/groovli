@@ -62,25 +62,29 @@
 	        	<h2 class="landingPageHeaderFont">What's trending</h2>
 	        	<div class="ui vertically divided grid">
 					<div class="doubling five column row">
-						{{#each trendingSongs}}
-							<div class="column">
-								<img class="ui small image" src="{{iTunesLargeAlbumArt}}">
-								<div class="content">
-									<b>{{trimmedTitle}}</b> <i>by</i>
-									<div class="content"><b>{{sa}}</b></div>
+						{{#if trendingSongsLoaded}}
+							{{#each trendingSongs}}
+								<div class="column">
+									<img class="ui small image" src="{{iTunesLargeAlbumArt}}">
+									<div class="content">
+										<b>{{trimmedTitle}}</b> <i>by</i>
+										<div class="content"><b>{{sa}}</b></div>
+									</div>
 								</div>
-							</div>
-							<!--<div class="card">
-								<div class="image">
-									<img src="{{iTunesLargeAlbumArt}}">
-								</div>
-								<div class="content">
-									<b>{{st}}</b> <i>by</i>
-									<div class="content"><b>{{sa}}</b></div>
-								</div>
-							</div>-->
+								<!--<div class="card">
+									<div class="image">
+										<img src="{{iTunesLargeAlbumArt}}">
+									</div>
+									<div class="content">
+										<b>{{st}}</b> <i>by</i>
+										<div class="content"><b>{{sa}}</b></div>
+									</div>
+								</div>-->
 
-						{{/each}}
+							{{/each}}
+						{{else}}
+							<div class="ui active centered large inline loader"></div>
+						{{/if}}
 					</div>
 				</div>
 		    </div>
@@ -131,18 +135,21 @@
 		<div class="ten wide column landingPageTrendingBoxBackground">
 			<h2 class="landingPageHeaderFont" style="color: #df455f">Someone just listened to...</h2>
 		  	<div class="ui four column doubling grid container">
-
-		  		{{#each songsJustListened}}
-					<div class="column">
-						<div class="item">
-							<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
-							<div class="content">
-							<div class="header">{{trimmedTitle}}</div> <i>by</i>
-								{{sa}}
+		  		{{#if recentSongsLoaded}}
+			  		{{#each songsJustListened}}
+						<div class="column">
+							<div class="item">
+								<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
+								<div class="content">
+								<div class="header">{{trimmedTitle}}</div> <i>by</i>
+									{{sa}}
+								</div>
 							</div>
 						</div>
-					</div>
-				{{/each}}
+					{{/each}}
+				{{else}}
+					<div class="ui active centered inline loader"></div>
+				{{/if}}
 				<div class="column"></div>
 				<div class="column"></div>
 				<div class="column"></div>
