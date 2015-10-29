@@ -380,11 +380,14 @@ Meteor.methods({
 		{
 			_.each(socarray, function(x){
 				var foundUser = Meteor.users.findOne({'services.facebook.id': String(x.fbid)});
-				var socObject = {
-					'_id':foundUser._id,
-					'fbid':x.fbid
-				};
-				idArray.push(socObject);
+				if(!_.isUndefined(foundUser))
+				{
+					var socObject = {
+						'_id':foundUser._id,
+						'fbid':x.fbid
+					};
+					idArray.push(socObject);
+				}
 			});
 		}
 		return idArray;
