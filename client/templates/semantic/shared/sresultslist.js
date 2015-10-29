@@ -72,8 +72,11 @@ function animateListToCurrentlyPlayingSong()
     songContainer.scrollTop = selSong.item().offsetTop - 50;
     Session.set('animatedToSong', true);
   }*/
-  $('#srchresultList').animate({ scrollTop: $('.searchresultItem.selected')[0].offsetTop - 50}, 500);
-  Session.set('animatedToSong', true);
+  if(!_.isUndefined($('.searchresultItem.selected')[0]))
+  {
+    $('#srchresultList').animate({ scrollTop: $('.searchresultItem.selected')[0].offsetTop - 50}, 500);
+    Session.set('animatedToSong', true);
+  }
 }
 
 
@@ -84,10 +87,10 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
   //console.log(Session.get('activeTab'));
   if(songSourceTab !== Session.get('activeTab'))
   {
-    console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
+    //console.log('DECIDING WHAT TAB TO SWITCH TO!!!!');
     if(songSourceTab === 'search')
     {
-      console.log('switching TABS from my groovs list to tastemakers');
+      //console.log('switching TABS from my groovs list to tastemakers');
       //$('#songTabs a[href="#tastemakers"]').tab('show');
       $('#sresultsTabHeader').click();
     }

@@ -3,15 +3,26 @@
 	{{#if songPlaying}}
     	{{#with currentSong}}
     		{{checkIfArtistHasPage currentSong.sa}}
+    		<!--{{#if cover}}
+    			{{checkIfCoveringArtistHasPage currentSong.coveredBy}}
+    		{{/if}}-->
 			<div class="ui list">
 				{{#if artistTrackAreNotSame}}
-		          {{#if artistHasPage}}
-		            <!--<a href="{{pathFor 'artist' _name=ampersandRemovedArtistName }}" target='blank' title="artist page">-->
-		            <a href="{{pathFor 'artist' _id=artistIDForName }}" target='blank' title="artist page">
-		            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div></a>
-		          {{else}}
-		            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div>
-		          {{/if}}
+		          <!--{{#if cover}}
+		          	{{#if artistHasPage}}
+			            <a href="{{pathFor 'artist' _id=coveringArtistIDForName }}" target='blank' title="artist page">
+			            <div class="item"><div class="header"><h2>{{currentSong.coveredBy}}</h2></div></div></a>
+			          {{else}}
+			            <div class="item"><div class="header"><h2>{{currentSong.coveredBy}}</h2></div></div>
+			          {{/if}}		          		
+		          {{else}}-->
+			          {{#if artistHasPage}}
+			            <a href="{{pathFor 'artist' _id=artistIDForName }}" target='blank' title="artist page">
+			            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div></a>
+			          {{else}}
+			            <div class="item"><div class="header"><h2>{{currentSong.sa}}</h2></div></div>
+			          {{/if}}
+		          <!--{{/if}}-->
 		          <div class="item"><div class="content"><h5>{{currentSong.st}}</h5></div></div>
 		          {{#if albumDeetsNotEmpty}}
 		              <div class="item"><div class="content">Track {{currentSong.trackNumber}} of {{currentSong.trackCount}},</div></div>
@@ -30,11 +41,16 @@
 		          {{/if}}
 		          {{#if cover}}
 		            {{checkIfCoveringArtistHasPage currentSong.coveredBy}}
-		            {{#if coveringArtistHasPage}}
-		            	<div class="item"><div class="content"><i>as covered by <b><a href="{{pathFor 'artist' _name=ampersandRemovedCoveringArtistName }}" target='blank' title="artist page">{{coveredBy}}</a></b></i></div></div>
+					{{#if coveringArtistHasPage}}
+		            	<div class="item"><div class="content"><i>as covered by <b><a href="{{pathFor 'artist' _id=coveringArtistIDForName }}" target='blank' title="artist page">{{currentSong.coveredBy}}</a></b></i></div></div>
 		            {{else}}
-		            	<div class="item"><div class="content"><i>as covered by <b>{{coveredBy}}</b></i></div></div>
+		            	<div class="item"><div class="content"><i>as covered by <b>{{currentSong.coveredBy}}</b></i></div></div>
 		            {{/if}}
+		            <!--{{#if artistHasPage}}
+		            	<div class="item"><div class="content"><i>this is a cover of an original by <b><a href="{{pathFor 'artist' _id=artistIDForName }}" target='blank' title="artist page">{{currentSong.sa}}</a></b></i></div></div>
+		            {{else}}
+		            	<div class="item"><div class="content"><i>this is a cover of an original by <b>{{currentSong.sa}}</b></i></div></div>
+		            {{/if}}-->
 		          {{/if}}
 		          {{#if live}}
 		            <div class="item"><div class="content"><b><i>performed live</i></b></div></div>

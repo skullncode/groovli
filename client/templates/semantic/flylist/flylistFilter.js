@@ -3,6 +3,7 @@ Session.setDefault('flistM', '');
 Session.setDefault('eflistnm', ''); //edit flylist name
 Session.setDefault('eflistid', ''); //edit flylist id
 Session.setDefault('cflist', ''); //current flylist
+Session.setDefault('selGens', []);
 
 Template.flylistFilter.onRendered(function () {
   $('.ui.dropdown.flylistSelector').dropdown();
@@ -311,6 +312,8 @@ function playFlylist(flylistItem, ev){
 }
 
 function updateCurrentFlylistGenres(currentGenreSel) {
+  //console.log('THIS IS HTE CURREENT GENRE SEL!!!!!');
+  //console.log(currentGenreSel);
   if(!_.isUndefined(currentGenreSel))
   {
     //console.log('PLAYTHISFLYLIST method - SOMETHING NEW HAS BEEN SELECTED FROM THE GENRE selector:');

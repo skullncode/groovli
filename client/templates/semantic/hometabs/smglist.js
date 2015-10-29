@@ -240,9 +240,11 @@ function animateListToCurrentlyPlayingSong() {
   //{
     //console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$######################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$ this is the selected song: ");
     //console.log($('.songBrowserItem.selected')[0]);
-
-    $('#mgList').animate({ scrollTop: $('.songBrowserItem.selected')[0].offsetTop - 50}, 500);
-    Session.set('animatedToSong', true);
+    if(!_.isUndefined($('.songBrowserItem.selected')[0]))
+    {
+      $('#mgList').animate({ scrollTop: $('.songBrowserItem.selected')[0].offsetTop - 50}, 500);
+      Session.set('animatedToSong', true);
+    }
   //}
 }
 

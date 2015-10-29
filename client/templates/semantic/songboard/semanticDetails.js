@@ -1,4 +1,5 @@
 var currentSongArtistObj = new ReactiveVar(null);
+var coveringArtistObj = new ReactiveVar(null);
 var genresForArtistPageLoaded = new ReactiveVar(false);
 
 Template.semanticDetails.helpers({
@@ -42,6 +43,18 @@ Template.semanticDetails.helpers({
         return foundArtist._id;*/
       if(!_.isUndefined(currentSongArtistObj.get()))
         return currentSongArtistObj.get()._id;
+    }
+  },
+  
+  coveringArtistIDForName: function() {
+    var cs = Session.get('CS');
+    if(!_.isUndefined(cs) && !_.isEmpty(cs) && !_.isUndefined(cs.sa) && !_.isNull(coveringArtistObj.get()))
+    {
+      /*var foundArtist = Artists.findOne({'name': {$regex: new RegExp('^' + cs.sa + '$', 'i')}});
+      if(!_.isUndefined(foundArtist))
+        return foundArtist._id;*/
+      if(!_.isUndefined(coveringArtistObj.get()))
+        return coveringArtistObj.get()._id;
     }
   },
 
@@ -114,8 +127,8 @@ Template.semanticDetails.helpers({
   coveringArtistHasPage: function() {
     if(Session.get('coveringArtistHasPage'))
     {
-      console.log('########################## replacement ERRRROR 2');
-      console.log(currentSong.coveredBy);
+      //console.log('########################## replacement ERRRROR 2');
+      //console.log(currentSong.coveredBy);
       if(!_.isUndefined(currentSong.sa))
         currentSong.coveredBy = currentSong.coveredBy.replace(/&/g, 'and');
       return true;
@@ -220,7 +233,10 @@ function doesArtistHavePage(artName, mode) {
     }
 
     var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
-    currentSongArtistObj.set(x);
+    if(mode === 'original')
+      currentSongArtistObj.set(x);
+    else if(mode === 'cover')
+      coveringArtistObj.set(x);
     //console.log("#########################################################GOT THIS ARTIST: ");
     //console.log(x);
     if(_.isEmpty(x))

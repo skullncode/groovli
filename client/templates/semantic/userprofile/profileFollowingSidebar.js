@@ -14,6 +14,7 @@ Template.profileFollowingSidebar.helpers({
 	followingLink: function() {
 		if(!_.isNull(this) && !_.isUndefined(this) && !_.isNull(userIDsForTastemakers.get()) && !_.isUndefined(this.fbid))
 		{
+			tastemakerDetailsLoaded.set(true);
 			var x = _.findWhere(userIDsForTastemakers.get(), {'fbid':String(this.fbid)});
 			if(!_.isUndefined(x))
 			{

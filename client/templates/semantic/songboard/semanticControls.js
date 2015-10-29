@@ -826,7 +826,7 @@ function selectShareFromControls(share, shares, tab) {
     }
     else if(tab === 'search')
     {
-      console.log('UPDATING SONGS For search TAB: ');
+      //console.log('UPDATING SONGS For search TAB: ');
       while(counter < sh.length)
       {
         sh[counter].sourceTab = 'search';
