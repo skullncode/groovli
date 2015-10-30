@@ -106,7 +106,11 @@
 									  {{songCount}}
 									</div>
 									<div class="label">
-									  Songs
+										{{#if songCountPluralRequired}}
+									  		Songs
+									  	{{else}}
+									  		Song
+									  	{{/if}}
 									</div>
 								</div>
 							{{else}}

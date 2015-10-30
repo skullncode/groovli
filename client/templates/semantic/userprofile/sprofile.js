@@ -180,6 +180,9 @@ Template.sprofile.helpers({
     songCount: function() {
       return Session.get(this._id+'_sc');
     },
+    songCountPluralRequired: function() {
+      return Session.get(this._id+'_sc') > 1 || Session.get(this._id+'_sc') == 0;
+    },
     locationFlagCode: function() {
     	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj').baseLocation))
     	{
