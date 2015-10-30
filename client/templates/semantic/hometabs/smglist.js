@@ -6,6 +6,8 @@ Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
 var pagedMGlistSongsLoaded = new ReactiveVar(false);
 
+var pagingLimit = 15;
+
 
 Template.smglist.helpers({
   songs: function() {
@@ -30,20 +32,6 @@ Template.smglist.helpers({
         if(!_.isEmpty(Session.get('genl')))
         {
           var myGroovsForSelGens = [];
-          /*_(Session.get('genl')).each(function (v1, k1) {
-              _(v1.sharedBy).each(function (v2, k2) {
-                  if (v2.uid == String(Meteor.user().services.facebook.id)) {
-                      myGroovsForSelGens.push(v1);
-                  }
-              });
-          });*/
-          //fix to make paging work
-          /*if((Session.get('mgSongCount') > 30) && !_.isEmpty(Session.get('selGens'))) //ONLY for genre / flylist feature
-          {
-            console.log("FIX To make paging work post genre subscription!!!!");
-            Session.set('existingMGCursor', Session.get('mgSongCount')/2);
-            Session.set('existingMGCursor', 0);
-          }*/
           fullSongList = Songs.find({'sharedBy.uid': String(Meteor.user().services.facebook.id)},{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
           var myGroovsForSelGens = fullSongList.fetch();
           //console.log("THIS IS THE Sub list length for the My Groovs tab:");
@@ -54,7 +42,7 @@ Template.smglist.helpers({
           if(Session.get('existingMGCursor') > Session.get('mgSongCount')) //If page count is past total count then reset back to 0
           {
             console.log("current cursor IS PAST song COUNT!!!");
-            var newCursorPosition = Session.get('mgSongCount') - 30
+            var newCursorPosition = Session.get('mgSongCount') - pagingLimit
 
             if(newCursorPosition >= 0)
               Session.set('existingMGCursor', newCursorPosition);
@@ -101,7 +89,7 @@ Template.smglist.helpers({
     if(Session.get('existingMGCursor') > Session.get('mgSongCount')) //If page count is past total count then reset back to 0
     {
       //console.log("current cursor IS PAST song COUNT!!!");
-      //var newCursorPosition = Session.get('tmSongCount') - 30
+      //var newCursorPosition = Session.get('tmSongCount') - pagingLimit
       Session.set('existingMGCursor', 0);
     }
   },
@@ -139,28 +127,9 @@ Template.smglist.helpers({
   mgLength: function() {
     return Session.get('mLen');
   },
-  nextText: function() 
-  {
-    if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - 30))
-    {
-      return (Number(Session.get('existingMGCursor')) + 30) + " - " + (Number(Session.get('existingMGCursor')) + 60);
-    }
-    
-    return '';
-  }, 
-
-  prevText: function() 
-  {
-    if(Number(Session.get('existingMGCursor')) < 30)
-    {
-      return '';
-    }
-
-    return (Number(Session.get('existingMGCursor')) - 30) + " - " + (Number(Session.get('existingMGCursor')));
-  },
   moreThan30SongsForGenList: function()
   {
-    return (Session.get('mgSongCount') > 30);
+    return (Session.get('mgSongCount') > pagingLimit);
   },
   flylistLoadedAndNoMatchingSongs: function() 
   {
@@ -270,11 +239,11 @@ switchTabToMyGroovsIfNotAlreadyFocusedForSelectedSong = function(songSourceTab){
 Template.smglist.events({
     "click #previousMGS": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(Session.get('existingMGCursor')) > 29)
+      if(Number(Session.get('existingMGCursor')) > (pagingLimit - 1))
       {
         //console.log('INSIDE if condition!!');
         pagedMGlistSongsLoaded.set(false);
-        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - 30);
+        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
       }
@@ -288,11 +257,11 @@ Template.smglist.events({
 
     "click #nextMGS": function (event) {
       //console.log('CLICKED next button');
-      if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - 30))
+      if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - pagingLimit))
       {
         //console.log('INSIDE if condition!!');
         pagedMGlistSongsLoaded.set(false);
-        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + 30);
+        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
       }

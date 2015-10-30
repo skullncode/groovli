@@ -28,6 +28,8 @@
   }
 });*/
 
+var songboardPagingLimit = 15;
+
 Meteor.publish('listensForCurrentSong', function(linktype, linkSID) {
   if(linktype === 'YOUTUBE')
   {
@@ -97,7 +99,7 @@ Meteor.publish('30songsForMyGroovsBasedOnYearSelection', function(userID, cursor
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: 15,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -170,7 +172,7 @@ Meteor.publish('30songsForMyGroovsBasedOnGenreSelection', function(userID, curso
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: 15,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -218,7 +220,7 @@ Meteor.publish('30songsForMyGroovs', function(userID, cursorSkipAmount) {
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -278,7 +280,7 @@ Meteor.publish('30songsForTastemakersBasedOnGenreSelection', function(sel, selGe
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
 
@@ -331,7 +333,7 @@ Meteor.publish('30songsForTastemakers', function(sel, cursorSkipAmount) {
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,
+    limit: songboardPagingLimit,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -411,7 +413,7 @@ Meteor.publish('30songsForGlobalBasedOnYearSelection', function(excludedIds, yr,
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -504,7 +506,7 @@ Meteor.publish('30songsForGlobalBasedOnGenreSelection', function(sel, selGen, cu
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     
@@ -548,7 +550,7 @@ Meteor.publish('30songsForGlobal', function(sel, cursorSkipAmount) {
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 30,
+    limit: songboardPagingLimit,
     sort: {'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);

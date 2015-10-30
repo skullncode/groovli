@@ -15,24 +15,25 @@
 	{{> Template.dynamic template=header}}
 	<div class="ui stackable grid">
 		<!--PADDING-->
-		<div class="sixteen wide column"></div>
-		<div class="sixteen wide column"></div>
+		<!--REMOVE PADDING FOR NOW WITH NEW SECONDARY MENU<div class="sixteen wide column"></div>-->
+		<div class="sixteen wide column homePlayerTabsContainerBoxBackground"></div>
 
-		<!--PADDING grey box beginning-->
-		<div class="one wide computer column"></div>
+		<!--PADDING grey box beginning
+		<div class="one wide computer column homePlayerTabsContainerBoxBackground"></div>
 		<div class="fourteen wide computer only column homePlayerTabsContainerBoxBackground">
 			{{>semanticBreadcrumbNav}}
 		</div>
-		<div class="one wide computer only column"></div>
+		<div class="one wide computer only column homePlayerTabsContainerBoxBackground"></div>-->
 		<!--ACTUAL CONTENT - BEGIN-->
-		<div class="one wide computer only column"></div>
+		<div class="sixteen wide mobile only column homePlayerTabsContainerBoxBackground"></div>
+		<div class="one wide computer only column homePlayerTabsContainerBoxBackground"></div>
 		<div class="eight wide computer sixteen wide tablet sixteen wide mobile column homePlayerTabsContainerBoxBackground">
 			{{> Template.dynamic template=main}}
 		</div>
 		<div class="six wide computer sixteen wide tablet sixteen wide mobile column homePlayerTabsContainerBoxBackground">
 			{{> Template.dynamic template=sidebar}}
 		</div>
-		<div class="one wide computer column"></div>
+		<div class="one wide computer column homePlayerTabsContainerBoxBackground"></div>
 		<!--ACTUAL CONTENT - BEGIN-->
 	</div>
 	{{> Template.dynamic template=footer}}

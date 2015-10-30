@@ -4,6 +4,7 @@ Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
 var pagedMGlistSongsLoaded = new ReactiveVar(false);
+var pagingLimit = 15;
 
 
 Template.mygroovList.helpers({
@@ -57,7 +58,7 @@ Template.mygroovList.helpers({
     if(Session.get('existingMGCursor') > Session.get('mgSongCount')) //If page count is past total count then reset back to 0
     {
       //console.log("current cursor IS PAST song COUNT!!!");
-      //var newCursorPosition = Session.get('tmSongCount') - 30
+      //var newCursorPosition = Session.get('tmSongCount') - pagingLimit
       Session.set('existingMGCursor', 0);
     }
   },
@@ -95,28 +96,9 @@ Template.mygroovList.helpers({
       Session.set('playerLoaded', false);
     }
   },
-  nextText: function() 
-  {
-    if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - 30))
-    {
-      return (Number(Session.get('existingMGCursor')) + 30) + " - " + (Number(Session.get('existingMGCursor')) + 60);
-    }
-    
-    return '';
-  }, 
-
-  prevText: function() 
-  {
-    if(Number(Session.get('existingMGCursor')) < 30)
-    {
-      return '';
-    }
-
-    return (Number(Session.get('existingMGCursor')) - 30) + " - " + (Number(Session.get('existingMGCursor')));
-  },
   moreThan30SongsForGenList: function()
   {
-    return (Session.get('mgSongCount') > 30);
+    return (Session.get('mgSongCount') > pagingLimit);
   },
   flylistLoadedAndNoMatchingSongs: function() 
   {
@@ -239,11 +221,11 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
 Template.mygroovList.events({
     "click #previousMGS": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(Session.get('existingMGCursor')) > 29)
+      if(Number(Session.get('existingMGCursor')) > (pagingLimit - 1))
       {
         //console.log('INSIDE if condition!!');
         pagedMGlistSongsLoaded.set(false);
-        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - 30);
+        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
       }
@@ -257,11 +239,11 @@ Template.mygroovList.events({
 
     "click #nextMGS": function (event) {
       //console.log('CLICKED next button');
-      if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - 30))
+      if(Number(Session.get('existingMGCursor')) < Number(Session.get('mgSongCount') - pagingLimit))
       {
         //console.log('INSIDE if condition!!');
         pagedMGlistSongsLoaded.set(false);
-        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + 30);
+        Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
       }

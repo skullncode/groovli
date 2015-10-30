@@ -62,7 +62,8 @@
 }
 
 .homePlayerTabsContainerBoxBackground{
-	background-color:#D9D9D9;
+	/*background-color:#D9D9D9; OLD COLOR BEFORE MATHU VISUAL AUDIT*/
+	background-color:#f1f0eb;
 }
 
 .landingPageTrendingBoxBackground{

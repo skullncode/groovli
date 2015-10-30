@@ -2,6 +2,7 @@ Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 //Session.setDefault('sgSongCursor', undefined)
 var pagedGlistSongsLoaded = new ReactiveVar(false);
+var pagingLimit = 15;
 
 Template.globalPage.helpers({
   songs: function() {
@@ -66,7 +67,7 @@ Template.globalPage.helpers({
     if(Session.get('existingSGCursor') > Session.get('sgSongCount')) //If page count is past total count then reset back to 0
     {
       //console.log("current cursor IS PAST song COUNT!!!");
-      //var newCursorPosition = Session.get('tmSongCount') - 30
+      //var newCursorPosition = Session.get('tmSongCount') - pagingLimit
       Session.set('existingSGCursor', 0);
     }
   },
@@ -189,11 +190,11 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
 Template.globalPage.events({
     "click #previousSGS": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(Session.get('existingSGCursor')) > 29)
+      if(Number(Session.get('existingSGCursor')) > (pagingLimit - 1))
       {
         //console.log('INSIDE if condition!!');
         pagedGlistSongsLoaded.set(false);
-        Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) - 30);
+        Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) - pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
       }
@@ -207,11 +208,11 @@ Template.globalPage.events({
 
     "click #nextSGS": function (event) {
       //console.log('CLICKED next button');
-      if(Number(Session.get('existingSGCursor')) < Number(Session.get('sgSongCount') - 30))
+      if(Number(Session.get('existingSGCursor')) < Number(Session.get('sgSongCount') - pagingLimit))
       {
         //console.log('INSIDE if condition!!');
         pagedGlistSongsLoaded.set(false);
-        Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) + 30);
+        Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) + pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
       }

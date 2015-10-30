@@ -2,6 +2,7 @@ Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
 //Session.setDefault('tmSongCursor', undefined)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
+var pagingLimit = 15;
 
 
 Template.stmlist.helpers({
@@ -73,7 +74,7 @@ Template.stmlist.helpers({
     if(Session.get('existingTMCursor') > Session.get('tmSongCount')) //If page count is past total count then reset back to 0
     {
       console.log("current cursor IS PAST song COUNT!!!");
-      var newCursorPosition = Session.get('tmSongCount') - 30
+      var newCursorPosition = Session.get('tmSongCount') - pagingLimit
       Session.set('existingTMCursor', 0);
     }
   },
@@ -211,11 +212,11 @@ function switchTabIfNotAlreadyFocusedForSelectedSong(songSourceTab){
 Template.stmlist.events({
     "click #previousTMS": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(Session.get('existingTMCursor')) > 29)
+      if(Number(Session.get('existingTMCursor')) > (pagingLimit - 1))
       {
         //console.log('INSIDE if condition!!');
         pagedTMlistSongsLoaded.set(false);
-        Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) - 30);
+        Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) - pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
       }
@@ -229,11 +230,11 @@ Template.stmlist.events({
 
     "click #nextTMS": function (event) {
       //console.log('CLICKED next button');
-      if(Number(Session.get('existingTMCursor')) < Number(Session.get('tmSongCount') - 30))
+      if(Number(Session.get('existingTMCursor')) < Number(Session.get('tmSongCount') - pagingLimit))
       {
         //console.log('INSIDE if condition!!');
         pagedTMlistSongsLoaded.set(false);
-        Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) + 30);
+        Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) + pagingLimit);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
       }
