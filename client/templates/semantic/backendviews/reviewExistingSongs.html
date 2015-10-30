@@ -1,68 +1,135 @@
 <template name="reviewExistingSongs">
 	{{#if currentUser}}
     	{{#if userIsAnAdmin}}
-			<h1 class="ui header">Review Existing Songs</h1>
-			<table class="ui celled structured table">
-				<thead>
-				<tr>
-					<th rowspan="2">Actions</th>
-					<th rowspan="2">Song</th>
-					<th rowspan="2">Artist</th>
-					<th rowspan="2">Title</th>
-					<th rowspan="2">Shared By</th>     
-					<th colspan="3">Validity</th>
-					<th colspan="4">Extra Deets</th>	 
-				</tr>
-				<tr>
-					<th>iTunes</th>
-					<th>LFM</th>
-					<th>Manual</th>
-					<th>Live</th>
-					<th>Mashup</th>
-					<th>Cover</th>
-					<th>Remix</th>
-				</tr>
-				</thead>
-				<tbody>
-					{{#if songsLoaded}}
-						{{#each existingSongsForReview}}
-							{{>semanticReviewItem}}
-						{{/each}}
-				    {{else}}
-			    		<div class="ui active centered large inline loader"></div>
-			    	{{/if}}
-				</tbody>
-				<tfoot>
-				  <tr>
-				  <th colspan="1">
-				    <p><strong>{{currentCursorPosition}} of {{existingCount}} songs</strong></p>                    
-				  </th>
-				  <th colspan="1">
-				    <select class="ui compact dropdown" id="jumpPaging">
-					  <option value="">Jump To</option>
-					  {{#each pagingRange}}
-					  	<option value="{{this}}">{{this}}</option>
-					  {{/each}}
-					</select>
-				  </th>
-				  <th colspan="10">
-				    <div class="ui right floated pagination menu">
-						<button id="beginningOfSongList" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
-							<i class="angle double left icon"></i>
-						</button>
-						<button id="previousSongs" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
-							<i class="left chevron icon"></i>
-						</button>
-						<button id="nextSongs" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
-							<i class="right chevron icon"></i>
-						</button>
-						<button id="endOfSongList" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
-							<i class="angle double right icon"></i>
-						</button>
-				    </div>
-				  </th>
-				</tr></tfoot>
-			</table>
+			<div class="ui grid">
+			  <div class="four column row">
+			  	<div class="left floated column">
+			  		<h1 class="ui header">Review Existing Songs</h1>
+			  	</div>
+			    <div class="right floated column">
+			    	<div class="ui search">
+					  <div class="ui icon input">
+					    <input class="prompt" type="text" placeholder="Search for existing songs...">
+					    <i class="search icon"></i>
+					  </div>
+					  <div class="results"></div>
+					</div>
+			    </div>
+			  </div>
+			</div>
+			<div class="ui stackable grid">
+				<div class="sixteen wide computer sixteen wide tablet sixteen wide mobile column">
+					<div class="ui pointing secondary menu reviewExistingSongsTabs">
+					  <a class="active item" data-tab="existingSongList">Existing Songs</a>
+					  <a class="item" data-tab="searchedSongResults">Search Results</a>
+					</div>
+					<div class="ui active tab segment" data-tab="existingSongList">
+						<table class="ui celled structured table">
+							<thead>
+							<tr>
+								<th rowspan="2">Actions</th>
+								<th rowspan="2">Song</th>
+								<th rowspan="2">Artist</th>
+								<th rowspan="2">Title</th>
+								<th rowspan="2">Shared By</th>     
+								<th colspan="3">Validity</th>
+								<th colspan="4">Extra Deets</th>	 
+							</tr>
+							<tr>
+								<th>iTunes</th>
+								<th>LFM</th>
+								<th>Manual</th>
+								<th>Live</th>
+								<th>Mashup</th>
+								<th>Cover</th>
+								<th>Remix</th>
+							</tr>
+							</thead>
+							<tbody>
+								{{#if songsLoaded}}
+									{{#each existingSongsForReview}}
+										{{>semanticReviewItem}}
+									{{/each}}
+							    {{else}}
+						    		<div class="ui active centered large inline loader"></div>
+						    	{{/if}}
+							</tbody>
+							<tfoot>
+							  <tr>
+							  <th colspan="1">
+							    <p><strong>{{currentCursorPosition}} of {{existingCount}} songs</strong></p>                    
+							  </th>
+							  <th colspan="1">
+							    <select class="ui compact dropdown" id="jumpPaging">
+								  <option value="">Jump To</option>
+								  {{#each pagingRange}}
+								  	<option value="{{this}}">{{this}}</option>
+								  {{/each}}
+								</select>
+							  </th>
+							  <th colspan="10">
+							    <div class="ui right floated pagination menu">
+									<button id="beginningOfSongList" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
+										<i class="angle double left icon"></i>
+									</button>
+									<button id="previousSongs" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
+										<i class="left chevron icon"></i>
+									</button>
+									<button id="nextSongs" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
+										<i class="right chevron icon"></i>
+									</button>
+									<button id="endOfSongList" class="ui icon item {{#if songListDoesNotRequirePaging}}disabled{{/if}} button">
+										<i class="angle double right icon"></i>
+									</button>
+							    </div>
+							  </th>
+							</tr></tfoot>
+						</table>			  
+					</div>
+					<div class="ui tab segment" data-tab="searchedSongResults">
+						<table class="ui celled structured table">
+							<thead>
+							<tr>
+								<th rowspan="2">Actions</th>
+								<th rowspan="2">Song</th>
+								<th rowspan="2">Artist</th>
+								<th rowspan="2">Title</th>
+								<th rowspan="2">Shared By</th>     
+								<th colspan="3">Validity</th>
+								<th colspan="4">Extra Deets</th>	 
+							</tr>
+							<tr>
+								<th>iTunes</th>
+								<th>LFM</th>
+								<th>Manual</th>
+								<th>Live</th>
+								<th>Mashup</th>
+								<th>Cover</th>
+								<th>Remix</th>
+							</tr>
+							</thead>
+							<tbody>
+								{{#if searchResultsExist}}
+									{{#each searchResultsForReview}}
+										{{>semanticReviewItem}}
+									{{/each}}
+							    {{else}}
+						    		<div class="ui basic segment">
+									  <p><i>Not searched for anything yet so this is empty!</i></p>
+									</div>
+						    	{{/if}}
+							</tbody>
+							<tfoot>
+							  <tr>
+							  <th colspan="12">
+							    <p><strong>{{currentCursorPosition}} of {{existingCount}} songs</strong></p>                    
+							  </th>
+							</tr></tfoot>
+						</table>
+					</div>
+				</div>	
+			</div>
+			
 		{{/if}}
   	{{/if}}
 	{{#if loggingIn}}

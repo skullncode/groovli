@@ -2,6 +2,7 @@ var existingSongListLoaded = new ReactiveVar(false);
 var existingSongCursor = new ReactiveVar(0);
 var existingSongCount = new ReactiveVar(0);
 var calculatedPagingRange = new ReactiveVar(null);
+var existingSongReviewSearchResults = new ReactiveVar(null);
 var pagingCount = 10;
 
 Template.reviewExistingSongs.helpers({
@@ -56,7 +57,17 @@ Template.reviewExistingSongs.helpers({
 		return existingSongListLoaded.get();
 	},
 	songListDoesNotRequirePaging: function() {
+		Meteor.setTimeout(initiateSongTabs, 800);
 		return (Counts.get('counterForExistingSongs') <= pagingCount)
+	},
+	searchResultsExist: function() {
+		if(_.isNull(existingSongReviewSearchResults.get()) || _.isEmpty(existingSongReviewSearchResults.get()))
+			return false
+		else
+			return true;
+	},
+	searchResultsForReview: function() {
+		return existingSongReviewSearchResults.get();
 	}
 });
 
@@ -126,4 +137,56 @@ Template.reviewExistingSongs.onCreated(function() {
 
 function existingSongsSubLoaded(){
 	existingSongListLoaded.set(true);
+}
+
+
+function initiateSongTabs(){
+	//console.log('initiating tabs!!!!');
+	$('.reviewExistingSongsTabs .item').tab();
+}
+
+
+Template.reviewExistingSongs.onRendered(function () {
+	$('.ui.search')
+	  .search({
+	    apiSettings: {
+	      //url: '//localhost:3000/api/ss/{query}'
+	      url: '//groovli.com/api/ss/{query}'
+	    },
+	    fields: {
+	      results : 'apiResults',
+	      title   : 'sa',
+	      description : 'st'
+	    },
+	    onSelect: function(result, response) {
+	    	//console.log('THIS IS THE RESULT!!:');
+	    	//console.log(result);
+			Session.set('clkdsrchresult', result);
+	        //alert(result);
+	        //var currentResults = Session.get('usrchResults');
+	        if(_.isNull(existingSongReviewSearchResults.get()))
+	        {
+	        	existingSongReviewSearchResults.set([]);
+	        }
+	        
+	        var currentResults = existingSongReviewSearchResults.get();
+	        currentResults.push(result);
+	        //Session.set('usrchResults', currentResults);
+	        existingSongReviewSearchResults.set(currentResults);
+	        
+	        //Meteor.setTimeout(playSongFromSearchResult, 500);
+	        /*var ytLinkID = result.sl.substring(result.sl.indexOf("v=")+2);
+	        loadVideoById(ytLinkID);*/
+	    },
+	    minCharacters : 3
+	  })
+	;
+});
+
+
+function playSongFromSearchResult(){
+	//console.log("GOING TO PLAYYYYYYYY the selected SONG in the search results:");
+	//$('#sresultsTabHeader').click()
+	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
+	mixpanel.track('played song from search result');
 }
