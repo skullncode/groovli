@@ -1,4 +1,6 @@
 var messagingSidebarContext = new ReactiveVar(null);
+var knownUsersLoaded = new ReactiveVar(false);
+var unknownUsersLoaded = new ReactiveVar(false);
 Session.setDefault('selectedUserInMessagingList', null)
 Session.setDefault('skuser', false); //selected known user
 Session.setDefault('sukuser', false); //selected unknown user
@@ -82,6 +84,13 @@ Template.messagingSidebar.helpers({
 			return true;
 		else
 			return false;
+	},
+	knownUsersLoaded: function() {
+		return knownUsersLoaded.get();
+	},
+
+	unknownUsersLoaded: function() {
+		return unknownUsersLoaded.get();
 	}
 });
 
@@ -160,6 +169,7 @@ function getAllPossibleUsersForMessaging() {
 		    	//console.log('REVIEW EXISTING SUCCESS: ');
 		    	//console.log(result);
 		    	Session.set(Meteor.user()._id + '_allMessagingUsers', result);
+		    	knownUsersLoaded.set(true);
 		    	//Session.set('friendCount', result.length);
 		    }
 		});
@@ -206,6 +216,7 @@ function getUnknownUsersForMessaging() {
 			    	//console.log('REVIEW EXISTING SUCCESS: ');
 			    	//console.log(result);
 			    	Session.set(Meteor.user()._id + '_allUnknownMessagingUsers', result);
+			    	unknownUsersLoaded.set(true);
 			    	//Session.set('friendCount', result.length);
 			    }
 			});

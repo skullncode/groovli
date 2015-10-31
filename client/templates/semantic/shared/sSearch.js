@@ -10,6 +10,19 @@ Template.sSearch.helpers({
       //console.log('THERE ARE noooooo FAVES!!!');
       return false;
     }
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 800);
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
   }
 });
 
@@ -49,4 +62,8 @@ function playSongFromSearchResult(){
 	//$('#sresultsTabHeader').click()
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
 	mixpanel.track('played song from search result');
+}
+
+function activatePopups(){
+  $('#headerMenuSearchBox').popup();
 }

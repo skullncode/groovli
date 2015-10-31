@@ -32,7 +32,7 @@ function onTMSubReady()
   //console.log('TM SUBS IS FINALLY DONE - top tastemakers subscription finally ready!!!!');
 
   var result = Meteor.users.find({'$nor':[{'services.facebook.id': Meteor.user().services.facebook.id}]}).count();
-  console.log(result);
+  //console.log(result);
   if(result > 0)
   {
     Session.set('ttmkrsLoaded', true);

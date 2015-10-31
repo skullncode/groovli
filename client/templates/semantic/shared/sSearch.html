@@ -1,11 +1,12 @@
 <template name="sSearch">
 	{{#if onSongboardPages}}
-		<div class="ui category search item">
+		<div id="headerMenuSearchBox" class="ui category search item" data-content="{{#if notifsEnabled}}Search for any songs within Groovli from here; songs you select from the search results will show up within the Search Results tab below{{/if}}" data-variation="inverted large">
 		  <div class="ui transparent icon input">
 		    <input class="prompt" type="text" placeholder="Search songs...">
 		    <i class="search link icon"></i>
 		  </div>
 		  <div class="results"></div>
 		</div>
+		{{activatePopups}}
 	{{/if}}
 </template>

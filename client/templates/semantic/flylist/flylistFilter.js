@@ -43,6 +43,22 @@ Template.flylistFilter.helpers({
   		return true;
   	else
   		return false;
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 800);
+  },
+  renderFlylist: function() {
+    Meteor.setTimeout(renderFlylist, 500);
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
   }
 });
 
@@ -381,4 +397,12 @@ function updateCurrentFlylistGenres(currentGenreSel) {
 
     Session.set('selGens', currentGenreSel);
   }
+}
+
+function activatePopups(){
+  $('.flylistSelector').popup({position : 'left center'});
+}
+
+function renderFlylist() {
+  $('.ui.dropdown.flylistSelector').dropdown();
 }

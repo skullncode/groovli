@@ -8,12 +8,27 @@ Template.mygroovTabs.helpers({
   getDateRange: function() {
   	if(!Session.get('drl'))
   		getYearRangeForMyGroovs();
+  },
+  initiateSongTabs: function() {
+  	Meteor.setTimeout(initiateSongTabs, 800);
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 800);
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
   }
 });
 
 Template.mygroovTabs.onRendered(function () {
 	$('.ui.modal').modal();
-	$('.tabular.menu .item').tab();
 	//$('.ui.dropdown.flylistSelector').dropdown();
 });
 
@@ -78,4 +93,12 @@ function getYearRangeForMyGroovs() {
 		  }
 		});
 	}
+}
+
+function initiateSongTabs() {
+	$('.tabular.menu .item').tab();
+}
+
+function activatePopups(){
+  $('#mygroovsTabHeader').popup();
 }

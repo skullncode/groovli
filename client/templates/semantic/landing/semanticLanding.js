@@ -116,7 +116,7 @@ Template.semanticLanding.events({
             else
             {
                 //after logging in update FB friend list
-                Meteor.call('updateFBFriendList');
+                Meteor.call('updateFBFriendList', Meteor.user());
                 //Router.go('/songboard');
                 FlowRouter.go('/songboard');
             }

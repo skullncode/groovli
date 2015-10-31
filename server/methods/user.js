@@ -88,11 +88,12 @@ function setLocationForUser(uid)
 }
 
 Meteor.methods({
-	updateFBFriendList: function()
+	updateFBFriendList: function(loggedInUser)
 	{
 		//console.log('THIS IS THE METEOR USER OBJECT!!!');
 		//console.log(Meteor.user());
-		var updatedFBGetURL = fbGraphURLforFriends.replace('#TOKEN#',Meteor.user().services.facebook.accessToken);
+		//var updatedFBGetURL = fbGraphURLforFriends.replace('#TOKEN#',Meteor.user().services.facebook.accessToken);
+		var updatedFBGetURL = fbGraphURLforFriends.replace('#TOKEN#',loggedInUser.services.facebook.accessToken);
 		var counter = 0;
 		var fbFriends = [];
 		Meteor.http.get(updatedFBGetURL,
@@ -439,5 +440,27 @@ Meteor.methods({
  		//console.log(dateRange);
 
  		return dateRange;
+	},
+	toggleHelpNotifications: function (userID, notificationsEnabled) {
+		var foundUser = Meteor.users.findOne(userID)
+
+		if(!_.isUndefined(foundUser))
+		{
+			var conditions = {_id: userID};	
+			var updateVars = {$set:{notifsEnabled: notificationsEnabled}};
+			Meteor.users.update(conditions, updateVars, function(error, result) {
+		      if (error) {
+		        // display the error to the user
+		        console.log(error.reason);
+		      }
+		      else{
+		      	console.log('################ successfully UPDATED HELP NOTIFICATION enabled STATUS for user: ' + userID);
+		      }
+			});
+		}
+		else
+		{
+			console.log('USER NOT FOUND: ' + userID);
+		}
 	}
 });

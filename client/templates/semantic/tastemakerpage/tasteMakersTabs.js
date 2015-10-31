@@ -14,12 +14,27 @@ Template.tasteMakersTabs.helpers({
       return true;
     else
       return false;
+  },
+  initiateSongTabs: function() {
+  	Meteor.setTimeout(initiateSongTabs, 800);
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 800);
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
   }
 });
 
 Template.tasteMakersTabs.onRendered(function () {
 	$('.ui.modal').modal();
-	$('.tabular.menu .item').tab();
 	//$('.ui.dropdown.flylistSelector').dropdown();
 });
 
@@ -79,4 +94,12 @@ function getYearRangeForMyGroovs() {
 		  }
 		});
 	}
+}
+function initiateSongTabs(){
+	//console.log('################################## initiating song tabs!!!!');
+	$('.tabular.menu .item').tab();
+}
+
+function activatePopups(){
+  $('#tastemakersTabHeader').popup();
 }

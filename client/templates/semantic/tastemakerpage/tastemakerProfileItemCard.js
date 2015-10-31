@@ -9,8 +9,8 @@ if (Meteor.isClient) {
     getFollowerCount: function(uObj) {
       if(!_.isUndefined(uObj))
       {
-        console.log("GOING TO get follower count for this user object: ");
-        console.log(uObj);
+        //console.log("GOING TO get follower count for this user object: ");
+        //console.log(uObj);
         Meteor.call('getFollowerCount', uObj, function(error,result){
             if(error){
                 console.log(error.reason);

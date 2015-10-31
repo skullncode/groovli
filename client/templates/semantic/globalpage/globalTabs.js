@@ -8,12 +8,27 @@ Template.globalTabs.helpers({
   getDateRange: function() {
   	if(!Session.get('gldrl'))
   		getGlobalYearRange();
+  },
+  initiateSongTabs: function() {
+  	Meteor.setTimeout(initiateSongTabs, 800);
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 800);
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
   }
 });
 
 Template.globalTabs.onRendered(function () {
 	$('.ui.modal').modal();
-	$('.tabular.menu .item').tab();
 	//$('.ui.dropdown.flylistSelector').dropdown();
 });
 
@@ -79,4 +94,13 @@ function getGlobalYearRange() {
 		  }
 		});
 	}
+}
+
+
+function initiateSongTabs() {
+	$('.tabular.menu .item').tab();
+}
+
+function activatePopups(){
+  $('#globalTabHeader').popup();
 }

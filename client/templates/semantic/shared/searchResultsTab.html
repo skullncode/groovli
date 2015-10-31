@@ -1,3 +1,4 @@
 <template name="searchResultsTab">
-	<a id="sresultsTabHeader" class="item" data-tab="sresults">Search Results</a>
+	<a id="sresultsTabHeader" class="item" data-tab="sresults" data-content="{{#if notifsEnabled}}This tab will always show your search results{{/if}}" data-variation="inverted large">Search Results</a>
+	{{activatePopups}}
 </template>

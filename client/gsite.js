@@ -25,7 +25,7 @@ if (Meteor.isClient) {
 	var updateFBFriendListFunction = function () {
 		//console.log('LOADING songboard and going to update the fb friendlist!');
 		if(userCheck())
-			Meteor.call('updateFBFriendList');
+			Meteor.call('updateFBFriendList', Meteor.user());
 	}
 
 	var getLatestStoriesFromDBAndFBFunction = function () {
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
 	}
   	//resetSession();
   	if(userCheck())
-  		Meteor.call('updateFBFriendList');
+  		Meteor.call('updateFBFriendList', Meteor.user());
 
   	Meteor.setInterval(updateFBFriendListFunction, 30000);
 

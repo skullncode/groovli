@@ -35,13 +35,13 @@
               <div class="brand item">
                 <img class="ui small image" src="../images/logo/groovli.png">
               </div>
-              <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink">Home</a>
-              <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink">My Groovs</a>
-              <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink">Tastemakers</a>
-              <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink">Global</a>
+              <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink" data-content="{{#if notifsEnabled}}listen to music shared by you, your tastemakers & people from the global community{{/if}}" data-variation="inverted large">Home</a>
+              <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by you{{/if}}" data-variation="inverted large">My Groovs</a>
+              <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by your friends and people YOU chose to follow from the global community{{/if}}" data-variation="inverted large">Tastemakers</a>
+              <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by people outside your social circle{{/if}}" data-variation="inverted large">Global</a>
               <div class="right menu orangeHeaderMenu">
                 {{>sSearch}}
-                <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item">
+                <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item" title="messages">
                   <i class="large comment icon orangeHeaderMenuItem"></i>
                   {{#if hasUnreadMsgs}}
                     <a class="ui red right corner label">{{unreadMsgCount}}</a>
@@ -51,6 +51,7 @@
                 <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
                   <i class="dropdown icon"></i>
                   <div class="menu">
+                    {{>helpNotificationDisabler}}
                     <a href="/profile/{{currentUser._id}}" target="blank"><div class="item">Profile</div></a>
                     <div class="ui divider"></div>
                     <div id="logout" class="item">Logout</div>
@@ -70,12 +71,12 @@
             <div class="brand item">
               <img class="ui small image" src="../images/logo/groovli.png">
             </div>
-            <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink">Home</a>
-            <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink">My Groovs</a>
-            <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink">Tastemakers</a>
-            <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink">Global</a>
+            <a href="{{pathFor 'semanticboard' }}" class="{{activeRouteIsHome}} item homelink" data-content="{{#if notifsEnabled}}listen to music shared by you, your tastemakers & people from the global community{{/if}}" data-variation="inverted large">Home</a>
+            <a href="{{pathFor 'mygroovs' }}" class="{{activeRouteIsMyGroovs}} item mygroovslink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by you{{/if}}" data-variation="inverted large">My Groovs</a>
+            <a href="{{pathFor 'tastemakerspage' }}" class="{{activeRouteIsTastemakers}} item tastemakerslink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by your friends and people YOU chose to follow from the global community{{/if}}" data-variation="inverted large">Tastemakers</a>
+            <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by people outside your social circle{{/if}}" data-variation="inverted large">Global</a>
             <div class="right menu orangeHeaderMenu">
-              <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item">
+              <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item" title="messages">
                 <i class="large comment icon orangeHeaderMenuItem"></i>
                 {{#if hasUnreadMsgs}}
                   <a class="ui red right corner label">{{unreadMsgCount}}</a>
@@ -85,6 +86,7 @@
               <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square">
                 <i class="dropdown icon"></i>
                 <div class="menu">
+                  {{>helpNotificationDisabler}}
                   <a href="/profile/{{currentUser._id}}" target="blank"><div class="item">Profile</div></a>
                   <div class="ui divider"></div>
                   <div id="logout" class="item">Logout</div>
@@ -148,4 +150,5 @@
       </div>
   </div>
 </div>
+{{activatePopups}}
 </template>

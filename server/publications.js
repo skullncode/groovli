@@ -999,7 +999,8 @@ Meteor.publish("userData", function () {
           "unfollowedFriends": 1,
           "createdAt": 1,
           "status": 1,
-          "baseLocation": 1
+          "baseLocation": 1,
+          "notifsEnabled": 1
         }
      });
   } else {

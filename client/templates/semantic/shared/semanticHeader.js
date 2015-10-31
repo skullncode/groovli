@@ -29,6 +29,19 @@ Template.semanticHeader.helpers({
   },
   unreadMsgCount: function() {
     return Session.get('urmsgsC');
+  },
+  notifsEnabled: function() {
+    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      return Meteor.user().notifsEnabled;
+    }
+    else
+    {
+      return true;
+    }
+  },
+  activatePopups: function() {
+    Meteor.setTimeout(activatePopups, 500);
   }
 });
 
@@ -50,6 +63,7 @@ Template.semanticHeader.onCreated(function() {
     {
       self.subscribe("unreadMsgCountForLoggedInUser", Meteor.user().services.facebook.id);
       Session.set('urmsgsC', Counts.get('unreadMsgCounterForLoggedInUser'));
+      activatePopups();
     }
   });
 });
@@ -98,6 +112,13 @@ Template.semanticHeader.events({
     	FlowRouter.go('/global');
     }
 });
+
+function activatePopups(){
+  $('.homelink').popup();
+  $('.mygroovslink').popup();
+  $('.tastemakerslink').popup();
+  $('.globalpagelink').popup();
+}
 
 
 /*

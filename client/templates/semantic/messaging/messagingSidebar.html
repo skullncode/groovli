@@ -15,47 +15,55 @@
 	</div>
 	<div class="ui bottom attached tab segment active" data-tab="friendsMsgs">
 		<div class="ui vertical fluid right tabular menu usersForMessaging">
-			{{#if hasUsersForMessaging}}
-				{{#each usersForMessaging}}
-					<a href="/messages/{{this._id}}" id="userInMessagingList" class="item {{this._id}}">
-						<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
-						{{#if hasOnlineStatus}}
-							{{#if this.status.online}}
-								<a class="ui green empty circular label"></a>
+			{{#if knownUsersLoaded}}
+				{{#if hasUsersForMessaging}}
+					{{#each usersForMessaging}}
+						<a href="/messages/{{this._id}}" id="userInMessagingList" class="item {{this._id}}">
+							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
+							{{#if hasOnlineStatus}}
+								{{#if this.status.online}}
+									<a class="ui green empty circular label"></a>
+								{{/if}}
 							{{/if}}
-						{{/if}}
-						{{#if thisUserHasUnreadMsgs}}
-							<div class="ui red right corner label">{{unreadMsgsFromThisUser}}</div>
-						{{/if}}
-					</a>
-				{{/each}}
+							{{#if thisUserHasUnreadMsgs}}
+								<div class="ui red right corner label">{{unreadMsgsFromThisUser}}</div>
+							{{/if}}
+						</a>
+					{{/each}}
+				{{else}}
+					<div class="ui basic segment">
+	                  <p><i>You have no friends or tastemakers within Groovli yet...:-(</i></p>
+	                </div>
+				{{/if}}
 			{{else}}
-				<div class="ui basic segment">
-                  <p><i>You have no friends or tastemakers within Groovli yet...:-(</i></p>
-                </div>
+				<div class="ui active centered large inline loader"></div>
 			{{/if}}
 	    </div>
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="otherMsgs">
 		<div class="ui vertical fluid right tabular menu usersForMessaging">
-			{{#if hasUnknownUsersForMessaging}}
-				{{#each unknownUsersForMessaging}}
-					<a href="/messages/{{this._id}}" id="unknownUserInMessagingList" class="item {{this._id}}">
-						<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
-						{{#if hasOnlineStatus}}
-							{{#if this.status.online}}
-								<a class="ui green empty circular label"></a>
+			{{#if unknownUsersLoaded}}
+				{{#if hasUnknownUsersForMessaging}}
+					{{#each unknownUsersForMessaging}}
+						<a href="/messages/{{this._id}}" id="unknownUserInMessagingList" class="item {{this._id}}">
+							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
+							{{#if hasOnlineStatus}}
+								{{#if this.status.online}}
+									<a class="ui green empty circular label"></a>
+								{{/if}}
 							{{/if}}
-						{{/if}}
-						{{#if thisUserHasUnreadMsgs}}
-							<div class="ui red right corner label">{{unreadMsgsFromThisUser}}</div>
-						{{/if}}					
-					</a>
-				{{/each}}
+							{{#if thisUserHasUnreadMsgs}}
+								<div class="ui red right corner label">{{unreadMsgsFromThisUser}}</div>
+							{{/if}}					
+						</a>
+					{{/each}}
+				{{else}}
+					<div class="ui basic segment">
+	                  <p><i>You have no messages from unknown people..:-)</i></p>
+	                </div>
+				{{/if}}
 			{{else}}
-				<div class="ui basic segment">
-                  <p><i>You have no messages from unknown people..:-)</i></p>
-                </div>
+				<div class="ui active centered large inline loader"></div>
 			{{/if}}
 	    </div>
 	</div>

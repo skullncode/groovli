@@ -1,5 +1,5 @@
 <template name="flylistFilter">
-	<div class="ui floating dropdown flylistSelector labeled search icon button">
+	<div class="ui floating dropdown flylistSelector labeled search icon button" data-content="{{#if notifsEnabled}}Flylists allow you to create and save a set of GENRE filters, to suit specific moods & tastes; once a Flylist is created and played, ONLY music matching the selected genres will be played{{/if}}" data-variation="inverted large">
 	  <i class="music icon"></i>
 	  <span class="text">Flylist filters{{flylistDropdownHeaderText}}
 	  </span>
@@ -21,4 +21,6 @@
 			{{/if}}
 	  </div>
 	</div>
+	{{activatePopups}}
+	{{renderFlylist}}
 </template>

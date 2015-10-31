@@ -2,7 +2,7 @@
 	{{#if currentUser}}
 		<div class="ui top attached tabular menu">
 			<!--<a id="recentPostsByTastemakersTabHeader" class="item" data-tab="tastemakers">Recent Posts</a>-->
-			<a id="tastemakersTabHeader" class="item active" data-tab="tastemakers">Tastemakers</a>
+			<a id="tastemakersTabHeader" class="item active" data-tab="tastemakers" data-content="{{#if notifsEnabled}}ONLY music shared by your friends and people YOU chose to follow from the global community will show up here; within this view you can also choose to listen to ONLY songs shared by ONE specific person / tastemaker{{/if}}" data-variation="inverted large">Tastemakers</a>
 			{{> searchResultsTab}}
 		</div>
 		<div class="ui icon menu orangeHeaderMenu" style="margin:0px;">
@@ -28,4 +28,6 @@
 	{{/if}}
 
 	{{>newFlylistModal}}
+	{{initiateSongTabs}}
+	{{activatePopups}}
 </template>
