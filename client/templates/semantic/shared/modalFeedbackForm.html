@@ -1,0 +1,56 @@
+<template name="modalFeedbackForm">
+	<div class="ui small modal feedbackForm">
+	  	<i class="close icon"></i>
+		<div class="header">
+			Hello {{currentUser.services.facebook.first_name}}! Please give us your feedback about Groovli!
+		</div>
+		<div class="content">
+			<div id="modalFeedbackForm" class="ui form">
+			  <div class="grouped fields">
+			  	<div class="required field">
+			    	<label>What would you like to share with us?</label>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input type="radio" id="feedbackType" name="feedbackType" value="Bug">
+			        <label><i class="bug icon"></i>Bug</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input type="radio" id="feedbackType" name="feedbackType" value="Question">
+			        <label><i class="help icon"></i>Question</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input type="radio" id="feedbackType" name="feedbackType" value="Suggestion">
+			        <label><i class="edit icon"></i>Suggestion</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input type="radio" id="feedbackType" name="feedbackType" value="Kudos">
+			        <label><i class="heart icon"></i>Kudos</label>
+			      </div>
+			    </div>
+			  </div>
+				<div class="sixteen wide required field">
+					<label>Your Feedback:</label>
+					<textarea id="txtFeedback" rows="3"></textarea>
+				</div>
+				<div class="eight wide required field">
+					<label>E-mail</label>
+					<input id="userEmail" type="email" placeholder="joe@acme.com">
+				</div>
+				<div class="actions">
+					<div class="ui black deny button">
+					Cancel
+					</div>
+					<input type="submit" value="Send your feedback now!" form="modalFeedbackForm" class="ui positive submit button">
+				</div>
+				<div class="ui error message"></div>
+			</div>
+		</div>
+	</div>
+</template>
