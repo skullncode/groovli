@@ -1,4 +1,4 @@
-var notificationsEnabled = new ReactiveVar(false);
+//var notificationsEnabled = new ReactiveVar(false);
 
 Template.helpNotificationDisabler.helpers({
 	getNotifEnabledStatusForThisUser: function() {
@@ -31,7 +31,18 @@ Template.helpNotificationDisabler.helpers({
 	},
 
 	notifsEnabled: function() {
-		return notificationsEnabled.get();
+		//return notificationsEnabled.get();
+		return Session.get('uhne'); //user help notifications enabled
+	},
+	setupHelpNotificationToggle: function() {
+		if(Session.get('uhne'))
+		{
+			$('.helpNotificationDisabler.checkbox').checkbox('set checked');
+		}
+		else if(!Session.get('uhne'))
+		{
+			$('.helpNotificationDisabler.checkbox').checkbox('set unchecked');
+		}
 	}
 });
 

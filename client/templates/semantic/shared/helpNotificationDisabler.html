@@ -1,10 +1,11 @@
 <template name="helpNotificationDisabler">
-	{{getNotifEnabledStatusForThisUser}}
+	<!--{{getNotifEnabledStatusForThisUser}}-->
 	<div class="item helpNotificationDisabler" data-content="{{#if notifsEnabled}}switch OFF all help popups{{else}}switch ON all help popups{{/if}}" data-variation="inverted large">
 		<div class="ui toggle helpNotificationDisabler checkbox">
 			<input type="checkbox" name="public">
 			<label><i class="large help circle icon"></i></label>
 		</div>
 	</div>
+	{{setupHelpNotificationToggle}}
 	{{activatePopups}}
 </template>

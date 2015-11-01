@@ -10,7 +10,7 @@ Template.sSearch.helpers({
       //console.log('THERE ARE noooooo FAVES!!!');
       return false;
     }
-  },
+  }/*,
   activatePopups: function() {
     Meteor.setTimeout(activatePopups, 800);
   },
@@ -23,7 +23,7 @@ Template.sSearch.helpers({
     {
       return true;
     }
-  }
+  }*/
 });
 
 Template.sSearch.onRendered(function () {
@@ -63,7 +63,7 @@ function playSongFromSearchResult(){
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
 	mixpanel.track('played song from search result');
 }
-
+/*
 function activatePopups(){
-  $('#headerMenuSearchBox').popup();
-}
+  $('#headerMenuSearchBox').popup({position : 'left center'});
+}*/

@@ -1,5 +1,6 @@
 Session.setDefault('urmsgsC', 0);
 Session.setDefault('userIdD', false); //user has been identified with mixpanel for this session
+Session.setDefault('uhne', false); //user help notifications enabled - by default set it to FALSE so users are not disturbed
 
 Template.semanticHeader.helpers({
   activeRouteIsMyGroovs: function() {
@@ -43,6 +44,9 @@ Template.semanticHeader.helpers({
   },
   activatePopups: function() {
     Meteor.setTimeout(activatePopups, 500);
+  },
+  setNotifsSessionVar: function() {
+    Session.set('uhne', Meteor.user().notifsEnabled);
   }
 });
 
@@ -60,7 +64,7 @@ Template.semanticHeader.onRendered(function () {
 Template.semanticHeader.onCreated(function() {
   var self = this;
   self.autorun(function() {
-    self.subscribe('userData');
+    self.subscribe('userData', {onReady: setupHelpNotificationStatus});
     if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services))
     {
       self.subscribe("unreadMsgCountForLoggedInUser", Meteor.user().services.facebook.id);
@@ -69,6 +73,28 @@ Template.semanticHeader.onCreated(function() {
     }
   });
 });
+
+function setupHelpNotificationStatus() {
+  if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()))
+  {
+    if(!_.isUndefined(Meteor.user().notifsEnabled))
+    {
+      if(Meteor.user().notifsEnabled)
+      {
+        Session.set('uhne', true);
+      }
+      else
+      {
+        Session.set('uhne', false);
+      }
+    }
+    else
+    {
+      //NOT YET set that means new user so notifications are not yet DISABLED so set it to checked
+      Session.set('uhne', true);
+    }
+  }
+}
 
 
 Template.semanticHeader.events({
