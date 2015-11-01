@@ -74,8 +74,6 @@ if (Meteor.isClient) {
 		    "$ip": Meteor.user().status.lastLogin.ipAddr
 		});
 	}*/
-
-	identifyUserWithMixPanel();
   });
 
 
@@ -121,18 +119,4 @@ if (Meteor.isClient) {
 
 function userCheck(){
 	return Meteor.user() && !_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook);
-}
-
-function identifyUserWithMixPanel(){
-	if(userCheck())
-	{
-		mixpanel.identify(Meteor.user()._id);
-		mixpanel.people.set({
-		    "$first_name": Meteor.user().services.facebook.first_name,
-		    "$last_name": Meteor.user().services.facebook.last_name,
-		    "$created": Meteor.user().createdAt,
-		    "$email": Meteor.user().services.facebook.email,
-		    "$ip": Meteor.user().status.lastLogin.ipAddr
-		});
-	}
 }

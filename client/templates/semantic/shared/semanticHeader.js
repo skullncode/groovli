@@ -1,4 +1,5 @@
 Session.setDefault('urmsgsC', 0);
+Session.setDefault('userIdD', false); //user has been identified with mixpanel for this session
 
 Template.semanticHeader.helpers({
   activeRouteIsMyGroovs: function() {
@@ -126,7 +127,7 @@ function userCheck(){
 }
 
 function identifyUserWithMixPanel(){
-  if(userCheck())
+  if(userCheck() && !Session.get('userIdD'))
   {
     mixpanel.identify(Meteor.user()._id);
     mixpanel.people.set({
@@ -136,5 +137,6 @@ function identifyUserWithMixPanel(){
         "$email": Meteor.user().services.facebook.email,
         "$ip": Meteor.user().status.lastLogin.ipAddr
     });
+    Session.set('userIdD', true);
   }
 }

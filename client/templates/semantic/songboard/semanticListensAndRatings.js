@@ -31,6 +31,7 @@ Template.semanticListensAndRatings.helpers({
   },
 
   averageRating: function() {
+    calculateRatingForThisSong();
     return Session.get('avgrtg');
   },
 
@@ -39,7 +40,8 @@ Template.semanticListensAndRatings.helpers({
   },
 
   ratingsExist: function() {
-    return (Session.get('numrtrs') > 0);
+    //return (Session.get('numrtrs') > 0);
+    return Ratings.find().count() > 0;
   },
   getPersonalRating: function() {
     getPersonalRatingForSong(Session.get('CS'));
@@ -56,42 +58,54 @@ Template.semanticListensAndRatings.onCreated(function () {
   // Use self.subscribe with the data context reactively
   self.autorun(function () {
     var cs = Session.get('CS');
-    var avg = 0;
     if(!_.isUndefined(cs) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().services))
     {
       var sid = cs.sl.substring(cs.sl.indexOf("v=")+2);
-      self.subscribe("ratingsForCurrentSong", cs.type, sid);
-      var currentRatings = Ratings.find({'uid': Meteor.user().services.facebook.id, "sl":cs.sl}).fetch();
-      if(_.isEmpty(currentRatings))
-      {
-        Session.set('numrtrs', 0);
-        Session.set('avgrtg', 0);
-      }
-      else
-      {
-        //console.log('calculating average rating as there are: ' + result.length + '');
-        var counter = 0;
-
-        //console.log('this is the initial averageRating : ' + avg)
-        while(counter < currentRatings.length)
-        {
-          avg += parseInt(currentRatings[counter].rating);
-          counter++;
-        }
-
-        avg = avg / currentRatings.length;
-        avg = avg.toFixed(1); //rounding to nearest 1 decimal place for rating or its too long
-        Session.set('numrtrs', currentRatings.length);
-
-        //console.log('THIS IS THE AVERAGE rating: ' + avg);
-        Session.set('avgrtg', avg);
-      }
+      self.subscribe("ratingsForCurrentSong", cs.type, sid, {onReady: onSubFinishedCalcRatingForThisSong});
+      
 
       self.subscribe("listensForCurrentSong", cs.type, sid)
       Session.set(sid+'_lc', Counts.get('listenCounterForYTSong'));
     }
   });
 });
+
+function onSubFinishedCalcRatingForThisSong() {
+  calculateRatingForThisSong();
+  getPersonalRatingForSong(Session.get('CS'));
+}
+
+function calculateRatingForThisSong() {
+  //console.log('CALCULATING RATING FOR THISSSSSSSSSSSSSSSS SONG!!!!');
+  var cs = Session.get('CS');
+  var avg = 0;
+
+  var currentRatings = Ratings.find({"sl":cs.sl}).fetch();
+  if(_.isEmpty(currentRatings))
+  {
+    Session.set('numrtrs', 0);
+    Session.set('avgrtg', 0);
+  }
+  else
+  {
+    //console.log('calculating average rating as there are: ' + result.length + '');
+    var counter = 0;
+
+    //console.log('this is the initial averageRating : ' + avg)
+    while(counter < currentRatings.length)
+    {
+      avg += parseInt(currentRatings[counter].rating);
+      counter++;
+    }
+
+    avg = avg / currentRatings.length;
+    avg = avg.toFixed(1); //rounding to nearest 1 decimal place for rating or its too long
+    Session.set('numrtrs', currentRatings.length);
+
+    //console.log('THIS IS THE AVERAGE rating: ' + avg);
+    Session.set('avgrtg', avg);
+  }
+}
 
 function getPersonalRatingForSong(thisSong) {
   //console.log("get PERSONAL RATING METHOD Called!!!!!!!!!");
