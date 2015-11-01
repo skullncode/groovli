@@ -46,6 +46,8 @@ Template.tasteMakersTabs.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('artistsForSite', {onReady: getAllGenres});
 	});
+	initiateSongTabs();
+	activatePopups();
 });
 
 function getAllGenres(){

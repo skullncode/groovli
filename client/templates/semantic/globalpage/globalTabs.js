@@ -40,6 +40,8 @@ Template.globalTabs.onCreated(function() {
 	self.autorun(function() {
 		self.subscribe('artistsForSite', {onReady: getAllGenres});
 	});
+	initiateSongTabs();
+	activatePopups();
 });
 
 function getAllGenres(){
@@ -72,7 +74,7 @@ function getAllGenres(){
 }
 
 function getGlobalYearRange() {
-	console.log("GOING TO GET date range for Global groovs!!");
+	//console.log("GOING TO GET date range for Global groovs!!");
 	if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
 	{
 		var excludedIDsForGlobalFilter = getIDsToExcludeForGlobalFilter();

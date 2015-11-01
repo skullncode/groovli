@@ -1,25 +1,28 @@
-var notificationsEnabled = new ReactiveVar(true);
+var notificationsEnabled = new ReactiveVar(false);
 
 Template.helpNotificationDisabler.helpers({
 	getNotifEnabledStatusForThisUser: function() {
-		if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+		if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()))
 		{
-			if(Meteor.user().notifsEnabled)
+			if(!_.isUndefined(Meteor.user().notifsEnabled))
 			{
-				$('.helpNotificationDisabler.checkbox').checkbox('set checked');
-				notificationsEnabled.set(true);
+				if(Meteor.user().notifsEnabled)
+				{
+					$('.helpNotificationDisabler.checkbox').checkbox('set checked');
+					notificationsEnabled.set(true);
+				}
+				else
+				{
+					$('.helpNotificationDisabler.checkbox').checkbox('set unchecked');
+					notificationsEnabled.set(false);
+				}
 			}
 			else
 			{
-				$('.helpNotificationDisabler.checkbox').checkbox('set unchecked');
-				notificationsEnabled.set(false);
+				//NOT YET set that means new user so notifications are not yet DISABLED so set it to checked
+				$('.helpNotificationDisabler.checkbox').checkbox('check');
+				notificationsEnabled.set(true);
 			}
-		}
-		else
-		{
-			//NOT YET set that means new user so notifications are not yet DISABLED so set it to checked
-			$('.helpNotificationDisabler.checkbox').checkbox('check');
-			notificationsEnabled.set(true);
 		}
 	},
 

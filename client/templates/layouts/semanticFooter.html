@@ -35,7 +35,9 @@
         <div class="three wide column">
           <div class="ui inverted link list">
             <!--<a id="aboutFooterLink" class="item">About</a>-->
+            {{#if currentUser}}
             <a id="feedbackForm" class="item link" href="">Feedback</a>
+            {{/if}}
             <a class="item" href="mailto:sandeep@groovli.com?Subject=Groovli%20-%20Enquiry">Contact Us</a>
             <a class="item" href="{{pathFor 'terms' }}" target="blank">Terms and Conditions</a>
             <a class="item" href="{{pathFor 'privacypolicy' }}" target="blank">Privacy Policy</a>
