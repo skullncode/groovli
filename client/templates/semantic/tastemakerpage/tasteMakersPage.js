@@ -1,7 +1,7 @@
 Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
-var pagingLimit = 15;
+var pagingLimit = 10;
 
 
 Template.tasteMakersPage.helpers({

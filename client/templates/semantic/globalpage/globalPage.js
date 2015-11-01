@@ -2,7 +2,7 @@ Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 //Session.setDefault('sgSongCursor', undefined)
 var pagedGlistSongsLoaded = new ReactiveVar(false);
-var pagingLimit = 15;
+var pagingLimit = 10;
 
 Template.globalPage.helpers({
   songs: function() {
@@ -12,7 +12,8 @@ Template.globalPage.helpers({
       if(!_.isUndefined(Session.get('glSelyr')))
       {
         var sel = getMongoSelectorForGlobal();
-        globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 200});
+        //globalSongList = Songs.find(sel, {sort: { 'sharedBy.systemDate': -1 }, limit: 10});
+        globalSongList = Songs.find({}, {sort: { 'sharedBy.systemDate': -1 }, limit: 10});
         //console.log("THIS IS HTE global selector $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:");
         //console.log(sel);
         var songCollection = globalSongList.fetch();
@@ -276,7 +277,7 @@ function onSGSubReady()
   //console.log('THIS IS THE SONG COUNT NOW: ');
   pagedGlistSongsLoaded.set(true);
   var sgSelector = getMongoSelectorForGlobal();  
-  var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
+  var result = Songs.find({}, {sort: { 'sharedBy.systemDate': -1 }}).count();
   //console.log(result);
   if(result > 0)
   {

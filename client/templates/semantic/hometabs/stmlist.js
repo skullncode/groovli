@@ -2,7 +2,7 @@ Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
 //Session.setDefault('tmSongCursor', undefined)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
-var pagingLimit = 15;
+var pagingLimit = 10;
 
 
 Template.stmlist.helpers({

@@ -6,7 +6,7 @@ Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
 var pagedMGlistSongsLoaded = new ReactiveVar(false);
 
-var pagingLimit = 15;
+var pagingLimit = 10;
 
 
 Template.smglist.helpers({

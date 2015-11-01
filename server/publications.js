@@ -1,34 +1,4 @@
-/*Meteor.publish('allSongsForSongBoard', function(userID) {
-  if(userID !== null)
-  {
-    var options = {
-      fields: {
-      "songSearchText": 0, 
-      "aeCount": 0, 
-      "meCount": 0, 
-      "iTunesValid": 0, 
-      "LFMValid": 0, 
-      "cleanedTrackSearchQuery": 0, 
-      "wuzzyFactor": 0, 
-      "error": 0, 
-      "iTunesMediumAlbumArt": 0, 
-      "iTunesLargeAlbumArt": 0, 
-      "iTunesAlbumURL": 0, 
-      "iTunesAlbumPrice": 0,
-      "iTunesPriceCurrency": 0,
-      "iTunesTrackPrice": 0,
-      "iTunesTrackURL": 0,
-      "discCount": 0,
-      "discNumber": 0
-    }};
-    //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
-    //was returning only songs for that user so had to change it; original publish selection was wrong and was not removing extra fields
-    //return Songs.find({'sharedBy.uid': String(userID), $or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},options);
-    return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},options);
-  }
-});*/
-
-var songboardPagingLimit = 15;
+var songboardPagingLimit = 10;
 
 Meteor.publish('listensForCurrentSong', function(linktype, linkSID) {
   if(linktype === 'YOUTUBE')
@@ -99,7 +69,7 @@ Meteor.publish('30songsForMyGroovsBasedOnYearSelection', function(userID, cursor
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 15,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -172,7 +142,7 @@ Meteor.publish('30songsForMyGroovsBasedOnGenreSelection', function(userID, curso
       "discCount": 0,
       "discNumber": 0
     },
-    limit: 15,//2,
+    limit: songboardPagingLimit,//2,
     sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 },
     skip: cursorSkipAmount};
     //return Songs.find({$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}]},{'sharedBy.uid': String(userID)}, options);
@@ -1473,35 +1443,3 @@ function getSongIDsForArtistListForGenrePage(artistList){
 
   return genArtSongIDs;
 }
-
-
-/*
-{ '$nor': [ { 'sharedBy.uid': '721431527969807' } ]
-,'$or': [  { 'sharedBy.uid': '10153166103642774' }, 
-          { 'sharedBy.uid': '10205130516756424' }
-        ]
-,'$and' : [
-        { '$or' : [ { iTunesValid: 'VALID' },
-          { LFMValid: 'VALID' },
-          { manualApproval: 'VALID' } ] },
-        { 'sa': {'$in': [ 'Chet Baker','Don Ellis Band','Koop','The Sonic Chameleon','No BS! Brass Band','John Coltrane','Miles Davis','Kenny G','Fromwood','Nina Simone','Michael Bublé','Kat Edmonson','Norah Jones','Snarky Puppy','Billy Strayhorn','Meghan Trainor','The Trio of OZ' ]}}
-    ]}
-*/
-
-/*
-[ 'Chet Baker','Don Ellis Band','Koop','The Sonic Chameleon','No BS! Brass Band','John Coltrane','Miles Davis','Kenny G','Fromwood','Nina Simone','Michael Bublé','Kat Edmonson','Norah Jones','Snarky Puppy','Billy Strayhorn','Meghan Trainor','The Trio of OZ' ]
-*/
-
-/*
-{ '$nor': [ { 'sharedBy.uid': '721431527969807' } ],
-'$or': 
-[ { 'sharedBy.uid': '10153166103642774' },
-{ 'sharedBy.uid': '10205130516756424' } ],
-sa: [ { '$in': [ 'Chet Baker','Don Ellis Band','Koop','The Sonic Chameleon','No BS! Brass Band','John Coltrane','Miles Davis','Kenny G','Fromwood','Nina Simone','Michael Bublé','Kat Edmonson','Norah Jones','Snarky Puppy','Billy Strayhorn','Meghan Trainor','The Trio of OZ' ] } ] }*/
-
-/*
-{ '$nor': [ { 'sharedBy.uid': '721431527969807' } ],
-'$or': 
-[ { 'sharedBy.uid': '10153166103642774' },
-{ 'sharedBy.uid': '10205130516756424' } ],
-sa: { '$in': [ 'Chet Baker','Don Ellis Band','Koop','The Sonic Chameleon','No BS! Brass Band','John Coltrane','Miles Davis','Kenny G','Fromwood','Nina Simone','Michael Bublé','Kat Edmonson','Norah Jones','Snarky Puppy','Billy Strayhorn','Meghan Trainor','The Trio of OZ' ] }  }*/

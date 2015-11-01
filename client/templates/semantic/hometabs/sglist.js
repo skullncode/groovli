@@ -1,7 +1,7 @@
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 var pagedGlistSongsLoaded = new ReactiveVar(false);
-var pagingLimit = 15;
+var pagingLimit = 10;
 //Session.setDefault('sgSongCursor', undefined)
 
 Template.sglist.helpers({
