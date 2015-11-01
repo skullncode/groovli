@@ -53,6 +53,7 @@ Template.semanticHeader.onRendered(function () {
 	});
 
   $('.ui.dropdown.mainHeaderMenuDropdown').dropdown();
+  identifyUserWithMixPanel();
 });
 
 Template.semanticHeader.onCreated(function() {
@@ -120,17 +121,20 @@ function activatePopups(){
   $('.globalpagelink').popup();
 }
 
+function userCheck(){
+  return Meteor.user() && !_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook);
+}
 
-/*
-{ '$nor': 
-[ { 'sharedBy.uid': '721431527969807' },
-{ 'sharedBy.uid': '10153166103642774' },
-{ 'sharedBy.uid': '10205130516756424' } ],
-'$or': 
-[ { iTunesValid: 'VALID' },
-{ LFMValid: 'VALID' },
-{ manualApproval: 'VALID' } ],
-sa: 
-{ '$in': [ 'Chet Baker','Don Ellis Band','Koop','The Sonic Chameleon','No BS! Brass Band','John Coltrane',
-'Miles Davis','Kenny G','Fromwood','Nina Simone','Michael Bublé','Kat Edmonson','Norah Jones',
-'Snarky Puppy','Billy Strayhorn','Meghan Trainor','The Trio of OZ' ] } }*/
+function identifyUserWithMixPanel(){
+  if(userCheck())
+  {
+    mixpanel.identify(Meteor.user()._id);
+    mixpanel.people.set({
+        "$first_name": Meteor.user().services.facebook.first_name,
+        "$last_name": Meteor.user().services.facebook.last_name,
+        "$created": Meteor.user().createdAt,
+        "$email": Meteor.user().services.facebook.email,
+        "$ip": Meteor.user().status.lastLogin.ipAddr
+    });
+  }
+}
