@@ -207,6 +207,16 @@ Meteor.publish('counterForMyGroovs', function(userID) {
   }
 });
 
+Meteor.publish('userSpecificCounterForRatings', function(userID) {
+  if(userID !== null)
+  {
+    /*console.log('########################THIS IS THE RATING count for this user: ');
+    console.log(userID);
+    console.log(Ratings.find({'uid': userID}).count());*/
+    Counts.publish(this, 'ratingCountForUser', Ratings.find({'uid': userID}));
+  }
+});
+
 //FOR FLYLIST FEATURE
 Meteor.publish('30songsForTastemakersBasedOnGenreSelection', function(sel, selGen, cursorSkipAmount) {
   //console.log("******************-----reached TASTEMAKER GENRE SELECTION subscription!!!");
@@ -962,6 +972,7 @@ Meteor.publish("userData", function () {
       fields: 
         {
           "services.facebook.first_name": 1,
+          "services.facebook.accessToken": 1,
           "services.facebook.id": 1,
           "services.facebook.email": 1,
           "emails.address[0]": 1,

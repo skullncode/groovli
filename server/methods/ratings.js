@@ -52,10 +52,10 @@ Meteor.methods({
 			//console.log(listOfRatings);
 			return listOfRatings;
 		}
-	},*/
+	},
 	getRatingCountForUser: function(uid) {
 		console.log('REACHED THE GET RATING METHOD: ' + uid);
 		var ratingsForUser = Ratings.find({'uid': uid}).fetch();
 		return ratingsForUser.length;
-	}
+	}*/
 });

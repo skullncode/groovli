@@ -4,6 +4,7 @@ var listenCountLoaded = new ReactiveVar(false);
 var ratingCountLoaded = new ReactiveVar(false);
 var songCountLoaded = new ReactiveVar(false);
 var pagedSongsLoaded = new ReactiveVar(false);
+var faveCountLoaded = new ReactiveVar(false);
 
 Template.sprofile.helpers({
 	uObjLoaded: function() {
@@ -72,7 +73,8 @@ Template.sprofile.helpers({
 
 	favoriteCount: function() {
 		//return Favorites.find({}).count();
-		return Session.get(profileContext.get().params._id+'_faveCount');
+		//return Session.get(profileContext.get().params._id+'_faveCount');
+		return Counts.get('faveCounterForUser');
 	},
 
 	hasFavorites: function() {
@@ -107,13 +109,10 @@ Template.sprofile.helpers({
 			return new moment(userLh[0].timestamp).calendar();
 	},
 
-	ratingCount: function(uid) {
-		if(!_.isUndefined(Session.get(profileContext.get().params._id+'personalRC')))
-			return Session.get(profileContext.get().params._id+'personalRC');
-		else
-			return 0;
+	ratingCount: function() {
+		return Counts.get('ratingCountForUser');
 	},
-
+	/* SWITCHED TO PUBLICATION instead of user method
 	getRatingCountForUser: function(){
 		//ratingCountLoaded.set(false);
 		Meteor.call('getRatingCountForUser', this.services.facebook.id, function(error,result){
@@ -126,7 +125,7 @@ Template.sprofile.helpers({
 			  	ratingCountLoaded.set(true);
 		    };
 		});
-	},
+	},*/
 
 	lowerCasedText: function(txtToLowerCase){
 		return txtToLowerCase.toLowerCase();
@@ -178,10 +177,11 @@ Template.sprofile.helpers({
 	},
 
     songCount: function() {
-      return Session.get(this._id+'_sc');
+      //return Session.get(this._id+'_sc');
+      return Counts.get('songCountForMyGroovs');
     },
     songCountPluralRequired: function() {
-      return Session.get(this._id+'_sc') > 1 || Session.get(this._id+'_sc') == 0;
+      return Counts.get('songCountForMyGroovs') > 1 || Counts.get('songCountForMyGroovs') == 0;
     },
     locationFlagCode: function() {
     	if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj').baseLocation))
@@ -250,6 +250,9 @@ Template.sprofile.helpers({
     },
     topTenGenresLoaded: function() {
     	return Session.get('ttgldd');
+    },
+    faveCountLoaded: function() {
+    	return faveCountLoaded.get();
     }
 });
 
@@ -353,17 +356,30 @@ Template.sprofile.onCreated(function() {
 		//self.subscribe('userObjectForProfilePage', profileContext.get().params._id, {onReady: userObjExists});
 		self.subscribe('allSongsForSpecificUser', profileContext.get().params._id, Session.get(profileContext.get().params._id+'_sCursor'), {onReady: songSubscriptionReady});
 		//self.subscribe('favoritesForSpecificUser', profileContext.get().params._id);
-		self.subscribe("favoriteCountForSpecificUser", profileContext.get().params._id);
-		Session.set(profileContext.get().params._id+'_faveCount', Counts.get('faveCounterForUser'));
+		self.subscribe("favoriteCountForSpecificUser", profileContext.get().params._id, {onReady: userFaveCountLoaded});
+
+		
 		//console.log("FINISHED TRYING TO GET all subscriptions")
 		if(!_.isUndefined(Session.get(profileContext.get().params._id+'_uObj')))
 		{
 			self.subscribe("counterForMyGroovs", Session.get(profileContext.get().params._id+'_uObj').services.facebook.id);
         	Session.set(profileContext.get().params._id+'_sc', Counts.get('songCountForMyGroovs'));
         	songCountLoaded.set(true);
+        	self.subscribe("userSpecificCounterForRatings", Session.get(profileContext.get().params._id+'_uObj').services.facebook.id, {onReady: userRatingCountLoaded});
         }
 	});
 });
+
+function userFaveCountLoaded() {
+	//Session.set(profileContext.get().params._id+'_faveCount', Counts.get('faveCounterForUser'));
+	faveCountLoaded.set(true);
+}
+
+function userRatingCountLoaded() {
+	//Session.set(profileContext.get().params._id+'personalRC',Counts.get('ratingCountForUser'));
+	ratingCountLoaded.set(true);
+}
+
 
 function songSubscriptionReady() {
 	pagedSongsLoaded.set(true);
