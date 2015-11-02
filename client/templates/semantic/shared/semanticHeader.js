@@ -46,7 +46,10 @@ Template.semanticHeader.helpers({
     Meteor.setTimeout(activatePopups, 500);
   },
   setNotifsSessionVar: function() {
-    Session.set('uhne', Meteor.user().notifsEnabled);
+    if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()))
+      Session.set('uhne', Meteor.user().notifsEnabled);
+    else
+      Session.set('uhne', false);
   }
 });
 

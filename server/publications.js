@@ -961,8 +961,11 @@ Meteor.publish("userData", function () {
      {
       fields: 
         {
-          "services.facebook": 1,
+          "services.facebook.first_name": 1,
+          "services.facebook.id": 1,
+          "services.facebook.email": 1,
           "emails.address[0]": 1,
+          "roles": 1,
           "profile": 1,
           "fbFriends": 1,
           "tastemakers": 1,
