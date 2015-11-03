@@ -1,5 +1,5 @@
 var fullSongList = {};
-Session.set('playerStarted', false);
+Session.setDefault('playerStarted', false);
 
 Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)

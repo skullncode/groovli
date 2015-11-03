@@ -1,3 +1,4 @@
+Session.setDefault('playerStarted', false);
 Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);

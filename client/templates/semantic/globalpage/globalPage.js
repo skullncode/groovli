@@ -1,3 +1,4 @@
+Session.setDefault('playerStarted', false);
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 //Session.setDefault('sgSongCursor', undefined)

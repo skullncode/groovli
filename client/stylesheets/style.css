@@ -24,6 +24,10 @@
 	color:white;
 }
 
+.green.selected {
+	background-color:#B0FF96;
+}
+
 .right.menu.orangeHeaderMenu, .ui.icon.orangeHeaderMenu{
 	background-color:#f68e15;
 }

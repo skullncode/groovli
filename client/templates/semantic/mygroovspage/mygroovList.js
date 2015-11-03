@@ -1,5 +1,5 @@
 var fullSongListByYear = {};
-
+Session.setDefault('playerStarted', false);
 Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
