@@ -203,6 +203,27 @@ Template.semanticUserMaster.events({
         //console.log('INSIDE else condition!!');
         toastr.info("Reached the end of the user list; <br><br><b><i>try moving backwards (<-) to see more users!</i></b><br><br>");
       }
+    },
+
+    "click #deleteUser": function(event) {
+    	//console.log('THIS IS THE user object delete was clicked for: ');
+    	//console.log(this);
+	   
+	    var userDeleteCheck = confirm("Are you sure you want to delete the user: '"+this.profile.name+"'?");
+	    if(userDeleteCheck == true) {
+	        Meteor.call('deleteUser', this._id, function(error,result){
+	            if(error){
+	              return toastr.error(error.reason);
+	            }
+	            else{
+	                // do something with result
+	              return toastr.success('Successfully deleted that user!');
+	            };
+	        });
+	    } 
+	    else {
+	      console.log('NOTHING WILL BE DELETED!!!');
+	    }
     }
 });
 

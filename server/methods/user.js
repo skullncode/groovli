@@ -462,5 +462,16 @@ Meteor.methods({
 		{
 			console.log('USER NOT FOUND: ' + userID);
 		}
+	},
+	deleteUser: function(userID) {
+		Meteor.users.remove({_id: userID}, function(error) {
+	          if (error) {
+	            // display the error to the user
+	            return error;
+	          }
+	          else{
+	            //console.log('result');
+	          }
+	      })
 	}
 });
