@@ -289,6 +289,8 @@ Meteor.publish('counterForTastemakersBasedOnGenreSelection', function(sel, selGe
 Meteor.publish('30songsForTastemakers', function(sel, cursorSkipAmount) {
   if(sel !== null)
   {
+    //console.log("############### reached tastemaker selector: ");
+    //console.log(sel);
     sel = addSongValidatorsToSelector(sel, "tastemakers"); //added it as it was returning and playing invalid songs too! NOT GOOD!
 
     var options = {

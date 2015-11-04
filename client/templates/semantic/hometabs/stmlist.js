@@ -9,7 +9,7 @@ Template.stmlist.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     //if(!_.isUndefined(Meteor.user().fbFriends) || !_.isUndefined(Meteor.user().tastemakers)) {
-    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().tastemakers)) 
+    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers)) 
     {
       if(Session.get('tmSongsLoaded') && _.isEmpty(Session.get('selGens')))
       {
@@ -135,7 +135,7 @@ function getMongoSelectorForFriendSongs() {
 
   counter = 0;
   //if(Meteor.user().fbFriends.length > 1)
-  if(!_.isUndefined(Meteor.user().tastemakers))
+  if(!_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers))
   {
     query["$or"] = [];
     if(Meteor.user().tastemakers.length > 0)
@@ -160,6 +160,7 @@ function getMongoSelectorForFriendSongs() {
   }
   else
   {
+    //console.log('NOOOOOOOOOOOOOOOOOOO TASTEMAKERS FOR THIS USER:');
     query["$or"] = [];
     //use a fake user to simplify not selecting anyone if tastemakers is empty
     var fakeUser = {
@@ -289,7 +290,7 @@ function onTMSubReady()
     //var stmSelector = getMongoSelectorForGenreBasedSelectionWithinFriendSongs();
 
   var result = Songs.find(stmSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
-  //console.log(result);
+  console.log(result);
   if(result > 0)
   {
     Session.set('tmSongsLoaded', true);

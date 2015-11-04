@@ -9,7 +9,7 @@ Template.tasteMakersPage.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     //if(!_.isUndefined(Meteor.user().fbFriends) || !_.isUndefined(Meteor.user().tastemakers)) {
-    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().tastemakers)) 
+    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers)) 
     {
       if(Session.get('tmSongsLoaded') && _.isEmpty(Session.get('selGens')))
       {
@@ -166,7 +166,7 @@ function getMongoSelectorForFriendSongs(specificID) {
     //if(Meteor.user().fbFriends.length > 1)
     //console.log('##################################### this is the tastemakers length: ');
     //console.log(Meteor.user().tastemakers);
-    if(!_.isUndefined(Meteor.user().tastemakers))
+    if(!_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers))
     {
       query["$or"] = [];
       if(Meteor.user().tastemakers.length > 0)

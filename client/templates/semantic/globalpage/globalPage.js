@@ -9,7 +9,8 @@ Template.globalPage.helpers({
   songs: function() {
     //Session.set('personalSongList', Songs.find());
     //if(!_.isUndefined(Meteor.user().fbFriends) || !_.isUndefined(Meteor.user().tastemakers)) {
-    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().tastemakers)) {
+      //removed check of TASTEMAKERS AS IT IS NOT RELEVANT IN THIS SECTION BUT IS REQUIRED IN THE GLOBAL MONGO SELECTOR
+    if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user())) {
       if(!_.isUndefined(Session.get('glSelyr')))
       {
         var sel = getMongoSelectorForGlobal();
@@ -99,7 +100,7 @@ getIDsToExcludeForGlobalFilter = function() {
   var idsToExclude = [];
   idsToExclude.push(Meteor.user().services.facebook.id)
   var counter = 0;
-  if(!_.isUndefined(Meteor.user().tastemakers)) {
+  if(!_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers)) {
     //then add all of user's friends for exclusion from Global list
     //while(counter < Meteor.user().fbFriends.length)
     while(counter < Meteor.user().tastemakers.length)
@@ -128,7 +129,7 @@ function getMongoSelectorForGlobal() {
 
 
   //if(!_.isUndefined(Meteor.user().fbFriends)) {
-  if(!_.isUndefined(Meteor.user().tastemakers)) {
+  if(!_.isUndefined(Meteor.user().tastemakers) && !_.isEmpty(Meteor.user().tastemakers)) {
     //then add all of user's friends for exclusion from Global list
     //while(counter < Meteor.user().fbFriends.length)
     while(counter < Meteor.user().tastemakers.length)
