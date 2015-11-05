@@ -2,7 +2,7 @@
 	<div class="ui bottom attached tab segment active" data-tab="global">
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if globalSongsExist}}
-	    	<div class="ui label"><i class="music icon"></i> {{sgLength}}</div>
+	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{sgSongCount}}</div>
 	    {{/if}}
 	    {{>globalDateFilter}}
 	  	<div id="sgList" class="songLists">

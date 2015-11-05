@@ -80,6 +80,16 @@ Template.stmlist.helpers({
   },
   pagedTMlistSongsLoaded: function() {
     return pagedTMlistSongsLoaded.get();
+  },
+  currentCursorPosition: function() {
+      var x = Number(Session.get('existingTMCursor')) + 1;
+      var y = Number(Session.get('existingTMCursor')) + pagingLimit;
+      if(y > Number(Session.get('tmSongCount')))
+        y = Number(Session.get('tmSongCount'));
+      return  x + '-' + y;
+  },
+  tmSongCount: function() {
+    return Session.get('tmSongCount');
   }
 });
 

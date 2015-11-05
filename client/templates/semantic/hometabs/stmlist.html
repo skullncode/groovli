@@ -2,7 +2,7 @@
 	<div class="ui bottom attached tab segment" data-tab="tastemakers">
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if tastemakerSongsExist}}
-	    	<div class="ui label"><i class="music icon"></i> {{tmLength}}</div>
+	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{tmSongCount}}</div>
 	    {{/if}}
 	  	<div id="tmList" class="songLists">
 	  		{{fixTMSongCursor}}

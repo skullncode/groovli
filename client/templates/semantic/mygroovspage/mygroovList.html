@@ -2,7 +2,7 @@
 	<div class="ui bottom attached tab segment active" data-tab="mygroovs">
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if myGroovsExist}}
-	    	<div class="ui label"><i class="music icon"></i> {{mgLength}}</div>
+	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{mgSongCount}}</div>
 	    {{/if}}
 	    {{>mygroovsDateFilter}}
 	  	<div id="mgList" class="songLists">

@@ -60,6 +60,16 @@ Template.sglist.helpers({
     //console.log('############## this is the paged g list songs loaded reactive var value: ');
     //console.log(pagedGlistSongsLoaded.get());
     return pagedGlistSongsLoaded.get();
+  },
+  currentCursorPosition: function() {
+      var x = Number(Session.get('existingSGCursor')) + 1;
+      var y = Number(Session.get('existingSGCursor')) + pagingLimit;
+      if(y > Number(Session.get('sgSongCount')))
+        y = Number(Session.get('sgSongCount'));
+      return  x + '-' + y;
+  },
+  sgSongCount: function() {
+    return Session.get('sgSongCount');
   }
 });
 

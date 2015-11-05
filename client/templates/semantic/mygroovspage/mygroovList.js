@@ -109,6 +109,16 @@ Template.mygroovList.helpers({
   },
   pagedMGlistSongsLoaded: function() {
     return pagedMGlistSongsLoaded.get();
+  },
+  currentCursorPosition: function() {
+      var x = Number(Session.get('existingMGCursor')) + 1;
+      var y = Number(Session.get('existingMGCursor')) + pagingLimit;
+      if(y > Number(Session.get('mgSongCount')))
+        y = Number(Session.get('mgSongCount'));
+      return  x + '-' + y;
+  },
+  mgSongCount: function() {
+    return Session.get('mgSongCount');
   }
 });
 

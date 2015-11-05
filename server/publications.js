@@ -369,7 +369,8 @@ Meteor.publish('30songsForGlobalBasedOnYearSelection', function(excludedIds, yr,
     //console.log(sel);
     //var globalYearQuery = {$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'sharedBy': { $elemMatch: { uid: {"$nin":excludedIds}, systemDate: { '$gte' : beginDate , '$lt' : endDate }}}};
     var globalYearQuery = getMongoSelectorForGlobalYearSelection(excludedIds, beginDate, endDate, selGen);
-    //console.log(globalYearQuery);
+    console.log('################ this is the global year query!!!:');
+    console.log(globalYearQuery);
  
     //console.log("FOR THAT LIST OF SELECTED genres we got this list of matching artists: ");
     //console.log(genArtistList);
@@ -509,6 +510,9 @@ Meteor.publish('30songsForGlobal', function(sel, cursorSkipAmount) {
   if(sel !== null)
   {
     sel = addSongValidatorsToSelector(sel, "global"); //added it as it was returning and playing invalid songs too! NOT GOOD!
+
+    //console.log("*****************THIS IS THE UPDATED GLOBAL QUERY SELECTOR: ");
+    //console.log(sel);
 
     var options = {
       fields: {
@@ -1266,6 +1270,9 @@ Meteor.publish('inviteCount', function() {
 function getMongoSelectorForGlobalYearSelection(exIDs, bDate, eDate, selGen) {
   //{$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'sharedBy': { $elemMatch: { uid: {"$nin":excludedIds}, systemDate: { '$gte' : beginDate , '$lt' : endDate }}}};
 
+  //console.log("############## GOING TO EXCLUDE THEEEEEEEEEEEEEEEESE IDs: ");
+  //console.log(exIDs);
+
   var counter = 0;
   var query = {};
 
@@ -1278,6 +1285,8 @@ function getMongoSelectorForGlobalYearSelection(exIDs, bDate, eDate, selGen) {
   query["$or"].push({manualApproval:'VALID'});
   //SONG VALIDATORS - END
 
+  /* REMOVING NIN object and trying to use $nor instead*/
+  /*
   var exIDObj = {'$nin': exIDs};
 
   var dateInclusion = { '$gte' : bDate , '$lt' : eDate };
@@ -1285,7 +1294,29 @@ function getMongoSelectorForGlobalYearSelection(exIDs, bDate, eDate, selGen) {
 
   var innerElemMatchObj = {'$elemMatch': uidSysDateObj};
 
+  query['sharedBy'] = innerElemMatchObj;*/
+
+  //NEW REPLACEMENT CODE FOR ABOVE SECTION
+
+  var dateInclusion = { '$gte' : bDate , '$lt' : eDate };
+  var uidSysDateObj = {'systemDate': dateInclusion}
+
+  var innerElemMatchObj = {'$elemMatch': uidSysDateObj};
+
   query['sharedBy'] = innerElemMatchObj;
+
+  query["$nor"] = [];
+
+  _.each(exIDs, function(x){
+    var t = {
+      'sharedBy.uid': x
+    };
+
+    //add all tastemakers to be excluded
+    query["$nor"].push(t);
+  });
+
+  //NEW REPLACEMENT CODE FOR ABOVE SECTION
 
   if(!_.isUndefined(selGen) && !_.isEmpty(selGen))
   {
