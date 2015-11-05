@@ -1,5 +1,6 @@
 <template name="stmlist">
 	<div class="ui bottom attached tab segment" data-tab="tastemakers">
+		{{randomizeSongPageSelectionOnFirstLoad}}
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if tastemakerSongsExist}}
 	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{tmSongCount}}</div>

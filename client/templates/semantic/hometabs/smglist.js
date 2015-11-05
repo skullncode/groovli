@@ -3,6 +3,8 @@ Session.setDefault('playerStarted', false);
 
 Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)
+
+Session.setDefault('mgspRndmzd', false);
 //Session.setDefault('mgSongCursor', undefined)
 var pagedMGlistSongsLoaded = new ReactiveVar(false);
 
@@ -150,6 +152,22 @@ Template.smglist.helpers({
   },
   mgSongCount: function() {
     return Session.get('mgSongCount');
+  },
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    if(pagedMGlistSongsLoaded.get() && !Session.get('mgspRndmzd') && Session.get('mgSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      Session.set('mgspRndmzd', true);
+      var x = _.range(0, Session.get('mgSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        pagedMGlistSongsLoaded.set(false);
+        Session.set('existingMGCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('me');
+      }
+    }
   }
 });
 

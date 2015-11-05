@@ -1,5 +1,7 @@
 Session.setDefault('existingTMCursor', 0);
 Session.setDefault('tmSongsLoaded', false)
+
+Session.setDefault('tmspRndmzd', false);
 //Session.setDefault('tmSongCursor', undefined)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
 var pagingLimit = 10;
@@ -90,6 +92,26 @@ Template.stmlist.helpers({
   },
   tmSongCount: function() {
     return Session.get('tmSongCount');
+  },
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    //console.log('THIS IS THE THE SONGS Loaded value ;');
+    //console.log(pagedTMlistSongsLoaded.get());
+    if(pagedTMlistSongsLoaded.get() && !Session.get('tmspRndmzd') && Session.get('tmSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      Session.set('tmspRndmzd', true);
+      var x = _.range(0, Session.get('tmSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        pagedTMlistSongsLoaded.set(false);
+        Session.set('existingTMCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('friends');
+      }
+      /*else
+        console.log('randomly selected index is 0 so nothing has to be done!');*/
+    }
   }
 });
 
@@ -300,7 +322,7 @@ function onTMSubReady()
     //var stmSelector = getMongoSelectorForGenreBasedSelectionWithinFriendSongs();
 
   var result = Songs.find(stmSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
-  console.log(result);
+  //console.log(result);
   if(result > 0)
   {
     Session.set('tmSongsLoaded', true);

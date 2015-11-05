@@ -1,5 +1,7 @@
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
+Session.setDefault('sgspRndmzd', false);
+
 var pagedGlistSongsLoaded = new ReactiveVar(false);
 var pagingLimit = 10;
 //Session.setDefault('sgSongCursor', undefined)
@@ -70,6 +72,22 @@ Template.sglist.helpers({
   },
   sgSongCount: function() {
     return Session.get('sgSongCount');
+  },
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    if(pagedGlistSongsLoaded.get() && !Session.get('sgspRndmzd') && Session.get('sgSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      Session.set('sgspRndmzd', true);
+      var x = _.range(0, Session.get('sgSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        pagedGlistSongsLoaded.set(false);
+        Session.set('existingSGCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('global');
+      }
+    }
   }
 });
 
