@@ -27,7 +27,8 @@ Template.sSearch.helpers({
 });
 
 Template.sSearch.onRendered(function () {
-	$('.ui.search')
+	//$('.ui.search')
+	$('#headerMenuSearchBox')
 	  .search({
 	    apiSettings: {
 	      //url: '//localhost:3000/api/ss/{query}'
