@@ -336,7 +336,7 @@ Meteor.methods({
 		return allUserData;
 	},
 	getFriendData: function(friendList) {
-		var friendData = Meteor.users.find({'services.facebook.id': {$in: friendList}}).fetch();
+		var friendData = Meteor.users.find({'services.facebook.id': {$in: friendList}}, {sort: {'status.online': -1, 'status.lastLogin.date': -1}}).fetch();
 		return friendData;
 	},
 	setUserBaseLocation: function(fbid) {
