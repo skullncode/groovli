@@ -2,8 +2,22 @@
 	{{#if songPlaying}}
 		<div class="ui grid container">
 			{{>semanticFaveAction}}
-			<div id="hideShowComments" class="four wide sitewideOrange column">
-			  <i class="comment icon {{#if commentsVisible}}black{{else}}white{{/if}}"></i>{{commentCountForSong}}
+			<div id="hideShowComments" class="two wide sitewideOrange column" title="show / hide comments">
+			  <a href=""><i class="sitewideOrange comment icon {{#if commentsVisible}}black{{else}}white{{/if}}"></i></a>{{commentCountForSong}}
+			</div>
+			<div class="four wide sitewideOrange column">
+				{{#if songMuted}}
+					<a href="" title="Unmute Song"><i id="toggleMute" class="sitewideOrange volume off icon"></i></a>
+				{{else}}
+					<a href="" title="Mute Song"><i id="toggleMute" class="sitewideOrange volume up icon"></i></a>
+				{{/if}}
+				<button id="decreaseVolume" title="decrease volume" class="ui mini circular icon button vidVolumeButtons" style="background-color:#f68e15;color:white;">
+				  <i class="minus icon"></i>
+				</button>
+				<button id="increaseVolume" title="increase volume" class="ui mini circular icon button vidVolumeButtons" style="background-color:#f68e15;color:white;">
+				  	<i class="plus icon"></i>
+				</button>
+				{{playerVol}}%
 			</div>
 			<div class="four wide sitewideOrange column">
 			  <!--<i class="plus square outline icon"></i>-->
@@ -15,15 +29,15 @@
 				<div class="ui move right reveal">
 				  <div class="visible content">
 				    <!--<i class="share alternate icon"></i>-->
-				    <button class="ui labeled icon button" style="background-color:#f68e15;color:white;">
+				    <button class="mini ui labeled icon button" style="background-color:#f68e15;color:white;">
 					  <i class="share alternate icon"></i>Share
 					</button>
 				  </div>
 				  <div class="hidden content">
-				    <a id='shareFbButton' class="ui circular facebook icon button">
+				    <a id='shareFbButton' class="mini ui circular facebook icon button" title="Share song to Facebook wall!">
 					  <i class="facebook icon"></i>
 					</a>
-					<a href="http://twitter.com/?status={{songLinkToBeShared}} %23groovli &#64;groovliapp %23nowplaying" title="Share on Twitter" target="_blank" class="ui circular twitter icon button">
+					<a href="http://twitter.com/?status={{songLinkToBeShared}} %23groovli &#64;groovliapp %23nowplaying" title="Tweet this song!" target="_blank" class="mini ui circular twitter icon button">
 					  <i class="twitter icon"></i>
 					</a>
 				  </div>

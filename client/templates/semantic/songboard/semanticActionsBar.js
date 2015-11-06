@@ -1,3 +1,8 @@
+//Session.setDefault("scmntsVisible", false);
+var songCommentsVisible = new ReactiveVar(false);
+var songMuted = new ReactiveVar(false);
+var songVolume = new ReactiveVar(100);
+
 Template.semanticActionsBar.helpers({
   songPlaying: function() {
     var cs = Session.get('CS');
@@ -14,12 +19,18 @@ Template.semanticActionsBar.helpers({
       return 0;
   },
   commentsVisible: function() {
-    return Session.get("scmntsVisible");
+    return songCommentsVisible.get();
   },
   songLinkToBeShared: function() {
     var cs = Session.get('CS');
     if(!_.isUndefined(cs))
       return cs.sl;
+  },
+  songMuted: function() {
+    return songMuted.get();
+  },
+  playerVol: function() {
+    return songVolume.get();
   }
 });
 
@@ -32,7 +43,8 @@ Template.semanticActionsBar.events({
           //$('.fa-comments').addClass('commentsNotShown');
           $('#commentSection').slideUp();
           mixpanel.track('hide comments for song');
-          Session.set("scmntsVisible", false);
+          //Session.set("scmntsVisible", false);
+          songCommentsVisible.set(false);
         }
         else
         {
@@ -40,7 +52,35 @@ Template.semanticActionsBar.events({
           //$('.fa-comments').addClass('commentsShown');
           $('#commentSection').slideDown();
           mixpanel.track('show comments for song');
-          Session.set("scmntsVisible", true);
+          //Session.set("scmntsVisible", true);
+          songCommentsVisible.set(true);
+        }
+    },
+    'click #toggleMute': function(event) {
+        songMuted.set(!songMuted.get());
+        toggleMute();
+        songVolume.set(getPlayerVol());
+    },
+    'click #increaseVolume': function(event) {
+        if(songVolume.get() < 100) {
+          setPlayerVol(getPlayerVol()+5);
+          songVolume.set(getPlayerVol()+5);
+          if(songVolume.get() > 0 && songMuted.get())
+          {
+            songMuted.set(false);
+            toggleMute();
+          }
+        }
+    },
+    'click #decreaseVolume': function(event) {
+        if(songVolume.get() > 0) {
+          setPlayerVol(getPlayerVol()-5);
+          songVolume.set(getPlayerVol()-5);
+          if(songVolume.get() === 0 && !songMuted.get())
+          {
+            songMuted.set(true);
+            toggleMute();
+          }
         }
     },
     'click #shareFbButton': function(e) {

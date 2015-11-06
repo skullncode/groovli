@@ -308,6 +308,24 @@ function setupListenIncrementMethod(){
   //incrementListenCount();
 }
 
+function toggleMute(){
+  if(!ytplayer.isMuted())
+    ytplayer.mute();
+  else
+    ytplayer.unMute();
+}
+
+function setPlayerVol(volNum){
+  if(volNum >= 0 && volNum <= 100)
+    ytplayer.setVolume(volNum);
+}
+
+function getPlayerVol(){
+  if(ytplayer) {
+    return ytplayer.getVolume();
+  }
+}
+
 function loadVideoById(soundID){ //WAS USING currentSong previously but not anymore//, currentSong) {
   //var playpauseButton = $('.glyphicon-play');
   //playpauseButton.toggleClass('glyphicon-play glyphicon-pause');
