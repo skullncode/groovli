@@ -43,7 +43,7 @@ Template.smglist.helpers({
 
           if(Session.get('existingMGCursor') > Session.get('mgSongCount')) //If page count is past total count then reset back to 0
           {
-            console.log("current cursor IS PAST song COUNT!!!");
+            //console.log("current cursor IS PAST song COUNT!!!");
             var newCursorPosition = Session.get('mgSongCount') - pagingLimit
 
             if(newCursorPosition >= 0)

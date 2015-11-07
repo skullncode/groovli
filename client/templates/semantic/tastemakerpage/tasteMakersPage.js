@@ -83,7 +83,7 @@ Template.tasteMakersPage.helpers({
   fixTMSongCursor: function() {
     if(Session.get('existingTMCursor') > Session.get('tmSongCount')) //If page count is past total count then reset back to 0
     {
-      console.log("current cursor IS PAST song COUNT!!!");
+      //console.log("current cursor IS PAST song COUNT!!!");
       var newCursorPosition = Session.get('tmSongCount') - pagingLimit;
       Session.set('existingTMCursor', 0);
     }
