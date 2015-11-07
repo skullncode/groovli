@@ -19,7 +19,7 @@
 				{{#if hasUsersForMessaging}}
 					{{#each usersForMessaging}}
 						<a href="/messages/{{this._id}}" id="userInMessagingList" class="item {{this._id}}">
-							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
+							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.services.facebook.first_name}}
 							{{#if hasOnlineStatus}}
 								{{#if this.status.online}}
 									<a class="ui green empty circular label"></a>
@@ -46,7 +46,7 @@
 				{{#if hasUnknownUsersForMessaging}}
 					{{#each unknownUsersForMessaging}}
 						<a href="/messages/{{this._id}}" id="unknownUserInMessagingList" class="item {{this._id}}">
-							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.profile.name}}
+							<img class="ui mini circular image" src="http://graph.facebook.com/{{this.services.facebook.id}}/picture?type=square">{{this.services.facebook.first_name}}
 							{{#if hasOnlineStatus}}
 								{{#if this.status.online}}
 									<a class="ui green empty circular label"></a>

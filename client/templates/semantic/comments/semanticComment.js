@@ -5,13 +5,15 @@ Template.semanticComment.helpers({
   },
   nameForComment: function() {
     var userForComment = this.nameOfUser;
-    //console.log('THIS IS THE USER for this comment: ');
-    //console.log(userForComment);
+    /*console.log('THIS IS THE USER obj for this comment: ');
+    console.log(this);
+    console.log('THIS IS HTE USER NAMEEEE')
+    console.log(userForComment);*/
     if(!_.isUndefined(userForComment))
     {
       //console.log('RETURNING THIS NAME: ');
       //console.log(userForComment.profile.name)
-      return userForComment;
+      return userForComment.split(' ')[0];
     }
   },
   isOwnComment: function() {
