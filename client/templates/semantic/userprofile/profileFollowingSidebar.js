@@ -2,13 +2,23 @@
 var followingContext = new ReactiveVar(null);
 var userIDsForTastemakers = new ReactiveVar(null);
 var tastemakerDetailsLoaded = new ReactiveVar(false);
+var smallerChunkedTastemakers = new ReactiveVar(null);
+var upperCounterPosition = new ReactiveVar(0);
+var pagingLimitForTastemakers = 12;
 
 Template.profileFollowingSidebar.helpers({
 	peopleFollowedByUser: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')) && Session.get(followingContext.get().params._id+'_uObjLoaded'))
 		{
-			//return Session.get(Session.get(followingContext.get().params._id+'_uObj')._id+'_fclist');
-			return Session.get(followingContext.get().params._id+'_uObj').tastemakers;
+			//return Session.get(followingContext.get().params._id+'_uObj').tastemakers;
+			
+
+			//console.log('##########THIS IS THE FINAL chunked tastemaker: ');
+			//console.log(smallerChunkedTastemakers);
+			if(!_.isNull(smallerChunkedTastemakers.get()))
+				return smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')];
+			else
+				[];
 		}
 	},
 	followingLink: function() {
@@ -50,39 +60,34 @@ Template.profileFollowingSidebar.helpers({
 				return 0;
 		}
 	},
-	/*
-	viewingFirst6Faves: function() {
-		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
-		{
-			if(Session.get(Session.get(followingContext.get().params._id+'_uObj')._id+'_fc') < 6)
-				return true;
-			else
-				return Session.get('f6Faves');
-		}
-	},
-
-	viewingLast6Faves: function() {
-		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
-		{
-			if(Session.get(Session.get(followingContext.get().params._id+'_uObj')._id+'_fc') < 6)
-				return true;
-			else
-				return Session.get('l6Faves');
-		}
-	},*/
 	//less tastemakers than having to enable the paging buttons
 	tastemakersLessThanPagingLimit: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
 		{
 			var x = Session.get(followingContext.get().params._id+'_uObj');
 			if(!_.isUndefined(x.tastemakers))
-				return x.tastemakers.length <= 12;
+				return x.tastemakers.length <= pagingLimitForTastemakers;
 			else
 				return true;
 		}
 	},
 	tastemakerDetailsLoaded:function() {
 		return tastemakerDetailsLoaded.get();
+	},
+	counterPosition: function() {
+		if(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
+		{
+			var multiplier = pagingLimitForTastemakers * Session.get(followingContext.get().params._id+'_followingcurs');
+			var x = 1 + multiplier;
+	    	upperCounterPosition.set(x + smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')].length-1);
+	    	if(upperCounterPosition.get() > Session.get(followingContext.get().params._id+'_uObj').tastemakers.length)
+	    		upperCounterPosition.set(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length);
+	    	return  x + '-' + upperCounterPosition.get() + ' of ';
+    	}
+    	else
+    	{
+    		return '';
+    	}
 	}
 });
 
@@ -114,6 +119,25 @@ Template.profileFollowingSidebar.onCreated(function() {
 				  	tastemakerDetailsLoaded.set(true);
 			    };
 			});
+
+	    	if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj').tastemakers) && Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0)
+	    	{
+	    		//console.log('TASTEMAKERS is not BLANK for this user!!!!!!!!');
+				var a = Session.get(followingContext.get().params._id+'_uObj').tastemakers;
+				var size = 12;
+				var tempChunk = [];
+				while (a.length > 0) {
+				  chunk = a.splice(0,size)
+				  tempChunk.push(chunk);
+				  //smallerChunkedTastemakers.push(chunk);
+				}
+				smallerChunkedTastemakers.set(tempChunk);
+			}
+			else
+			{
+				//console.log('TASTEMAKERS is BLANK for this user!!!!!!!!');
+				smallerChunkedTastemakers.set([])
+			}
     	}
 		//Session.set('followingLd',false);
 		//isFollowingReady();
@@ -124,34 +148,22 @@ Template.profileFollowingSidebar.onCreated(function() {
 Template.profileFollowingSidebar.events({
     "click #previousFollowingList": function (event) {
       //console.log('CLICKED PREVIOUS button');
-      if(Number(Session.get(followingContext.get().params._id+'_followingcurs')) > 11)
+      if(Number(Session.get(followingContext.get().params._id+'_followingcurs')) > 0)
       {
         //console.log('INSIDE if condition!!');
-        Session.set(followingContext.get().params._id+'_followingcurs', Number(Session.get(followingContext.get().params._id+'_followingcurs')) - 12);
+        Session.set(followingContext.get().params._id+'_followingcurs', Session.get(followingContext.get().params._id+'_followingcurs') - 1);
         //iHist(true);
         //resetPlayedLengthSpecificToTab('me');
       }
-      /*else
-      {
-        toastr.info("Reached the beginning of "+Session.get(followingContext.get().params._id+'_uObj').services.facebook.first_name+"'s shared songs; <br><br><b><i>try moving forward (->) to see what they shared in the past!</i></b><br><br>");
-        //console.log('INSIDE else condition!!');
-      }*/
     },
 
     "click #nextFollowingList": function (event) {
       //console.log('CLICKED next button');
-      if(Number(Session.get(followingContext.get().params._id+'_followingcurs')) < Number(Session.get(Session.get(followingContext.get().params._id+'_uObj')._id+'_fc') - 11))
+      if(upperCounterPosition.get() < Session.get(followingContext.get().params._id+'_uObj').tastemakers.length - 1)
       {
         //console.log('INSIDE if condition!!');
-        Session.set(followingContext.get().params._id+'_followingcurs', Number(Session.get(followingContext.get().params._id+'_followingcurs')) + 11);
-        //iHist(true);
-        //resetPlayedLengthSpecificToTab('me');
+        Session.set(followingContext.get().params._id+'_followingcurs', Session.get(followingContext.get().params._id+'_followingcurs') + 1);
       }
-      /*else
-      {
-        //console.log('INSIDE else condition!!');
-        toastr.info("Reached the end of "+Session.get(followingContext.get().params._id+'_uObj').services.facebook.first_name+"'s shared songs; <br><br><b><i>try moving backward (<-) to see what they shared more recently!</i></b><br><br>");
-      }*/
     },
     "click #userProfileFollowingLink": function(event) {
     	//console.log('clicked user profile link');
