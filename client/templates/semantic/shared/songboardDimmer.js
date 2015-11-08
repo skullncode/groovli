@@ -11,7 +11,7 @@ Template.songboardDimmer.onRendered(function () {
 });
 
 function showDimmer(){
-    $('.ui.page.dimmer')
+    $('.ui.page.dimmer.songboardDimmer')
           .dimmer({
             closable: false
           }).dimmer('show')
@@ -19,5 +19,5 @@ function showDimmer(){
 }
 
 function hideDimmer(){
-    $('.ui.page.dimmer').dimmer('hide');
+    $('.ui.page.dimmer.songboardDimmer').dimmer('hide');
 }
