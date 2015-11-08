@@ -1,4 +1,4 @@
-Template.semanticLayout.onRendered(function () {
+Template.songboardLayout.onRendered(function () {
 	fixSemanticGrids();
 });
 
