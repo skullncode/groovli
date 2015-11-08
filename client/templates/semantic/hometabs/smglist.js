@@ -71,7 +71,7 @@ Template.smglist.helpers({
     var anySongsProcessedAndLoaded = (Session.get('mLen') > 0 || Session.get('fLen') > 0 || Session.get('gLen') > 0);
     //console.log('HAS THE PLAYER LOADED OR NOT:');
     //console.log(Session.get('playerLoaded'));
-    if(anySongsProcessedAndLoaded && Session.get('playerLoaded'))
+    if(anySongsProcessedAndLoaded && Session.get('playerLoaded') && Session.get('mgspRndmzd') && Session.get('tmspRndmzd') && Session.get('sgspRndmzd') && pagedMGlistSongsLoaded.get() && Session.get('tmlsld') && Session.get('glsld'))
       return true;
     else
       return false;
@@ -96,7 +96,7 @@ Template.smglist.helpers({
     }
   },
   startPlayer: function() {
-    if(!Session.get('playerStarted') && Session.get('playerLoaded'))
+    if(!Session.get('playerStarted') && Session.get('playerLoaded') && Session.get('mgspRndmzd') && pagedMGlistSongsLoaded.get())
     {
       //console.log('SONGS apparently loaded!!! STARTINGGGG PLAYERR!!!');
       initializePlayableTabs();
@@ -157,16 +157,23 @@ Template.smglist.helpers({
     if(pagedMGlistSongsLoaded.get() && !Session.get('mgspRndmzd') && Session.get('mgSongCount') > 0)
     {
       //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
-      Session.set('mgspRndmzd', true);
       var x = _.range(0, Session.get('mgSongCount'), pagingLimit);
       var y = _.random(x.length-1)
       if(y > 0)
       {
+        //console.log('GONNA RELOAD PAGE TO RANDOMIZE SELECTION');
         pagedMGlistSongsLoaded.set(false);
         Session.set('existingMGCursor', x[y]);
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
       }
+      //console.log('my groovs has been randomized now!!!');
+      Session.set('mgspRndmzd', true);
+    }
+    else if(pagedMGlistSongsLoaded.get() && Session.get('mgSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      Session.set('mgspRndmzd', true);
     }
   }
 });
@@ -317,7 +324,7 @@ Template.smglist.onCreated(function() {
       {
         iHist(true);
         resetPlayedLengthSpecificToTab('me');
-        self.subscribe("counterForMyGroovs", Meteor.user().services.facebook.id)
+        self.subscribe("counterForMyGroovs", Meteor.user().services.facebook.id);
         Session.set('mgSongCount', Counts.get('songCountForMyGroovs'));
         self.subscribe('30songsForMyGroovs', Meteor.user().services.facebook.id, Session.get('existingMGCursor'), {onReady: onMGSubReady});
       }

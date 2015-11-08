@@ -3,6 +3,7 @@ Session.setDefault('sgSongsLoaded', false)
 Session.setDefault('sgspRndmzd', false);
 
 var pagedGlistSongsLoaded = new ReactiveVar(false);
+Session.setDefault('glsld', false);
 var pagingLimit = 10;
 //Session.setDefault('sgSongCursor', undefined)
 
@@ -77,16 +78,22 @@ Template.sglist.helpers({
     if(pagedGlistSongsLoaded.get() && !Session.get('sgspRndmzd') && Session.get('sgSongCount') > 0)
     {
       //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
-      Session.set('sgspRndmzd', true);
       var x = _.range(0, Session.get('sgSongCount'), pagingLimit);
       var y = _.random(x.length-1)
       if(y > 0)
       {
         pagedGlistSongsLoaded.set(false);
+        Session.set('glsld', false);
         Session.set('existingSGCursor', x[y]);
         iHist(true);
         resetPlayedLengthSpecificToTab('global');
       }
+      Session.set('sgspRndmzd', true);
+    }
+    else if(pagedGlistSongsLoaded.get() && Session.get('sgSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      Session.set('sgspRndmzd', true);
     }
   }
 });
@@ -264,6 +271,7 @@ function onSGSubReady()
   var sgSelector = getMongoSelectorForGlobal();  
   var result = Songs.find(sgSelector, {sort: { 'sharedBy.systemDate': -1 }}).count();
   pagedGlistSongsLoaded.set(true);
+  Session.set('glsld', true);
   //console.log(result);
   if(result > 0)
   {

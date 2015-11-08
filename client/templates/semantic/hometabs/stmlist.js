@@ -4,6 +4,7 @@ Session.setDefault('tmSongsLoaded', false)
 Session.setDefault('tmspRndmzd', false);
 //Session.setDefault('tmSongCursor', undefined)
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
+Session.setDefault('tmlsld', false);
 var pagingLimit = 10;
 
 
@@ -99,18 +100,25 @@ Template.stmlist.helpers({
     if(pagedTMlistSongsLoaded.get() && !Session.get('tmspRndmzd') && Session.get('tmSongCount') > 0)
     {
       //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
-      Session.set('tmspRndmzd', true);
+      
       var x = _.range(0, Session.get('tmSongCount'), pagingLimit);
       var y = _.random(x.length-1)
       if(y > 0)
       {
         pagedTMlistSongsLoaded.set(false);
+        Session.set('tmlsld', false);
         Session.set('existingTMCursor', x[y]);
         iHist(true);
         resetPlayedLengthSpecificToTab('friends');
       }
+      Session.set('tmspRndmzd', true);
       /*else
         console.log('randomly selected index is 0 so nothing has to be done!');*/
+    }
+    else if(pagedTMlistSongsLoaded.get() && Session.get('tmSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      Session.set('tmspRndmzd', true);
     }
   }
 });
@@ -316,6 +324,7 @@ function onTMSubReady()
   //console.log('THIS IS THE tastemaker SONG COUNT NOW: ');
 
   pagedTMlistSongsLoaded.set(true);
+  Session.set('tmlsld', true);
   //if(_.isEmpty(Session.get('selGens')))
     var stmSelector = getMongoSelectorForFriendSongs();  
   //else if(!_.isEmpty(Session.get('selGens')))

@@ -369,8 +369,8 @@ Meteor.publish('30songsForGlobalBasedOnYearSelection', function(excludedIds, yr,
     //console.log(sel);
     //var globalYearQuery = {$or: [{iTunesValid:'VALID'},{LFMValid:'VALID'},{manualApproval:'VALID'}], 'sharedBy': { $elemMatch: { uid: {"$nin":excludedIds}, systemDate: { '$gte' : beginDate , '$lt' : endDate }}}};
     var globalYearQuery = getMongoSelectorForGlobalYearSelection(excludedIds, beginDate, endDate, selGen);
-    console.log('################ this is the global year query!!!:');
-    console.log(globalYearQuery);
+    //console.log('################ this is the global year query!!!:');
+    //console.log(globalYearQuery);
  
     //console.log("FOR THAT LIST OF SELECTED genres we got this list of matching artists: ");
     //console.log(genArtistList);
