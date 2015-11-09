@@ -1232,6 +1232,37 @@ Meteor.publish('genreCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('reviewMessages', function(cursorSkipAmount) {
+  return Messages.find({},{
+          limit: 10,
+          skip: cursorSkipAmount,
+          sort: {'timestamp':-1}
+       });
+});
+
+Meteor.publish('msgsForReviewCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForReviewMsgs', Messages.find({}));
+  }
+});
+
+Meteor.publish('reviewComments', function(cursorSkipAmount) {
+  return Comments.find({},{
+          limit: 10,
+          skip: cursorSkipAmount,
+          sort: {'createdAt':-1}
+       });
+});
+
+Meteor.publish('commentsForReviewCount', function(loggedInUser) {
+  if(!_.isNull(loggedInUser))
+  {
+    Counts.publish(this, 'counterForReviewComments', Comments.find({}));
+  }
+});
+
+
 
 Meteor.publish('/invites', function() {
   //console.log("INSIDE THE INVITES publishing code: ");

@@ -1,23 +1,23 @@
-<template name="reviewMessages">
+<template name="reviewComments">
 	{{#if currentUser}}
     	{{#if userIsAnAdmin}}
-			<h1 class="ui header">Review All Messages</h1>
+			<h1 class="ui header">Review All Comments</h1>
 			<table class="ui celled structured table">
 				<thead>
 				<tr>
 					<th colspan="1">Actions</th>
-					<th colspan="1">ID</th>
-					<th colspan="1">From</th>
-					<th colspan="1">To</th>
-					<th colspan="1">Read</th>
+					<th colspan="1">CommentID</th>
+					<th colspan="1">Song</th>
+					<th colspan="1">Author</th>
+					<th colspan="1">Like Count</th>
 					<th colspan="1">Timestamp</th>
 					<th colspan="1">Content</th>
 				</tr>
 				</thead>
 				<tbody>
-					{{#if msgsLoaded}}
-						{{#each msgsForReview}}
-							{{>semanticMsgReviewItem}}
+					{{#if commentsLoaded}}
+						{{#each commentsForReview}}
+							{{>commentReviewItem}}
 						{{/each}}
 				    {{else}}
 			    		<div class="ui active centered large inline loader"></div>
@@ -26,7 +26,7 @@
 				<tfoot>
 				  <tr>
 				  <th colspan="1">
-				    <p><strong>{{currentCursorPosition}} of {{msgCount}} messages</strong></p>                    
+				    <p><strong>{{currentCursorPosition}} of {{commentsCount}} comments</strong></p>                    
 				  </th>
 				  <th colspan="1">
 				    <select class="ui compact dropdown" id="jumpPaging">
@@ -38,16 +38,16 @@
 				  </th>
 				  <th colspan="10">
 				    <div class="ui right floated pagination menu">
-						<button id="beginningOfMsgList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+						<button id="beginningOfCommentList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
 							<i class="angle double left icon"></i>
 						</button>
-						<button id="previousMsgs" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+						<button id="previousComments" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
 							<i class="left chevron icon"></i>
 						</button>
-						<button id="nextMsgs" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+						<button id="nextComments" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
 							<i class="right chevron icon"></i>
 						</button>
-						<button id="endOfMsgList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
+						<button id="endOfCommentsList" class="ui icon item {{#if artistListDoesNotRequirePaging}}disabled{{/if}} button">
 							<i class="angle double right icon"></i>
 						</button>
 				    </div>

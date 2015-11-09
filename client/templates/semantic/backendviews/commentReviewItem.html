@@ -1,0 +1,40 @@
+<template name="commentReviewItem">
+	<tr>
+		<td>
+			<button id="deleteComment" class="circular ui icon red button" title="delete this comment">
+			  <i class="icon remove"></i>
+			</button>
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="commentID" class="ui header">{{_id}}</h4>
+			</div>
+		</td>
+		<td>
+			<h4 class="ui image header">
+			<img src="{{youtubeThumbnail}}" class="ui tiny rounded image">
+			<div class="content">
+				<div class="sub header"><a href="{{this.referenceId}}" target="blank">Link</a></div>
+			</div>
+			</h4>
+		</td>
+		<td>
+			<a href="/profile/{{userId}}" target="blank">{{nameOfUser}}</a>
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="genreName" class="ui header">{{this.likes.length}}</h4>
+			</div>
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="genreName" class="ui header">{{humanTimestamp}}</h4>
+			</div>
+		</td>
+		<td>
+			<div class="content">
+				{{content}}
+			</div>
+		</td>
+	</tr>
+</template>

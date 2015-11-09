@@ -1,0 +1,54 @@
+<template name="semanticMsgReviewItem">
+	<tr>
+		<td>
+			<button id="deleteMsg" class="circular ui icon red button" title="delete this message">
+			  <i class="icon remove"></i>
+			</button>
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="msgID" class="ui header">{{_id}}</h4>
+			</div>
+		</td>
+		<td>
+			<h4 class="ui image header">
+				<img class="ui avatar image" src="http://graph.facebook.com/{{from}}/picture?type=square"> 
+				<div class="content">
+					<div class="sub header"><a href="http://facebook.com/{{from}}" target="blank">FB Link</a></div>
+				</div>
+			</h4>
+		</td>
+		<td>
+			{{#if recipientIsGroup}}
+				<div class="content">
+					{{to}}
+					<div class="content">
+						<div class="sub header"><a href="{{groupLink}}" target="blank">Group Link</a></div>
+					</div>
+				</div>
+			{{else}}
+				<h4 class="ui image header">
+					<img class="ui avatar image" src="http://graph.facebook.com/{{to}}/picture?type=square"> 
+					<div class="content">
+						<div class="sub header"><a href="http://facebook.com/{{to}}" target="blank">FB Link</a></div>
+					</div>
+				</h4>
+			{{/if}}
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="genreName" class="ui header">{{read}}</h4>
+			</div>
+		</td>
+		<td>
+			<div class="content">
+				<h4 id="genreName" class="ui header">{{humanTimestamp}}</h4>
+			</div>
+		</td>
+		<td>
+			<div class="content">
+				{{content}}
+			</div>
+		</td>
+	</tr>
+</template>
