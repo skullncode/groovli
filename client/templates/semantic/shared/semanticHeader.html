@@ -42,6 +42,81 @@
               <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by people outside your social circle{{/if}}" data-variation="inverted large">Global</a>
               <div class="right menu orangeHeaderMenu">
                 {{>sSearch}}
+
+                <!--<div class="ui dropdown headerMenuNotificationDropdown item">
+                  <i class="large newspaper icon"></i>
+                  <a class="ui red right corner label">5</a>
+                  <div class="menu">
+                    <div class="ui small feed">
+                      <h4 class="ui header">Followers Activity</h4>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                             <a>Elliot Fu</a> added <a>Jenny Hess</a> as a friend
+                          </div>
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                             <a>Stevie Feliciano</a> added <a>Elliot Fu</a> as a friend
+                          </div>
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                             <a>Helen Troy</a> added <a>Christian Rocha</a> as a friend
+                          </div>
+                        </div>
+                      </div>
+                      <div class="event">
+                        <div class="content">
+                          <div class="summary">
+                             <a>Christian Rocha</a> signed up for the  site.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>-->
+
+                <div class="ui scrolling dropdown icon headerMenuNotificationDropdown item">
+                  <i class="newspaper icon orangeHeaderMenuItem"></i>
+                  {{#if hasUnseenNotifications}}
+                    <div class="floating ui red label">{{unseenNotificationCount}}</div>
+                  {{/if}}
+                  <div class="menu">
+                    <!--<div class="ui feed">-->
+                      {{#if hasNotificationsForUser}}
+                        <div class="header">
+                         <h3>Notifications</h3>
+                        </div>
+                        <div class="ui divider"></div>
+                        {{#each notificationsForThisUser}}
+                          <div class="item">
+                            <div class="event">
+                              <div class="content">
+                                <div class="date">{{humanTimestampForNotification}}</div>
+                                <div class="summary">
+                                  <img class="ui avatar image" src="http://graph.facebook.com/{{from.fbid}}/picture?type=square">
+                                  {{#if notificationIsCommentPost}}
+                                     {{from.first_name}} commented on your <br>song <i>{{object.st}}</i> by <i>{{object.sa}}</i>
+                                  {{/if}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        {{/each}}
+                      {{else}}
+                        <div class="item">
+                          <h3>No recent notifications!</h3>
+                        </div>
+                      {{/if}}
+                    <!--</div>-->
+                  </div>
+                </div>
+
                 <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item" title="messages">
                   <i class="large comment icon orangeHeaderMenuItem"></i>
                   {{#if hasUnreadMsgs}}

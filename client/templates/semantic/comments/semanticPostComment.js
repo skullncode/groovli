@@ -18,6 +18,7 @@ Template.semanticPostComment.events({
             to: Session.get('CS').sl
           });
           $("#commentContent").val("");
+          Meteor.call('insertNewNotification', Meteor.user(), Session.get('CS').sharedBy, 'postComment', Session.get('CS'), commentContent);
         }
       });
     }

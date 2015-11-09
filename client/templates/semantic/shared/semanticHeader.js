@@ -32,6 +32,24 @@ Template.semanticHeader.helpers({
   unreadMsgCount: function() {
     return Session.get('urmsgsC');
   },
+  hasUnseenNotifications: function() {
+    return Notifications.find({seen:false}).count() > 0;
+  },
+  unseenNotificationCount: function() {
+    return Notifications.find({seen:false}).count();
+  },
+  notificationsForThisUser: function() {
+    return Notifications.find({},{sort:{'timestamp':-1}});
+  },
+  notificationIsCommentPost: function() {
+    return this.action === 'postComment';
+  },
+  humanTimestampForNotification: function() {
+    return new moment(this.timestamp * 1000).fromNow();
+  },
+  hasNotificationsForUser: function() {
+    return Notifications.find().count() > 0
+  },
   notifsEnabled: function() {
     if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
     {
@@ -62,6 +80,7 @@ Template.semanticHeader.onRendered(function () {
 
   $('.ui.dropdown.mainHeaderMenuDropdown').dropdown();
   identifyUserWithMixPanel();
+  $('.ui.scrolling.dropdown.icon.headerMenuNotificationDropdown').dropdown();
 });
 
 Template.semanticHeader.onCreated(function() {
@@ -73,6 +92,9 @@ Template.semanticHeader.onCreated(function() {
       self.subscribe("unreadMsgCountForLoggedInUser", Meteor.user().services.facebook.id);
       Session.set('urmsgsC', Counts.get('unreadMsgCounterForLoggedInUser'));
       activatePopups();
+
+      self.subscribe("notificationsForLoggedInUser", Meteor.user().services.facebook.id);
+
     }
   });
 });
@@ -141,8 +163,19 @@ Template.semanticHeader.events({
     	$('.mainHeaderMenu .active').removeClass('active');
     	$('.mainHeaderMenu .globalpagelink').addClass('active');
     	FlowRouter.go('/global');
+    },
+    'click .ui.scrolling.dropdown.icon.headerMenuNotificationDropdown': function(event){
+      //console.log('clicked the notification dropdown MENU now!!!!!!');
+      if(Notifications.find({seen:false}).count() > 0)
+      {
+        Meteor.call('markNotificationsAsSeen', Notifications.find().fetch());
+      }
     }
 });
+
+function activateNotificationDropdown() {
+  $('.ui.dropdown.headerMenuNotificationDropdown').dropdown();
+}
 
 function activatePopups(){
   $('.homelink').popup();

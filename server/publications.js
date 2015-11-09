@@ -1262,6 +1262,19 @@ Meteor.publish('commentsForReviewCount', function(loggedInUser) {
   }
 });
 
+Meteor.publish('notificationsForLoggedInUser', function(userID) {
+  //console.log('INSIDE THE notifications publish function with this userID: ');
+  //console.log(userID);
+  if(userID !== null)
+  {
+    //var foundMsgs = Messages.find({$or: [{'from': String(userID)},{'to': String(userID)}]});
+    //console.log('THIS IS THE MESSAGES FOUND:')
+    //console.log(foundMsgs.fetch());
+    //return foundMsgs;
+    return Notifications.find({'to': String(userID)},{sort:{'timestamp':-1}});
+  }
+});
+
 
 
 Meteor.publish('/invites', function() {
