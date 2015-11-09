@@ -48,9 +48,9 @@ Template.semanticComment.helpers({
 Template.semanticComment.events({
   "click .delete": function (event) {
     // This function is called when the new task form is submitted
-    console.log("CLICKED BUTTON for DELETING comment!!!");
-    var commentID = $(event.currentTarget).attr('id');
-    console.log('THIS IS THE COMMENT ID: ' + commentID);
+    //console.log("CLICKED BUTTON for DELETING comment!!!");
+    //var commentID = $(event.currentTarget).attr('id');
+    var commentID = this._id;
     if(!_.isEmpty(commentID))
     {
       //console.log("THIS IS THE COMMENT: ");
@@ -60,16 +60,22 @@ Template.semanticComment.events({
           console.log('Encountered error while trying to post comment for song!');
         else
         {
-          console.log('SUCCESSFULLY deleted comment for this song!!');
+          //console.log('SUCCESSFULLY deleted comment for this song!!');
           //$("#commentContent").val("");
+          mixpanel.track('deleted comment for song', {
+            from: Meteor.user().services.facebook.id,
+            to: Session.get('CS').sl
+          });
         }
       });
     }
     return false;
   },
   "click .likeComment": function (event) {
-    var commentID = $(event.currentTarget).attr('id');
-    console.log('CLICKED button for LIKING comment! : ' + commentID);
+    var commentID = this._id;
+    //console.log('CLICKED button for LIKING comment! : ' + commentID);
+    //console.log('########### This is the object: ');
+    //console.log(this);
     if(!_.isEmpty(commentID))
     {
       //console.log("THIS IS THE COMMENT: ");
@@ -81,8 +87,12 @@ Template.semanticComment.events({
             console.log('Encountered error while trying to post comment for song!');
           else
           {
-            console.log('SUCCESSFULLY liked comment for this song!!');
+            //console.log('SUCCESSFULLY liked comment for this song!!');
             //$("#commentContent").val("");
+            mixpanel.track('liked comment for song', {
+              from: Meteor.user().services.facebook.id,
+              to: Session.get('CS').sl
+            });
           }
         });
       }

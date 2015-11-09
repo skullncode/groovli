@@ -19,7 +19,7 @@
 		  </div>
 		  <div class="actions">
 		  	{{#unless isOwnComment}}
-        		<a class="like"><i class="thumbs up icon"></i>Like</a>
+        		<a id="{{commentId}}" class="likeComment"><i class="thumbs up icon"></i>Like</a>
         	{{/unless}}
         	{{#if isOwnCommentAndLessThanFiveMinutes}}
 				<a title="You only have 5 minutes to delete this comment!" id="{{_id}}" class="delete"><i class="trash icon"></i>Delete</a>
