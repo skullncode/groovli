@@ -74,6 +74,16 @@ if (Meteor.isClient) {
         return '& ' + otherCounter + ' other people, '
       else
         return '';
+    },
+    messageWhenSharedByThisUser: function() {
+      var counter = 0;
+      while(counter < this.sharedBy.length)
+      {
+        if(this.sharedBy[counter].uid === Meteor.user().services.facebook.id)
+          return this.sharedBy[counter].msg;
+        else
+          counter++;
+      }
     }
   });
 
