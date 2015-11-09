@@ -25,11 +25,37 @@ Template.profileFaveBands.helpers({
 		return cleanedArtistName(artName)
 	},
 
-	artistIDForName: function(artName) {	
-		var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
-		if(!_.isEmpty(x))
+	artistIDForName: function(artName) {
+		if(artName.indexOf(' & ') >= 0)
 		{
-			return x._id;
+			//console.log('IN FIRST IF CONDITION');
+			//console.log(artistName);
+			var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+			if(!_.isEmpty(x))
+			{
+				//console.log('THIS IS THE artist specific song LENGTH : ' + x.length);
+				//return x;
+				return x._id;
+			}
+			else
+			{
+				artName = artName.replace(/ & /g, ' and ');
+				//console.log('DID not find anything with just &; replaced with AND and now searching again!');
+				//console.log(artistName);
+				x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+				if(!_.isEmpty(x))
+				{
+					return x._id;	
+				}
+			}
+		}
+		else
+		{
+			var x = Artists.findOne({'name': {$regex: new RegExp('^' + artName + '$', 'i')}});
+			if(!_.isEmpty(x))
+			{
+				return x._id;
+			}
 		}
 	},
 	artistHasPage: function(artName) {
