@@ -31,12 +31,11 @@ Template.semanticArtistItem.helpers({
 Template.semanticArtistItem.events({
   'click #deleteArtistEntry': function(e) {
     console.log('CLICKED delete artist button:');
-    var artName = $(e.currentTarget.parentElement.parentElement).find('#artistName').text()
     //console.log(e);
     var artistObjectDiv = $(e.currentTarget.parentElement.parentElement);
     //console.log('FOR THIS ARTIST: ' + artName);
     //console.log(artistObjectDiv);
-    Meteor.call('deleteArtistEntry', artName, function(error,result){
+    Meteor.call('deleteArtistEntry', this._id, function(error,result){
         if(error){
           return toastr.error(error.reason);
         }

@@ -48,8 +48,8 @@ Meteor.methods({
 	{
 		return Artists.findOne({'name': {$regex: new RegExp('^' + artistName + '$', 'i')}});
 	},
-	deleteArtistEntry: function(artistName) {
-	    Artists.remove({name: artistName}, function(error) {
+	deleteArtistEntry: function(artistID) {
+	    Artists.remove({_id: artistID}, function(error) {
 	          if (error) {
 	            // display the error to the user
 	            return error;

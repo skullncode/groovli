@@ -1207,7 +1207,8 @@ Meteor.publish('invalidSongCount', function(loggedInUser) {
 Meteor.publish('reviewArtists', function(cursorSkipAmount) {
   return Artists.find({},{
           limit: 10,
-          skip: cursorSkipAmount
+          skip: cursorSkipAmount,
+          sort: {'name':1}
        });
 });
 
@@ -1221,7 +1222,8 @@ Meteor.publish('artistCount', function(loggedInUser) {
 Meteor.publish('reviewGenres', function(cursorSkipAmount) {
   return Genres.find({},{
           limit: 10,
-          skip: cursorSkipAmount
+          skip: cursorSkipAmount,
+          sort: {'name':1}
        });
 });
 
