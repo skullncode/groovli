@@ -1262,7 +1262,7 @@ Meteor.publish('commentsForReviewCount', function(loggedInUser) {
   }
 });
 
-Meteor.publish('notificationsForLoggedInUser', function(userID) {
+Meteor.publish('notificationsForLoggedInUser', function(userID, notificationLimit) {
   //console.log('INSIDE THE notifications publish function with this userID: ');
   //console.log(userID);
   if(userID !== null)
@@ -1271,7 +1271,14 @@ Meteor.publish('notificationsForLoggedInUser', function(userID) {
     //console.log('THIS IS THE MESSAGES FOUND:')
     //console.log(foundMsgs.fetch());
     //return foundMsgs;
-    return Notifications.find({'to': String(userID)},{sort:{'timestamp':-1}});
+    return Notifications.find({'to': String(userID)},{limit: notificationLimit, sort:{'timestamp':-1}});
+  }
+});
+
+Meteor.publish('notificationsCountForLoggedInUser', function(userID) {
+  if(!_.isNull(userID))
+  {
+    Counts.publish(this, 'counterForNotifications', Notifications.find({'to': String(userID)}));
   }
 });
 

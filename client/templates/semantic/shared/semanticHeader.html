@@ -43,50 +43,12 @@
               <div class="right menu orangeHeaderMenu">
                 {{>sSearch}}
 
-                <!--<div class="ui dropdown headerMenuNotificationDropdown item">
-                  <i class="large newspaper icon"></i>
-                  <a class="ui red right corner label">5</a>
-                  <div class="menu">
-                    <div class="ui small feed">
-                      <h4 class="ui header">Followers Activity</h4>
-                      <div class="event">
-                        <div class="content">
-                          <div class="summary">
-                             <a>Elliot Fu</a> added <a>Jenny Hess</a> as a friend
-                          </div>
-                        </div>
-                      </div>
-                      <div class="event">
-                        <div class="content">
-                          <div class="summary">
-                             <a>Stevie Feliciano</a> added <a>Elliot Fu</a> as a friend
-                          </div>
-                        </div>
-                      </div>
-                      <div class="event">
-                        <div class="content">
-                          <div class="summary">
-                             <a>Helen Troy</a> added <a>Christian Rocha</a> as a friend
-                          </div>
-                        </div>
-                      </div>
-                      <div class="event">
-                        <div class="content">
-                          <div class="summary">
-                             <a>Christian Rocha</a> signed up for the  site.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>-->
-
                 <div class="ui scrolling dropdown icon headerMenuNotificationDropdown item">
                   <i class="newspaper icon orangeHeaderMenuItem"></i>
                   {{#if hasUnseenNotifications}}
                     <div class="floating ui red label">{{unseenNotificationCount}}</div>
                   {{/if}}
-                  <div class="menu">
+                  <div id="userNotifList" class="menu">
                     <!--<div class="ui feed">-->
                       {{#if hasNotificationsForUser}}
                         <div class="header">
@@ -101,13 +63,26 @@
                                 <div class="summary">
                                   <img class="ui avatar image" src="http://graph.facebook.com/{{from.fbid}}/picture?type=square">
                                   {{#if notificationIsCommentPost}}
-                                     {{from.first_name}} commented on your <br>song <i>{{object.st}}</i> by <i>{{object.sa}}</i>
+                                     <b>{{from.first_name}}</b> commented<br><br>
+                                     <i><b>"{{content}}"</b></i><br><br>
+                                     on your song <br><i><b>{{object.st}}</b></i> by <i><b>{{object.sa}}</b></i>
                                   {{/if}}
                                 </div>
                               </div>
                             </div>
                           </div>
                         {{/each}}
+                        {{#if moreNotificationsExist}}
+                            <div style="margin-left: 25px;">
+                              <button id="loadMoreNotifications" class="mini ui button">
+                                <i>Load more...</i>
+                              </button>
+                            </div>
+                        {{else}}
+                            <div class="ui label" style="margin-left: 25px;">
+                              <i>No more notifications</i>
+                            </div>
+                        {{/if}}
                       {{else}}
                         <div class="item">
                           <h3>No recent notifications!</h3>

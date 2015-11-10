@@ -1,6 +1,10 @@
 Session.setDefault('urmsgsC', 0);
 Session.setDefault('userIdD', false); //user has been identified with mixpanel for this session
 Session.setDefault('uhne', false); //user help notifications enabled - by default set it to FALSE so users are not disturbed
+var notifCount = new ReactiveVar(0);
+Session.setDefault('nLim', 10); //notifications item limit
+var notificationIncrement = 10;
+
 
 Template.semanticHeader.helpers({
   activeRouteIsMyGroovs: function() {
@@ -68,6 +72,9 @@ Template.semanticHeader.helpers({
       Session.set('uhne', Meteor.user().notifsEnabled);
     else
       Session.set('uhne', false);
+  },
+  moreNotificationsExist: function(){
+    return Notifications.find().count() < notifCount.get();
   }
 });
 
@@ -93,11 +100,18 @@ Template.semanticHeader.onCreated(function() {
       Session.set('urmsgsC', Counts.get('unreadMsgCounterForLoggedInUser'));
       activatePopups();
 
-      self.subscribe("notificationsForLoggedInUser", Meteor.user().services.facebook.id);
+      self.subscribe("notificationsCountForLoggedInUser", Meteor.user().services.facebook.id, {onReady: notifCountReady});      
 
+      self.subscribe("notificationsForLoggedInUser", Meteor.user().services.facebook.id, Session.get('nLim'));
     }
   });
 });
+
+
+function notifCountReady(){
+  //console.log('NOTIFICATION count is now ready!!');
+  notifCount.set(Counts.get('counterForNotifications'));
+}
 
 function setupHelpNotificationStatus() {
   if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()))
@@ -170,6 +184,9 @@ Template.semanticHeader.events({
       {
         Meteor.call('markNotificationsAsSeen', Notifications.find().fetch());
       }
+    },
+    'click #loadMoreNotifications': function(event){
+      Session.set('nLim', Session.get('nLim') + notificationIncrement);
     }
 });
 
