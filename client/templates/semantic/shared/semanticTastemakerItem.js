@@ -72,18 +72,22 @@ if (Meteor.isClient) {
           counter++;
       }
     },
-    friendsSharedByForTastemakerItem: function() {
+    /*friendsSharedByForTastemakerItem: function() {
       var shareCounter = 0;
       var friendCounter = 0;
       var friendIDsThatSharedThisSong = [];
       while(shareCounter < this.sharedBy.length)
       {
-        //console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
+        console.log('INSIDE SHARE COUNTER: for this length: '+this.sharedBy.length);
+        console.log('this is the sharedBy object: ');
+        console.log(this.sharedBy);
         //while(friendCounter < Meteor.user().fbFriends.length)
         while(friendCounter < Meteor.user().tastemakers.length)
         {
-          //console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
-          //console.log('FRIEND COUNTER IS:  '+ friendCounter);
+          console.log('INSIDE FRIEND COUNTER: for this length: '+Meteor.user().fbFriends.length);
+          console.log('FRIEND COUNTER IS:  '+ friendCounter);
+          console.log('this is the tastemakers object: ');
+          console.log(Meteor.user().tastemakers);
           if(!_.isUndefined(Meteor.user().tastemakers[friendCounter]))
           {
             if(this.sharedBy[shareCounter].uid === Meteor.user().tastemakers[friendCounter].fbid)
@@ -92,6 +96,22 @@ if (Meteor.isClient) {
         
           friendCounter++;
         }
+        shareCounter++;
+      }
+      return friendIDsThatSharedThisSong;
+    }*/
+    friendsSharedByForTastemakerItem: function() {
+      var shareCounter = 0;
+      var friendIDsThatSharedThisSong = [];
+      while(shareCounter < this.sharedBy.length)
+      {
+        //that means this shared by DETAIL is for one of the current user's tastemakers
+        var foundFriend = _.findWhere(Meteor.user().tastemakers, {fbid: this.sharedBy[shareCounter].uid});
+        if(!_.isUndefined(foundFriend))
+        {
+          friendIDsThatSharedThisSong.push({friendID: foundFriend.fbid, friendName: foundFriend.name, friendTimestamp: new moment(this.sharedBy[shareCounter].systemDate * 1000).format('llll')});
+        }
+        
         shareCounter++;
       }
       return friendIDsThatSharedThisSong;
