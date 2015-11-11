@@ -55,7 +55,7 @@ Template.semanticHeader.helpers({
     return Notifications.find().count() > 0
   },
   notifsEnabled: function() {
-    if(!_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
+    if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().notifsEnabled))
     {
       return Meteor.user().notifsEnabled;
     }
