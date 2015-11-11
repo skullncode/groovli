@@ -75,18 +75,21 @@ Template.profileFollowingSidebar.helpers({
 		return tastemakerDetailsLoaded.get();
 	},
 	counterPosition: function() {
-		if(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
+		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')) && !_.isUndefined(Session.get(followingContext.get().params._id+'_uObj').tastemakers))
 		{
-			var multiplier = pagingLimitForTastemakers * Session.get(followingContext.get().params._id+'_followingcurs');
-			var x = 1 + multiplier;
-	    	upperCounterPosition.set(x + smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')].length-1);
-	    	if(upperCounterPosition.get() > Session.get(followingContext.get().params._id+'_uObj').tastemakers.length)
-	    		upperCounterPosition.set(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length);
-	    	return  x + '-' + upperCounterPosition.get() + ' of ';
-    	}
-    	else
-    	{
-    		return '';
+			if(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
+			{
+				var multiplier = pagingLimitForTastemakers * Session.get(followingContext.get().params._id+'_followingcurs');
+				var x = 1 + multiplier;
+		    	upperCounterPosition.set(x + smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')].length-1);
+		    	if(upperCounterPosition.get() > Session.get(followingContext.get().params._id+'_uObj').tastemakers.length)
+		    		upperCounterPosition.set(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length);
+		    	return  x + '-' + upperCounterPosition.get() + ' of ';
+	    	}
+	    	else
+	    	{
+	    		return '';
+	    	}
     	}
 	}
 });
