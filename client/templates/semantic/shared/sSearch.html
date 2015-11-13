@@ -7,13 +7,31 @@
 		  </div>
 		  <div class="results"></div>
 		</div>-->
-	    <div id="headerMenuSearchBox" class="ui category search item">
-		  <div class="ui icon input">
-		    <input class="prompt" type="text" placeholder="Search within Groovli...">
-		    <i class="search icon"></i>
+		<!--<div id="headerMenuSearchBox" class="ui right action left icon input">
+		  <i class="search icon"></i>
+		  <input type="text" placeholder="Search">
+		  <div class="ui basic floating dropdown button">
+		    <div class="text">This Page</div>
+		    <i class="dropdown icon"></i>
+		    <div class="menu">
+		      <div class="item">This Organization</div>
+		      <div class="item">Entire Site</div>
+		    </div>
+		  </div>
+		  <div class="results"></div>
+		</div>-->
+		<!--MOST RECENT WORKING SEARCH BOX with UI fixes-->
+	    <div id="headerMenuSearchBox" class="ui small right labeled input search item" title="search within Groovli for existing songs or search YouTube to share new songs">
+		  <input id="headerSearchBoxText" class="prompt" type="text" placeholder="Search within">
+		  <div class="ui dropdown headerMenuSearchSource orange label" style="margin-left:0px;">
+		    <div class="text">{{selectedSearchSource}}</div>
+		    <i class="dropdown icon"></i>
+		    <div class="menu">
+		      <div class="item">Groovli</div>
+		      <div class="item">YouTube</div>
+		    </div>
 		  </div>
 		  <div class="results"></div>
 		</div>
-		<!--{{activatePopups}}-->
 	{{/if}}
 </template>

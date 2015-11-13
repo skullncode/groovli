@@ -1,6 +1,7 @@
 Session.setDefault('urmsgsC', 0);
 Session.setDefault('userIdD', false); //user has been identified with mixpanel for this session
 Session.setDefault('uhne', false); //user help notifications enabled - by default set it to FALSE so users are not disturbed
+Session.setDefault('selYTsrchRes', null);
 var notifCount = new ReactiveVar(0);
 Session.setDefault('nLim', 10); //notifications item limit
 var notificationIncrement = 10;

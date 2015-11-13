@@ -1,0 +1,27 @@
+<template name="previewYouTubeSongFromSearch">
+	<div class="ui small modal previewYouTubeSongFromSearch">
+		<div class="header">Preview</div>
+		<div class="image content">
+			{{#if youtubeSongObjectSelected}}
+		  		<iframe src="http://www.youtube.com/embed/{{searchedYouTubeSongVideoID}}?autoplay=0"></iframe>
+			{{else}}
+				<h3>NO SONG SELECTED</h3>
+			{{/if}}
+		  <div class="description">
+		    <div class="ui basic segment">
+		    	<div class="ui header">Verify the song before sharing</div>
+		    	<p>Is this the song you wanted to share?</p>
+		    </div>
+		  </div>
+		</div>
+		<div class="actions">
+		  <div class="ui negative button">
+		    Cancel sharing
+		  </div>
+		  <div class="ui positive right labeled icon button">
+		    Sounds good!
+		    <i class="checkmark icon"></i>
+		  </div>
+		</div>
+	</div>
+</template>

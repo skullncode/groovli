@@ -43,7 +43,7 @@
               <div class="right menu orangeHeaderMenu">
                 {{>sSearch}}
 
-                <div class="ui scrolling dropdown icon headerMenuNotificationDropdown item">
+                <div class="ui scrolling dropdown icon headerMenuNotificationDropdown item" title="notifications">
                   <i class="newspaper icon orangeHeaderMenuItem"></i>
                   {{#if hasUnseenNotifications}}
                     <div class="floating ui red label">{{unseenNotificationCount}}</div>
@@ -93,10 +93,13 @@
                 </div>
 
                 <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item" title="messages">
-                  <i class="large comment icon orangeHeaderMenuItem"></i>
+                  <i class="comment icon orangeHeaderMenuItem"></i>
                   {{#if hasUnreadMsgs}}
                     <a class="ui red right corner label">{{unreadMsgCount}}</a>
                   {{/if}}
+                </a>
+                <a href="https://vimeo.com/145378946" target="blank" class="item" title="help / Groovli video walkthrough">
+                  <i class="help icon orangeHeaderMenuItem"></i>
                 </a>
                 <a class="ui dropdown mainHeaderMenuDropdown item">
                 <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
@@ -128,10 +131,13 @@
             <a href="{{pathFor 'globalpage' }}" class="{{activeRouteIsGlobal}} item globalpagelink" data-content="{{#if notifsEnabled}}listen to ONLY music shared by people outside your social circle{{/if}}" data-variation="inverted large">Global</a>
             <div class="right menu orangeHeaderMenu">
               <a href="{{pathFor 'messages' }}" target="blank" class="{{activeRouteIsMessages}} item" title="messages">
-                <i class="large comment icon orangeHeaderMenuItem"></i>
+                <i class="comment icon orangeHeaderMenuItem"></i>
                 {{#if hasUnreadMsgs}}
                   <a class="ui red right corner label">{{unreadMsgCount}}</a>
                 {{/if}}
+              </a>
+              <a href="https://vimeo.com/145378946" class="item" target="blank" title="help / Groovli video walkthrough">
+                <i class="help icon orangeHeaderMenuItem"></i>
               </a>
               <a class="ui dropdown mainHeaderMenuDropdown item">
               <img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square">
@@ -196,11 +202,13 @@
             {{#if hasUnreadMsgs}}
               <a class="ui red right corner label">{{unreadMsgCount}}</a>
             {{/if}}
-          </a>          
+          </a>
+          <a href="https://vimeo.com/145378946" target="blank" class="ui item">Help</a>
           <a id="logout" href="" class="ui item">Logout</a>
       </div>
   </div>
 </div>
 {{activatePopups}}
 {{setNotifsSessionVar}}
+{{>previewYouTubeSongFromSearch}}
 </template>
