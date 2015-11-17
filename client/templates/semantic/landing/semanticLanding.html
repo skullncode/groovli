@@ -103,6 +103,14 @@
 				<h2></h2>
 			</div>
 		  <img class="ui fluid image" src="../images/groovli_how_works3.png">
+		  <center>
+		  		{{#unless currentUser}}
+					<div id="facebook-login" class="massive ui facebook button">
+						<i class="facebook icon"></i>
+						Sign in with Facebook
+					</div>
+			  	{{/unless}}
+		  </center>
 	 	</div>
 	 	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
   	</div>
@@ -124,6 +132,14 @@
 			    3. Make friends with people that share a similar taste in music.
 			  </h3>
 			</div>
+			<center>
+				{{#unless currentUser}}
+					<div id="facebook-login" class="massive ui facebook button">
+						<i class="facebook icon"></i>
+						Sign in with Facebook
+					</div>
+			  	{{/unless}}
+			</center>
 	  	</div>
 	  	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
   	</div>
