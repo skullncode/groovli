@@ -157,9 +157,13 @@ function initiateSearchAPI() {
 		          type: 'yt'
 		        });
 				$('.ui.modal.previewYouTubeSongFromSearch').modal({
+					onShow: function() {
+						playpauseVideo();
+					},
 					onHide: function () {
 						Session.set('selYTsrchRes', null);
 						$('#headerSearchBoxText').val("");
+						playpauseVideo();
 						return true;
 					},
 					onDeny: function(){
