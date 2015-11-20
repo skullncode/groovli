@@ -57,6 +57,9 @@ Template.semanticLanding.helpers({
   
   recentSongsLoaded: function() {
     return recentSongsLoaded.get();
+  },
+  cordova: function(){
+    return Meteor.isCordova;
   }
 });
 
