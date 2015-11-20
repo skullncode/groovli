@@ -54,7 +54,7 @@ Template.semanticGenreChatter.events({
                     // do something with result
                     //toastr.success('Message successfully sent!');
                     $('#gc-input-chatMessage').val("");
-                    mixpanel.track('sent message within genre chatterbox', {
+                    amplitude.logEvent('sent message within genre chatterbox', {
                         from: Meteor.user().services.facebook.id,
                         to: genreChatterContext.get().context.params._id+"_genre_group"
                       });

@@ -62,7 +62,7 @@ Template.semanticComment.events({
         {
           //console.log('SUCCESSFULLY deleted comment for this song!!');
           //$("#commentContent").val("");
-          mixpanel.track('deleted comment for song', {
+          amplitude.logEvent('deleted comment for song', {
             from: Meteor.user().services.facebook.id,
             to: Session.get('CS').sl
           });
@@ -89,7 +89,7 @@ Template.semanticComment.events({
           {
             //console.log('SUCCESSFULLY liked comment for this song!!');
             //$("#commentContent").val("");
-            mixpanel.track('liked comment for song', {
+            amplitude.logEvent('liked comment for song', {
               from: Meteor.user().services.facebook.id,
               to: Session.get('CS').sl
             });

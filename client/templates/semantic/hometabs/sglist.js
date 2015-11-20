@@ -209,7 +209,7 @@ Template.sglist.events({
         toastr.info("Reached most recent page of Tastemakers; <br><br><b><i>try moving forward (->) and listening to older groovs of your friends!</i></b><br><br>");
         //console.log('INSIDE else condition!!');
       }
-      mixpanel.track('paged backwards for global songs');
+      amplitude.logEvent('paged backwards for global songs');
     },
 
     "click #nextSGS": function (event) {
@@ -227,7 +227,7 @@ Template.sglist.events({
         //console.log('INSIDE else condition!!');
         toastr.info("Reached oldest page of Tastemakers; <br><br><b><i>try moving backward (<-) and listening to newer groovs of your friends!</i></b><br><br>");
       }
-      mixpanel.track('paged forward for global songs');
+      amplitude.logEvent('paged forward for global songs');
     }
 });
 

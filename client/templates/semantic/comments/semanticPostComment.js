@@ -13,7 +13,7 @@ Template.semanticPostComment.events({
         else
         {
           //console.log('SUCCESSFULLY posted comment for this song!!');
-          mixpanel.track('posted comment for song', {
+          amplitude.logEvent('posted comment for song', {
             from: Meteor.user().services.facebook.id,
             to: Session.get('CS').sl
           });

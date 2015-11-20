@@ -119,7 +119,7 @@ Template.messagingSidebar.events({
 	  //console.log(event);
 	  //console.log('selected this user:');
 	  //console.log(this);
-	  mixpanel.track("clicked known user within messaging list");
+	  amplitude.logEvent("clicked known user within messaging list");
 	  Session.set('skuser', true);
 	  Session.set('sukuser', false);
 	  Session.set('selectedUserInMessagingList', this);
@@ -133,7 +133,7 @@ Template.messagingSidebar.events({
 	  //console.log(event);
 	  //console.log('selected this user:');
 	  //console.log(this);
-	  mixpanel.track("clicked unknown user within messaging list");
+	  amplitude.logEvent("clicked unknown user within messaging list");
 	  Session.set('sukuser', true);
 	  Session.set('skuser', false);
 	  Session.set('selectedUserInMessagingList', this);

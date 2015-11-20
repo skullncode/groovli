@@ -90,7 +90,7 @@ Template.messagesForUser.helpers({
 Template.messagesForUser.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
   {
-    mixpanel.track("loaded messages page");
+    amplitude.logEvent("loaded messages page");
   }
 });
 
@@ -224,7 +224,7 @@ Template.messagesForUser.events({
                     // do something with result
                     //toastr.success('Message successfully sent!');
                     $('#master-input-chatMessage').val("");
-                    mixpanel.track('sent message from messaging page', {
+                    amplitude.logEvent('sent message from messaging page', {
                     	from: Meteor.user().services.facebook.id,
 				        to: currentlySelectedUser.get().services.facebook.id
 				      });

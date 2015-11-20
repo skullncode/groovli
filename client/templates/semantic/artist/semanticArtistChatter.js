@@ -54,7 +54,7 @@ Template.semanticArtistChatter.events({
                     // do something with result
                     //toastr.success('Message successfully sent!');
                     $('#ac-input-chatMessage').val("");
-                    mixpanel.track('sent message within artist chatterbox', {
+                    amplitude.logEvent('sent message within artist chatterbox', {
                         from: Meteor.user().services.facebook.id,
                         to: artistChatterContext.get().context.params._id+"_artist_group"
                       });

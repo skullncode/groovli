@@ -28,7 +28,7 @@ Template.tastemakersFilter.onRendered(function () {
       // custom action
       Session.set('seltstmkr',text);
       Session.set('seltstmkrid',value);
-      mixpanel.track('filtered on specfic tastemaker', {
+      amplitude.logEvent('filtered on specfic tastemaker', {
           selectedTastemaker: text,
           selectedTastemakerID: value
         });

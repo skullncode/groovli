@@ -287,7 +287,7 @@ Template.smglist.events({
         toastr.info("Reached most recent page of My Groovs; <br><br><b><i>try moving forward (->) and listening to your older groovs!</i></b><br><br>");
         //console.log('INSIDE else condition!!');
       }
-      mixpanel.track('paged backwards for my groovs');
+      amplitude.logEvent('paged backwards for my groovs');
     },
 
     "click #nextMGS": function (event) {
@@ -305,7 +305,7 @@ Template.smglist.events({
         //console.log('INSIDE else condition!!');
         toastr.info("Reached oldest page of My Groovs; <br><br><b><i>try moving backward (<-) and listening to your newer groovs!</i></b><br><br>");
       }
-      mixpanel.track('paged forwards for my groovs');
+      amplitude.logEvent('paged forwards for my groovs');
     }
 });
 

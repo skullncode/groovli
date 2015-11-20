@@ -312,7 +312,7 @@ Template.sprofile.events({
 		    else{
 		        // do something with result
 			  	//console.log('SUCCESSFULLY unfollowed user!');
-			  	mixpanel.track('followed user');
+			  	amplitude.logEvent('followed user');
 		    };
 		});
       return true;
@@ -331,7 +331,7 @@ Template.sprofile.events({
 		    else{
 		        // do something with result
 			  	//console.log('SUCCESSFULLY followed user!');
-			  	mixpanel.track('unfollowed user');
+			  	amplitude.logEvent('unfollowed user');
 		    };
 		});
       return true;
@@ -394,7 +394,7 @@ function userObjExists(){
 		Session.set(profileContext.get().params._id+'_uObj', Meteor.users.findOne(profileContext.get().params._id));
 		Session.set(profileContext.get().params._id+'_uObjLoaded', true);
 		getYearRangeForMyGroovs();
-		mixpanel.track('view user profile', {
+		amplitude.logEvent('view user profile', {
 	        userProfile: profileContext.get().params._id,
 	       	viewee: Meteor.user()._id
 	      });

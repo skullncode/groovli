@@ -110,7 +110,7 @@ function playerLoaded()
 
 	  ytplayer.seekTo(selectedTime, true)
     //analytics.track("seeked thru song");
-    mixpanel.track("seeked thru song");
+    amplitude.logEvent("seeked thru song");
     
 	}, false);
   
@@ -133,7 +133,7 @@ function onPlayerStateChange(event) {
       //var nextBtn = $('.fa-step-forward');
       var nextBtn = $('.step.forward.icon');
       //analytics.track("reached end of song");
-      mixpanel.track("reached end of song");
+      amplitude.logEvent("reached end of song");
       nextBtn.click();
 	}
   else if(event.data === -1 || event.data === 3) { //if buffering show loader 
@@ -147,7 +147,7 @@ function onPlayerStateChange(event) {
 
 function onPlayerError(errorCode) {
   //analytics.track("auto error");
-  mixpanel.track("auto error");
+  amplitude.logEvent("auto error");
   Session.set('SongErroneous', true);
   Session.set('YTErrorCode', errorCode.target.e);
   //console.log('ERROR CODE IS: ');
@@ -246,7 +246,7 @@ function playpauseVideo() {
   {
     //console.log('GOING TO PAUSE now!!!');
     //analytics.track("pause song");
-    mixpanel.track("pause song");
+    amplitude.logEvent("pause song");
     //playpauseButton = $('.glyphicon-pause');
     //playpauseButton = $('.fa-pause');
     playpauseButton = $('.pause.icon');
@@ -261,7 +261,7 @@ function playpauseVideo() {
   { 
     //console.log('GOING TO PLAY now!!!');
     //analytics.track("play song");
-    mixpanel.track("play song");
+    amplitude.logEvent("play song");
     if (ytplayer) {
       ytplayer.playVideo();
     }
@@ -348,6 +348,6 @@ function loadVideoById(soundID){ //WAS USING currentSong previously but not anym
   //console.log('DURATION OF song is: ' + ytplayer.getDuration());
   //console.log('40% of song duration is: ' + 0.40 * ytplayer.getDuration());
   //analytics.track("load new YT song");
-  mixpanel.track("load new YT song");
+  amplitude.logEvent("load new YT song");
   //makeMuutCommentRelatedUpdates(soundID, currentSong);
 }

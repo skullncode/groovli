@@ -26,7 +26,7 @@ Template.listenToSimilar.events({
               console.log(error.reason);
           }
           else{
-            mixpanel.track('listen to Similar - created new flylist similar to artist', {
+            amplitude.logEvent('listen to Similar - created new flylist similar to artist', {
               by: Meteor.user().services.facebook.id,
             });
             //console.log('####### This is the list of flylists now: ');

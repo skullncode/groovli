@@ -202,7 +202,7 @@ Template.semanticGenreProfile.onRendered(function () {
 	/*$('.special.cards .image').dimmer({
 	  on: 'hover'
 	});*/
-	mixpanel.track('loaded genre page', {
+	amplitude.logEvent('loaded genre page', {
         genreID: genreProfileContext.get().params._id
       });
 	Session.setDefault(genreProfileContext.get().params._id+'_genObjLoaded', false);

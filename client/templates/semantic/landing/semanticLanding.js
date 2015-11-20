@@ -8,11 +8,15 @@ Template.semanticLanding.onRendered(function () {
     Meteor.call('setUserBaseLocation', Meteor.user().services.facebook.id);
     //analytics.track("logged in user loaded home page");
     mixpanel.track("logged in user loaded home page");
+    amplitude.logEvent("logged in user loaded landing page", {
+      user: Meteor.user()
+    });
   }
   else
   {
     //analytics.track("anonymous user loaded home page");
     mixpanel.track("anonymous user loaded home page");
+    amplitude.logEvent("anonymous user loaded landing page");
   }
   getTrendingSongs();
   getRecentListens();

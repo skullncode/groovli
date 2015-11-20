@@ -188,5 +188,5 @@ function playSongFromSearchResult(){
 	//console.log("GOING TO PLAYYYYYYYY the selected SONG in the search results:");
 	//$('#sresultsTabHeader').click()
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
-	mixpanel.track('played song from search result');
+	amplitude.logEvent('played song from search result');
 }

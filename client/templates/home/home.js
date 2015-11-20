@@ -4,12 +4,12 @@ Template.home.rendered = function() {
     Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
     Meteor.call('setUserBaseLocation', Meteor.user().services.facebook.id);
     //analytics.track("logged in user loaded home page");
-    mixpanel.track("logged in user loaded home page");
+    //mixpanel.track("logged in user loaded home page");
   }
   else
   {
     //analytics.track("anonymous user loaded home page");
-    mixpanel.track("anonymous user loaded home page");
+    //mixpanel.track("anonymous user loaded home page");
   }
   getLast20Songs();
 };

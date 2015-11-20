@@ -57,7 +57,7 @@ Template.semanticFaveAction.events({
           console.log('Encountered error while trying to favorite song!');
         else
         {
-          mixpanel.track('favorited a song');
+          amplitude.logEvent('favorited a song');
           //console.log('SUCCESSFULLY favorited this song!!');
           //$("#commentContent").val("");
         }

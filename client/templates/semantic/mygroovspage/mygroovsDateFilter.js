@@ -27,7 +27,7 @@ Template.mygroovsDateFilter.onRendered(function () {
     onChange: function(value, text, $selectedItem) {
       // custom action
       Session.set('selyr',text);
-      mixpanel.track('filtered on specfic year for my groovs', {
+      amplitude.logEvent('filtered on specfic year for my groovs', {
           selectedYear: text
         });
     }

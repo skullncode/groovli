@@ -287,7 +287,7 @@ Template.semanticArtistProfile.onRendered(function () {
 	/*$('.special.cards .image').dimmer({
 	  on: 'hover'
 	});*/
-	mixpanel.track('loaded artist page', {
+	amplitude.logEvent('loaded artist page', {
         artistID: artistProfileContext.get().params._id
       });
 	Session.setDefault(artistProfileContext.get().params._id+'_artObjLoaded', false);

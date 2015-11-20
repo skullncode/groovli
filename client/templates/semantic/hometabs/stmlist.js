@@ -266,7 +266,7 @@ Template.stmlist.events({
         toastr.info("Reached most recent page of Tastemakers; <br><br><b><i>try moving forward (->) and listening to older groovs of your friends!</i></b><br><br>");
         //console.log('INSIDE else condition!!');
       }
-      mixpanel.track('paged backwards for tastemakers');
+      amplitude.logEvent('paged backwards for tastemakers');
     },
 
     "click #nextTMS": function (event) {
@@ -284,7 +284,7 @@ Template.stmlist.events({
         //console.log('INSIDE else condition!!');
         toastr.info("Reached oldest page of Tastemakers; <br><br><b><i>try moving backward (<-) and listening to newer groovs of your friends!</i></b><br><br>");
       }
-      mixpanel.track('paged forwards for tastemakers');
+      amplitude.logEvent('paged forwards for tastemakers');
     }
 });
 

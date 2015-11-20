@@ -73,12 +73,12 @@ Template.semanticControls.events({
         if($('#responsivePlayerContainer').is(":visible"))
         {
           $('#responsivePlayerContainer').slideUp();
-          mixpanel.track('hide video');
+          amplitude.logEvent('hide video');
         }
         else
         {
           $('#responsivePlayerContainer').slideDown();
-          mixpanel.track('show video');
+          amplitude.logEvent('show video');
         }
     }
 });
@@ -86,7 +86,7 @@ Template.semanticControls.events({
 function nextSong() {
   //console.log('HISTORY GETTING!!!!!: ' + getHistory());
   //console.log('PRESSED NEXTTTT!!!!!');
-  mixpanel.track("clicked next button");
+  amplitude.logEvent("clicked next button");
   Session.set('animatedToSong', false);
   if(!nextPressed)
   {
@@ -111,8 +111,6 @@ function nextSong() {
 }
 
 function previousSong() {
-  //console.log('PRESSED PREvioussss!!!!!');
-  //mixpanel.track("clicked previous button");
   Session.set('animatedToSong', false);
   if(!previousPressed)
   {
@@ -573,7 +571,7 @@ function setShare(currentShare)
   if(isHistoryEmpty())
   {
     //analytics.track("started play history");
-    mixpanel.track("started play history");
+    amplitude.logEvent("started play history");
     iHist(false);    
     pushToHistory(currentShare);
     decrementHistoryBy1();
@@ -1048,7 +1046,7 @@ function selectShareFromControls(share, shares, tab) {
 
      Meteor.call('insertSongListen', getCurrentID(), 'yt');
 
-      mixpanel.track('increment song listen count', {
+      amplitude.logEvent('increment song listen count', {
         songID: getCurrentID(),
         currentListenCount: currentSong.listenCount,
         type: 'yt'
@@ -1109,7 +1107,7 @@ function selectShareFromControls(share, shares, tab) {
       else //if not at the end of the linklist then just move to the next one
       {
         //analytics.track("next song in history");
-        mixpanel.track("next song in history");
+        amplitude.logEvent("next song in history");
         incrementHistoryBy1();
         return false;
       } 
@@ -1136,7 +1134,7 @@ function selectShareFromControls(share, shares, tab) {
       }
       //console.log('musicHistory hasnt reached beginning');
       //analytics.track("click previous song");
-      mixpanel.track("click previous song");
+      amplitude.logEvent("click previous song");
       return true;
     }
     else

@@ -216,7 +216,7 @@ Template.globalPage.events({
         toastr.info("Reached most recent page of Global Groovs; <br><br><b><i>try moving forward (->) and listening to older groovs of the global community!</i></b><br><br>");
         //console.log('INSIDE else condition!!');
       }
-      mixpanel.track('paged backwards for global page');
+      amplitude.logEvent('paged backwards for global page');
     },
 
     "click #nextSGS": function (event) {
@@ -234,7 +234,7 @@ Template.globalPage.events({
         //console.log('INSIDE else condition!!');
         toastr.info("Reached oldest page of Global Groovs; <br><br><b><i>try moving backward (<-) and listening to newer groovs of the global community!</i></b><br><br>");
       }
-      mixpanel.track('paged forwards for global page');
+      amplitude.logEvent('paged forwards for global page');
     }
 });
 

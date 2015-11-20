@@ -20,7 +20,8 @@ if (Meteor.isClient) {
 
 	//analytics.load("CDGLDNcbyBEBdoLtea3ZcQq5PbI48oIz");
 	//console.log("REACHED END OF MY GROOVS IS: " + Session.get('reachedEndofMyGroovs'));
-	mixpanel.init("50bbe12ca3b86338fddb7eb652267601");
+	//mixpanel.init("50bbe12ca3b86338fddb7eb652267601");
+	amplitude.init("943bd512ddfaef78cf953ef22478890c");
 
 	var updateFBFriendListFunction = function () {
 		//console.log('LOADING songboard and going to update the fb friendlist!');

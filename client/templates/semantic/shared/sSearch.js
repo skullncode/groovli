@@ -152,7 +152,7 @@ function initiateSearchAPI() {
 		    	//console.log('THIS IS THE RESULT!!:');
 		    	//console.log(result);
 		    	Session.set('selYTsrchRes', result);
-		    	mixpanel.track('preview song from YouTube before sharing', {
+		    	amplitude.logEvent('preview song from YouTube before sharing', {
 		          songObject: result,
 		          type: 'yt'
 		        });
@@ -192,7 +192,7 @@ function playSongFromSearchResult(){
 	//console.log("GOING TO PLAYYYYYYYY the selected SONG in the search results:");
 	//$('#sresultsTabHeader').click()
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
-	mixpanel.track('played song from search result');
+	amplitude.logEvent('played song from search result');
 }
 
 function shareFromSearchResultToFacebook(ytSongObject){
@@ -222,7 +222,7 @@ function shareFromSearchResultToFacebook(ytSongObject){
           };*/
           /*Meteor.call('insertNewSong',sharedFBObject, 'FB', 'YOUTUBE');*/ // COMMENTED OUT NOW as song is automatically being pulled in via FB
           //updateSongSourceTabInHistory(sharedFBObject);
-          mixpanel.track('shared song to FB FROM YOUTUBE');
+          amplitude.logEvent('shared song to FB FROM YOUTUBE');
           toastr.success('Song shared successfully!');
         } else {
           toastr.error('Error while sharing song!');

@@ -173,7 +173,7 @@ function enableRater(){
             //getAverageRatingForSong();
           }
         });
-        mixpanel.track('rate song', {
+        amplitude.logEvent('rate song', {
           songID: sid,
           rating: value,
           type: 'yt'

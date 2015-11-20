@@ -110,7 +110,7 @@ Template.flylistFilter.events({
       else
       {
         updateFlylistHeaderTextAccordingly('delete');
-        mixpanel.track('deleted flylist');
+        amplitude.logEvent('deleted flylist');
         //console.log('SUCCESSFULLY DELETED flylist!!!!!');
       }
     });
@@ -208,7 +208,7 @@ function validateNewFlylistForm() {
             }
             else{
               updateFlylistHeaderTextAccordingly('create');
-              mixpanel.track('created new flylist', {
+              amplitude.logEvent('created new flylist', {
                 by: Meteor.user().services.facebook.id,
               });
               //console.log('SUCCESSFULLY created new flylist!!!!!');
@@ -286,7 +286,7 @@ function stopFlylist(){
   //starting a flylist should reset tab play lengths and history
   updateFlylistHeaderTextAccordingly('stop');
 
-  mixpanel.track('stop flylist');
+  amplitude.logEvent('stop flylist');
 }
 
 function makeFlylistToastrNotification(){
@@ -324,7 +324,7 @@ function playFlylist(flylistItem, ev){
 
   updateCurrentFlylistGenres(flylistItem.genres);
 
-  mixpanel.track('play flylist');
+  amplitude.logEvent('play flylist');
 }
 
 function updateCurrentFlylistGenres(currentGenreSel) {
