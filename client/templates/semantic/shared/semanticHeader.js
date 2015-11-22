@@ -87,7 +87,7 @@ Template.semanticHeader.onRendered(function () {
 	});
 
   $('.ui.dropdown.mainHeaderMenuDropdown').dropdown();
-  identifyUserWithMixPanel();
+  identifyUserWithAmplitude();
   $('.ui.scrolling.dropdown.icon.headerMenuNotificationDropdown').dropdown();
 });
 
@@ -206,17 +206,23 @@ function userCheck(){
   return Meteor.user() && !_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook);
 }
 
-function identifyUserWithMixPanel(){
+function identifyUserWithAmplitude(){
   if(userCheck() && !Session.get('userIdD'))
   {
-    mixpanel.identify(Meteor.user()._id);
+
+    amplitude.setUserId(Meteor.user()._id);
+    var groovliIdentify = new amplitude.Identify().set('first_name', Meteor.user().services.facebook.first_name).set('last_name', Meteor.user().services.facebook.last_name).set('createdAt', Meteor.user().createdAt).set('email', Meteor.user().services.facebook.email).set('ip', Meteor.user().status.lastLogin.ipAddr);
+    amplitude.identify(groovliIdentify);
+    
+    /*mixpanel.identify(Meteor.user()._id);
     mixpanel.people.set({
         "$first_name": Meteor.user().services.facebook.first_name,
         "$last_name": Meteor.user().services.facebook.last_name,
         "$created": Meteor.user().createdAt,
         "$email": Meteor.user().services.facebook.email,
         "$ip": Meteor.user().status.lastLogin.ipAddr
-    });
+    });*/
+
     Session.set('userIdD', true);
   }
 }
