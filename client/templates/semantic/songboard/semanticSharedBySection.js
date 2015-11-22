@@ -18,7 +18,8 @@ Template.semanticSharedBySection.helpers({
         //console.log('FRIEND COUNTER IS:  '+ friendCounter);
         if(_.isUndefined(_.findWhere(globalIDsThatSharedThisSong, {p_id: cs.sharedBy[shareCounter]._id})) && _.isUndefined(_.findWhere(globalIDsThatSharedThisSong, {personid_sysdate: cs.sharedBy[shareCounter].uid + "_" + cs.sharedBy[shareCounter].systemDate})))
         {
-          globalIDsThatSharedThisSong.push({personID: cs.sharedBy[shareCounter].uid, personName: cs.sharedBy[shareCounter].uname, personTimestamp: new moment(cs.sharedBy[shareCounter].systemDate * 1000).format('llll'), p_id: cs.sharedBy[shareCounter]._id, personid_sysdate: cs.sharedBy[shareCounter].uid + "_" + cs.sharedBy[shareCounter].systemDate});
+          var firstName = cs.sharedBy[shareCounter].uname.split(' ')[0];
+          globalIDsThatSharedThisSong.push({personID: cs.sharedBy[shareCounter].uid, personName: firstName, personTimestamp: new moment(cs.sharedBy[shareCounter].systemDate * 1000).format('llll'), p_id: cs.sharedBy[shareCounter]._id, personid_sysdate: cs.sharedBy[shareCounter].uid + "_" + cs.sharedBy[shareCounter].systemDate});
         }
         
         shareCounter++;
