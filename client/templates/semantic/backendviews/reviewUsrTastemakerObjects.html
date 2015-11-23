@@ -1,0 +1,137 @@
+<template name="reviewUsrTastemakerObjects">
+  {{#if currentUser}}
+    {{#if userIsAnAdmin}}
+      <h1 class="ui header">Fix User Tastemaker Objects</h1>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>FB ID</th>
+            <th>Joined</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Last Login</th>
+            <th>Friend Objects</th>
+            <th>Tastemaker Objects</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#if userListLoaded}}
+          <td colspan="12"><h3>Online Users</h3></td>
+          {{#each onlineUsers}}
+            <tr>
+              {{getTotalListenCountForUser _id}}
+              {{getSongCountForUser services.facebook.id}}
+              {{getStoryCountForUser services.facebook.id}}
+              <td>
+                <button id="updateUserTastemakerObject" class="circular ui icon blue button">
+                  <i class="icon configure"></i>
+                </button>
+              </td>
+              <td>
+                <a href="/profile/{{_id}}" target='blank'><h4 class="ui image header">
+                  <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square" class="ui mini rounded image">
+                  <div class="content">
+                    {{profile.name}}
+                    <div class="sub header">{{{currentStatus}}}
+                  </div>
+                </div>
+              </h4></a></td>
+              <td>{{services.facebook.id}}</td>
+              <td>{{memberSince}}</td>
+              <td>{{locationCountry}}</td>
+              <td>{{locationCity}}</td>              
+              <td>{{lastLogin}}</td>
+              {{#if fbFriends}}
+                <td>
+                {{#each fbFriends}}
+                    <br>{{this.fbid}} || {{this.name}} || {{this.uid}}
+                {{/each}}
+                </td>
+              {{else}}
+                <td>No facebook friends for this user</td>
+              {{/if}}
+              {{#if tastemakers}}
+                <td>
+                {{#each tastemakers}}
+                    <br>{{this.fbid}} || {{this.name}} || {{this.uid}}
+                {{/each}}
+                </td>
+              {{else}}
+                <td>No tastemakers for this user</td>
+              {{/if}}
+            </tr>
+          {{/each}}
+          <td colspan="12"><h3>Offline Users</h3></td>
+          {{#each offlineUsers}}
+            <tr>
+              {{getTotalListenCountForUser _id}}
+              {{getSongCountForUser services.facebook.id}}
+              {{getStoryCountForUser services.facebook.id}}
+              <td>
+                <button id="updateUserTastemakerObject" class="circular ui icon blue button">
+                  <i class="icon configure"></i>
+                </button>
+              </td>
+              <td>
+                <a href="/profile/{{_id}}" target='blank'><h4 class="ui image header">
+                  <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=square" class="ui mini rounded image">
+                  <div class="content">
+                    {{profile.name}}
+                    <div class="sub header">{{{currentStatus}}}
+                  </div>
+                </div>
+              </h4></a></td>
+              <td>{{services.facebook.id}}</td>
+              <td>{{memberSince}}</td>
+              <td>{{locationCountry}}</td>
+              <td>{{locationCity}}</td>              
+              <td>{{lastLogin}}</td>
+              {{#if fbFriends}}
+                <td>
+                {{#each fbFriends}}
+                    <br>{{this.fbid}} || {{this.name}} || {{this.uid}}
+                {{/each}}
+                </td>
+              {{else}}
+                <td>No facebook friends for this user</td>
+              {{/if}}
+              {{#if tastemakers}}
+                <td>
+                {{#each tastemakers}}
+                    <br>{{this.fbid}} || {{this.name}} || {{this.uid}}
+                {{/each}}
+                </td>
+              {{else}}
+                <td>No tastemakers for this user</td>
+              {{/if}}
+            </tr>
+          {{/each}}
+        {{else}}
+          <div class="ui active centered large inline loader"></div>
+        {{/if}}
+        </tbody>
+        <tfoot>
+          <tr>
+          <th colspan="1">
+            <p><strong>{{currentCursorPosition}} of {{userCount}} users</strong></p>                    
+          </th>
+          <th colspan="11">
+            <div class="ui right floated pagination menu">
+              <button id="previousUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+                <i class="left chevron icon"></i>
+              </button>
+              <button id="nextUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
+                <i class="right chevron icon"></i>
+              </button>
+            </div>
+          </th>
+        </tr></tfoot>
+      </table>
+    {{/if}}
+  {{/if}}
+  {{#if loggingIn}}
+    <div class="ui active centered large inline loader"></div>
+  {{/if}}
+</template>

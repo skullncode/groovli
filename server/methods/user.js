@@ -105,10 +105,31 @@ Meteor.methods({
 						//console.log('COUNTER now is: ' + counter);
 						//console.log('THIS IS THE Friends Name: ' + result.data.data[counter].name);
 						//console.log('THIS IS THE Friends ID: ' + result.data.data[counter].id);
-						var foundFriend = {
+						var foundFriendObj = Meteor.users.findOne({'services.facebook.id': result.data.data[counter].id});
+
+						//console.log(foundFriendObj);
+						if(!_.isUndefined(foundFriendObj))
+						{
+							var foundFriend = {
+								name: result.data.data[counter].name,
+								uid: foundFriendObj._id,
+								fbid: result.data.data[counter].id
+							};
+						}
+						else
+						{
+							var foundFriend = {
+								name: result.data.data[counter].name,
+								uid: undefined,
+								fbid: result.data.data[counter].id
+							};
+						}
+
+						/*var foundFriend = {
 							name: result.data.data[counter].name,
-							fbid:result.data.data[counter].id
-						};
+							fbid: result.data.data[counter].id
+						};*/
+						
 						fbFriends.push(foundFriend);
 						counter++;
 					}
@@ -258,7 +279,8 @@ Meteor.methods({
 			{
 				userObjToAddTastemakerList = {
 					name: userToFollow.profile.name,
-					fbid: userToFollow.services.facebook.id
+					fbid: userToFollow.services.facebook.id,
+					uid: userToFollow._id
 				};
 			}
 		}
@@ -363,7 +385,7 @@ Meteor.methods({
 		if(!_.isEmpty(currentUserObj) && !_.isUndefined(currentUserObj.fbFriends) && !_.isEmpty(onesided))
 		{
 			_.each(onesided, function(x){
-				if(_.isUndefined(_.findWhere(currentUserObj.fbFriends, {'fbid': x.services.facebook.id})) && _.isUndefined(_.findWhere(currentUserObj.tastemakers, {'fbid': x.services.facebook.id})))
+				if(_.isUndefined(_$.findWhere(currentUserObj.fbFriends, {'fbid': x.services.facebook.id})) && _.isUndefined(_.findWhere(currentUserObj.tastemakers, {'fbid': x.services.facebook.id})))
 				{
 					//console.log('this person is NOT a friend or a tastemaker, so theyre good: ' + x.profile.name);
 					oneSidedCopy.push(x);
@@ -473,5 +495,97 @@ Meteor.methods({
 	            //console.log('result');
 	          }
 	      })
+	},
+	updateUserTastemakerObject: function(userID){
+		var foundUser = Meteor.users.findOne(userID);
+		var newFbFriendsObj = [];
+		var newTastemakersObj = [];
+		
+		_.each(foundUser.fbFriends, function(x){
+			//console.log('this is the fbid: ');
+			//console.log(x.fbid);
+			//console.log('THIS IS THE FB friend object: ');
+			//console.log(x);
+			var foundFriendObj = Meteor.users.findOne({'services.facebook.id': x.fbid});
+
+			//console.log(foundFriendObj);
+			if(!_.isUndefined(foundFriendObj))
+			{
+				newFbFriendsObj.push(
+				{
+					fbid: x.fbid,
+					uid: foundFriendObj._id,
+					name: x.name
+				});
+			}
+			else
+			{
+				newFbFriendsObj.push(
+				{
+					fbid: x.fbid,
+					uid: undefined,
+					name: x.name
+				});
+			}
+		});
+
+
+		console.log('THIS IS THE UPDATED fb friends Object: ');
+		console.log(newFbFriendsObj);
+
+		var conditions = {_id: userID};	
+		var updateVars = {$set:{fbFriends: newFbFriendsObj}};
+		Meteor.users.update(conditions, updateVars, function(error, result) {
+	      if (error) {
+	        // display the error to the user
+	        console.log(error.reason);
+	      }
+	      else{
+	      	console.log('################ successfully UPDATED FB Friends Object: ' + userID);
+	      }
+		});
+
+		_.each(foundUser.tastemakers, function(x){
+			//console.log('this is the fbid: ');
+			//console.log(x.fbid);
+			//console.log('THIS IS THE FB friend object: ');
+			//console.log(x);
+			var foundTastemakerObj = Meteor.users.findOne({'services.facebook.id': x.fbid});
+
+			//console.log(foundFriendObj);
+			if(!_.isUndefined(foundTastemakerObj))
+			{
+				newTastemakersObj.push(
+				{
+					fbid: x.fbid,
+					uid: foundTastemakerObj._id,
+					name: x.name
+				});
+			}
+			else
+			{
+				newTastemakersObj.push(
+				{
+					fbid: x.fbid,
+					uid: undefined,
+					name: x.name
+				});
+			}
+		});
+
+		//console.log('THIS IS THE UPDATED tastemakers Object: ');
+		//console.log(newTastemakersObj);
+
+		conditions = {_id: userID};	
+		updateVars = {$set:{tastemakers: newTastemakersObj}};
+		Meteor.users.update(conditions, updateVars, function(error, result) {
+	      if (error) {
+	        // display the error to the user
+	        console.log(error.reason);
+	      }
+	      else{
+	      	console.log('################ successfully UPDATED FB tastemakers Object: ' + userID);
+	      }
+		});
 	}
 });
