@@ -4,6 +4,7 @@ var userIDsForTastemakers = new ReactiveVar(null);
 var tastemakerDetailsLoaded = new ReactiveVar(false);
 var smallerChunkedTastemakers = new ReactiveVar(null);
 var upperCounterPosition = new ReactiveVar(0);
+var tastemakerLength = new ReactiveVar(0);
 var pagingLimitForTastemakers = 12;
 
 Template.profileFollowingSidebar.helpers({
@@ -21,7 +22,7 @@ Template.profileFollowingSidebar.helpers({
 				[];
 		}
 	},
-	followingLink: function() {
+	/*followingLink: function() {
 		if(!_.isNull(this) && !_.isUndefined(this) && !_.isNull(userIDsForTastemakers.get()) && !_.isUndefined(this.fbid))
 		{
 			tastemakerDetailsLoaded.set(true);
@@ -37,7 +38,7 @@ Template.profileFollowingSidebar.helpers({
 		}
 		else
 			return "";
-	},
+	},*/
 
 	notFollowingAnybody: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
@@ -53,11 +54,22 @@ Template.profileFollowingSidebar.helpers({
 	followingCount: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
 		{
-			var x = Session.get(followingContext.get().params._id+'_uObj');
+			/*var x = Session.get(followingContext.get().params._id+'_uObj');
 			if(!_.isUndefined(x.tastemakers))
-				return x.tastemakers.length;
+			{
+				var tstmakerObj = x.tastemakers;
+				while(!_.isUndefined(_.findWhere(tstmakerObj, {'uid': null})))
+				{
+					var foundNullTastemaker = _.findWhere(tstmakerObj, {'uid': null});
+					//console.log('THIS IS THE NEW chunk: ');
+					tstmakerObj = _.without(tstmakerObj, foundNullTastemaker);
+					//console.log(chunk);
+				}
+				return tstmakerObj.length;
+			}
 			else
-				return 0;
+				return 0;*/
+			return tastemakerLength.get();
 		}
 	},
 	//less tastemakers than having to enable the paging buttons
@@ -77,13 +89,14 @@ Template.profileFollowingSidebar.helpers({
 	counterPosition: function() {
 		if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')) && !_.isUndefined(Session.get(followingContext.get().params._id+'_uObj').tastemakers))
 		{
-			if(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
+			//if(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
+			if(tastemakerLength.get() > 0 && !_.isUndefined(smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')]))
 			{
 				var multiplier = pagingLimitForTastemakers * Session.get(followingContext.get().params._id+'_followingcurs');
 				var x = 1 + multiplier;
 		    	upperCounterPosition.set(x + smallerChunkedTastemakers.get()[Session.get(followingContext.get().params._id+'_followingcurs')].length-1);
-		    	if(upperCounterPosition.get() > Session.get(followingContext.get().params._id+'_uObj').tastemakers.length)
-		    		upperCounterPosition.set(Session.get(followingContext.get().params._id+'_uObj').tastemakers.length);
+		    	if(upperCounterPosition.get() > tastemakerLength.get())
+		    		upperCounterPosition.set(tastemakerLength.get());
 		    	return  x + '-' + upperCounterPosition.get() + ' of ';
 	    	}
 	    	else
@@ -91,6 +104,9 @@ Template.profileFollowingSidebar.helpers({
 	    		return '';
 	    	}
     	}
+	},
+	userIDIsNotNull: function() {
+		return !_.isNull(this.uid);
 	}
 });
 
@@ -110,7 +126,7 @@ Template.profileFollowingSidebar.onCreated(function() {
     	tastemakerDetailsLoaded.set(false);
     	if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj')))
     	{
-	    	Meteor.call('getUserIDsForSocIDs', Session.get(followingContext.get().params._id+'_uObj').tastemakers, function(error,result){
+	    	/*Meteor.call('getUserIDsForSocIDs', Session.get(followingContext.get().params._id+'_uObj').tastemakers, function(error,result){
 			    if(error){
 			        console.log(error.reason);
 			    }
@@ -121,7 +137,7 @@ Template.profileFollowingSidebar.onCreated(function() {
 				  	userIDsForTastemakers.set(result);
 				  	tastemakerDetailsLoaded.set(true);
 			    };
-			});
+			});*/
 
 	    	if(!_.isUndefined(Session.get(followingContext.get().params._id+'_uObj').tastemakers) && Session.get(followingContext.get().params._id+'_uObj').tastemakers.length > 0)
 	    	{
@@ -131,6 +147,13 @@ Template.profileFollowingSidebar.onCreated(function() {
 				var tempChunk = [];
 				while (a.length > 0) {
 				  chunk = a.splice(0,size)
+				  while(!_.isUndefined(_.findWhere(chunk, {'uid': null})))
+				  {
+				  	var foundNullTastemaker = _.findWhere(chunk, {'uid': null});
+				  	//console.log('THIS IS THE NEW chunk: ');
+				  	chunk = _.without(chunk, foundNullTastemaker);
+				  	//console.log(chunk);
+				  }
 				  tempChunk.push(chunk);
 				  //smallerChunkedTastemakers.push(chunk);
 				}
@@ -141,7 +164,25 @@ Template.profileFollowingSidebar.onCreated(function() {
 				//console.log('TASTEMAKERS is BLANK for this user!!!!!!!!');
 				smallerChunkedTastemakers.set([])
 			}
+
+
+			var x = Session.get(followingContext.get().params._id+'_uObj');
+			if(!_.isUndefined(x.tastemakers))
+			{
+				var tstmakerObj = x.tastemakers;
+				while(!_.isUndefined(_.findWhere(tstmakerObj, {'uid': null})))
+				{
+					var foundNullTastemaker = _.findWhere(tstmakerObj, {'uid': null});
+					//console.log('THIS IS THE NEW chunk: ');
+					tstmakerObj = _.without(tstmakerObj, foundNullTastemaker);
+					//console.log(chunk);
+				}
+				tastemakerLength.set(tstmakerObj.length);
+			}
+			else
+				tastemakerLength.set(0);
     	}
+    	
 		//Session.set('followingLd',false);
 		//isFollowingReady();
 		//}
@@ -162,7 +203,9 @@ Template.profileFollowingSidebar.events({
 
     "click #nextFollowingList": function (event) {
       //console.log('CLICKED next button');
-      if(upperCounterPosition.get() < Session.get(followingContext.get().params._id+'_uObj').tastemakers.length - 1)
+      //if(upperCounterPosition.get() < Session.get(followingContext.get().params._id+'_uObj').tastemakers.length - 1)
+      if(upperCounterPosition.get() < tastemakerLength.get() - 1)
+      
       {
         //console.log('INSIDE if condition!!');
         Session.set(followingContext.get().params._id+'_followingcurs', Session.get(followingContext.get().params._id+'_followingcurs') + 1);

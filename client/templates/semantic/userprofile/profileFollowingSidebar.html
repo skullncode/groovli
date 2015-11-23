@@ -15,7 +15,7 @@
 	<div class="ui bottom attached tertiary segment">
 		<!--<div class="ui items">-->
 			<div class="ui six column doubling grid container">
-			{{#if tastemakerDetailsLoaded}}
+			<!--{{#if tastemakerDetailsLoaded}}
 				{{#if notFollowingAnybody}}
 					<div class="ui basic segment">
 					  <p><i>This person is not following anyone right now...</i></p>
@@ -33,7 +33,18 @@
 				{{/if}}
 			{{else}}
 				<div class="ui active centered inline loader"></div>
-			{{/if}}
+			{{/if}}-->
+				{{#each peopleFollowedByUser}}
+					{{#if userIDIsNotNull}}
+						<div class="column">
+							<div class="item">
+								<a id="userProfileFollowingLink" href="/profile/{{uid}}" title="{{name}}">
+									<img class="ui tiny rounded image" src="http://graph.facebook.com/{{fbid}}/picture?type=square">
+							    </a>
+							</div>
+						</div>
+					{{/if}}
+				{{/each}}
 			</div>
 		</div>
 	<!--</div>-->
