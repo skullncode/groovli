@@ -36,9 +36,28 @@ Template.semanticLanding.helpers({
     //console.log(splitString);
     if(splitString.length > 3)
     {
-      if(this.st.indexOf('(') >= 0)
+      if(this.st.indexOf('(') > 0)
       {
         return this.st.substring(0, this.st.indexOf('(')-1); 
+      }
+      else if(this.st.indexOf('(') == 0)
+      {
+        if(this.st.indexOf(')') < 30)
+          return this.st.substring(1, this.st.indexOf(')'));
+        else
+        {
+          var putTogetherString = '';
+          var count = 3;
+          var index = 0;
+          while(index < count)
+          {
+            putTogetherString += x.replace('(', '').replace(')', '');
+            putTogetherString += " ";
+            count++;
+          }
+
+          return putTogetherString;
+        }
       }
       else
       {
