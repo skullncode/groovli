@@ -7,6 +7,10 @@
 	      <i class="dropdown icon"></i>
 	      <div class="menu">
 	        <div class="header">Choose Year</div>
+	        <div class="item" data-value="all years" data-text="all years">
+		      <i class="calendar mini circular icon"></i>
+		      all years
+		    </div>
 	        {{#each mygroovsYearRange}}
 	        	<div class="item {{activeYearHelper this}}" data-text="{{this}}">{{this}}</div>
 	        {{/each}}

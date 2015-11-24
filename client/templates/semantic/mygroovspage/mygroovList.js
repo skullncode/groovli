@@ -287,6 +287,29 @@ Template.mygroovList.onCreated(function() {
         Session.set('mgSongCount', Counts.get('songCountForMyGroovsBasedOnYearSelection'));
         self.subscribe('30songsForMyGroovsBasedOnYearSelection', Meteor.user().services.facebook.id, Session.get('existingMGCursor'), Session.get('selyr'), Session.get('selGens'), {onReady: onMGSubReady});
       }
+      else if(Session.get('selyr') == 'all years')
+      {
+        //console.log('GONNA SWITCH TO GETTING ALLLLLL YOUR SONGS from ALLLLLL YOUR years!!!');
+        if(_.isEmpty(Session.get('selGens')))
+        {
+          iHist(true);
+          resetPlayedLengthSpecificToTab('me');
+          Session.set('mgSongsLoaded', false);
+          self.subscribe("counterForMyGroovs", Meteor.user().services.facebook.id);
+          Session.set('mgSongCount', Counts.get('songCountForMyGroovs'));
+          self.subscribe('30songsForMyGroovs', Meteor.user().services.facebook.id, Session.get('existingMGCursor'), {onReady: onMGSubReady});
+        }
+        else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
+        {
+          iHist(true);
+          resetPlayedLengthSpecificToTab('me');
+          Session.set('mgSongsLoaded', false);
+          //console.log('GENRE selection Changed gonna subscribe again!!!');
+          self.subscribe("counterForMyGroovsBasedOnGenreSelection", Meteor.user().services.facebook.id, Session.get('selGens'))
+          Session.set('mgSongCount', Counts.get('songCountForMyGroovsBasedOnGenreSelection'));
+          self.subscribe('30songsForMyGroovsBasedOnGenreSelection', Meteor.user().services.facebook.id, Session.get('existingMGCursor'), Session.get('selGens'), {onReady: onMGSubReady});
+        }
+      }
       else
         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% did not get shit!");
     }

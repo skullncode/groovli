@@ -1,0 +1,25 @@
+<template name="mobLandingPage">
+	<div class="sixteen wide column">
+		<img class="ui big image" src="../images/logo/groovli-big.png">
+	</div>
+	<div class="sixteen wide column mastheadHomeOrange">
+		<div class="ui vertical masthead center aligned segment">
+			<div class="ui text container">
+			  <h1 class="ui inverted header">Your social jukebox</h1>
+			  <h2 class="ui inverted header">Make friends through music.</h2>
+			  <h2></h2>
+			  <h2></h2>
+			</div>
+		</div>
+	</div>
+	<div class="sixteen wide column">
+		{{#unless currentUser}}
+			<div class="ui vertical center aligned segment">
+				<div id="facebook-login" class="massive ui facebook button">
+					<i class="facebook icon"></i>
+					Sign in with Facebook
+				</div>
+			</div>
+		{{/unless}}
+	</div>
+</template>

@@ -22,28 +22,43 @@ if (Meteor.isClient) {
       }
     },
     songItemTimeStamp: function() {
-      var counter = 0;
-      var beginYr = new Date('January 1, '+ String(Session.get('selyr'))).getTime()/1000;
-      var endYr = new Date('January 1, '+ String(Session.get('selyr')+1)).getTime()/1000;
-      /*console.log('this is the begin YR: ');
-      console.log(beginYr);
-      console.log('this is the END YR: ');
-      console.log(endYr);*/
-      
-      while(counter < this.sharedBy.length)
+      if(Session.get('selyr') == 'all years')
       {
-        /*console.log('this is the '+counter+' timestamp: ');
-        console.log(this.sharedBy[counter].systemDate);*/
-        //return new Date(this.sharedBy[counter].systemDate * 1000).toUTCString();
-         //&& this.sharedBy[counter].systemDate >= beginYr && this.sharedBy[counter].systemDate < endYr
-        if((this.sharedBy[counter].uid === Meteor.user().services.facebook.id) && (this.sharedBy[counter].systemDate >= beginYr && this.sharedBy[counter].systemDate < endYr))
+        var counter = 0;
+        while(counter < this.sharedBy.length)
         {
-          return new moment(this.sharedBy[counter].systemDate * 1000).format('llll');
-          //return this.sharedBy[counter].systemDate;
+          //return new Date(this.sharedBy[counter].systemDate * 1000).toUTCString();
+          if(this.sharedBy[counter].uid === Meteor.user().services.facebook.id)
+            return new moment(this.sharedBy[counter].systemDate * 1000).format('llll');
+          else
+            counter++;
+        }      
+      }
+      else
+      {
+        var counter = 0;
+        var beginYr = new Date('January 1, '+ String(Session.get('selyr'))).getTime()/1000;
+        var endYr = new Date('January 1, '+ String(Session.get('selyr')+1)).getTime()/1000;
+        /*console.log('this is the begin YR: ');
+        console.log(beginYr);
+        console.log('this is the END YR: ');
+        console.log(endYr);*/
+        
+        while(counter < this.sharedBy.length)
+        {
+          /*console.log('this is the '+counter+' timestamp: ');
+          console.log(this.sharedBy[counter].systemDate);*/
+          //return new Date(this.sharedBy[counter].systemDate * 1000).toUTCString();
+           //&& this.sharedBy[counter].systemDate >= beginYr && this.sharedBy[counter].systemDate < endYr
+          if((this.sharedBy[counter].uid === Meteor.user().services.facebook.id) && (this.sharedBy[counter].systemDate >= beginYr && this.sharedBy[counter].systemDate < endYr))
+          {
+            return new moment(this.sharedBy[counter].systemDate * 1000).format('llll');
+            //return this.sharedBy[counter].systemDate;
+          }
+          else
+            counter++;
         }
-        else
-          counter++;
-      }      
+      }    
     },
     trimmedArtist: function() {
       return this.sa.substring(0,40);

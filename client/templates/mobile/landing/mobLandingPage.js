@@ -1,7 +1,7 @@
 var trendingSongsLoaded = new ReactiveVar(false);
 var recentSongsLoaded = new ReactiveVar(false);
 
-Template.semanticLanding.onRendered(function () {
+Template.mobLandingPage.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
   {
     Meteor.call('addAdminRolesToKing', Meteor.user().services.facebook.email);
@@ -22,7 +22,7 @@ Template.semanticLanding.onRendered(function () {
   getRecentListens();
 });
 
-Template.semanticLanding.helpers({
+Template.mobLandingPage.helpers({
   songsJustListened: function() {
     return Session.get('lp_recent');
   },
@@ -64,20 +64,18 @@ Template.semanticLanding.helpers({
   }
 });
 
-Template.semanticLanding.onRendered(function() {
+Template.mobLandingPage.onRendered(function() {
   //$('.ui.dropdown.landingDropdownMenu').dropdown();
   Session.set("playerLoaded", false);
   Session.set("playerStarted", false);
   //Meteor.setTimeout(enableDropdown, 800);
 });
 
-Template.semanticLanding.onCreated(function() {
+Template.mobLandingPage.onCreated(function() {
   var self = this;
   self.autorun(function() {
     self.subscribe('userData');  
   });
-  Session.set("playerLoaded", false);
-  Session.set("playerStarted", false);
 });
 
 function getRecentListens(){
@@ -110,10 +108,47 @@ function getTrendingSongs(){
   });
 }
 
-Template.semanticLanding.events({
+function fbSuccessCallback(){
+  console.log("SUCCESS LOGGING INTO FB!!!!");
+}
+
+Template.mobLandingPage.events({
     'click #facebook-login': function(event) {
         //Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'read_stream', 'email', 'publish_actions', 'user_activities', 'user_interests', 'user_friends', 'user_about_me', 'user_status', 'user_posts', 'user_actions.music', 'user_actions.video', 'user_location', 'user_hometown']}, function(err){
-          Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'email', 'user_friends', 'user_posts']}, function(err){
+          openFB.init({appId: '848177241914409'});
+          openFB.login(function (response) {
+              if (response.status === 'connected') {
+                  if (response.authResponse) {
+                      var accessToken = response.authResponse.accessToken;
+                      console.log("SUCCESS LOGGING INTO FB!!!!");
+                      console.log('THIIIIIS IS THE access Token: ');
+                      console.log(accessToken);
+                      console.log('this is hte response: ');
+                      console.log(response);
+                      /*openFB.api({
+                          path: "/{your app version in facebook developer envi.}/me?",
+                          params: { "access_token": accessToken, "?fields":"name,email,gender,user_birthday,locale,bio&access_token='"+accessToken+"'" },
+                          success: function (response) {
+                              var data = JSON.stringify(response);
+                             // do whatever you want with the data for example
+                             $(".data_div").html(data); 
+                             $(".data_email").html(data.email);
+
+                          },
+                          error: function(err){
+                          alert(err);
+                         }
+                      });*/
+                  }
+                  else { 
+                    console.log("EMPTY RESPONSE ----- LOGGING INTO FB!!!!");
+                  }
+              }
+              else { 
+                console.log("error LOGGING INTO FB!!!!");
+              }
+          }, {scope: 'public_profile,email,user_friends,user_posts'});
+          /*Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'email', 'user_friends', 'user_posts']}, function(err){
             if (err) {
                 throw new Meteor.Error("Facebook login failed");
             }
@@ -124,7 +159,7 @@ Template.semanticLanding.events({
                 //Router.go('/songboard');
                 FlowRouter.go('/songboard');
             }
-        });
+        });*/
     },
  
     'click #logout': function(event) {
