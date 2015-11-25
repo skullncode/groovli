@@ -1,11 +1,41 @@
 <template name="semanticSharedBySection">
 	{{#if songPlaying}}
 		<div class="item"><div class="content"><b>Shared by:</b></div></div>
-		<div class="item"><div class="content">
+		<div class="item">
+			<div class="content">
 			{{#each sharedByDetailsForCurrentSong}}
-				<a href="/profile/{{p_id}}" target='blank'><img class="ui avatar mini image" style="width:20px;height:20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+				<a href="/profile/{{p_id}}" target='blank' class="sharedByUserPopup {{p_id}}"><img class="ui avatar mini image" style="width:20px;height:20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top"></a>
+				<div class="ui popup">
+				  	<div class='content' style='padding-bottom: 0px;'>
+					  	<div class='left floated ui image'>
+					  		<img src='http://graph.facebook.com/{{personID}}/picture?type=square'>
+					  	</div>
+					  	<div class='content'>
+					  		<div class='header'>
+					  			<b>{{#if userProfileIsNotYou}}{{personName}}{{else}}you{{/if}}</b>
+					  		</div>
+					  		<div class='description'>
+					  			shared this song on <i>{{personTimestamp}}</i>
+					  		</div>
+					  		<hr>
+					  		<div class='extra content'>
+					  			<a id='viewProfile' target='_blank' href='/profile/{{p_id}}' class='left floated blue tiny ui button'>
+					  			View Profile
+					  			</a>
+					  		{{#if userProfileIsNotYou}}
+					  			{{#if alreadyFollowed}}
+					  				<a id='unfollowUser' class='right floated red tiny ui button'>Unfollow</a>
+					  			{{else}}
+					  				<a id='followUserFromCard' class='right floated green tiny ui button'>Follow</a>
+					  			{{/if}}
+					  		{{/if}}
+					  		</div>
+						</div>
+					</div>
+				</div>
 			{{/each}}
-		</div></div>
+			</div>
+		</div>
 	{{/if}}
 </template>
 

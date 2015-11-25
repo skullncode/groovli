@@ -295,7 +295,8 @@ Meteor.methods({
 			{
 				userObjToAddTastemakerList = {
 					name: userToFollow.name,
-					fbid: userToFollow.uid
+					fbid: userToFollow.uid,
+					uid: userToFollow._id
 				};
 			}
 		}
