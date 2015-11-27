@@ -202,7 +202,7 @@ Template.sglist.events({
         pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) - pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('global');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {
@@ -220,7 +220,7 @@ Template.sglist.events({
         pagedGlistSongsLoaded.set(false);
         Session.set('existingSGCursor', Number(Session.get('existingSGCursor')) + pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('global');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {

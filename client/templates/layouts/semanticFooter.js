@@ -11,7 +11,7 @@ Template.semanticFooter.helpers({
 	 }
   },
   siteLastUpdatedTimestamp: function() {
-    var lastUpdatedManualTimestamp = new moment("November 24th 2015, 1:00 pm", "'MMMM Do YYYY, h:mm a'");
+    var lastUpdatedManualTimestamp = new moment("November 27th 2015, 5:15 pm", "'MMMM Do YYYY, h:mm a'");
     return new moment(lastUpdatedManualTimestamp).fromNow();
   }
 });

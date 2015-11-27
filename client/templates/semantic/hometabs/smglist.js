@@ -280,7 +280,7 @@ Template.smglist.events({
         pagedMGlistSongsLoaded.set(false);
         Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) - pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('me');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {
@@ -298,7 +298,7 @@ Template.smglist.events({
         pagedMGlistSongsLoaded.set(false);
         Session.set('existingMGCursor', Number(Session.get('existingMGCursor')) + pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('me');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {

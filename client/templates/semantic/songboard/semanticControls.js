@@ -231,29 +231,84 @@ function getRandomSongTabThatStillHasUnplayedSongs()
 
 function areThereAnyMoreSongsToPlayBasedOnCurrentlyPlayableTabs()
 {
-  //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################# currently PLAYABLE TABS are:');
-  //console.log(Session.get('playableTabs'));
+  //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################# CHECKING SONG PLAYABILITY ACROSS ALL TABS:');
   var songsStillAvailableToPlay = false;
+  var tabCtr = 0;
+  while(tabCtr < Session.get('playableTabs').length)
+  {
+    if(Session.get('playableTabs')[tabCtr] == 'me')
+    {
+      if(Session.get('mygroovsPlayedLength') < getSongsLength('me'))
+      {
+        //console.log('there are songs to play IN ME');
+        songsStillAvailableToPlay = true;
+        tabCtr = Session.get('playableTabs').length; //to break out of while loop
+      }
+      else
+      {
+        //console.log('there are NOOOOOOOOO songs to play IN ME');
+        songsStillAvailableToPlay = false;
+      }
+    }
+    else if(Session.get('playableTabs')[tabCtr] == 'friends')
+    {
+      
+      if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
+      {
+        //console.log('there are songs to play IN friends');
+        songsStillAvailableToPlay = true;
+        tabCtr = Session.get('playableTabs').length; //to break out of while loop
+      }
+      else
+      {
+        //console.log('there are NOOOOOOOOO songs to play IN friends');
+        songsStillAvailableToPlay = false;
+      }
+    }
+    else if(Session.get('playableTabs')[tabCtr] == 'global')
+    {
+      if(Session.get('globalPlayedLength') < getSongsLength('global'))
+      {
+        //console.log('there are songs to play IN global');
+        songsStillAvailableToPlay = true;
+        tabCtr = Session.get('playableTabs').length; //to break out of while loop
+      }
+      else
+      {
+        //console.log('there are NOOOOOOOOO songs to play IN global');
+        songsStillAvailableToPlay = false;
+      }
+    }
+    tabCtr++;
+  }
+
+  /* COULD NOT BREAK OUT OF EACH!!! so using while loop instead
   _.each(Session.get('playableTabs'), function(z){
     if(z == 'me')
     {
       if(Session.get('mygroovsPlayedLength') < getSongsLength('me'))
       {
+        console.log('there are songs to play IN ME');
         songsStillAvailableToPlay = true;
       }
       else
       {
+        
+        console.log('there are NOOOOOOOOO songs to play IN ME');
         songsStillAvailableToPlay = false;
       }
     }
     else if(z == 'friends')
     {
+      
       if(Session.get('tastemakersPlayedLength') < getSongsLength('friends'))
       {
+        console.log('there are songs to play IN friends');
         songsStillAvailableToPlay = true;
       }
       else
       {
+        console.log('there are NOOOOOOOOO songs to play IN friends');
         songsStillAvailableToPlay = false;
       }
     }
@@ -261,14 +316,16 @@ function areThereAnyMoreSongsToPlayBasedOnCurrentlyPlayableTabs()
     {
       if(Session.get('globalPlayedLength') < getSongsLength('global'))
       {
+        console.log('there are songs to play IN global');
         songsStillAvailableToPlay = true;
       }
       else
       {
+        console.log('there are NOOOOOOOOO songs to play IN global');
         songsStillAvailableToPlay = false;
       }
     }
-  });
+  });*/
 
   /*if(songsStillAvailableToPlay)
     console.log('################ THERE ARE STILL SONGS TO BE PLAYED!!!!!');
@@ -469,6 +526,7 @@ function songIndexWithinList(song, songList) {
 
 function updatePlayCountPerTab(tab, selectedChoice)
 {
+  //console.log('UPDAAAAAAAAAAAAAAAAAAAAAAAAAAAATING play count for this tab: '+ tab);
   var currentCount = 0;
   if(tab === 'me')
   {
@@ -1080,17 +1138,19 @@ function selectShareFromControls(share, shares, tab) {
     //console.log('this is the current history index - NEXT PRESSED:' + getCurrentHistoryIndex());
     setLastActionAsNext();
 
-
+    //ifHistory is empty that means the player has been reset so start random selections from scratch
     if(isHistoryEmpty())
     {
       setReachedEndOfStream(false);
-      //console.log("nothing in here so pushing the first random choice i got");
+      //console.log("HISTORY IS EMPTY - nothing in here so pushing the first random choice i got");
 
       iHist(false);
       return true;
     }
     else
     {
+      //console.log("HISTORY IS NOT EMPTY");
+      //console.log(getHistory());
       //if(getHistoryLength() < getSongsLength('me')-1)
       //console.log('CHECKING HISTORY LENGTH : HISTORY LENGTH IS: ' + getHistoryLength());
       //console.log('CHECKING HISTORY LENGTH : COMBINED HISTORY LENGTH IS: ' + getCombinedMusicLength());

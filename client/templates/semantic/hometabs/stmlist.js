@@ -259,7 +259,7 @@ Template.stmlist.events({
         pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) - pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('friends');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {
@@ -277,7 +277,7 @@ Template.stmlist.events({
         pagedTMlistSongsLoaded.set(false);
         Session.set('existingTMCursor', Number(Session.get('existingTMCursor')) + pagingLimit);
         iHist(true);
-        resetPlayedLengthSpecificToTab('friends');
+        resetPlayedLengthSpecificToTab('all');
       }
       else
       {
