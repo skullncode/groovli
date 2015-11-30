@@ -134,7 +134,17 @@ function onPlayerStateChange(event) {
       var nextBtn = $('.step.forward.icon');
       //analytics.track("reached end of song");
       amplitude.logEvent("reached end of song");
-      nextBtn.click();
+
+      if(Session.get('srep'))
+      {
+        ytplayer.seekTo(0, true);
+        //console.log('repeating this song now');
+        amplitude.logEvent("repeating this song");
+      }
+      else
+      {
+        nextBtn.click();
+      }
 	}
   else if(event.data === -1 || event.data === 3) { //if buffering show loader 
     ////console.log(loader);

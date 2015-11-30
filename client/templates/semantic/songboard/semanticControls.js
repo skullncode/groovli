@@ -24,6 +24,8 @@ Template.semanticControls.onRendered(function () {
   fixSemanticGrids();
 });
 
+Session.setDefault('srep', false); // repeat this song
+
 /**
 * Makes sure the positional 'wide' class is present for every device-specific semantic-ui rule
 */
@@ -72,14 +74,28 @@ Template.semanticControls.events({
     'click #hideShowVideo': function(event) {
         if($('#responsivePlayerContainer').is(":visible"))
         {
+          $('#hideShowVideoButton').addClass('disabled');
           $('#responsivePlayerContainer').slideUp();
           amplitude.logEvent('hide video');
         }
         else
         {
+          $('#hideShowVideoButton').removeClass('disabled');
           $('#responsivePlayerContainer').slideDown();
           amplitude.logEvent('show video');
         }
+    },
+    'click #repeatButton': function(event){
+      if(!$('#repeatButton').hasClass('disabled'))
+      {
+        $('#repeatButton').addClass('disabled');
+        Session.set('srep', false);
+      }
+      else
+      {
+        $('#repeatButton').removeClass('disabled');
+        Session.set('srep', true);
+      }
     }
 });
 
