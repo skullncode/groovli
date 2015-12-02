@@ -1,5 +1,6 @@
 var trendingSongsLoaded = new ReactiveVar(false);
 var recentSongsLoaded = new ReactiveVar(false);
+Session.setDefault('vimOpen', false);
 
 Template.semanticLanding.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
@@ -182,6 +183,7 @@ Template.semanticLanding.events({
               scrollTop: 0
           }, 300);
           amplitude.logEvent('WATCH how it works video');
+          Session.set('vimOpen', false);
         }
         else
         {
@@ -192,7 +194,9 @@ Template.semanticLanding.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           amplitude.logEvent('CLOSE how it works video');
+          Session.set('vimOpen', true);
         }
+        return true;
     },
     'click #btnSmlScrnWatchHowGroovliWorks': function(event) {
       if($('#watchVimeoHowItWorksContainer').is(":visible"))
@@ -204,6 +208,7 @@ Template.semanticLanding.events({
               scrollTop: 0
           }, 300);
           amplitude.logEvent('WATCH how it works video');
+          Session.set('vimOpen', false);
         }
         else
         {
@@ -214,7 +219,9 @@ Template.semanticLanding.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           amplitude.logEvent('CLOSE how it works video');
+          Session.set('vimOpen', true);
         }
+        return true;
     }
     
 });

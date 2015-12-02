@@ -98,7 +98,7 @@
                     <a class="ui red right corner label">{{unreadMsgCount}}</a>
                   {{/if}}
                 </a>
-                <a href="https://vimeo.com/145378946" target="blank" class="item" title="help / Groovli video walkthrough">
+                <a id="btnLrgScrnHeaderSongBoardWatchVimeo" class="item" title="help / Groovli video walkthrough">
                   <i class="help icon orangeHeaderMenuItem"></i>
                 </a>
                 <a class="ui dropdown mainHeaderMenuDropdown item">
@@ -136,7 +136,7 @@
                   <a class="ui red right corner label">{{unreadMsgCount}}</a>
                 {{/if}}
               </a>
-              <a href="https://vimeo.com/145378946" class="item" target="blank" title="help / Groovli video walkthrough">
+              <a id="btnTabScrnHeaderSongBoardWatchVimeo" class="item" title="help / Groovli video walkthrough">
                 <i class="help icon orangeHeaderMenuItem"></i>
               </a>
               <a class="ui dropdown mainHeaderMenuDropdown item">
@@ -203,7 +203,7 @@
               <a class="ui red right corner label">{{unreadMsgCount}}</a>
             {{/if}}
           </a>
-          <a href="https://vimeo.com/145378946" target="blank" class="ui item">Help</a>
+          <a id="btnMobScrnHeaderSongBoardWatchVimeo" class="ui item">Help</a>
           <a id="logout" href="" class="ui item">Logout</a>
       </div>
   </div>
@@ -211,4 +211,5 @@
 {{activatePopups}}
 {{setNotifsSessionVar}}
 {{>previewYouTubeSongFromSearch}}
+{{>watchVimeoHowItWorksSongBoardTemplate}}
 </template>

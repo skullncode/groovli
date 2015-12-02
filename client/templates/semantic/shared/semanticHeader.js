@@ -188,6 +188,46 @@ Template.semanticHeader.events({
     },
     'click #loadMoreNotifications': function(event){
       Session.set('nLim', Session.get('nLim') + notificationIncrement);
+    },
+    'click #btnLrgScrnHeaderSongBoardWatchVimeo': function(event) {
+      if($('#watchVimeoHowItWorksContainer').is(":visible"))
+        {
+          $('#watchVimeoHowItWorksContainer').slideUp();
+          $('html, body').animate({
+              scrollTop: 0
+          }, 300);
+          Session.set('vimOpen', false);
+          //amplitude.logEvent('WATCH how it works video');
+        }
+        else
+        {
+          $('#watchVimeoHowItWorksContainer').slideDown();
+          $('html, body').animate({
+              scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
+          }, 300);
+          Session.set('vimOpen', true);
+          //amplitude.logEvent('CLOSE how it works video');
+        }
+    },
+    'click #btnTabScrnHeaderSongBoardWatchVimeo': function(event) {
+      if($('#watchVimeoHowItWorksContainer').is(":visible"))
+        {
+          $('#watchVimeoHowItWorksContainer').slideUp();
+          $('html, body').animate({
+              scrollTop: 0
+          }, 300);
+          Session.set('vimOpen', false);
+          //amplitude.logEvent('WATCH how it works video');
+        }
+        else
+        {
+          $('#watchVimeoHowItWorksContainer').slideDown();
+          $('html, body').animate({
+              scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
+          }, 300);
+          Session.set('vimOpen', true);
+          //amplitude.logEvent('CLOSE how it works video');
+        }
     }
 });
 

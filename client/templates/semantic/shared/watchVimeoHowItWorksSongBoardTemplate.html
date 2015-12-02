@@ -1,15 +1,16 @@
-<template name="watchVimeoHowItWorksTemplate">
+<template name="watchVimeoHowItWorksSongBoardTemplate">
 	<div id="watchVimeoHowItWorksContainer" class="ui two column centered grid" style="display: none;">
-		<div class="two wide column mastheadHomeOrange"></div>
-		<div class="twelve wide only column mastheadHomeOrange">
+		<div class="two wide column homePlayerTabsContainerBoxBackground"></div>
+		<div class="twelve wide only column homePlayerTabsContainerBoxBackground">
 			<p>
 				{{#if vimeoOpen}}
+					<button id="btnCloseVimeoDemoOnSongBoard" class="ui right floated icon red large button"><i class="remove icon"></i>Close Demo</button>
 					<div id="watchVimeoHowItWorksVideoContainer" class="ui embed">
 						<iframe src="https://player.vimeo.com/video/145378946?color=ff9933&byline=0&portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/145378946">Groovli Demo</a> from <a href="https://vimeo.com/user19566042">Sandeep Jayendran</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 					</div>
 				{{/if}}
 			</p>
 		</div>
-		<div class="two wide column mastheadHomeOrange"></div>
+		<div class="two wide column homePlayerTabsContainerBoxBackground"></div>
 	</div>
 </template>

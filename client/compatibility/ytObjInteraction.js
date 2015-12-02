@@ -281,29 +281,18 @@ function playpauseVideo() {
   }  
 }
 
- /*function makeMuutCommentRelatedUpdates(soundID, currentSong) {
- 
-  //UPDATE MUUT COMMENTS BOX
-  var commentsUniqueID = "https://muut.com/i/groovli/music/comments:" + soundID;
-  var pageTitle = '';
-  //console.log('#$#$#$#$##$#$#$#$#$THIS IS THE COMMENTS UNIQUE ID: ' + commentsUniqueID);
-   //CHANGE PAGE TITLE
-  if(currentSong.sa === currentSong.st)
-    pageTitle = 'groovli - '+ currentSong.sa
-  else
-    pageTitle = 'groovli - '+ currentSong.sa + ' - ' + currentSong.st;
-  $("#muut-custom").replaceWith('<div data-show_title="false" class="muut" id="muut-custom"></div>');
-  var conf = {
-     url: commentsUniqueID,
-     title: pageTitle,
-     channel: pageTitle,
-     show_online: false,
-     upload: false
-  };
-  $("#muut-custom").muut(conf);
-  //UPDATE PAGE TITLE
-  $(document).prop('title', pageTitle);
-}*/
+function playPauseVideoWhenVimeoClosesOpens(){
+  if (ytplayer) {
+    if(ytplayer.getPlayerState() == 1 && Session.get('vimOpen'))
+    {
+      playpauseVideo();
+    }
+    else if(ytplayer.getPlayerState() == 2 && !Session.get('vimOpen'))
+    {
+      playpauseVideo();
+    }
+  }
+}
 
 
 //this is required in order to push a listen only once the user has listened thru 40% of the song, or the listen does not qualify
