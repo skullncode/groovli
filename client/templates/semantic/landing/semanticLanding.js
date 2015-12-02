@@ -170,7 +170,53 @@ Template.semanticLanding.events({
 
     'click #clickHomeFromLanding': function(event) {
       FlowRouter.go('/songboard');
+    },
+
+    'click #btnLrgScrnWatchHowGroovliWorks': function(event) {
+      if($('#watchVimeoHowItWorksContainer').is(":visible"))
+        {
+          $('#watchVimeoHowItWorksContainer').slideUp();
+          $('#btnLrgScrnWatchHowGroovliWorks').text('Watch how Groovli works!');
+          $('#btnSmlScrnWatchHowGroovliWorks').text('Watch how Groovli works!');
+          $('html, body').animate({
+              scrollTop: 0
+          }, 300);
+          amplitude.logEvent('WATCH how it works video');
+        }
+        else
+        {
+          $('#watchVimeoHowItWorksContainer').slideDown();
+          $('#btnLrgScrnWatchHowGroovliWorks').text('Hide Video');
+          $('#btnSmlScrnWatchHowGroovliWorks').text('Hide Video');
+          $('html, body').animate({
+              scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
+          }, 300);
+          amplitude.logEvent('CLOSE how it works video');
+        }
+    },
+    'click #btnSmlScrnWatchHowGroovliWorks': function(event) {
+      if($('#watchVimeoHowItWorksContainer').is(":visible"))
+        {
+          $('#watchVimeoHowItWorksContainer').slideUp();
+          $('#btnSmlScrnWatchHowGroovliWorks').text('Watch how Groovli works!');
+          $('#btnLrgScrnWatchHowGroovliWorks').text('Watch how Groovli works!');
+          $('html, body').animate({
+              scrollTop: 0
+          }, 300);
+          amplitude.logEvent('WATCH how it works video');
+        }
+        else
+        {
+          $('#watchVimeoHowItWorksContainer').slideDown();
+          $('#btnSmlScrnWatchHowGroovliWorks').text('Hide Video');
+          $('#btnLrgScrnWatchHowGroovliWorks').text('Hide Video');
+          $('html, body').animate({
+              scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
+          }, 300);
+          amplitude.logEvent('CLOSE how it works video');
+        }
     }
+    
 });
 
 /*function enableDropdown(){

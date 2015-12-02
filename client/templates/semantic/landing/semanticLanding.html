@@ -1,8 +1,8 @@
 <template name="semanticLanding">
 <!-- Landing Page Menu -->
-	<div class="ui two column centered grid">
+	<div class="computer tablet only ui two column centered grid">
 		<div class="three wide computer column mastheadHomeOrange"></div>
-		<div class="ten wide column mastheadHomeOrange">
+		<div class="ten wide computer tablet only column mastheadHomeOrange">
 			<div style="background-color:white;">
 				<div class="ui secondary menu">
 				  <div class="ui container">
@@ -37,23 +37,61 @@
 			<div class="ui grid">
 				<div class="column large screen computer tablet only">
 					<img class="ui fluid image" src="../images/masthead_new.png">
-					<a href="https://vimeo.com/145378946" target="blank" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
+					<a id="btnLrgScrnWatchHowGroovliWorks" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
 				</div>
-			</div>
-			<div class="mobile only ui centered grid">
-				<div class="ui vertical masthead center aligned segment">
-				<div class="ui text container">
-			      <h1 class="ui inverted header">Your social jukebox</h1>
-			      <h2 class="ui inverted header">Make friends through music.</h2>
-			      <a href="https://vimeo.com/145378946" target="blank" class="ui inverted button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
-			      <h2></h2>
-			      <h2></h2>
-			    </div>
-			    </div>
 			</div>
 		</div>
 		<div class="three wide computer column mastheadHomeOrange"></div>
 	</div>
+	<div class="mobile only ui column centered grid" style="margin-top:-5px">
+		<div class="sixteen wide column grid mastheadHomeOrange">
+			<div class="mobile only ui centered grid">
+				<div style="background-color:white;">
+					<div class="ui secondary menu">
+				  		<div class="ui container">
+						    <div class="brand item">
+								<img class="ui small image" src="../images/logo/groovli.png" title="beta">
+							</div>
+						</div>
+						<div class="right menu">
+							<div class="item">
+								{{#if currentUser}}
+									<a id="clickHomeFromLanding" class="item">Home</a><img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"><a id="logout" class="item">Logout</a>
+									<!--
+									<a class="ui simple dropdown landingDropdownMenu item">
+										<img class="ui avatar image" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square"> {{currentUser.services.facebook.first_name}}
+								    	<i class="dropdown icon"></i>
+										<div class="menu">
+											<div id="clickHomeFromLanding" class="item">Home</div>
+											<div class="item">Profile</div>
+											<div class="ui divider"></div>
+											<div id="logout" class="item">Logout</div>
+										</div>
+									</a>-->
+								{{else}}
+							        <div id="facebook-login" class="ui facebook button">
+							        <i class="facebook icon"></i>
+							        Sign in with Facebook</div>
+						        {{/if}}
+						    </div>
+						</div>
+					</div>
+				</div>
+	  		</div>
+	  		<div class="mobile only ui centered grid">
+		  		<div class="ui vertical masthead center aligned segment">
+					<div class="ui text container">
+				      <h1 class="ui inverted header">Your social jukebox</h1>
+				      <h2 class="ui inverted header">Make friends through music.</h2>
+				      <a id="btnSmlScrnWatchHowGroovliWorks" class="ui large inverted button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
+				      <h2></h2>
+				      <h2></h2>
+				    </div>
+			    </div>
+		    </div>
+  		</div>
+  	</div>
+  	{{>watchVimeoHowItWorksTemplate}}
 
 <!-- What's trending section-->
 	<div class="ui two column centered grid">
@@ -134,16 +172,18 @@
 			    3. Make friends with people that share a similar taste in music.
 			  </h3>
 			</div>
-			<center>
+	  	</div>
+	  	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+	  	<div class="sixteen wide column grid homeHowGroovliWorksSegment">
+		  	<center>
 				{{#unless currentUser}}
-					<div id="facebook-login" class="massive ui facebook button">
+					<div id="facebook-login" class="fluid massive ui facebook button">
 						<i class="facebook icon"></i>
 						Sign in with Facebook
 					</div>
 			  	{{/unless}}
 			</center>
-	  	</div>
-	  	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+		</div>
   	</div>
 
 <!-- Songs recently listened to -->  	
