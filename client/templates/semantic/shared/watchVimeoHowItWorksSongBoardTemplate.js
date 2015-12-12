@@ -16,7 +16,7 @@ if (Meteor.isClient) {
         $('html, body').animate({
             scrollTop: 0
         }, 300);
-        amplitude.logEvent('CLOSE how it works video');
+        amplitude.logEvent('CLOSE how it works video - SONGBOARD');
         Session.set('vimOpen', false);
       }
       return true;

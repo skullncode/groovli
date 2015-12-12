@@ -107,7 +107,14 @@ Template.profileFollowingSidebar.helpers({
 	},
 	userIDIsNotNull: function() {
 		return !_.isNull(this.uid);
-	}
+	},
+	firstNameFromFullName: function() {
+	    var fullNameForUser = this.name;
+	    if(!_.isUndefined(fullNameForUser))
+	    {
+	      return fullNameForUser.split(' ')[0];
+	    }
+  },
 });
 
 

@@ -197,7 +197,7 @@ Template.semanticHeader.events({
               scrollTop: 0
           }, 300);
           Session.set('vimOpen', false);
-          //amplitude.logEvent('WATCH how it works video');
+          amplitude.logEvent('WATCH how it works video - SONGBOARD');
         }
         else
         {
@@ -206,7 +206,7 @@ Template.semanticHeader.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           Session.set('vimOpen', true);
-          //amplitude.logEvent('CLOSE how it works video');
+          amplitude.logEvent('CLOSE how it works video - SONGBOARD');
         }
     },
     'click #btnTabScrnHeaderSongBoardWatchVimeo': function(event) {
@@ -217,7 +217,7 @@ Template.semanticHeader.events({
               scrollTop: 0
           }, 300);
           Session.set('vimOpen', false);
-          //amplitude.logEvent('WATCH how it works video');
+          amplitude.logEvent('WATCH how it works video - SONGBOARD');
         }
         else
         {
@@ -226,7 +226,7 @@ Template.semanticHeader.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           Session.set('vimOpen', true);
-          //amplitude.logEvent('CLOSE how it works video');
+          amplitude.logEvent('CLOSE how it works video - SONGBOARD');
         }
     }
 });
