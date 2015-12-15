@@ -158,7 +158,8 @@ function initiateSearchAPI() {
 		        });
 				$('.ui.modal.previewYouTubeSongFromSearch').modal({
 					onShow: function() {
-						playpauseVideo();
+						//playpauseVideo();
+						pauseSongOnlyIfSongBoardIsPlaying();
 					},
 					onHide: function () {
 						Session.set('selYTsrchRes', null);

@@ -235,7 +235,26 @@ function updatePlayerInfo() {
 					var currentScrollOffset = $(listName).scrollTop();//$("#personalVidList").scrollTop();
 					$(listName).animate({ scrollTop: $(".thumbnail.shareBrowserItem.selected").offset().top - 140 + currentScrollOffset}, 500);*/
 				}
+
+        //to automatically keep player control in sync with youtube player state
+        var playpauseButton = $('.play.icon.playInControls');
+        if(playpauseButton.length > 0)
+        {
+          //console.log('PLAYER HAS BEEN played!!!!!!');
+          playpauseButton.toggleClass('play pause');
+        } 
+
 			}
+
+      //to automatically keep player control in sync with youtube player state
+      if(ytplayer.getPlayerState() == 2){
+        var playpauseButton = $('.play.icon.playInControls');
+        if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
+        {
+          playpauseButton = $('.pause.icon');
+          playpauseButton.toggleClass('pause play');
+        } 
+      }
 		}
 		catch(err)
 		{
@@ -279,6 +298,26 @@ function playpauseVideo() {
     //playpauseButton.toggleClass('fa-play fa-pause');
     playpauseButton.toggleClass('play pause');
   }  
+}
+
+function pauseSongOnlyIfSongBoardIsPlaying(){
+  var playpauseButton = $('.play.icon.playInControls');
+  //ONLY if SONG is PLAYING pause it - otherwise do nothing
+  if(playpauseButton.length == 0 || playpauseButton == [] || playpauseButton == undefined || playpauseButton == null)
+  {
+    //console.log('GOING TO PAUSE now!!!');
+    //analytics.track("pause song");
+    amplitude.logEvent("pause song");
+    //playpauseButton = $('.glyphicon-pause');
+    //playpauseButton = $('.fa-pause');
+    playpauseButton = $('.pause.icon');
+    if (ytplayer) {
+      ytplayer.pauseVideo();
+    }
+    //playpauseButton.toggleClass('glyphicon-pause glyphicon-play');
+    //playpauseButton.toggleClass('fa-pause fa-play');
+    playpauseButton.toggleClass('pause play');
+  } 
 }
 
 function playPauseVideoWhenVimeoClosesOpens(){
