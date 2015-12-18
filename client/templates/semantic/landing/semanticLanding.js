@@ -81,6 +81,9 @@ Template.semanticLanding.helpers({
   
   recentSongsLoaded: function() {
     return recentSongsLoaded.get();
+  },
+  secureItunesThumbnail: function(){
+    return this.iTunesLargeAlbumArt.replace('http', 'https');
   }
 });
 

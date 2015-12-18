@@ -80,7 +80,7 @@ Template.messagesForUser.helpers({
     },
 
     userImageForThisMessage: function() {
-        return 'http://graph.facebook.com/'+this.from+'/picture?type=square';
+        return 'https://graph.facebook.com/'+this.from+'/picture?type=square';
     },
     firstNameFromName: function() {
       return this.fromName.split(' ')[0];
