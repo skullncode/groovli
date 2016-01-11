@@ -12,12 +12,22 @@ Template.semanticLanding.onRendered(function () {
     amplitude.logEvent("logged in user loaded landing page", {
       user: Meteor.user()
     });
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'landing page',
+        eventAction: 'logged in user loaded landing page'
+    });
   }
   else
   {
     //analytics.track("anonymous user loaded home page");
     mixpanel.track("anonymous user loaded home page");
     amplitude.logEvent("anonymous user loaded landing page");
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'landing page',
+        eventAction: 'anonymous user loaded landing page'
+    });
   }
   getTrendingSongs();
   getRecentListens();
@@ -186,6 +196,11 @@ Template.semanticLanding.events({
               scrollTop: 0
           }, 300);
           amplitude.logEvent('WATCH how it works video');
+          ga('send', {
+              hitType: 'event',
+              eventCategory: 'landing page',
+              eventAction: 'WATCH how it works video'
+          });
           Session.set('vimOpen', false);
         }
         else
@@ -197,6 +212,11 @@ Template.semanticLanding.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           amplitude.logEvent('CLOSE how it works video');
+          ga('send', {
+              hitType: 'event',
+              eventCategory: 'landing page',
+              eventAction: 'CLOSE how it works video'
+          });
           Session.set('vimOpen', true);
         }
         return true;
@@ -211,6 +231,11 @@ Template.semanticLanding.events({
               scrollTop: 0
           }, 300);
           amplitude.logEvent('WATCH how it works video');
+          ga('send', {
+              hitType: 'event',
+              eventCategory: 'landing page',
+              eventAction: 'WATCH how it works video'
+          });
           Session.set('vimOpen', false);
         }
         else
@@ -222,6 +247,11 @@ Template.semanticLanding.events({
               scrollTop: $('#watchVimeoHowItWorksContainer').offset().top - 70
           }, 300);
           amplitude.logEvent('CLOSE how it works video');
+          ga('send', {
+              hitType: 'event',
+              eventCategory: 'landing page',
+              eventAction: 'CLOSE how it works video'
+          });
           Session.set('vimOpen', true);
         }
         return true;

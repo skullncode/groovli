@@ -17,6 +17,11 @@ if (Meteor.isClient) {
             scrollTop: 0
         }, 300);
         amplitude.logEvent('CLOSE how it works video - SONGBOARD');
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'CLOSE how it works video - SONGBOARD'
+          });
         Session.set('vimOpen', false);
       }
       return true;

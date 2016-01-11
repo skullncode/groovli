@@ -111,6 +111,11 @@ function playerLoaded()
 	  ytplayer.seekTo(selectedTime, true)
     //analytics.track("seeked thru song");
     amplitude.logEvent("seeked thru song");
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'songboard',
+      eventAction: 'seeked thru song'
+    });
     
 	}, false);
   
@@ -134,12 +139,24 @@ function onPlayerStateChange(event) {
       var nextBtn = $('.step.forward.icon');
       //analytics.track("reached end of song");
       amplitude.logEvent("reached end of song");
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'reached end of song',
+        nonInteraction: true
+      });
 
       if(Session.get('srep'))
       {
         ytplayer.seekTo(0, true);
         //console.log('repeating this song now');
         amplitude.logEvent("repeating this song");
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'repeating this song',
+          nonInteraction: true
+        });
       }
       else
       {
@@ -158,6 +175,12 @@ function onPlayerStateChange(event) {
 function onPlayerError(errorCode) {
   //analytics.track("auto error");
   amplitude.logEvent("auto error");
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'songboard',
+    eventAction: 'auto error',
+    nonInteraction: true
+  });
   Session.set('SongErroneous', true);
   Session.set('YTErrorCode', errorCode.target.e);
   //console.log('ERROR CODE IS: ');
@@ -276,6 +299,11 @@ function playpauseVideo() {
     //console.log('GOING TO PAUSE now!!!');
     //analytics.track("pause song");
     amplitude.logEvent("pause song");
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'songboard',
+      eventAction: 'pause song'
+    });
     //playpauseButton = $('.glyphicon-pause');
     //playpauseButton = $('.fa-pause');
     playpauseButton = $('.pause.icon');
@@ -291,6 +319,11 @@ function playpauseVideo() {
     //console.log('GOING TO PLAY now!!!');
     //analytics.track("play song");
     amplitude.logEvent("play song");
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'songboard',
+      eventAction: 'play song'
+    });
     if (ytplayer) {
       ytplayer.playVideo();
     }
@@ -308,6 +341,11 @@ function pauseSongOnlyIfSongBoardIsPlaying(){
     //console.log('GOING TO PAUSE now!!!');
     //analytics.track("pause song");
     amplitude.logEvent("pause song");
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'songboard',
+      eventAction: 'pause song'
+    });
     //playpauseButton = $('.glyphicon-pause');
     //playpauseButton = $('.fa-pause');
     playpauseButton = $('.pause.icon');
@@ -387,5 +425,11 @@ function loadVideoById(soundID){ //WAS USING currentSong previously but not anym
   //console.log('40% of song duration is: ' + 0.40 * ytplayer.getDuration());
   //analytics.track("load new YT song");
   amplitude.logEvent("load new YT song");
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'songboard',
+    eventAction: 'load new YT song',
+    nonInteraction: true
+  });
   //makeMuutCommentRelatedUpdates(soundID, currentSong);
 }

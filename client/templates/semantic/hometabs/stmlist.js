@@ -267,6 +267,11 @@ Template.stmlist.events({
         //console.log('INSIDE else condition!!');
       }
       amplitude.logEvent('paged backwards for tastemakers');
+      ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'paged backwards for tastemakers'
+      });
     },
 
     "click #nextTMS": function (event) {
@@ -285,6 +290,11 @@ Template.stmlist.events({
         toastr.info("Reached oldest page of Tastemakers; <br><br><b><i>try moving backward (<-) and listening to newer groovs of your friends!</i></b><br><br>");
       }
       amplitude.logEvent('paged forwards for tastemakers');
+      ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'paged forwards for tastemakers'
+      });
     }
 });
 

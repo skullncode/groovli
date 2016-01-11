@@ -205,6 +205,11 @@ Template.semanticGenreProfile.onRendered(function () {
 	amplitude.logEvent('loaded genre page', {
         genreID: genreProfileContext.get().params._id
       });
+	ga('send', {
+        hitType: 'event',
+        eventCategory: 'genre page',
+        eventAction: 'loaded genre page'
+    });
 	Session.setDefault(genreProfileContext.get().params._id+'_genObjLoaded', false);
 });
 

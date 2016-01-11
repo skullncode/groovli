@@ -120,6 +120,11 @@ Template.messagingSidebar.events({
 	  //console.log('selected this user:');
 	  //console.log(this);
 	  amplitude.logEvent("clicked known user within messaging list");
+	  ga('send', {
+	      hitType: 'event',
+	      eventCategory: 'messages page',
+	      eventAction: 'clicked known user within messaging list'
+	  });
 	  Session.set('skuser', true);
 	  Session.set('sukuser', false);
 	  Session.set('selectedUserInMessagingList', this);
@@ -134,6 +139,11 @@ Template.messagingSidebar.events({
 	  //console.log('selected this user:');
 	  //console.log(this);
 	  amplitude.logEvent("clicked unknown user within messaging list");
+	  ga('send', {
+	      hitType: 'event',
+	      eventCategory: 'messages page',
+	      eventAction: 'clicked unknown user within messaging list'
+	  });
 	  Session.set('sukuser', true);
 	  Session.set('skuser', false);
 	  Session.set('selectedUserInMessagingList', this);

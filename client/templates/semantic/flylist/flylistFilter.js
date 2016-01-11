@@ -111,6 +111,11 @@ Template.flylistFilter.events({
       {
         updateFlylistHeaderTextAccordingly('delete');
         amplitude.logEvent('deleted flylist');
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'deleted flylist'
+        });
         //console.log('SUCCESSFULLY DELETED flylist!!!!!');
       }
     });
@@ -211,6 +216,11 @@ function validateNewFlylistForm() {
               amplitude.logEvent('created new flylist', {
                 by: Meteor.user().services.facebook.id,
               });
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'songboard',
+                eventAction: 'created new flylist'
+              });
               //console.log('SUCCESSFULLY created new flylist!!!!!');
               return true;
             }
@@ -287,6 +297,11 @@ function stopFlylist(){
   updateFlylistHeaderTextAccordingly('stop');
 
   amplitude.logEvent('stop flylist');
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'songboard',
+    eventAction: 'stop flylist'
+  });
 }
 
 function makeFlylistToastrNotification(){
@@ -325,6 +340,11 @@ function playFlylist(flylistItem, ev){
   updateCurrentFlylistGenres(flylistItem.genres);
 
   amplitude.logEvent('play flylist');
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'songboard',
+    eventAction: 'play flylist'
+  });
 }
 
 function updateCurrentFlylistGenres(currentGenreSel) {

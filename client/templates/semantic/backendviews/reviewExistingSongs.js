@@ -189,4 +189,9 @@ function playSongFromSearchResult(){
 	//$('#sresultsTabHeader').click()
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
 	amplitude.logEvent('played song from search result');
+	ga('send', {
+      hitType: 'event',
+      eventCategory: 'search box',
+      eventAction: 'played song from search result'
+    });
 }

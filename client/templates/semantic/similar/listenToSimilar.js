@@ -29,6 +29,11 @@ Template.listenToSimilar.events({
             amplitude.logEvent('listen to Similar - created new flylist similar to artist', {
               by: Meteor.user().services.facebook.id,
             });
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'songboard',
+              eventAction: 'listen to Similar - created new flylist similar to artist'
+            });
             //console.log('####### This is the list of flylists now: ');
             var currentFlyLists = $('.ui.dropdown.flylistSelector').find('.flylistItem');
             _.each(currentFlyLists, function(y){

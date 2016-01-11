@@ -77,12 +77,22 @@ Template.semanticControls.events({
           $('#hideShowVideoButton').addClass('disabled');
           $('#responsivePlayerContainer').slideUp();
           amplitude.logEvent('hide video');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'hide video'
+          });
         }
         else
         {
           $('#hideShowVideoButton').removeClass('disabled');
           $('#responsivePlayerContainer').slideDown();
           amplitude.logEvent('show video');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'show video'
+          });
         }
     },
     'click #repeatButton': function(event){
@@ -103,6 +113,11 @@ function nextSong() {
   //console.log('HISTORY GETTING!!!!!: ' + getHistory());
   //console.log('PRESSED NEXTTTT!!!!!');
   amplitude.logEvent("clicked next button");
+  ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'click next button'
+      });
   Session.set('animatedToSong', false);
   if(!nextPressed)
   {
@@ -646,6 +661,11 @@ function setShare(currentShare)
   {
     //analytics.track("started play history");
     amplitude.logEvent("started play history");
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'songboard',
+      eventAction: 'started play history'
+    });
     iHist(false);    
     pushToHistory(currentShare);
     decrementHistoryBy1();
@@ -1125,6 +1145,11 @@ function selectShareFromControls(share, shares, tab) {
         currentListenCount: currentSong.listenCount,
         type: 'yt'
       });
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'increment song listen count'
+      });
    }
 
    function getCombinedMusicLength() {
@@ -1184,6 +1209,11 @@ function selectShareFromControls(share, shares, tab) {
       {
         //analytics.track("next song in history");
         amplitude.logEvent("next song in history");
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'next song in history'
+        });
         incrementHistoryBy1();
         return false;
       } 
@@ -1211,6 +1241,11 @@ function selectShareFromControls(share, shares, tab) {
       //console.log('musicHistory hasnt reached beginning');
       //analytics.track("click previous song");
       amplitude.logEvent("click previous song");
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'click previous song'
+      });
       return true;
     }
     else

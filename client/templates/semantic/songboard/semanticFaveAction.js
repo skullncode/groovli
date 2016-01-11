@@ -58,6 +58,11 @@ Template.semanticFaveAction.events({
         else
         {
           amplitude.logEvent('favorited a song');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'favorited a song'
+          });
           //console.log('SUCCESSFULLY favorited this song!!');
           //$("#commentContent").val("");
         }

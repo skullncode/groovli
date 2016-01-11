@@ -43,6 +43,11 @@ Template.semanticActionsBar.events({
           //$('.fa-comments').addClass('commentsNotShown');
           $('#commentSection').slideUp();
           amplitude.logEvent('hide comments for song');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'hide comments for song'
+          });
           //Session.set("scmntsVisible", false);
           songCommentsVisible.set(false);
         }
@@ -52,6 +57,11 @@ Template.semanticActionsBar.events({
           //$('.fa-comments').addClass('commentsShown');
           $('#commentSection').slideDown();
           amplitude.logEvent('show comments for song');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'show comments for song'
+          });
           //Session.set("scmntsVisible", true);
           songCommentsVisible.set(true);
         }
@@ -113,6 +123,11 @@ Template.semanticActionsBar.events({
               /*Meteor.call('insertNewSong',sharedFBObject, 'FB', 'YOUTUBE');*/ // COMMENTED OUT NOW as song is automatically being pulled in via FB
               //updateSongSourceTabInHistory(sharedFBObject);
               amplitude.logEvent('shared song to FB');
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'songboard',
+                eventAction: 'shared song to FB'
+              });
               toastr.success('Song shared successfully!');
             } else {
               toastr.error('Error while sharing song!');

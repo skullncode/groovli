@@ -290,6 +290,11 @@ Template.semanticArtistProfile.onRendered(function () {
 	amplitude.logEvent('loaded artist page', {
         artistID: artistProfileContext.get().params._id
       });
+	ga('send', {
+      hitType: 'event',
+      eventCategory: 'artist page',
+      eventAction: 'loaded artist page'
+    });
 	Session.setDefault(artistProfileContext.get().params._id+'_artObjLoaded', false);
 });
 

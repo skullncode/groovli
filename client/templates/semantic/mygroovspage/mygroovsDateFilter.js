@@ -30,6 +30,11 @@ Template.mygroovsDateFilter.onRendered(function () {
       amplitude.logEvent('filtered on specfic year for my groovs', {
           selectedYear: text
         });
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'filtered on specfic year for my groovs'
+      });
     }
   });
 });

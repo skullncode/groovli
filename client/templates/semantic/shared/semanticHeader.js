@@ -198,6 +198,11 @@ Template.semanticHeader.events({
           }, 300);
           Session.set('vimOpen', false);
           amplitude.logEvent('WATCH how it works video - SONGBOARD');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'WATCH how it works video - SONGBOARD'
+          });
         }
         else
         {
@@ -207,6 +212,11 @@ Template.semanticHeader.events({
           }, 300);
           Session.set('vimOpen', true);
           amplitude.logEvent('CLOSE how it works video - SONGBOARD');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'CLOSE how it works video - SONGBOARD'
+          });
         }
     },
     'click #btnTabScrnHeaderSongBoardWatchVimeo': function(event) {
@@ -218,6 +228,11 @@ Template.semanticHeader.events({
           }, 300);
           Session.set('vimOpen', false);
           amplitude.logEvent('WATCH how it works video - SONGBOARD');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'WATCH how it works video - SONGBOARD'
+          });
         }
         else
         {
@@ -227,6 +242,11 @@ Template.semanticHeader.events({
           }, 300);
           Session.set('vimOpen', true);
           amplitude.logEvent('CLOSE how it works video - SONGBOARD');
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'CLOSE how it works video - SONGBOARD'
+          });
         }
     }
 });

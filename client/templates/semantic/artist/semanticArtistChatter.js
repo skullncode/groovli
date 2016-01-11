@@ -58,6 +58,11 @@ Template.semanticArtistChatter.events({
                         from: Meteor.user().services.facebook.id,
                         to: artistChatterContext.get().context.params._id+"_artist_group"
                       });
+                    ga('send', {
+                      hitType: 'event',
+                      eventCategory: 'artist page',
+                      eventAction: 'sent message within artist chatterbox'
+                    });
                     //$('#chatbox').animate({scrollTop: $('#chatbox').get(0).scrollHeight}, 500); //auto scroll to bottom of chat window
                     if(artistChatterGroup === artistChatterContext.get().context.params._id+"_artist_group")
                     {

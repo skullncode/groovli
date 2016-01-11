@@ -217,6 +217,11 @@ Template.globalPage.events({
         //console.log('INSIDE else condition!!');
       }
       amplitude.logEvent('paged backwards for global page');
+      ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'paged backwards for global page'
+      });
     },
 
     "click #nextSGS": function (event) {
@@ -235,6 +240,11 @@ Template.globalPage.events({
         toastr.info("Reached oldest page of Global Groovs; <br><br><b><i>try moving backward (<-) and listening to newer groovs of the global community!</i></b><br><br>");
       }
       amplitude.logEvent('paged forwards for global page');
+      ga('send', {
+          hitType: 'event',
+          eventCategory: 'songboard',
+          eventAction: 'paged forwards for global page'
+      });
     }
 });
 

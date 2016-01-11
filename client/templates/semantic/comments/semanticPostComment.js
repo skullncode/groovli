@@ -17,6 +17,11 @@ Template.semanticPostComment.events({
             from: Meteor.user().services.facebook.id,
             to: Session.get('CS').sl
           });
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'posted comment for song'
+          });
           $("#commentContent").val("");
           Meteor.call('insertNewNotification', Meteor.user(), Session.get('CS').sharedBy, 'postComment', Session.get('CS'), commentContent);
         }

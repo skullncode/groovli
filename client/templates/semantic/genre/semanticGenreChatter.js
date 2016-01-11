@@ -58,6 +58,11 @@ Template.semanticGenreChatter.events({
                         from: Meteor.user().services.facebook.id,
                         to: genreChatterContext.get().context.params._id+"_genre_group"
                       });
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'genre page',
+                        eventAction: 'sent message within genre chatterbox'
+                    });
                     //$('#chatbox').animate({scrollTop: $('#chatbox').get(0).scrollHeight}, 500); //auto scroll to bottom of chat window
                     if(genreChatterGroup === genreChatterContext.get().context.params._id+"_genre_group")
                     {

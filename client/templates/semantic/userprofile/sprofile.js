@@ -313,6 +313,11 @@ Template.sprofile.events({
 		        // do something with result
 			  	//console.log('SUCCESSFULLY unfollowed user!');
 			  	amplitude.logEvent('followed user');
+			  	ga('send', {
+		            hitType: 'event',
+		            eventCategory: 'user page',
+		            eventAction: 'followed user'
+		          });
 		    };
 		});
       return true;
@@ -332,6 +337,11 @@ Template.sprofile.events({
 		        // do something with result
 			  	//console.log('SUCCESSFULLY followed user!');
 			  	amplitude.logEvent('unfollowed user');
+			  	ga('send', {
+		            hitType: 'event',
+		            eventCategory: 'user page',
+		            eventAction: 'unfollowed user'
+		          });
 		    };
 		});
       return true;
@@ -398,6 +408,11 @@ function userObjExists(){
 	        userProfile: profileContext.get().params._id,
 	       	viewee: Meteor.user()._id
 	      });
+		ga('send', {
+            hitType: 'event',
+            eventCategory: 'user page',
+            eventAction: 'view user profile page'
+          });
 	}
 	else
 	{

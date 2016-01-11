@@ -91,6 +91,11 @@ Template.messagesForUser.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
   {
     amplitude.logEvent("loaded messages page");
+	ga('send', {
+	      hitType: 'event',
+	      eventCategory: 'messages page',
+	      eventAction: 'loaded messages page'
+	  });
   }
 });
 
@@ -228,6 +233,11 @@ Template.messagesForUser.events({
                     	from: Meteor.user().services.facebook.id,
 				        to: currentlySelectedUser.get().services.facebook.id
 				      });
+                    ga('send', {
+					      hitType: 'event',
+					      eventCategory: 'messages page',
+					      eventAction: 'sent message from messaging page'
+					  });
                     //$('#chatbox').animate({scrollTop: $('#chatbox').get(0).scrollHeight}, 500); //auto scroll to bottom of chat window
                     /*if(messageRecipientID === messagingMasterContext.get().context.params._id)
                     {

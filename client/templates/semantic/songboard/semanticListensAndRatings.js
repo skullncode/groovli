@@ -178,6 +178,11 @@ function enableRater(){
           rating: value,
           type: 'yt'
         });
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'rate song'
+          });
       }
   });
 }

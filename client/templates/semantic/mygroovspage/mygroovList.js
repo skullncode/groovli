@@ -245,6 +245,11 @@ Template.mygroovList.events({
         //console.log('INSIDE else condition!!');
       }
       amplitude.logEvent('paged backwards for my groovs page');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'paged backwards for my groovs page'
+      });
     },
 
     "click #nextMGS": function (event) {
@@ -263,6 +268,11 @@ Template.mygroovList.events({
         toastr.info("Reached oldest page of My Groovs; <br><br><b><i>try moving backward (<-) and listening to your newer groovs!</i></b><br><br>");
       }
       amplitude.logEvent('paged forwards for my groovs page');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'songboard',
+        eventAction: 'paged forwards for my groovs page'
+      });
     }
 });
 

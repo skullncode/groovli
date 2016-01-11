@@ -32,6 +32,11 @@ Template.tastemakersFilter.onRendered(function () {
           selectedTastemaker: text,
           selectedTastemakerID: value
         });
+      ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'filtered on specfic tastemaker'
+          });
     }
   });
   //getTastemakerList();

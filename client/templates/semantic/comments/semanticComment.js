@@ -66,6 +66,11 @@ Template.semanticComment.events({
             from: Meteor.user().services.facebook.id,
             to: Session.get('CS').sl
           });
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'songboard',
+            eventAction: 'deleted comment for song'
+          });
         }
       });
     }
@@ -92,6 +97,11 @@ Template.semanticComment.events({
             amplitude.logEvent('liked comment for song', {
               from: Meteor.user().services.facebook.id,
               to: Session.get('CS').sl
+            });
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'songboard',
+              eventAction: 'liked comment for song'
             });
           }
         });

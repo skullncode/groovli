@@ -156,6 +156,11 @@ function initiateSearchAPI() {
 		          songObject: result,
 		          type: 'yt'
 		        });
+		        ga('send', {
+			        hitType: 'event',
+			        eventCategory: 'song search',
+			        eventAction: 'preview song from YouTube before sharing'
+			      });
 				$('.ui.modal.previewYouTubeSongFromSearch').modal({
 					onShow: function() {
 						//playpauseVideo();
@@ -194,6 +199,11 @@ function playSongFromSearchResult(){
 	//$('#sresultsTabHeader').click()
 	setSongObjectBasedOnSearchResult(Session.get('clkdsrchresult'));
 	amplitude.logEvent('played song from search result');
+	ga('send', {
+        hitType: 'event',
+        eventCategory: 'song search',
+        eventAction: 'played song from search result'
+      });
 }
 
 function shareFromSearchResultToFacebook(ytSongObject){
@@ -224,6 +234,11 @@ function shareFromSearchResultToFacebook(ytSongObject){
           /*Meteor.call('insertNewSong',sharedFBObject, 'FB', 'YOUTUBE');*/ // COMMENTED OUT NOW as song is automatically being pulled in via FB
           //updateSongSourceTabInHistory(sharedFBObject);
           amplitude.logEvent('shared song to FB FROM YOUTUBE');
+          ga('send', {
+	        hitType: 'event',
+	        eventCategory: 'song search',
+	        eventAction: 'shared song to FB FROM YOUTUBE'
+	      });
           toastr.success('Song shared successfully!');
         } else {
           toastr.error('Error while sharing song!');
