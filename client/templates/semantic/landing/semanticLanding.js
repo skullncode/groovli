@@ -1,6 +1,8 @@
 var trendingSongsLoaded = new ReactiveVar(false);
 var recentSongsLoaded = new ReactiveVar(false);
 Session.setDefault('vimOpen', false);
+var leftIndex = new ReactiveVar(7);
+var rightIndex = new ReactiveVar(16);
 
 Template.semanticLanding.onRendered(function () {
   if(Meteor.user() && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
@@ -122,7 +124,8 @@ function getRecentListens(){
           // do something with result
         //console.log('GOT THIS BACK From the server: ');
         //console.log(result);
-        Session.set('lp_recent', result)
+        Session.set('lp_recentALL',result)
+        Session.set('lp_recent', _.first(result, 8))
         recentSongsLoaded.set(true);
       }
   });
@@ -184,6 +187,70 @@ Template.semanticLanding.events({
 
     'click #clickHomeFromLanding': function(event) {
       FlowRouter.go('/songboard');
+    },
+
+    'click #leftButtonListen': function(event) {
+      var i = leftIndex.get();
+      var j = rightIndex.get();
+      //console.log('left index is: ' + i);
+      //console.log('right index is: ' + j);
+      if(i < 15)
+      {
+        i++;
+      }
+      else
+      {
+        i = 0;
+      }
+
+      if(j < 15)
+      {
+        j++;
+      }
+      else
+      {
+        j = 0;
+      }
+
+      var x = Session.get('lp_recent');
+      x.shift();
+      x.push(Session.get('lp_recentALL')[i]);
+      Session.set('lp_recent',x);
+      //console.log('after moving this is the index: ' + i); 
+      leftIndex.set(i);
+      rightIndex.set(j);
+    },
+
+    'click #rightButtonListen': function(event) {
+      var i = rightIndex.get();
+      var j = leftIndex.get();
+      //console.log('left index is: ' + j);
+      //console.log('right index is: ' + i);
+      if(i > 0)
+      {
+        i--;
+      }
+      else
+      {
+        i = 15;
+      }
+
+      if(j > 0)
+      {
+        j--;
+      }
+      else
+      {
+        j = 15;
+      }
+
+      var x = Session.get('lp_recent');
+      x.pop();
+      x.unshift(Session.get('lp_recentALL')[i]);
+      Session.set('lp_recent',x);
+      //console.log('after moving this is the index: ' + i); 
+      rightIndex.set(i);
+      leftIndex.set(j);
     },
 
     'click #btnLrgScrnWatchHowGroovliWorks': function(event) {

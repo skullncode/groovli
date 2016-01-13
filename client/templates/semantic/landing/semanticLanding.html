@@ -26,6 +26,11 @@
 			<div class="ui grid">
 				<div class="column large screen computer tablet only">
 					<img class="ui fluid image" src="../images/masthead_new.png">
+					{{#unless currentUser}}
+						<div id="facebook-login" class="ui large inverted right floated button">
+							<i class="facebook icon"></i>
+							Sign up with Facebook!</div>
+					{{/unless}}
 					<!--<a id="btnLrgScrnWatchHowGroovliWorks" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>-->
 				</div>
 			</div>
@@ -49,7 +54,7 @@
 								{{else}}
 							        <div id="facebook-login" class="ui facebook button">
 							        <i class="facebook icon"></i>
-							        Sign in with Facebook</div>
+							        Login</div>
 						        {{/if}}
 						    </div>
 						</div>
@@ -61,6 +66,11 @@
 					<div class="ui text container">
 				      <h1 class="ui inverted header">Your social jukebox</h1>
 				      <h2 class="ui inverted header">Make friends through music.</h2>
+				      	{{#unless currentUser}}
+							<div id="facebook-login" class="ui large inverted facebook button">
+							<i class="facebook icon"></i>
+							Sign up with Facebook!</div>
+						{{/unless}}
 				      <!--<a id="btnSmlScrnWatchHowGroovliWorks" class="ui large inverted button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>-->
 				      <h2></h2>
 				      <h2></h2>
@@ -101,26 +111,58 @@
 	  <div class="three wide computer column landingPageTrendingBoxBackground"></div>
   	</div>-->
 
-  	<!--new 3 piece info section-->
+  	<!-- Songs recently listened to -->  	
 
   	<div class="ui two column centered grid">
-  		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+  		<div class="two wide computer column landingPageTrendingBoxBackground"></div>
+  		<div class="one wide computer column landingPageTrendingBoxBackground">
+  			<div class="ui column centered grid">
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+	  			<button id="leftButtonListen" class="massive ui icon button">
+				  <i class="caret left icon"></i>
+				</button>
+			</div>
+  		</div>
 		<div class="ten wide column landingPageTrendingBoxBackground">
-			<h2 class="landingPageHeaderFont">Features</h2>
-		  <img class="ui fluid image" src="../images/3pieceInfoGroovli.png">
-		  <center>
-		  		{{#unless currentUser}}
-					<div id="facebook-login" class="massive ui facebook button">
-						<i class="facebook icon"></i>
-						Sign up with Facebook now!
-					</div>
-			  	{{/unless}}
-		  </center>
-	 	</div>
-	 	<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+			<h2 class="landingPageHeaderFont" style="color: #df455f">Recent Plays</h2>
+		  	<div class="ui eight column doubling grid container">
+		  		{{#if recentSongsLoaded}}
+			  		{{#each songsJustListened}}
+						<div class="column">
+							<div class="item">
+								<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
+								<div class="content">
+								<div class="header">{{trimmedTitle}}</div> <i>by</i>
+									{{sa}}
+								</div>
+								<div class="header"></div>
+								<div class="header"></div>
+							</div>
+						</div>
+					{{/each}}
+				{{else}}
+					<div class="ui active centered inline loader"></div>
+				{{/if}}
+		  	</div>
+  		</div>
+  		<div class="one wide computer column landingPageTrendingBoxBackground">
+  			<div class="ui column centered grid">
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+  				<div class="column landingPageTrendingBoxBackground"></div>
+	  			<button id="rightButtonListen" class="massive ui icon button">
+				  <i class="caret right icon"></i>
+				</button>
+			</div>
+  		</div>
+  		<div class="two wide computer column landingPageTrendingBoxBackground"></div>
   	</div>
-
-  	<!--end 3 piece info section-->
 
 <!-- How Groovli Works section - Mobile & Computer separate-->  	
 
@@ -131,7 +173,7 @@
 				<h2 class="landingPageHeaderFont" style="color:white;">How Groovli works</h2>
 				<h2></h2>
 			</div>
-		  <img class="ui fluid image" src="../images/groovli_how_works3.png">
+		  <img class="ui fluid image" src="../images/groovli_how_works.png">
 		  <center>
 		  		{{#unless currentUser}}
 					<div id="facebook-login" class="massive ui facebook button">
@@ -175,35 +217,30 @@
 		</div>
   	</div>
 
-<!-- Songs recently listened to -->  	
+  	<!--new 3 piece info section-->
 
   	<div class="ui two column centered grid">
   		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
 		<div class="ten wide column landingPageTrendingBoxBackground">
-			<h2 class="landingPageHeaderFont" style="color: #df455f">Someone just listened to...</h2>
-		  	<div class="ui four column doubling grid container">
-		  		{{#if recentSongsLoaded}}
-			  		{{#each songsJustListened}}
-						<div class="column">
-							<div class="item">
-								<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
-								<div class="content">
-								<div class="header">{{trimmedTitle}}</div> <i>by</i>
-									{{sa}}
-								</div>
-							</div>
-						</div>
-					{{/each}}
-				{{else}}
-					<div class="ui active centered inline loader"></div>
-				{{/if}}
-				<div class="column"></div>
-				<div class="column"></div>
-				<div class="column"></div>
-		  	</div>
-  		</div>
-  		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+			<div class="column">
+				<h2 class="landingPageHeaderFont">Features</h2>
+				<img class="ui fluid image" src="../images/3pieceInfoGroovli.png">
+				<center>
+				<!--{{#unless currentUser}}
+					<div id="facebook-login" class="massive ui facebook button">
+						<i class="facebook icon"></i>
+						Sign up with Facebook now!
+					</div>
+				{{/unless}}-->
+				</center>
+			</div>
+	 	</div>
+	 	<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+	 	<div class="column landingPageTrendingBoxBackground"></div>
+		<div class="column landingPageTrendingBoxBackground"></div>
   	</div>
+
+  	<!--end 3 piece info section-->
 
 <!-- Landing Page Footer section-->  	
 
