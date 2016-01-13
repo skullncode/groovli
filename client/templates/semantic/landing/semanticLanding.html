@@ -16,7 +16,7 @@
 							{{else}}
 						        <div id="facebook-login" class="ui facebook button">
 						        <i class="facebook icon"></i>
-						        Sign in with Facebook</div>
+						        Login</div>
 					        {{/if}}
 					    </div>
 					</div>
@@ -26,7 +26,7 @@
 			<div class="ui grid">
 				<div class="column large screen computer tablet only">
 					<img class="ui fluid image" src="../images/masthead_new.png">
-					<a id="btnLrgScrnWatchHowGroovliWorks" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
+					<!--<a id="btnLrgScrnWatchHowGroovliWorks" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>-->
 				</div>
 			</div>
 		</div>
@@ -61,7 +61,7 @@
 					<div class="ui text container">
 				      <h1 class="ui inverted header">Your social jukebox</h1>
 				      <h2 class="ui inverted header">Make friends through music.</h2>
-				      <a id="btnSmlScrnWatchHowGroovliWorks" class="ui large inverted button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>
+				      <!--<a id="btnSmlScrnWatchHowGroovliWorks" class="ui large inverted button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>-->
 				      <h2></h2>
 				      <h2></h2>
 				    </div>
@@ -71,8 +71,8 @@
   	</div>
   	{{>watchVimeoHowItWorksTemplate}}
 
-<!-- What's trending section-->
-	<div class="ui two column centered grid">
+<!-- What's trending section - TEMPORARILY COMMENTED OUT & REPLACED WITH FEATURES SECTION -->
+	<!--<div class="ui two column centered grid">
 		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
 		<div class="ten wide column landingPageTrendingBoxBackground">
 		  <div class="ui vertical stripe segment">
@@ -99,7 +99,28 @@
 		  </div>
 	  </div>
 	  <div class="three wide computer column landingPageTrendingBoxBackground"></div>
+  	</div>-->
+
+  	<!--new 3 piece info section-->
+
+  	<div class="ui two column centered grid">
+  		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
+		<div class="ten wide column landingPageTrendingBoxBackground">
+			<h2 class="landingPageHeaderFont">Features</h2>
+		  <img class="ui fluid image" src="../images/3pieceInfoGroovli.png">
+		  <center>
+		  		{{#unless currentUser}}
+					<div id="facebook-login" class="massive ui facebook button">
+						<i class="facebook icon"></i>
+						Sign up with Facebook now!
+					</div>
+			  	{{/unless}}
+		  </center>
+	 	</div>
+	 	<div class="three wide computer column landingPageTrendingBoxBackground"></div>
   	</div>
+
+  	<!--end 3 piece info section-->
 
 <!-- How Groovli Works section - Mobile & Computer separate-->  	
 
@@ -115,7 +136,7 @@
 		  		{{#unless currentUser}}
 					<div id="facebook-login" class="massive ui facebook button">
 						<i class="facebook icon"></i>
-						Sign in with Facebook
+						Sign up with Facebook now!
 					</div>
 			  	{{/unless}}
 		  </center>
@@ -147,7 +168,7 @@
 				{{#unless currentUser}}
 					<div id="facebook-login" class="fluid massive ui facebook button">
 						<i class="facebook icon"></i>
-						Sign in with Facebook
+						Sign up with Facebook now!
 					</div>
 			  	{{/unless}}
 			</center>
