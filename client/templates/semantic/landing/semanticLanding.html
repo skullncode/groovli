@@ -27,9 +27,11 @@
 				<div class="column large screen computer tablet only">
 					<img class="ui fluid image" src="../images/masthead_new.png">
 					{{#unless currentUser}}
-						<div id="facebook-login" class="ui large inverted right floated button">
+					<center>
+						<div id="facebook-login" class="ui massive red button">
 							<i class="facebook icon"></i>
 							Sign up with Facebook!</div>
+					</center>
 					{{/unless}}
 					<!--<a id="btnLrgScrnWatchHowGroovliWorks" class="ui inverted right floated button" title="help / intro / groovli walkthrough">Watch how Groovli works!</a>-->
 				</div>
@@ -122,7 +124,7 @@
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
-	  			<button id="leftButtonListen" class="massive ui icon button">
+	  			<button id="leftButtonListen" class="massive ui icon circular button">
 				  <i class="caret left icon"></i>
 				</button>
 			</div>
@@ -156,7 +158,7 @@
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
-	  			<button id="rightButtonListen" class="massive ui icon button">
+	  			<button id="rightButtonListen" class="massive ui icon circular button">
 				  <i class="caret right icon"></i>
 				</button>
 			</div>
@@ -166,6 +168,7 @@
 
 <!-- How Groovli Works section - Mobile & Computer separate-->  	
 
+<!-- TEMPORARILY COMMENTED OUT TO HAVE ONLY ONE GRAPHIC
   	<div class="computer tablet only ui two column centered grid">
   		<div class="three wide computer column homeHowGroovliWorksSegment"></div>
 		<div class="ten wide column homeHowGroovliWorksSegment">
@@ -215,9 +218,30 @@
 			  	{{/unless}}
 			</center>
 		</div>
+  	</div>-->
+  	<div class="computer tablet only ui two column centered grid">
+  		<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+		<div class="ten wide column homeHowGroovliWorksSegment">
+			<div class="row">
+				<h2 class="landingPageHeaderFont" style="color:white;">How Groovli works</h2>
+				<h2></h2>
+			</div>
+		  <img class="ui fluid image" src="../images/graphic_how_works.png">
+		  <center>
+		  		{{#unless currentUser}}
+					<div id="facebook-login" class="massive ui red button">
+						<i class="facebook icon"></i>
+						Sign up with Facebook now!
+					</div>
+			  	{{/unless}}
+		  </center>
+	 	</div>
+	 	<div class="three wide computer column homeHowGroovliWorksSegment"></div>
+	 	<div class="column homeHowGroovliWorksSegment"></div>
+	 	<div class="column homeHowGroovliWorksSegment"></div>
   	</div>
 
-  	<!--new 3 piece info section-->
+  	<!--new 3 piece info section
 
   	<div class="ui two column centered grid">
   		<div class="three wide computer column landingPageTrendingBoxBackground"></div>
@@ -225,20 +249,14 @@
 			<div class="column">
 				<h2 class="landingPageHeaderFont">Features</h2>
 				<img class="ui fluid image" src="../images/3pieceInfoGroovli.png">
-				<center>
-				<!--{{#unless currentUser}}
-					<div id="facebook-login" class="massive ui facebook button">
-						<i class="facebook icon"></i>
-						Sign up with Facebook now!
-					</div>
-				{{/unless}}-->
-				</center>
+
 			</div>
 	 	</div>
 	 	<div class="three wide computer column landingPageTrendingBoxBackground"></div>
 	 	<div class="column landingPageTrendingBoxBackground"></div>
 		<div class="column landingPageTrendingBoxBackground"></div>
   	</div>
+  	-->
 
   	<!--end 3 piece info section-->
 
