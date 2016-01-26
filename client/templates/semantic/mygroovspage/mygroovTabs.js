@@ -83,11 +83,14 @@ function getYearRangeForMyGroovs() {
 		    console.log('Encountered error while trying to get date range for user songs!');
 		  else
 		  {
-		    //console.log("GOT back this date range: ");
-		    //console.log(result);
+		    console.log("GOT back this date range: ");
+		    console.log(result);
 		    Session.set('mgdr', result);
 		    if(result.length == 2)
-		    	Session.set('selyr', result[1]);
+		    {
+		    	//Session.set('selyr', result[1]);
+		    	Session.set('selyr','all years'); //choose to begin my groovs with ALL groovs not the latest year
+		    }
 		    else if(result.length == 1)
 		    	Session.set('selyr', result[0]);
 

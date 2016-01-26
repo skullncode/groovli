@@ -46,3 +46,4 @@ check
 reactive-var
 meteorhacks:aggregate
 force-ssl
+chart:chart

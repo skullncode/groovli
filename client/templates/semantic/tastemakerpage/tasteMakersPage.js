@@ -1,6 +1,7 @@
 Session.setDefault('playerStarted', false);
 Session.setDefault('existingTMCursor', 0);
-Session.setDefault('tmSongsLoaded', false)
+Session.setDefault('tmSongsLoaded', false);
+var tastemakersPageRandomized = new ReactiveVar(false);
 var pagedTMlistSongsLoaded = new ReactiveVar(false);
 var pagingLimit = 10;
 
@@ -61,10 +62,33 @@ Template.tasteMakersPage.helpers({
     return Session.get('fLen');
   },
   tastemakerSongsExist: function() {
-    if(Session.get('fLen') > 0)
+    if(Session.get('fLen') > 0 && tastemakersPageRandomized.get())
       return true;
     else
       return false;
+  },
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    if(pagedTMlistSongsLoaded.get() && !tastemakersPageRandomized.get() && Session.get('tmSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      var x = _.range(0, Session.get('tmSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        //console.log('GONNA RELOAD PAGE TO RANDOMIZE SELECTION');
+        pagedTMlistSongsLoaded.set(false);
+        Session.set('existingTMCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('friends');
+      }
+      //console.log('my groovs has been randomized now!!!');
+      tastemakersPageRandomized.set(true);
+    }
+    else if(pagedTMlistSongsLoaded.get() && Session.get('tmSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      tastemakersPageRandomized.set(true);
+    }
   },
   startPlayer: function() {
     if(!Session.get('playerStarted') && Session.get('playerLoaded'))
@@ -350,6 +374,12 @@ Template.tasteMakersPage.events({
             eventAction: 'paged forwards for tastemakers page'
           });
     }
+});
+
+Template.tasteMakersPage.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedTMlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  tastemakersPageRandomized.set(false);
 });
 
 Template.tasteMakersPage.onCreated(function() {

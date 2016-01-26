@@ -298,6 +298,12 @@ Template.stmlist.events({
     }
 });
 
+Template.stmlist.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedTMlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  Session.set('tmspRndmzd', false);
+});
+
 Template.stmlist.onCreated(function() {
   var self = this;
   self.autorun(function() {

@@ -319,12 +319,19 @@ Template.smglist.events({
     }
 });
 
+Template.smglist.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedMGlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  Session.set('mgspRndmzd', false);
+});
+
 Template.smglist.onCreated(function() {
   var self = this;
   self.autorun(function() {
     //var postId = FlowRouter.getParam('postId');
     if(!_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
     {
+      //console.log("LOADING THE HOME mode!!!!!");
       //console.log('GONNA get subscription of songs for MY GROOVS with this cursor!');
       //console.log(Session.get('existingMGCursor'));
       //console.log('SONG length: ');

@@ -88,6 +88,9 @@ function setLocationForUser(uid)
 }
 
 Meteor.methods({
+	saveLastLoginTimestamp: function(loggedInUser){
+		Meteor.users.update({_id: loggedInUser.userId()},{$set:{fbFriends: latestFriendList}})
+	},
 	updateFBFriendList: function(loggedInUser)
 	{
 		//console.log('THIS IS THE METEOR USER OBJECT!!!');

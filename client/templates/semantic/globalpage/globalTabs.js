@@ -91,8 +91,16 @@ function getGlobalYearRange() {
 		    var lastGlYrIndex = Session.get('gldr').length-1;
 		    //console.log("LAST INDEX GLL INDEX IS: ");
 		    //console.log(lastGlYrIndex);
-		    Session.set('glSelyr', result[lastGlYrIndex]); //set last year in global date range as selected year
+		    if(result.length == 2)
+		    {
+		    	//Session.set('selyr', result[1]);
+		    	Session.set('glSelyr','all years'); //choose to begin my groovs with ALL groovs not the latest year
+		    }
+		    else if(result.length == 1)
+		    	Session.set('glSelyr', result[lastGlYrIndex]); //set last year in global date range as selected year
+
 		    Session.set('gldrl', true);
+
 		  }
 		});
 	}

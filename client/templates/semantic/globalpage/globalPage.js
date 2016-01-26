@@ -2,6 +2,7 @@ Session.setDefault('playerStarted', false);
 Session.setDefault('existingSGCursor', 0);
 Session.setDefault('sgSongsLoaded', false)
 //Session.setDefault('sgSongCursor', undefined)
+var globalPageRndmzd = new ReactiveVar(false);
 var pagedGlistSongsLoaded = new ReactiveVar(false);
 var pagingLimit = 10;
 
@@ -38,11 +39,41 @@ Template.globalPage.helpers({
   },
   globalSongsExist: function() {
     //console.log('CHECKING length of friends songs: ' + Session.get('tastemakersSongsLength'));
-    if(Session.get('gLen') > 0)
+    var globalSongsLoaded = Session.get('gLen') > 0;
+    if(globalSongsLoaded && globalPageRndmzd.get())
       return true;
     else
       return false;
   },
+
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    if(pagedGlistSongsLoaded.get() && !globalPageRndmzd.get() && Session.get('sgSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      var x = _.range(0, Session.get('sgSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        //console.log('GONNA RELOAD PAGE TO RANDOMIZE SELECTION');
+        pagedGlistSongsLoaded.set(false);
+        Session.set('existingSGCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('global');
+      }
+      //console.log('my groovs has been randomized now!!!');
+      globalPageRndmzd.set(true);
+    }
+    else if(pagedGlistSongsLoaded.get() && Session.get('sgSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      globalPageRndmzd.set(true);
+    }
+    else
+    {
+      //console.log('ELSE BLOCK OF RANDOMIZATION!!!!!');
+    }
+  },
+
   startPlayer: function() {
     if(!Session.get('playerStarted') && Session.get('playerLoaded'))
     {
@@ -248,6 +279,12 @@ Template.globalPage.events({
     }
 });
 
+Template.globalPage.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedGlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  globalPageRndmzd.set(false);
+});
+
 Template.globalPage.onCreated(function() {
   var self = this;
   self.autorun(function() {
@@ -287,6 +324,30 @@ Template.globalPage.onCreated(function() {
         Session.set('sgSongCount', Counts.get('songCountForGlobalBasedOnYearSelection'));
         self.subscribe('30songsForGlobalBasedOnYearSelection', excludedIDsForGlobalFilter, Session.get('glSelyr'), Session.get('selGens'), Session.get('existingSGCursor'), {onReady: onSGSubReady});
         //console.log("**************************in Global list - FINISHED refreshing year SPECIFIC subscription!!!!!");
+      }
+      else if(Session.get('glSelyr') == 'all years')
+      {
+        //console.log('GONNA SWITCH TO GETTING ALLLLLL YOUR SONGS from ALLLLLL YOUR years!!!');
+        if(_.isEmpty(Session.get('selGens')))
+        {
+          iHist(true);
+          resetPlayedLengthSpecificToTab('global');
+          Session.set('sgSongsLoaded', false);
+          var sgSelector = getMongoSelectorForGlobal();
+          self.subscribe("counterForGlobal", sgSelector)
+          Session.set('sgSongCount', Counts.get('songCountForGlobal'));
+          self.subscribe('30songsForGlobal', sgSelector, Session.get('existingSGCursor'), {onReady: onSGSubReady});
+        }
+        else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
+        {
+          iHist(true);
+          resetPlayedLengthSpecificToTab('global');
+          var sgSelector = getMongoSelectorForGlobal();
+          Session.set('sgSongsLoaded', false);
+          self.subscribe("counterForGlobalBasedOnGenreSelection", sgSelector, Session.get('selGens'))
+          Session.set('sgSongCount', Counts.get('songCountForGlobalBasedOnGenreSelection'));
+          self.subscribe('30songsForGlobalBasedOnGenreSelection', sgSelector, Session.get('selGens'), Session.get('existingSGCursor'), {onReady: onSGSubReady});
+        }
       }
       //}
     }

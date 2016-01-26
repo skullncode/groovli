@@ -13,6 +13,12 @@
 	      {{/unless}}
 	      <div class="menu">
 	        <div class="header">Choose Year</div>
+	        {{#unless globalYearRangeOnlyHasOneYear}}
+		        <div class="item" data-value="all years" data-text="all years">
+			      <i class="calendar mini circular icon"></i>
+			      all years
+			    </div>
+		    {{/unless}}
 	        {{#each globalYearRange}}
 	        	<div class="item {{globalActiveYearHelper this}}" data-text="{{this}}">{{this}}</div>
 	        {{/each}}

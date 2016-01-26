@@ -241,6 +241,12 @@ Template.sglist.events({
     }
 });
 
+Template.sglist.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedGlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  Session.set('sgspRndmzd', false);
+});
+
 Template.sglist.onCreated(function() {
   var self = this;
   self.autorun(function() {

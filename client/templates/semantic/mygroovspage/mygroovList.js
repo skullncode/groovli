@@ -3,6 +3,7 @@ Session.setDefault('playerStarted', false);
 Session.setDefault('existingMGCursor', 0);
 Session.setDefault('mgSongsLoaded', false)
 //Session.setDefault('mgSongCursor', undefined)
+var myGroovsPageRandomized = new ReactiveVar(false);
 var pagedMGlistSongsLoaded = new ReactiveVar(false);
 var pagingLimit = 10;
 
@@ -49,10 +50,33 @@ Template.mygroovList.helpers({
     var anySongsProcessedAndLoaded = (Session.get('mLen') > 0 || Session.get('fLen') > 0 || Session.get('gLen') > 0);
     //console.log('HAS THE PLAYER LOADED OR NOT:');
     //console.log(Session.get('playerLoaded'));
-    if(anySongsProcessedAndLoaded && Session.get('playerLoaded'))
+    if(anySongsProcessedAndLoaded && Session.get('playerLoaded') && myGroovsPageRandomized.get())
       return true;
     else
       return false;
+  },
+  randomizeSongPageSelectionOnFirstLoad: function() {
+    if(pagedMGlistSongsLoaded.get() && !myGroovsPageRandomized.get() && Session.get('mgSongCount') > 0)
+    {
+      //console.log('GONNA RANDOMIZE PAGE SELECTION NOWWWWWWWW!!!!');
+      var x = _.range(0, Session.get('mgSongCount'), pagingLimit);
+      var y = _.random(x.length-1)
+      if(y > 0)
+      {
+        //console.log('GONNA RELOAD PAGE TO RANDOMIZE SELECTION');
+        pagedMGlistSongsLoaded.set(false);
+        Session.set('existingMGCursor', x[y]);
+        iHist(true);
+        resetPlayedLengthSpecificToTab('me');
+      }
+      //console.log('my groovs has been randomized now!!!');
+      myGroovsPageRandomized.set(true);
+    }
+    else if(pagedMGlistSongsLoaded.get() && Session.get('mgSongCount') == 0)
+    {
+      //console.log('user does not have any personal groovs so randomization is done!!!!');
+      myGroovsPageRandomized.set(true);
+    }
   },
   fixMGSongCursor: function() {
     if(Session.get('existingMGCursor') > Session.get('mgSongCount')) //If page count is past total count then reset back to 0
@@ -274,6 +298,12 @@ Template.mygroovList.events({
         eventAction: 'paged forwards for my groovs page'
       });
     }
+});
+
+Template.mygroovList.onRendered(function () {
+  //console.log('RENDERING THE GLOBAL PAGE AGAIN!!!!');
+  pagedMGlistSongsLoaded.set(false); //this enables the page to get randomized on EVERY SINGLE LOAD not just a page refresh
+  myGroovsPageRandomized.set(false);
 });
 
 Template.mygroovList.onCreated(function() {

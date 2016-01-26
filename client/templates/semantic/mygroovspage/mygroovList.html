@@ -1,5 +1,6 @@
 <template name="mygroovList">
 	<div class="ui bottom attached tab segment active" data-tab="mygroovs">
+		{{randomizeSongPageSelectionOnFirstLoad}}
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if myGroovsExist}}
 	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{mgSongCount}}</div>

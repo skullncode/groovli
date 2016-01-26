@@ -1,5 +1,6 @@
 <template name="globalPage">
 	<div class="ui bottom attached tab segment active" data-tab="global">
+		{{randomizeSongPageSelectionOnFirstLoad}}
 		{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
 		{{#if globalSongsExist}}
 	    	<div class="ui label"><i class="music icon"></i> {{currentCursorPosition}} of {{sgSongCount}}</div>

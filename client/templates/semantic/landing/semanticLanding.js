@@ -31,7 +31,7 @@ Template.semanticLanding.onRendered(function () {
         eventAction: 'anonymous user loaded landing page'
     });
   }
-  getTrendingSongs();
+  //getTrendingSongs();
   getRecentListens();
 });
 
@@ -151,14 +151,28 @@ Template.semanticLanding.events({
         //Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'read_stream', 'email', 'publish_actions', 'user_activities', 'user_interests', 'user_friends', 'user_about_me', 'user_status', 'user_posts', 'user_actions.music', 'user_actions.video', 'user_location', 'user_hometown']}, function(err){
           Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'email', 'user_friends', 'user_posts']}, function(err){
             if (err) {
+                amplitude.logEvent("facebook login failed");
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'landing',
+                  eventAction: 'facebook login failed'
+                });
                 throw new Meteor.Error("Facebook login failed");
             }
             else
             {
                 //after logging in update FB friend list
+                console.log('This is the current METEOR last login timestamp:');
+                console.l
                 Meteor.call('updateFBFriendList', Meteor.user());
-                //Router.go('/songboard');
+                amplitude.logEvent("click login with facebook button");
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'landing',
+                  eventAction: 'login with facebook'
+                });
                 FlowRouter.go('/songboard');
+                //FlowRouter.go('/welcome');
             }
         });
     },
@@ -187,6 +201,12 @@ Template.semanticLanding.events({
 
     'click #clickHomeFromLanding': function(event) {
       FlowRouter.go('/songboard');
+      amplitude.logEvent("logged in user clicks home button");
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'landing',
+        eventAction: 'logged in user clicks home button'
+      });
     },
 
     'click #leftButtonListen': function(event) {
@@ -219,6 +239,12 @@ Template.semanticLanding.events({
       //console.log('after moving this is the index: ' + i); 
       leftIndex.set(i);
       rightIndex.set(j);
+      amplitude.logEvent("user clicks left on recent plays");
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'landing',
+        eventAction: 'user clicks left on recent plays'
+      });
     },
 
     'click #rightButtonListen': function(event) {
@@ -251,6 +277,12 @@ Template.semanticLanding.events({
       //console.log('after moving this is the index: ' + i); 
       rightIndex.set(i);
       leftIndex.set(j);
+      amplitude.logEvent("user clicks right on recent plays");
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'landing',
+        eventAction: 'user clicks right on recent plays'
+      });
     },
 
     'click #btnLrgScrnWatchHowGroovliWorks': function(event) {
