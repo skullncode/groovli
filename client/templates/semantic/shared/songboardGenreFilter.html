@@ -1,0 +1,16 @@
+<template name="songboardGenreFilter">
+	<!--experimenting with moving flylists outside of menu-->
+	<div class="item">
+		<div class="ui pointing below green label">
+	      Filter by:
+	    </div>
+	    <button id="clearGenreFilter" class="ui mini circular {{#if genreFilterEmpty}}disabled{{/if}} red icon button"><i class="remove icon"></i></button>
+	</div>    
+	<select id="flylistGenres" name="flylistGenres" class="ui fluid search labeled icon dropdown flylistGenres" multiple="">
+		<option value="">Genre</option>
+		{{#each genresForFilter}}
+			<option value="{{this}}">{{this}}</option>
+		{{/each}}
+	</select>
+	<!--experimenting with moving flylists outside of menu-->
+</template>

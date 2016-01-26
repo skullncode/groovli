@@ -24,25 +24,24 @@ Template.tasteMakersPage.helpers({
 
         Session.set('fLen', tmsCollection.length);
         updateMySongs(tmsCollection, 'friends');
+        //updatePlayableTabsIfNecessary();
         initializePlayableTabs(); //NOT required if publication is not being initially limited
-        updatePlayableTabsIfNecessary();
-        
         return tastemakerSongList;
       }
       else if(!_.isEmpty(Session.get('selGens')))//FOR NEW FLYLIST FILTER FEATUREEEE
       {
-        console.log("in TASTEMAKERS SOngs helper to return back genre selected SONGSSS!!!!");
+        //console.log("in TASTEMAKERS SOngs helper to return back genre selected SONGSSS!!!!");
         if(!_.isEmpty(Session.get('genl')))
         {
           var tstmkrsForSelGens = [];
           var sel = getMongoSelectorForFriendSongs(Session.get('seltstmkrid'));
           tastemakerSongList = Songs.find(sel,{sort: {'sharedBy.uid': 1, 'sharedBy.systemDate': -1 }});
           var tstmkrsForSelGens = tastemakerSongList.fetch();
-          console.log("THIS IS THE Sub list length for the Tastemakers tab:");
-          console.log(tstmkrsForSelGens.length);
+          //console.log("THIS IS THE Sub list length for the Tastemakers tab:");
+          //console.log(tstmkrsForSelGens.length);
           Session.set('fLen', tstmkrsForSelGens.length);
           updateMySongs(tstmkrsForSelGens, 'friends');      
-
+          initializePlayableTabs(); //NOT required if publication is not being initially limited
           return tstmkrsForSelGens;
         }
       }

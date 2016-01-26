@@ -83,8 +83,8 @@ function getYearRangeForMyGroovs() {
 		    console.log('Encountered error while trying to get date range for user songs!');
 		  else
 		  {
-		    console.log("GOT back this date range: ");
-		    console.log(result);
+		    //console.log("GOT back this date range: ");
+		    //console.log(result);
 		    Session.set('mgdr', result);
 		    if(result.length == 2)
 		    {

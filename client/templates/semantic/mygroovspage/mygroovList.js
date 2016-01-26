@@ -26,7 +26,7 @@ Template.mygroovList.helpers({
           Session.set('mLen', myGroovsForSelYear.length);
           updateMySongs(myGroovsForSelYear, 'me');
           initializeMyGroovTabs();
-          updatePlayableTabsIfNecessary();
+          //updatePlayableTabsIfNecessary();
           
           return myGroovsForSelYear;
         //}
@@ -166,7 +166,7 @@ function updatePlayableTabsIfNecessary() {
   {
     if(_.indexOf(temp, 'me') === -1)
     {
-      //if(Session.get('pSongsLength') > 0)
+      //if(Session.get('tastemakersSongsLength') > 0)
       if(Session.get('mLen') > 0)
       {
         temp.push('me');

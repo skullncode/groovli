@@ -3,7 +3,7 @@ Template.listenToSimilar.events({
         if(!_.isUndefined(Session.get('CS')) && !_.isEmpty(Genres.find().fetch()))
         {
 
-        //console.log('GOING TO MAKE A FLYLIST WITH THESE GENRES: ');
+        //console.log('GOING TO switch the flylist genre selector to this: ');
 
         var genreListSimilarToThisTrack = [];
 
@@ -16,12 +16,14 @@ Template.listenToSimilar.events({
 
         //console.log(genreListSimilarToThisTrack);
 
-        var nameOfFlylist = "Similar to - " + Session.get('CS').sa;
+        changeGenreSelectionsProgrammatically(genreListSimilarToThisTrack);
+
+        //var nameOfFlylist = "Similar to - " + Session.get('CS').sa;
 
         //console.log(nameOfFlylist);
 
         
-        Meteor.call('createNewFlylist',Meteor.user()._id, Meteor.user().profile.name, Meteor.user().services.facebook.id, nameOfFlylist, genreListSimilarToThisTrack, function(error,result){
+        /*Meteor.call('createNewFlylist',Meteor.user()._id, Meteor.user().profile.name, Meteor.user().services.facebook.id, nameOfFlylist, genreListSimilarToThisTrack, function(error,result){
           if(error){
               console.log(error.reason);
           }
@@ -49,7 +51,7 @@ Template.listenToSimilar.events({
             //toastr.success("Successfully created new flylist for songs similar to: "+ Session.get('CS').st + "<br><br><b><i> approximately "+Session.get('genl').length+" matching songs<br><br>NOTE: Select more genres to get more songs!</i></b><br><br> going forward, Groovli will only play songs matching the selected genres!");         
             return true;
           }
-        });
+        });*/
       }
       else
       {

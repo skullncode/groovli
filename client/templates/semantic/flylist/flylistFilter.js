@@ -412,6 +412,7 @@ function updateCurrentFlylistGenres(currentGenreSel) {
     }
     else
     {
+      console.log('SOMETHING inside FLYLIST FILTERRRRRRR CLEARED ALL THE GENRES!!!!!!!');
       toastr.success("All genre selections removed; going forward, Groovli will play all songs!");
     }
 

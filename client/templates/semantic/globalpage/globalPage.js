@@ -26,7 +26,7 @@ Template.globalPage.helpers({
         Session.set('gLen', songCollection.length);
         updateMySongs(songCollection, 'global');
         initializePlayableTabs(); //NOT required if publication is not being initially limited
-        updatePlayableTabsIfNecessary();
+        //updatePlayableTabsIfNecessary();
         return globalSongList;
       }
       else
