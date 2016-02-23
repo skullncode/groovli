@@ -61,8 +61,8 @@ if (Meteor.isClient) {
             //console.log('#########################GOT BACK AN ID  FROM THE SERVER:');
             //console.log(result);
             //idForUserFollowingArtist.set(result[0]._id);
-
-            Session.set(result[0].fbid+'_id', result[0]._id);
+            if(!_.isEmpty(result))
+              Session.set(result[0].fbid+'_id', result[0]._id);
             idsLoadedForPeople.set(true);
             //userIDsForTastemakers.set(result);
           };

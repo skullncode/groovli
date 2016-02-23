@@ -987,8 +987,8 @@ Meteor.publish("userData", function () {
           "createdAt": 1,
           "status": 1,
           "baseLocation": 1,
-          "notifsEnabled": 1//,
-          //"lastToLastLogin":1
+          "notifsEnabled": 1,//,
+          "secondaryIP":1
         }
      });
   } else {

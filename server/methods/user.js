@@ -165,6 +165,11 @@ Meteor.methods({
 		var followerList = Meteor.users.find({'tastemakers.fbid': String(fbid)}).fetch();
 		return followerList.length
 	},
+	addSecondaryIPAddress: function(metuserID, ip){
+		console.log('###################### adding secondary IP to this user:' + metuserID);
+		console.log(ip);
+		Meteor.users.update({_id: metuserID},{$set:{secondaryIP: ip}});
+	},
 	addAdminRolesToKing: function(kingEmail)
 	{
 		if(kingEmail === 'reverieandreflection@gmail.com')

@@ -24,6 +24,14 @@ Template.semanticUserMaster.helpers({
 		if(!_.isUndefined(this.status.lastLogin))
 			return new moment(this.status.lastLogin.date).calendar();
 	},
+	userIP: function() {
+		if(!_.isUndefined(this.status.lastLogin))
+			return this.status.lastLogin.ipAddr;
+	},
+	scndIP: function() {
+		if(!_.isUndefined(this.status.lastLogin))
+			return this.secondaryIP;
+	},
 	locationCountry: function() {
 		//console.log('THIS IS THE LOCATION deets');
 		//console.log(this.baseLocation);

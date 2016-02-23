@@ -37,7 +37,10 @@ if (Meteor.isClient) {
 
 	var setBaseLocationForUsers = function () {
 		if(!_.isUndefined(Meteor.user()) && !_.isNull(Meteor.user()) && !_.isUndefined(Meteor.user().services) && !_.isUndefined(Meteor.user().services.facebook))
+		{
 			Meteor.call('setLocationForUnsetUsers', Meteor.user().services.facebook.id);
+			Meteor.call('addSecondaryIPAddress',Meteor.user()._id, headers.get("x-forwarded-for"));//added this after user status stopped picking up valid IP addresses
+		}
 	}
   	//resetSession();
   	if(userCheck())

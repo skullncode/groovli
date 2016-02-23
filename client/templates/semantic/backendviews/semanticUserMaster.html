@@ -9,6 +9,8 @@
             <th>Name</th>
             <th>FB ID</th>
             <th>Joined</th>
+            <th>IP</th>
+            <th>2ndIP</th>           
             <th>Country</th>
             <th>City</th>
             <th>Last Login</th>
@@ -22,7 +24,7 @@
         </thead>
         <tbody>
         {{#if userListLoaded}}
-          <td colspan="13"><h3>Online Users</h3></td>
+          <td colspan="15"><h3>Online Users</h3></td>
           {{#each onlineUsers}}
             <tr>
               {{getTotalListenCountForUser _id}}
@@ -44,6 +46,8 @@
               </h4></a></td>
               <td>{{services.facebook.id}}</td>
               <td>{{memberSince}}</td>
+              <td>{{userIP}}</td>
+              <td>{{scndIP}}</td>
               <td>{{locationCountry}}</td>
               <td>{{locationCity}}</td>              
               <td>{{lastLogin}}</td>
@@ -55,7 +59,7 @@
               <td>{{tastemakers.length}}</td>
             </tr>
           {{/each}}
-          <td colspan="13"><h3>Offline Users</h3></td>
+          <td colspan="15"><h3>Offline Users</h3></td>
           {{#each offlineUsers}}
             <tr>
               {{getTotalListenCountForUser _id}}
@@ -77,6 +81,8 @@
               </h4></a></td>
               <td>{{services.facebook.id}}</td>
               <td>{{memberSince}}</td>
+              <td>{{userIP}}</td>
+              <td>{{scndIP}}</td>
               <td>{{locationCountry}}</td>
               <td>{{locationCity}}</td>              
               <td>{{lastLogin}}</td>
@@ -97,7 +103,7 @@
           <th colspan="1">
             <p><strong>{{currentCursorPosition}} of {{userCount}} users</strong></p>                    
           </th>
-          <th colspan="12">
+          <th colspan="14">
             <div class="ui right floated pagination menu">
               <button id="previousUsers" class="ui icon item {{#if userListDoesNotRequirePaging}}disabled{{/if}} button">
                 <i class="left chevron icon"></i>
