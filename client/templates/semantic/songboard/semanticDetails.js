@@ -19,11 +19,15 @@ Template.semanticDetails.helpers({
   hasGenres: function() {
     if(!_.isEmpty(currentSong))
     {
-      var ca = Artists.findOne({name: currentSong.sa})
+      /*var ca = Artists.findOne({name: currentSong.sa})
       if((!_.isUndefined(currentSong.genre) && !_.isEmpty(currentSong.genre)) || (!_.isUndefined(ca) && !_.isUndefined(ca.genres) && !_.isEmpty(ca.genres)))
         return true;
       else
+        return false;*/
+      if(_.isEmpty(Genres.find().fetch()))
         return false;
+      else
+        return true;
     }
     else
       return false;
@@ -45,7 +49,7 @@ Template.semanticDetails.helpers({
         return currentSongArtistObj.get()._id;
     }
   },
-  
+
   coveringArtistIDForName: function() {
     var cs = Session.get('CS');
     if(!_.isUndefined(cs) && !_.isEmpty(cs) && !_.isUndefined(cs.sa) && !_.isNull(coveringArtistObj.get()))
@@ -71,7 +75,7 @@ Template.semanticDetails.helpers({
       return originalArtistName;
     }
   },
-  
+
   artistTrackAreNotSame: function() {
     //console.log('CHECKING for artist and track!!');
     var cs = Session.get('CS');
@@ -319,7 +323,7 @@ function getExtendedGenreListForCurrentSong(){
         var cleaned = x.genres;
         //console.log('BEFORE SPLICE 1:');
         //console.log(cleaned);
-        cleaned = _.without(cleaned, null, undefined, 'all'); 
+        cleaned = _.without(cleaned, null, undefined, 'all');
         //console.log('BEFORE RETURNING:');
         //console.log(cleaned);
         if(!_.isEmpty(cleaned))

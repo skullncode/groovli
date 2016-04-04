@@ -1,0 +1,24 @@
+<template name="semanticPlayerGenreItem">
+  <a href="/genre/{{this._id}}" target="blank" class="ui green label songGenrePopup {{this._id}}"><b>{{this.name}}</b></a>
+  <div class="ui popup">
+      <div class='content' style='padding-bottom: 0px;'>
+        <div class='content'>
+          <div class='header'>
+            <h3>{{this.name}}</h3>
+          </div>
+          <hr>
+          <div class='extra content'>
+            <a target='_blank' href="/genre/{{this._id}}" class='blue tiny ui button'>
+            View Genre Page
+            </a>
+          </div>
+          <div class='extra content'>
+            <a id='filterForThisGenre' class='green tiny ui button'>Listen to ONLY this genre!</a>
+          </div>
+          <div class='extra content'>
+            <a id='addToExistingFilter' class='green tiny ui button'>Add this genre to existing filter!</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</template>

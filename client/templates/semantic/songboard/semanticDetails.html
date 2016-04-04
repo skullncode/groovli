@@ -14,7 +14,7 @@
 			            <div class="item"><div class="header"><h2>{{currentSong.coveredBy}}</h2></div></div></a>
 			          {{else}}
 			            <div class="item"><div class="header"><h2>{{currentSong.coveredBy}}</h2></div></div>
-			          {{/if}}		          		
+			          {{/if}}
 		          {{else}}-->
 			          {{#if artistHasPage}}
 			            <a href="{{pathFor 'artist' _id=artistIDForName }}" target='blank' title="artist page">
@@ -34,10 +34,13 @@
 			            <div class="item"><div class="content"><b>Genres:</b></div></div>
 			            	<div class="item"><div class="content">
 				              {{#each extendedGenres}}
-				                    <a href="/genre/{{this._id}}" target="blank" class="ui green label"><b>{{this.name}}</b></a>
+				                    <!--<a href="/genre/{{this._id}}" target="blank" class="ui green label"><b>{{this.name}}</b></a>-->
+														{{>semanticPlayerGenreItem}}
 				              {{/each}}
 		            		</div></div>
 	            	{{/if}}
+							{{else}}
+								<b><i>no identified genres for this song</i></b>
 		          {{/if}}
 		          {{#if cover}}
 		            {{checkIfCoveringArtistHasPage currentSong.coveredBy}}

@@ -1,7 +1,7 @@
 ServiceConfiguration.configurations.remove({
     service: 'facebook'
 });
- 
+
 ServiceConfiguration.configurations.insert({
     service: 'facebook',
     //appId: '848177241914409', // DEV APP
