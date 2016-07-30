@@ -1,0 +1,18 @@
+<template name="commentBox">
+	<div class="media">
+		<div class="media-left">
+		    <img class="img-rounded headerProfileImage" style="width:40px;height:40px;" src="http://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=square" title="Don't be quiet! Express yourself {{currentUser.services.facebook.first_name}}!!">
+		</div>
+		<div class="media-body comment">
+			<form class="form-inline">
+				<div class="commentArea">
+					<textarea id="commentContent" class="commentBox" placeholder="Share your thoughts about this song"></textarea>
+					&nbsp;&nbsp;&nbsp;
+		        	<button id="btnPostComment" class="btn btn-success commentButton">
+		        		<span>Post!!</span>
+		        	</button>
+	        	</div>
+        	</form>
+		</div>
+	</div>
+</template>

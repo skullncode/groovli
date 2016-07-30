@@ -30,7 +30,6 @@ arillo:flow-router-helpers
 tmeasday:publish-counts
 semantic:ui-css
 simple:json-routes
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -49,3 +48,6 @@ force-ssl
 chart:chart
 rzymek:randomcolor
 gadicohen:headers
+standard-minifier-css
+standard-minifier-js
+nimble:restivus

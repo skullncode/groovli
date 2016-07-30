@@ -1,0 +1,56 @@
+<template name="profileTabs">
+	{{retrieveListenHistoryForUser}}
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs listenHistoryTab" role="tablist" id="profileTabs">
+			<li role="presentation" class="active"><a href="#listenHistory" aria-controls="listenHistory" role="tab" data-toggle="tab">history</a></li>
+			{{#if userProfileIsYou}}
+				<li role="presentation"><a href="#mutualListen" aria-controls="mutualListen" role="tab" data-toggle="tab">mutual</a></li>
+			{{/if}}
+			<li role="presentation"><a href="#favoriteSongs" aria-controls="favoriteSongs" role="tab" data-toggle="tab">favorites</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="listenHistory">
+				<ul id='listenHistory' class="listenHistory">
+				<li>
+					{{#each listenHistoryForUser}}
+						{{> historyItem}}
+					{{/each}}
+				</li>
+				</ul>
+				<h2><strong>{{historyCount}}</strong></h2>                    
+	            <p><small>most recent listens</small></p>
+			</div>
+			{{#if userProfileIsYou}}
+				<div role="tabpanel" class="tab-pane fade" id="mutualListen">
+					<ul id='listenHistory' class="listenHistory">
+						<li>
+							{{#each mutualListenHistoryForUser}}
+								{{> mutualItem}}
+							{{/each}}
+						</li>
+					</ul>
+					<h2><strong>{{mutualListenHistoryMatchCount}}</strong></h2>                    
+	            	<p><small>song matches</small></p>
+				</div>
+			{{/if}}
+			<div role="tabpanel" class="tab-pane fade" id="favoriteSongs">
+				<ul id='listenHistory' class="listenHistory">
+				<li>
+					{{#each favoritesForUser}}
+						{{> faveItem}}
+					{{/each}}
+				</li>
+				</ul>
+				<h2><strong>{{faveCount}}</strong></h2>
+				{{#if pluralFaves}}               
+	            	<p><small>favorite songs</small></p>
+	            {{else}}
+	            	<p><small>favorite song</small></p>
+	            {{/if}}
+			</div>
+		</div>
+	</div>
+</template>

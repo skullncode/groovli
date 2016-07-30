@@ -596,5 +596,15 @@ Meteor.methods({
 	      	console.log('################ successfully UPDATED FB tastemakers Object: ' + userID);
 	      }
 		});
+	},
+	updateMobileFBToken: function(userObj, accessToken)
+	{
+		//var foundUser = Meteor.users.findOne({'services.facebook.email': String(userObj.services.facebook.email)});
+		if(!_.isUndefined(userObj) && !_.isNull(userObj))
+		{
+			Meteor.users.update({'services.facebook.email': userObj.services.facebook.email},{$set:{mobileFBToken: accessToken}});
+		}
+		var foundUser = Meteor.users.findOne({'services.facebook.email': String(userObj.services.facebook.email)});
+		return foundUser;
 	}
 });

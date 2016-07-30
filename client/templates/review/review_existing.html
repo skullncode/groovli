@@ -1,0 +1,25 @@
+<template name="reviewExisting">
+	<h1>Review Existing Songs</h1>
+	{{retrieveExistingSongsForReview}}
+	<ul id='reviewExisting' class="reviewItems">
+		<li>
+			{{#each existingSongsForReview}}
+				{{> reviewItem}}
+			{{/each}}
+		</li>
+	</ul>
+	<ul class='pager'>
+		<li id='first' class='previous'><a href='#'>|&larr; First</a></li>
+		<li id='previous' class='previous'><a href='#'>&larr; {{prevText}}</a></li>
+		<li id='last' class='next'><a href='#'>Last &rarr;|</a></li>
+		<li id='next' class='next'><a href='#'>{{nextText}} &rarr;</a></li>
+	</ul>
+	<div class="col-md-2 column">
+		<h2><strong>{{existingCount}}</strong></h2>                    
+		<p><small>songs in total</small></p>
+	</div>
+	<!--<div class="col-md-8 column">
+		<br>
+		<button class="btn btn-warning btn-lg" id="getMissingAlbumArt"> Get missing album art</button>
+	</div>-->
+</template>

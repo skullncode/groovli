@@ -1,0 +1,116 @@
+<template name="profile">
+    <!--{{#if Template.subscriptionsReady}}-->
+        {{setUserProfileObject}}
+        <!--{{#if userProfileExists}}-->
+            <!--{{#with userObjectForRoute}}-->
+                <div class="container">
+                	<div class="row">
+                		<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+                    	 <div class="well profile">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-8">
+                                    {{#if userProfileIsNotYou}}
+                                        <h2>{{profile.name}}</h2>
+                                    {{else}}
+                                        <h2>you</h2>
+                                    {{/if}}
+                                    {{#if locationDetailsExist}}
+                                        <p><strong>From: </strong> {{locationCountry}} </p>
+                                    {{/if}}
+                                    <p><strong>Member since: </strong> {{memberSince createdAt}} </p>
+                                    <p><strong>Last activity: </strong> {{lastActivity}} </p>
+                                    <!--<p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>-->
+                                    <p><strong>Top {{topBandLength}} Bands: </strong>
+                                    {{#each topTenBands services.facebook.id}}
+                                        <!--<a href='#'><span class="tags">{{sa}}</span></a>-->
+                                        {{{validatedTop10Band}}}
+                                    {{/each}}
+                                    </p>
+                                    <p><strong>Top Genres: </strong>
+                                    {{#each topTenGenres}}
+                                        <!--<a href='#'><span class="tags">{{genre}}</span></a>-->
+                                        <a href="/genre/{{this.genre}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this.genre}} page"><b>{{this.genre}}</b></span></a>
+                                    {{/each}}
+                                    </p>
+                                </div>             
+                                <div class="col-xs-12 col-sm-4 text-center">
+                                    <figure>
+                                        <img src="http://graph.facebook.com/{{services.facebook.id}}/picture?type=large" alt="" class="img-circle img-responsive">
+                                    </figure>
+                                    <br>
+                                    {{#if userIsKing}}
+                                       <a class="btn btn-warning btn-xs" id="reviewPending" href="{{ pathFor 'pending' }}"> Review Pending</a>
+                                       <br>
+                                       <a class="btn btn-warning btn-xs" id="reviewExisting" href="{{ pathFor 'existing' }}"> Review Existing</a>
+                                       <br>
+                                       <a class="btn btn-warning btn-xs" id="reviewInvalid" href="{{ pathFor 'invalid' }}"> Review Invalid</a>
+                                       <br>
+                                       <a class="btn btn-warning btn-xs" id="reviewArtists" href="{{ pathFor 'allartists' }}"> All Artists</a>
+                                       <br>
+                                       <a class="btn btn-warning btn-xs" id="reviewGenres" href="{{ pathFor 'allgenres' }}"> All Genres</a>
+                                       <br>
+                                       <a class="btn btn-warning btn-xs" id="seeAllUsers" href="{{ pathFor 'allusers' }}"> All Users</a>
+                                       <br>
+                                    {{/if}}
+                                    {{#if userProfileIsNotYou}}
+                                        {{{isUserAFBFriend}}}
+                                        {{#if alreadyFollowed}}
+                                            <button class="btn btn-warning btn-block" id="unfollowUser"><span class="fa fa-minus-circle"></span> Unfollow</button>
+                                            <br>
+                                        {{else}}
+                                            <button class="btn btn-success btn-block" id="followUser"><span class="fa fa-plus-circle"></span> Follow</button>
+                                            <br>
+                                        {{/if}}
+                                    {{else}}
+                                        {{{fbFriendCount}}}
+                                    {{/if}}
+                                </div>
+                            </div>            
+                            <div class="col-xs-12 divider text-center">
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <h2><strong>{{personalSongCount services.facebook.id}}</strong></h2>                    
+                                    <p><small>Songs</small></p>
+                                </div>
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <h2><strong>{{ratingCount services.facebook.id}}</strong></h2>                    
+                                    <p><small>Songs Rated</small></p>
+                                </div>
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <!--<h2><strong>245</strong></h2>-->
+                                    {{getTotalListenCountForUser}}
+                                    {{{listenCount}}}
+                                    <!--<button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>-->
+                                </div>
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <!--<h2><strong> 20,7K </strong></h2>-->
+                                    {{{favoriteCount}}}
+                                </div>
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <!--<h2><strong> 20,7K </strong></h2>-->
+                                    {{getFollowerCount}}
+                                    {{{followerCount}}}
+                                </div>
+                                <div class="col-xs-12 col-sm-2 emphasis">
+                                    <!--<h2><strong>245</strong></h2>-->
+                                    {{{followingCount}}}
+                                    <!--<button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>-->
+                                </div>
+                            </div>
+                            <div class="col-xs-12 divider text-center">
+                                <div>
+                                    {{> profileTabs}}
+                                </div>
+
+                            </div>
+                    	 </div>                 
+                		</div>
+                	</div>
+                </div>
+    <!--{{else}}
+        {{> loading}}
+    {{/if}}-->
+    <!--    {{/with}}
+    {{else}}
+        {{> notFound}}
+    {{/if}}-->
+</template>

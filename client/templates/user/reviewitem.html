@@ -1,0 +1,168 @@
+<template name="reviewItem">
+	<div class='thumbnail songBrowserItem'>
+		<div class="col-md-4 column">
+			<img src="{{youtubeThumbnail}}" style="float:left;" height="90px" width="120px">
+			<div class="row">
+				<a id="externalSongLink" href="{{sl}}" target="blank"><i class="fa fa-external-link"></i>Link</a>
+				<br>
+				{{#each sharedByDetailsForCurrentSong}}
+					{{personName}}
+					<img class="img-rounded tastemakerFriendSharedBy" style="height: 20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'>
+					<br>
+				{{/each}}
+			</div>
+		</div>
+		<div class="col-md-6 column" style="text-align:left;"  >
+			<div class="row">
+				{{#if pendingIsInvalid}}
+					<i class="fa fa-exclamation-triangle"></i>
+				{{/if}}
+				<div class="input-group">
+					<label id='songArtistLabel' class='reviewItemText'>Song Artist:&nbsp;&nbsp;</label><label id='songArtistValue' class='reviewItemText'>{{sa}}</label>
+				</div>
+				<div class="input-group">
+					<label id='songTitleLabel' class='reviewItemText'>Song Title:&nbsp;&nbsp;</label><label id='songTitleValue' class='reviewItemText'>{{st}}</label>
+				</div>
+				{{#if isSongLive}}
+					<div class="input-group">
+						<label id='liveLabel' class='reviewItemText'>Live:&nbsp;</label><label id='liveValue' class='reviewItemText'>{{isSongLive}}</label>
+					</div>
+				{{/if}}
+				{{#if isSongCover}}
+				<div class="input-group">
+					<label id='coverLabel' class='reviewItemText'>Cover:&nbsp;</label><label id='coverValue' class='reviewItemText'>{{isSongCover}}</label>
+					<br>
+					<label id='covereredByLabel' class='reviewItemText'>Covered by:&nbsp;</label><label id='covereredByValue' class='reviewItemText'>{{coveredBy}}</label>
+				</div>
+				{{/if}}
+				{{#if isSongMashup}}
+				<div class="input-group">
+					<label id='mashupLabel' class='reviewItemText'>Mashup:&nbsp;</label><label id='mashupValue' class='reviewItemText'>{{isSongMashup}}</label>
+				</div>
+				{{/if}}
+				{{#if isSongRemix}}
+				<div class="input-group">
+					<label id='remixLabel' class='reviewItemText'>Remix:&nbsp;</label><label id='remixValue' class='reviewItemText'>{{isSongRemix}}</label>
+					<br>
+					<label id='remixedByLabel' class='reviewItemText'>Remixed by:&nbsp;</label><label id='remixedByValue' class='reviewItemText'>{{remixedBy}}</label>
+				</div>
+				{{/if}}
+				<div id="editSection" class="col-md-3 column" style="display:none">
+					<div class="input-group">
+				        <label for="txtEditArtist" class="control-label"><p class="text-info">Artist:</p></label>
+				        <input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
+			        </div>
+			        <div class="input-group">
+				        <label for="txtEditTitle" class="control-label"><p class="text-info">Title:</p></label>
+				        <input type="text" class='reviewItemText' size="30" id="txtEditTitle" value="{{st}}">
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditLink" class="control-label"><p class="text-info">Link:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
+			        </div>
+			        <div class="input-group">
+				        <label for="songValiditySelect" class="control-label"><p class="text-info">Validity:</p></label>
+					        <select id="songValiditySelect">
+								<option selected="selected">VALID</option>
+								<option>INVALID</option>
+							</select>
+					</div>
+					<div class="input-group">
+				        <label for="songManualItunesCheck" class="control-label"><p class="text-info">iTunes:</p></label>
+					        <select id="songManualItunesCheck">
+								<option selected="selected">CHECK ITUNES</option>
+								<option>NO HOPE IN ITUNES</option>
+							</select>
+					</div>
+					<div class="input-group">
+			        	<label for="check_live" class="control-label text-info">Live:<input id="check_live" type="checkbox" aria-label="live"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_cover" class="control-label text-info">Cover:<input id="check_cover" type="checkbox" aria-label="cover"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditCoveredBy" class="control-label"><p class="text-info">Covered By:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditCoveredBy" value="{{coveredBy}}">
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_mashup" class="control-label text-info">Mashup:<input id="check_mashup" type="checkbox" aria-label="mashup"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="check_remix" class="control-label text-info">Remix:<input id="check_remix" type="checkbox" aria-label="remix"></label>
+			        </div>
+			        <div class="input-group">
+			        	<label for="txtEditRemixedBy" class="control-label"><p class="text-info">Remixed By:</p></label>
+			            <input type="text" class='reviewItemText' size="30" id="txtEditRemixedBy" value="{{remixedBy}}">
+			        </div>
+				</div>
+				<!--
+				<div id="editLabels" class="col-md-3 column form-horizontal" style="display:none">
+					<label id="lblEditArtist" for="txtEditArtist">Artist:</label>
+					<br>
+					<label id="lblEditTitle" for="txtEditTitle">Title:</label>
+					<br>
+					<label id="lblEditTitle" for="txtEditLink">Link:</label>
+					<br>
+					<label id="lblSongValidity" for="songValiditySelect">Validity:</label>
+					<br><br><br>
+					<label id="lblSongLive" for="check_live">Live:</label>
+					<br>
+					<label id="lblSongCover" for="check_cover">Cover:</label>
+					<br>
+					<label id="lblSongMashup" for="check_mashup">Mashup:</label>
+				</div>
+				<div class="col-md-4 column form-horizontal" style="display:none" id="editSection">
+					<input type="text" class='reviewItemText' size="30" id="txtEditArtist" value="{{sa}}">
+					<br>
+					<input type="text" class='reviewItemText' size="30" id="txtEditTitle" value="{{st}}">
+					<br>
+					<input type="text" class='reviewItemText' size="30" id="txtEditLink" value="{{sl}}">
+					<br><br>
+					<select id="songValiditySelect">
+						<option selected="selected">VALID</option>
+						<option>INVALID</option>
+					</select>
+					<br>
+					<select id="songManualItunesCheck">
+						<option selected="selected">CHECK ITUNES</option>
+						<option>NO HOPE IN ITUNES</option>
+					</select>
+					<br><br>
+					<input id="check_live" type="checkbox" aria-label="live">
+					<br>
+					<input id="check_cover" type="checkbox" aria-label="cover">
+					<br>
+					<input id="check_mashup" type="checkbox" aria-label="mashup">
+				</div>-->
+			</div>
+			<div class="row">
+				<div class="col-md-4 column">
+					<button type="button" id="manualEdit" class="btn btn-default btn-xs">
+					  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Manual
+					</button>
+					<button type="button" id="itunesCheck" class="btn btn-default btn-xs">
+					 <i class="fa fa-apple"></i> iTunes
+					</button>
+					<button type="button" id="lfmCheck" class="btn btn-default btn-xs">
+					  <i class="fa fa-lastfm"></i> LFM
+					</button>
+					<button type="button" id="confirmUpdate" style="display:none" class="btn btn-success btn-xs">
+					  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+					<button type="button" id="cancelUpdate" style="display:none" class="btn btn-danger btn-xs">
+					  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					{{#if albumDeetsNotEmpty}}
+						<i class="glyphicon glyphicon-check">Deets</i>
+					{{else}}
+						<i class="glyphicon glyphicon-thumbs-down">Empty</i>						
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2 column">
+			{{{albumArt}}}
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+</template>

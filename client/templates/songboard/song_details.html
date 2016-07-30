@@ -1,0 +1,88 @@
+<template name='songDetails'>
+	{{#if songPlaying}}
+		{{#with currentSong}}
+			{{currentSongHasEncounteredAnError}}
+			{{checkIfArtistHasPage currentSong.sa}}
+			<div class="col-md-12 column well">
+				<div class="col-md-8 column">
+					{{#if artistTrackAreNotSame}}
+						<div>
+							{{#if artistHasPage}}
+								<h3><a href="{{pathFor 'artist' _name=ampersandRemovedArtistName }}" target='blank' title="artist page">{{currentSong.sa}}</a></h3>
+							{{else}}
+								<h3>{{currentSong.sa}}</h3>
+							{{/if}}
+							<h4>{{currentSong.st}}</h4>
+							<div>
+							<h6>
+							{{#if albumDeetsNotEmpty}}
+									Track {{currentSong.trackNumber}} of {{currentSong.trackCount}}, 
+									<br>from the album <b>{{currentSong.album}}</b>
+									<br>released <b>{{formattedReleaseDate}}</b>
+									<!--<br>Genre: 
+									{{#each extendedGenres}}
+										<a href="/genre/{{this}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this}} page"><b>{{this}}</b></span></a>
+									{{/each}}-->
+							{{/if}}
+							{{#if hasGenres}}
+								<p><strong>Genres: </strong>
+									{{#each extendedGenres}}
+									    <!--{{checkForGenre this}}-->
+									    <!--{{#if genreExists this}}-->
+									      <a href="/genre/{{this}}" target="blank"><span class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="{{this}} page"><b>{{this}}</b></span></a>
+									    <!--{{else}}
+									      <span class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="no page exists for the {{this}} genre">{{this}}</span>
+									    {{/if}}-->
+									{{/each}}
+								</p>
+							{{/if}}
+							{{#if cover}}
+								{{checkIfCoveringArtistHasPage currentSong.coveredBy}}
+								{{#if coveringArtistHasPage}}
+									<br><i>as covered by <b><a href="{{pathFor 'artist' _name=ampersandRemovedCoveringArtistName }}" target='blank' title="artist page">{{coveredBy}}</a></b></i>
+								{{else}}
+									<br><i>as covered by <b>{{coveredBy}}</b></i>
+								{{/if}}
+							{{/if}}
+							{{#if live}}
+								<br><b><i>performed live</i></b>
+							{{/if}}
+							{{#if mashup}}
+								<br><b><i>mashup of two or more songs</i></b>
+							{{/if}}
+							{{#if remix}}
+								<br><i>remixed by <b>{{remixedByDeets}}</b></i>
+							{{/if}}
+							</h6>
+							</div>
+						</div>
+					{{else}}
+						<div>
+							<h3>{{currentSong.sa}}</h3>
+						</div>
+					{{/if}}
+					Shared by: 
+					{{#each sharedByDetailsForCurrentSong}}
+						<a href="/profile/{{p_id}}" target='blank'><img class="img-rounded tastemakerFriendSharedBy" style="width:20px;height:20px;" src="http://graph.facebook.com/{{personID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{personName}} shared this on {{personTimestamp}}'></a>
+					{{/each}}
+					<br>
+					{{>favoriter}}
+				</div>
+				<div class="col-md-4 column" align="right">
+					{{>songRater}}
+					<br>
+					<a id="shareFbButton" title="Share on Facebook" class="btn btn-facebook">
+					<i class="fa fa-facebook"></i>&nbsp;&nbsp;&nbsp;&nbsp;Share on Facebook</a>
+					<a id="shareTwitterButton" href="http://twitter.com/?status={{currentSong.sl}} %23groovli %23nowplaying" title="Share on Twitter" target="_blank" class="btn btn-twitter"><i class="fa fa-twitter"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tweet this song</a>
+				</div>
+				<br>
+				<div class="col-md-12 column">
+					<hr>
+					{{>commentList songID=currentSongID}}
+				</div>
+			</div>
+		{{/with}}
+	{{else}}
+		<h5>still loading song...</h5>
+	{{/if}}
+</template>

@@ -1,0 +1,19 @@
+<template name="tastemakersList">
+	{{switchTabsAndAnimateListToCurrentlyPlayingSong}}
+	{{#if songOfFriendsExist}}
+		<span class="badge pull-right">{{songs.count}}</span>
+	{{else}}
+		<span>Not following anyone yet; check the Global list and follow someone to see their music here!</span>
+	{{/if}}
+	<ul id='tastemakersList' class="songsList horizontal-slide">
+		<li>
+			{{#each songs}}
+				<!--{{> tastemakersongItem}}-->
+				{{> tastemakersongItemMinimal}}
+			{{/each}}
+		</li>
+	</ul>
+	<!--<div class='{{deselectedTab}}'>
+		<h2 class='tabDeselectedText'>Currently deselected</h2>
+	</div>-->
+</template>

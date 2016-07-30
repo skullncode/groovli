@@ -1,0 +1,72 @@
+<template name="singleComment">
+	<div class="media">
+		<div class="media-left">
+		    <img class="img-rounded headerProfileImage" style="width:40px;height:40px;" src="http://graph.facebook.com/{{fbID}}/picture?type=square">
+		</div>
+		<div class="media-body comment">
+		    <h5 class="media-heading">{{nameForComment}}&nbsp;&nbsp;&nbsp;<small><i>{{createdAgo}}</i></small></h5>
+		    <div class="content">
+		        <p class="comment-content" data-id="{{commentId}}">{{content}}</p>
+
+		        <div class="actions btn-group btn-group-xs">
+	            	<a title="{{#if isOwnComment}}C'mon...don't you know it's not cool to like your own comment?{{else}}Like this comment!{{/if}}" id="{{_id}}" class="btn {{#if isOwnComment}}btn-default{{else}}btn-success{{/if}} likeComment" aria-label="Left Align">
+		            	<small>{{likesCount}}</small>
+		                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+		            </a>
+		            {{#if isOwnCommentAndLessThanFiveMinutes}}
+						<a title="You only have 5 minutes to delete this comment!" id="{{_id}}" class="btn btn-danger deleteComment" aria-label="Left Align">
+							<!--{{ take key='remove' default='Remove' }}-->
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</a>
+		            {{/if}}
+		            <!--
+		            <div class="btn btn-default reply-action" aria-label="Left Align">
+		                {{ take key='reply' default='Reply' }}
+		            </div>
+
+		            
+				            {{#if isEditable}}
+					            <div class="btn btn-default save-action" aria-label="Left Align">
+					                {{ take key='save' default='Save' }}
+					            </div>
+				            {{else}}
+					            <div class="btn btn-default edit-action" aria-label="Left Align">
+					                {{ take key='edit' default='Edit' }}
+					            </div>
+				            {{/if}}
+			           -->
+		        </div>
+		    </div>
+
+		    <!--{{#if addReply}}
+		        <div class="create-reply">
+		            {{> textarea reply=true scope=this }}
+		        </div>
+		    {{/if}}
+
+		    {{#if reply}}
+		        {{#each reply}}
+		            {{> commentsSingleComment }}
+		        {{/each}}
+		    {{/if}}-->
+		</div>
+	</div>
+</template>
+
+
+
+
+<!--
+<div class="media">
+ <p class="pull-right"><small>5 days ago</small></p>
+  <a class="media-left" href="#">
+    <img src="http://lorempixel.com/40/40/people/1/">
+  </a>
+  <div class="media-body">
+      
+    <h4 class="media-heading user_name">Baltej Singh</h4>
+    Wow! this is really great.
+    
+    <p><small><a href=""><i class="fa fa-thumbs-up"></i></a></small></p>
+  </div>
+</div>-->

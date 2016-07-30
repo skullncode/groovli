@@ -1,0 +1,19 @@
+<template name="tastemakersongItem">
+	<a class='thumbnail tastemakersongItem' href={{songID}} data-toggle="tooltip" data-placement="top" title={{songItemMessageForUser}}>
+		<div style="float:left;width:100px;">
+			<div style="background-image: url({{youtubeThumbnail}});position:relative;top:0px;width:120px;height:90px;">
+				<div class='overlay'>now playing</div>
+			</div>
+		</div>
+		<center>
+		<div class='songItemText'>{{sa}} - {{st}}</div>
+		<div class='songItemText'><h6 class='text-muted'><i>originally shared to {{{songDataSource}}} by</i></h6></div>
+		<div class='tastemakerFriendSharedByContainer' align='center'>
+			{{#each friendsSharedByForTastemakerItem}}
+				<img class="img-rounded tastemakerFriendSharedBy" style="width:20px;height:20px;" src="http://graph.facebook.com/{{friendID}}/picture?type=square" data-toggle="tooltip" data-placement="top" title='{{friendName}} shared this on {{friendTimestamp}}'>
+			{{/each}}
+		</div>
+		</center>
+		<div style="clear:both;"></div>
+	</a>
+</template>

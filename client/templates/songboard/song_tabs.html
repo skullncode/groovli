@@ -1,0 +1,29 @@
+<template name="songTabs">
+	<div id='songSearchMsg' style='display:none;' class="col-md-4 column">
+		<h2>Currently searching...</h2>
+	</div>
+	<div id="main" class="col-md-4 column">
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist" id="songTabs">
+		    <li role="presentation" class="active" title="last 50 songs shared by you socially"><a href="#mygroovs" aria-controls="mygroovs" role="tab" data-toggle="tab">my groovs</a></li>
+		    <li role="presentation" title="last 50 songs shared by your friends and tastemakers"><a href="#tastemakers" aria-controls="tastemakers" role="tab" data-toggle="tab">tastemakers</a></li>
+		    <li role="presentation" title="last 50 songs shared by people outside your social circles"><a href="#global" aria-controls="global" role="tab" data-toggle="tab">global</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane fade in active" id="mygroovs">
+		    	{{> mygroovsList}}
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="tastemakers">
+		    	{{> tastemakersList}}
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="global">
+		    	{{> globalList}}	
+		    </div>
+		  </div>
+		</div>
+	</div>
+</template>
