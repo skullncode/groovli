@@ -362,6 +362,84 @@ Meteor.methods({
 			}
 		}
 	},
+	unfollowUserFromApp: function(loggedInUser, userToUnfollow) {
+		var currentTastemakerList = loggedInUser.tastemakers;
+
+		if(!_.isUndefined(userToUnfollow.services))
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.services.facebook.id});
+		else if(!_.isUndefined(userToUnfollow.uid))
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToUnfollow.uid});
+		
+		var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
+
+		//if user exists in tastemaker list, use location to splice and remove the user from the tastemaker list
+		if(locationOfThisUserInList >= 0)
+		{
+			currentTastemakerList.splice(locationOfThisUserInList, 1)
+
+			console.log('updated tastemaker list: ');
+			console.log(currentTastemakerList);
+
+			//update Tastemaker list
+			Meteor.users.update({_id: loggedInUser._id},{$set:{tastemakers: currentTastemakerList}});
+		}
+
+		return 'successfully unfollowed user!';
+	},
+	followUserFromApp: function(loggedInUser, userToFollow) {
+		var currentTastemakerList = loggedInUser.tastemakers;
+
+		//console.log('THIS IS THE user to follows object: ');
+		//console.log(JSON.stringify(userToFollow));
+
+		//console.log('and the fb friends of the logged in user: ');
+		//console.log(loggedInUser.fbFriends);
+
+		//check to see if current tastemaker list is blank or not; if blank then initialize list to empty array
+		if(_.isNull(currentTastemakerList) || _.isUndefined(currentTastemakerList))
+		{
+			console.log('NO TASTEMAKERS SO FAR!!!');
+			currentTastemakerList = [];
+		}
+
+		if(!_.isUndefined(userToFollow.services) && !_.isUndefined(userToFollow.profile)) //if STANDARD User object
+		{
+			//find if user to follow already exists in 
+			var identifiedUserInList = _.findWhere(currentTastemakerList, {fbid: userToFollow.services.facebook.id})
+			console.log('THIS IS THE IDd user in the tastemaker list: ');
+			console.log(identifiedUserInList);
+			var userObjToAddTastemakerList = _.findWhere(loggedInUser.fbFriends, {fbid: userToFollow.services.facebook.id})
+
+			//this means that the user to follow is not a friend but an outsider / global user
+			//create the user object manually
+			if(_.isNull(userObjToAddTastemakerList) || _.isUndefined(userObjToAddTastemakerList))
+			{
+				userObjToAddTastemakerList = {
+					name: userToFollow.profile.name,
+					fbid: userToFollow.services.facebook.id,
+					uid: userToFollow._id
+				};
+			}
+		}
+
+		//var locationOfThisUserInList = currentTastemakerList.indexOf(identifiedUserInList);
+		
+		//if(locationOfThisUserInList === -1)
+		//if user is undefined or not found in current tastemakers list only then should they be added to the tastemaker list
+		if(_.isUndefined(identifiedUserInList)) 
+		{
+			console.log('DOES NOT EXIST IN CURRENT TASTEMAKER LIST, so will add them!!!');
+			currentTastemakerList.push(userObjToAddTastemakerList);
+
+			//console.log('NEW LIST is: ');
+			//console.log(currentTastemakerList);
+			
+			//add this user to the Tastemaker list
+			Meteor.users.update({_id: loggedInUser._id},{$set:{tastemakers: currentTastemakerList}});
+		}
+
+		return 'successfully followed user!';
+	},
 	getMasterUserData: function() {
 		var allUserData = Meteor.users.find({}).fetch();
 		return allUserData;
