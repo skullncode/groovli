@@ -124,19 +124,19 @@
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
-	  			<button id="leftButtonListen" class="massive ui icon circular button">
+	  			<!--<button id="leftButtonListen" class="massive ui icon circular button">
 				  <i class="caret left icon"></i>
-				</button>
+				</button>-->
 			</div>
   		</div>
 		<div class="ten wide column landingPageTrendingBoxBackground">
 			<h2 class="landingPageHeaderFont" style="color: #df455f">Recent Plays</h2>
-		  	<div class="ui eight column doubling grid container">
+		  	<div class="ui five column doubling grid container">
 		  		{{#if recentSongsLoaded}}
 			  		{{#each songsJustListened}}
 						<div class="column">
 							<div class="item">
-								<img class="ui tiny image" src="{{iTunesLargeAlbumArt}}">
+								<img class="ui tiny image" src="{{secureAlbumThumbnail}}">
 								<div class="content">
 								<div class="header">{{trimmedTitle}}</div> <i>by</i>
 									{{sa}}
@@ -158,9 +158,9 @@
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
   				<div class="column landingPageTrendingBoxBackground"></div>
-	  			<button id="rightButtonListen" class="massive ui icon circular button">
+	  			<!--<button id="rightButtonListen" class="massive ui icon circular button">
 				  <i class="caret right icon"></i>
-				</button>
+				</button>-->
 			</div>
   		</div>
   		<div class="two wide computer column landingPageTrendingBoxBackground"></div>

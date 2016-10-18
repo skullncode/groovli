@@ -49,7 +49,7 @@ Meteor.methods({
 		Messages.update({'_id': mid}, {$set: { read: true }}, function(error) {
 	      if (error) {
 	        // display the error to the user
-	        return console.log(error.reason);
+	        return error;
 	      }
 	      else{
 	      	//console.log('################ message successfully marked as READ: ' + mid);

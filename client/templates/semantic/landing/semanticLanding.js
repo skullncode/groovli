@@ -94,10 +94,18 @@ Template.semanticLanding.helpers({
   recentSongsLoaded: function() {
     return recentSongsLoaded.get();
   },
-  secureItunesThumbnail: function(){
-    return this.iTunesLargeAlbumArt.replace('http', 'https');
+  secureAlbumThumbnail: function(){
+    //return this.iTunesLargeAlbumArt.replace('http', 'https');
+    return this.spotifyAlbumArtURL;
   }
 });
+
+/*if(!_.isUndefined(result.data.tracks.items[0]) && !_.isEmpty(result.data.tracks.items[0]))
+          {
+            console.log("returning this now:");
+					  console.log(result.data.tracks.items[0].album.images[2].url);
+            return result.data.tracks.items[0].album.images[2].url;
+          }*/
 
 Template.semanticLanding.onRendered(function() {
   //$('.ui.dropdown.landingDropdownMenu').dropdown();
@@ -114,6 +122,33 @@ Template.semanticLanding.onCreated(function() {
   Session.set("playerLoaded", false);
   Session.set("playerStarted", false);
 });
+
+function getSpotifyAlbumArtForSong(sArtist, sTitle){
+		var searchQuery = sArtist + " " + sTitle;
+		var spotifyAlbumArtURL = "https://api.spotify.com/v1/search?q="+searchQuery+"&offset=0&limit=3&type=track";
+		Meteor.http.get(spotifyAlbumArtURL, function(error, result) {
+				if(!error) {
+					// this callback will be called asynchronously
+					// when the response is available
+					//console.log('this is the result from the spotify search:');
+					//console.log(result.data.tracks);
+					//console.log("returning this now:");
+					//console.log(result.data);
+					return result;
+				}
+				else
+				{
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+					console.log('REACHED spotify album art ERROR: ');
+					console.log(error);
+          return error;
+					//insertNewErrorInLogTable('REACHED LAST FM ERROR: ', error, null);
+					//$scope.lastFMInvalid++;
+					//$scope.currentStatus = 'SENDING: '+ $scope.lastFMSent + '-----VALIDATED: ' + $scope.lastFMValid + '-----INVALID: ' +$scope.lastFMInvalid;
+				}
+		});
+	}
 
 function getRecentListens(){
   Meteor.call('getLast20SongsForLandingPage', function(error,result){
