@@ -33,7 +33,7 @@
     "ROOT_URL": "https://groovli.com"
   },
 
-  "ssl": {
+    "ssl": {
     "certificate": "./fullchain.pem", // this is a bundle of certificates
     "key": "./privatekey.pem", // this is the private key of the certificate
     "port": 443 // 443 is the default value and it's the standard HTTPS port
