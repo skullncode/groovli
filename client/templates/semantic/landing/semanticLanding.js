@@ -123,31 +123,38 @@ Template.semanticLanding.onCreated(function() {
   Session.set("playerStarted", false);
 });
 
-function getSpotifyAlbumArtForSong(sArtist, sTitle){
-		var searchQuery = sArtist + " " + sTitle;
-		var spotifyAlbumArtURL = "https://api.spotify.com/v1/search?q="+searchQuery+"&offset=0&limit=3&type=track";
-		Meteor.http.get(spotifyAlbumArtURL, function(error, result) {
-				if(!error) {
-					// this callback will be called asynchronously
-					// when the response is available
-					//console.log('this is the result from the spotify search:');
-					//console.log(result.data.tracks);
-					//console.log("returning this now:");
-					//console.log(result.data);
-					return result;
-				}
-				else
-				{
-					// called asynchronously if an error occurs
-					// or server returns response with an error status.
-					console.log('REACHED spotify album art ERROR: ');
-					console.log(error);
-          return error;
-					//insertNewErrorInLogTable('REACHED LAST FM ERROR: ', error, null);
-					//$scope.lastFMInvalid++;
-					//$scope.currentStatus = 'SENDING: '+ $scope.lastFMSent + '-----VALIDATED: ' + $scope.lastFMValid + '-----INVALID: ' +$scope.lastFMInvalid;
-				}
+function addSpotifyAlbumArtForRecentSongs(){
+    var x = Session.get('lp_recent');
+    var blankLPRecent = [];
+    _.each(x, function(songObj){
+			var searchQuery = songObj.sa + " " + songObj.st;
+		  var spotifyAlbumArtURL = "https://api.spotify.com/v1/search?q="+searchQuery+"&offset=0&limit=3&type=track";
+      Meteor.http.get(spotifyAlbumArtURL, function(error, result) {
+          if(!error) {
+            // this callback will be called asynchronously
+            // when the response is available
+            //console.log('this is the result from the spotify search:');
+            //console.log(result.data.tracks);
+            //console.log("returning this now:");
+            //console.log(result.data);
+            blankLPRecent.push({sa: songObj.sa, st: songObj.st, spotifyAlbumArtURL: result.data.tracks.items[0].album.images[2].url})
+            Session.set("lp_recent",blankLPRecent);
+            //return result;
+          }
+          else
+          {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log('REACHED spotify album art ERROR: ');
+            console.log(error);
+            return error;
+            //insertNewErrorInLogTable('REACHED LAST FM ERROR: ', error, null);
+            //$scope.lastFMInvalid++;
+            //$scope.currentStatus = 'SENDING: '+ $scope.lastFMSent + '-----VALIDATED: ' + $scope.lastFMValid + '-----INVALID: ' +$scope.lastFMInvalid;
+          }
+      });
 		});
+    recentSongsLoaded.set(true);
 	}
 
 function getRecentListens(){
@@ -160,8 +167,9 @@ function getRecentListens(){
         //console.log('GOT THIS BACK From the server: ');
         //console.log(result);
         Session.set('lp_recentALL',result)
-        Session.set('lp_recent', _.first(result, 8))
-        recentSongsLoaded.set(true);
+        Session.set('lp_recent', _.first(result, 8));
+        addSpotifyAlbumArtForRecentSongs();
+        //recentSongsLoaded.set(true);
       }
   });
 }

@@ -684,5 +684,40 @@ Meteor.methods({
 		}
 		var foundUser = Meteor.users.findOne({'services.facebook.email': String(userObj.services.facebook.email)});
 		return foundUser;
+	},
+	updateUserDataForNewlyCreatedUser: function(internalUSERID, emailID, accessToken)
+	{
+		var fbDataURL = "https://graph.facebook.com/v2.6/me?fields=id%2Cname%2Cemail&access_token=" + accessToken;
+		console.log("################this is the FB url we're going to try and access to get more details for this user: " + fbDataURL);
+		Meteor.http.get(fbDataURL, 
+			function(error, result) {
+				if(!error && result.statusCode === 200) {
+					// this callback will be called asynchronously
+					// when the response is available
+					console.log("THIS IS THE RESULT FROM FB servers");
+					console.log(result.data);
+					console.log("going to update this user with this data now: " + internalUSERID);
+					if(!_.isUndefined(result))
+					{
+						Meteor.users.update({_id: internalUSERID},{$set:
+							{
+								profile:{"name":result.data.name},
+								services:{"facebook":{"id": result.data.id, "email": emailID}}
+							}
+						});
+						console.log('########Successfully updated brand new user internal fb details!');
+					}
+					else
+						console.log('ENCOUNTERED an eRROR while trying to update the users internal fb details: '+response);
+
+				}
+				else
+				{
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+					console.log('REACHED FB data update METHOD ERROR: ');
+					console.log(error);
+				}
+			});
 	}
 });
