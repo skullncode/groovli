@@ -3,13 +3,19 @@ var artistsSubLoaded = new ReactiveVar(false);
 var artistPercentage = new ReactiveVar(0);
 var genresForArtistPageLoaded = new ReactiveVar(false);
 var pagedArtistSongsLoaded = new ReactiveVar(false);
+//Session.setDefault('artImg', "http://semantic-ui.com/images/wireframe/square-image.png");
+var artImg = new ReactiveVar(null);
 
 Template.semanticArtistProfile.helpers({
-	artistImage: function() {
-		if(!_.isEmpty(this.largeImage['#text']))
-			return this.largeImage['#text'];
-		else
+	artImage: function() {
+		//console.log(this.largeImage['#text'])
+		//console.log("checking artist image: ");
+		//console.log(Session.get('artImg'));
+		//if(!_.isEmpty(Session.get('artImg')) || !_.isNull(Session.get('artImg')))
+		if(_.isEmpty(artImg.get()) || _.isNull(artImg.get()))
 			return "http://semantic-ui.com/images/wireframe/square-image.png";
+		else
+			return artImg.get();
 	},
 	aObjLoaded: function() {
 		return Session.get(artistProfileContext.get().params._id+'_artObjLoaded');
@@ -371,8 +377,6 @@ function songSubscriptionReady(){
 	pagedArtistSongsLoaded.set(true);
 }
 
-
-
 function totalSongCountReady(){
 	Session.set('_asc', Counts.get('songCountForAllSongs'));
 }
@@ -392,6 +396,52 @@ function genreSubForArtistPageLoaded(){
 	genresForArtistPageLoaded.set(true);
 }
 
+function getSpotifyArtistImage(){
+    var artistImg = '';
+		if(Session.get(artistProfileContext.get().params._id+'_artObjLoaded') && !_.isUndefined(Session.get(artistProfileContext.get().params._id+'_artObj')))
+		{
+			console.log("going to try and get a spotify image for this artist:");
+			console.log(Session.get(artistProfileContext.get().params._id+'_artObj'));
+			var searchQuery = Session.get(artistProfileContext.get().params._id+'_artObj').name;
+		  var spotifyArtistImageURL = "https://api.spotify.com/v1/search?q="+searchQuery+"&offset=0&limit=3&type=artist";
+      Meteor.http.get(spotifyArtistImageURL, function(error, result) {
+          if(!error) {
+            // this callback will be called asynchronously
+            // when the response is available
+            console.log('this is the result from the spotify search:');
+            //console.log(result.data.tracks);
+            //console.log("returning this now:");
+            console.log(result.data.artists.items);
+						console.log("going to try and match this result name: "+ result.data.artists.items[0].name.toLowerCase());
+						console.log('with this name: '+ searchQuery.toLowerCase());
+						if(!_.isEmpty(result) && !_.isEmpty(result.data) && !_.isEmpty(result.data.artists) && !_.isEmpty(result.data.artists.items) && !_.isEmpty(result.data.artists.items[0]) && result.data.artists.items[0].name.toLowerCase() == searchQuery.toLowerCase())
+						{
+							if(!_.isEmpty(result.data.artists.items[0].images) && !_.isEmpty(result.data.artists.items[0].images[0]))
+								artImg.set(result.data.artists.items[0].images[0].url);
+						}
+						else
+						{
+							console.log('did not find a matching artist in spotify!!!');
+							artImg.set(null);
+						}
+            //blankLPRecent.push({sa: songObj.sa, st: songObj.st, spotifyAlbumArtURL: result.data.tracks.items[0].album.images[2].url})
+            //Session.set("lp_recent",blankLPRecent);
+						
+            //return result;
+          }
+          else
+          {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log('REACHED spotify album art ERROR: ');
+            console.log(error);
+						artImg.set(null);
+            return error;
+          }
+      });
+		}
+	}
+
 function artistExists(){
 	//console.log("artist SUBSCRIPTION is readyyyyyyy!!");
 	//console.log("THIS IS HTE SUB obj:");
@@ -400,6 +450,7 @@ function artistExists(){
 	{
 		Session.set(artistProfileContext.get().params._id+'_artObj', Artists.findOne(String(artistProfileContext.get().params._id)));
 		Session.set(artistProfileContext.get().params._id+'_artObjLoaded', true);
+		getSpotifyArtistImage();
 		//console.log("ARTIST ACTUALLY EXISTS!!!!!!");
 		//getYearRangeForMyGroovs();
 	}
@@ -547,7 +598,6 @@ function getUsersFromChatter()
 
 	Session.set(FlowRouter.current().context.params._id+'_ausers', userListForArtist);
 }
-
 
 
 function fixSemanticGrids() {

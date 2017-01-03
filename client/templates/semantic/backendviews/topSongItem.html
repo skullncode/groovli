@@ -1,0 +1,22 @@
+<template name="topSongItem">
+	<tr>
+		<td>
+            <h4 class="ui image header">
+            <img src="{{youtubeThumbnail}}" class="ui tiny rounded image">
+            <div class="content">
+                <div class="sub header"><a href="{{this.sl}}" target="blank">Link</a></div>
+            </div>
+            </h4>
+        </td>
+		<td>
+			<div class="content">
+				<h4 id="msgID" class="ui header">{{_id}}</h4>
+			</div>
+		</td>
+		<td>
+			<h4>
+				{{count}}
+			</h4>
+		</td>
+	</tr>
+</template>

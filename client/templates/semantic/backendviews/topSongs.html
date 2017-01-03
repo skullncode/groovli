@@ -1,0 +1,42 @@
+<template name="topSongs">
+	{{#if currentUser}}
+    	{{#if userIsAnAdmin}}
+			<h1 class="ui header">See Top Songs</h1>
+			<table class="ui celled structured table">
+				<thead>
+				<tr>
+					<!--<th colspan="1">Actions</th>-->
+					<th colspan="1">Song</th>
+					<th colspan="1">Link</th>
+					<th colspan="1">Listen Count</th>
+				</tr>
+				</thead>
+				<tbody>
+					{{#if songsLoaded}}
+						{{#each listOfTopSongs}}
+							{{>topSongItem}}
+						{{/each}}
+				    {{else}}
+			    		<div class="ui active centered large inline loader"></div>
+			    	{{/if}}
+				</tbody>
+				<tfoot>
+				  <tr>
+				  <th colspan="1">
+				    <p><strong>{{songCount}} songs</strong></p>                    
+				  </th>
+				  <th colspan="4">
+				    <div class="ui right floated pagination menu">
+						<button id="loadSomeMoreTopSongs">Load 10 more
+							<i class="exchange icon"></i>
+						</button>
+				    </div>
+				  </th>
+				</tr></tfoot>
+			</table>
+		{{/if}}
+  	{{/if}}
+	{{#if loggingIn}}
+		<div class="ui active centered large inline loader"></div>
+	{{/if}}
+</template>

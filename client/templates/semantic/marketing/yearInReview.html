@@ -1,0 +1,83 @@
+<template name="yearInReview">
+<!--<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+    body > .grid {
+        height: 100%;
+    }
+    .image {
+        margin-top: -100px;
+    }
+    .column {
+        max-width: 450px;
+    }
+</style>
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <img src="assets/images/logo.png" class="image">
+      <div class="content">
+        Log-in to your account
+      </div>
+    </h2>
+    <form class="ui large form">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="email" placeholder="E-mail address">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="ui fluid large teal submit button">Login</div>
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+    <div class="ui message">
+      New to us? <a href="#">Sign Up</a>
+    </div>
+  </div>
+</div>-->
+<div class="mobile computer tablet only ui stackable centered grid">
+    <div class="sixteen wide centered column">
+        <img class="ui centered large image" src="../images/logo/groovli-big.png" title="beta">
+    </div>
+    <div class="sixteen wide centered column">
+        <div class="ui text container">
+            <h2 class="ui centered header">Want to know what <i>music you listened to in 2016</i> or <i><br>how many hours of music you've listened to</i> through the year?</h2>
+            <h2 class="ui centered pink header"><i>Now you can!</i></h2>
+            <div class="ui divider"></div>
+            {{#if currentUser}}
+              <center>
+                <div id="btnSeeYearInReview" class="ui huge green button">
+                Check out what {{userFirstNameOnly}} listened to in 2016!</div>
+                <small><a id="logout">Not {{userFirstNameOnly}}? Sign in with a different account!</a></small>
+                <div class="ui divider"></div>
+              </center>
+            {{else}}
+              <center>
+                <div id="facebook-login" class="ui huge facebook button">
+                <i class="facebook icon"></i>
+                Sign in with Facebook!</div>
+                <div class="ui divider"></div>
+              </center>
+            {{/if}}
+        </div>
+    </div>
+    <small>Made with <i class="red heart icon"></i>in Bangalore, India<br>
+    All Rights Reserved © Groovli 2017
+    <br>
+    <a class="item" href="{{pathFor 'privacypolicy' }}" target="blank">Privacy</a> | 
+    <a class="item" href="{{pathFor 'terms' }}" target="blank">Terms and Conditions</a>
+    </small>
+</div>
+</template>

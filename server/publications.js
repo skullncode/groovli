@@ -1250,6 +1250,25 @@ Meteor.publish('msgsForReviewCount', function(loggedInUser) {
   }
 });
 
+/*Meteor.publish('topSongs', function(cursorSkipAmount) {
+  return Listens.find({},{
+          limit: 10,
+          skip: cursorSkipAmount,
+          sort: {'timestamp':-1}
+       });
+  return Listens.aggregate(
+    [
+      { $group : { _id : "$sl", count:{$sum:1}}},
+      { $sort: {"count":-1}}
+    ]
+  );
+  var pipeline = [{ $group : { _id : "$sl", count:{$sum:1}}},
+ 						{$sort: {"count":-1}}];
+
+ 	return Listens.aggregate(pipeline);
+  //return topListensResult;
+});*/
+
 Meteor.publish('reviewComments', function(cursorSkipAmount) {
   return Comments.find({},{
           limit: 10,

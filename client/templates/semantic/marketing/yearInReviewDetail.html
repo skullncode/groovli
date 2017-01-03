@@ -1,0 +1,88 @@
+<template name="yearInReviewDetail">
+<div class="mobile computer tablet only ui stackable centered grid">
+    <div class="sixteen wide centered column">
+        <img class="ui centered large image" src="../images/logo/groovli-big.png" title="beta">
+    </div>
+    <div class="sixteen wide centered column">
+        <div class="ui text container">
+            <h1 class="ui centered header">{{userFirstNameOnly}}'s <i>musical history</i></h1>
+            <div class="ui divider"></div>
+            {{#if statsLoaded}}
+              <center>
+                <div class="ui statistic">
+                  <div class="value">
+                    {{songCount}}
+                  </div>
+                  <div class="label">
+                    {{#if songCountPluralRequired}}
+                      Songs shared
+                    {{else}}
+                      Song shared
+                    {{/if}}
+                  </div>
+                </div>
+                <br>
+                <div class="ui statistic">
+                  <div class="value">
+                    {{totalTimeSpan}}
+                  </div>
+                  <div class="label">
+                    {{#if yearCountPluralRequired}}
+                      years
+                    {{else}}
+                      year
+                    {{/if}}
+                  </div>
+                </div>
+                <br>
+                <div class="ui statistic">
+                  <div class="value">
+                    {{totalPlaytime}}
+                  </div>
+                  <div class="label">
+                    minutes of total playtime
+                  </div>
+                </div>
+                <br>
+                {{#if topArtists}}
+                  <div class="ui statistic">
+                    <div class="label">
+                      top artists
+                    </div>
+                    <center>
+                      <div>
+                        {{#each topArtists}}
+                          <img class="ui tiny rounded bordered image" src="{{artistImage}}">
+                          {{artistName}}
+                        {{/each}}
+                      </div>
+                    </center>
+                  </div>
+                  <br>
+                {{/if}}
+                {{#if topGenres}}
+                  <div class="ui statistic">
+                    <div class="label">
+                      top genres
+                    </div>
+                    <div>
+                      {{#each topGenres}}
+                        {{genreName}}<br>
+                      {{/each}}
+                    </div>
+                  </div>
+                {{/if}}
+              </center>
+            {{else}}
+              <div class="ui active centered inline loader"></div>
+            {{/if}}
+        </div>
+    </div>
+    <small>Made with <i class="red heart icon"></i>in Bangalore, India<br>
+    All Rights Reserved © Groovli 2017
+    <br>
+    <a class="item" href="{{pathFor 'privacypolicy' }}" target="blank">Privacy</a> | 
+    <a class="item" href="{{pathFor 'terms' }}" target="blank">Terms and Conditions</a>
+    </small>
+</div>
+</template>
