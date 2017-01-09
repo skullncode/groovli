@@ -719,5 +719,19 @@ Meteor.methods({
 					console.log(error);
 				}
 			});
+	},
+	updateDataImportProgress: function(userID, currentProgress)
+	{
+		//console.log('##########updated the import progress for USERID: ' + userID + ' - to ' + currentProgress);
+		Meteor.users.update({_id: userID},{$set:{importProgress: currentProgress}});
+		Meteor.users.update({_id: userID},{$set:{importProgress: currentProgress}}, function(error, result) {
+			if (error) {
+			// display the error to the user
+				console.log(error.reason);
+			}
+			else{
+				//console.log('################ SUCCESSFULLY updated data import progress!!');
+			}
+		});
 	}
 });

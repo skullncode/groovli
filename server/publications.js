@@ -845,6 +845,27 @@ Meteor.publish('allSongsForSpecificUser', function(userID, cursorSkipAmount) {
     }
 });
 
+Meteor.publish('importProgressForSpecificUser', function(userID){
+  if(userID !== null)
+  {
+    //console.log('THIS IS THE user ID that will be publishing for: ' + this.userId)
+    var options = {
+      fields: 
+        {
+          "services.facebook": 1,
+          "emails.address[0]": 1,
+          "profile": 1,
+          "createdAt": 1,
+          "importProgress": 1
+        }};
+    var targetedUser = Meteor.users.findOne(userID);
+    if(!_.isUndefined(targetedUser) && !_.isEmpty(targetedUser))
+    {
+      //console.log('FOUND AN ACTUAL USER OBJECT FOR THIS USER ID: ' + userID);
+      return Meteor.users.find({_id: userID}, options);
+    }
+  }
+});
 
 
 Meteor.publish('topTastemakersForSpecificUser', function(userID, tastemakerIDs) {

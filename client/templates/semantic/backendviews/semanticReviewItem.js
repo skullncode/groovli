@@ -130,6 +130,29 @@ Template.semanticReviewItem.events({
       editingSong.set(false);
       currentlyEditingID.set(null);
     },
+    "click #deleteSong": function(event) {
+      if(window.confirm("Are you sure you want to delete this song?"))
+      {
+        Meteor.call('manuallyDeleteSong', currentlyEditingID.get(), function(error, result) {
+          if(error)
+          {
+            console.log('Encountered error while trying to delete song');
+            console.log(error);
+          }
+          else
+          {
+            console.log('Successfully deleted song!');
+            editingSong.set(false);
+            currentlyEditingID.set(null);
+            alert('Successfully deleted song!');
+          }
+        });
+      }
+      else
+      {
+        //alert("you chose to cancel!");
+      }
+    },    
     "click #updateSong": function(event){
       manualUpdateConfirm(event);
       editingSong.set(false);

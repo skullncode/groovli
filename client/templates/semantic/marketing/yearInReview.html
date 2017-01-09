@@ -49,18 +49,23 @@
 </div>-->
 <div class="mobile computer tablet only ui stackable centered grid">
     <div class="sixteen wide centered column">
-        <img class="ui centered large image" src="../images/logo/groovli-big.png" title="beta">
+        <a href="https://groovli.com"><img class="ui centered large image" src="../images/logo/groovli-big.png" title="beta"></a>
     </div>
     <div class="sixteen wide centered column">
         <div class="ui text container">
-            <h2 class="ui centered header">Want to know what <i>music you listened to in 2016</i> or <i><br>how many hours of music you've listened to</i> through the year?</h2>
-            <h2 class="ui centered pink header"><i>Now you can!</i></h2>
+            <h1 class="ui centered header">Year in Review</h1>
+            <h2 class="ui centered header">Want to know what <i>music you listened to in 2016 or earlier</i> <br>or <br><i>how many hours of music you've listened to</i> through the year?</h2>
+            <h2 class="ui centered green header"><i>Now you can!</i></h2>
             <div class="ui divider"></div>
             {{#if currentUser}}
               <center>
                 <div id="btnSeeYearInReview" class="ui huge green button">
-                Check out what {{userFirstNameOnly}} listened to in 2016!</div>
-                <small><a id="logout">Not {{userFirstNameOnly}}? Sign in with a different account!</a></small>
+                Check out what {{userFirstNameOnly}} listened to in 2016!</div><br>
+                <!--<small><a id="logout">Not {{userFirstNameOnly}}? Sign in with a different account!</a></small>-->
+                <div class="ui divider"></div>
+                <center>
+                  <a id="logout" class="ui small red button">Not {{userFirstNameOnly}}? <br>Sign in with a different account!</a>
+                </center>
                 <div class="ui divider"></div>
               </center>
             {{else}}
@@ -78,6 +83,10 @@
     <br>
     <a class="item" href="{{pathFor 'privacypolicy' }}" target="blank">Privacy</a> | 
     <a class="item" href="{{pathFor 'terms' }}" target="blank">Terms and Conditions</a>
+    <br>
+    <center>
+      <a href="http://bit.ly/2g7v6CW" target="_blank"><img class="ui small image" src="../images/googlePlayBadge.png"></a>
+    </center>
     </small>
 </div>
 </template>

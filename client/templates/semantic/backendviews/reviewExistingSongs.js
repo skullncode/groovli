@@ -150,8 +150,8 @@ Template.reviewExistingSongs.onRendered(function () {
 	$('.ui.search')
 	  .search({
 	    apiSettings: {
-	      //url: '//localhost:3000/api/ss/{query}'
-	      url: '//groovli.com/api/ss/{query}'
+	      url: '//localhost:3000/api/ss/{query}'
+	      //url: '//groovli.com/api/ss/{query}'
 	    },
 	    fields: {
 	      results : 'apiResults',

@@ -88,19 +88,19 @@ function topSongsSubLoaded(){
 }
 
 function getTopSongs(){
-		Meteor.call('getTopSongsBasedOnListenCount', songCursor.get(), function(error, result) {
-			if(error)
-			{
-				console.log('Encountered error while trying to get list of top songs');
-				console.log(error);
-			}
-			else
-			{
-				masterSongList = result;
-				topSongList = masterSongList.splice(0,10);
-				Session.set("topSongList", topSongList);
-				songCount.set(topSongList.length);
-				topSongsSubLoaded();
-			}
+	Meteor.call('getTopSongsBasedOnListenCount', songCursor.get(), function(error, result) {
+		if(error)
+		{
+			console.log('Encountered error while trying to get list of top songs');
+			console.log(error);
+		}
+		else
+		{
+			masterSongList = result;
+			topSongList = masterSongList.splice(0,10);
+			Session.set("topSongList", topSongList);
+			songCount.set(topSongList.length);
+			topSongsSubLoaded();
+		}
 	});
 }

@@ -23,8 +23,8 @@ Template.yearInReview.events({
             else
             {
                 //after logging in update FB friend list
-                console.log('successfully logged in with meteor!!!');
-                console.log(Meteor.user());
+                //console.log('successfully logged in with meteor!!!');
+                //console.log(Meteor.user());
                 //Meteor.call('updateFBFriendList', Meteor.user());
                 /*amplitude.logEvent("click login with facebook button");
                 ga('send', {
@@ -32,7 +32,8 @@ Template.yearInReview.events({
                   eventCategory: 'landing',
                   eventAction: 'login with facebook'
                 });*/
-                FlowRouter.go('/yearinreview/'+Meteor.user()._id);
+                Meteor.call('getLatestStoriesFromDBAndFB');
+                FlowRouter.go('/yir/'+Meteor.user()._id);
                 //FlowRouter.go('/welcome');
             }
         });
@@ -51,7 +52,7 @@ Template.yearInReview.events({
                 //{
                     //console.log("NOT on homepage so will redirect to HOME!");
                     Session.set('ud', null);
-                    FlowRouter.go('/yearinreview');
+                    FlowRouter.go('/yir');
                 //}
                 //else
                 //    console.log('NOT DOING ANYTHING!!');
@@ -61,6 +62,6 @@ Template.yearInReview.events({
     },
 
     'click #btnSeeYearInReview': function(event){
-        FlowRouter.go('/yearinreview/'+Meteor.user()._id);
+        FlowRouter.go('/yir/'+Meteor.user()._id);
     }
 })
