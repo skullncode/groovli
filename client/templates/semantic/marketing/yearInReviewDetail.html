@@ -6,110 +6,113 @@
     <div class="sixteen wide centered column">
         <div class="ui text container">
             {{#if statsLoaded}}
-            <h1 class="ui centered header">{{userFirstNameOnly}}'s <i>musical history</i></h1>
-            <div class="ui divider"></div>
-              <center>
-                <div class="ui statistic">
-                  <div class="value">
-                    {{songCount}}
-                  </div>
-                  <div class="label">
-                    {{#if songCountPluralRequired}}
-                      Songs shared over the span of
-                    {{else}}
-                      Song shared over the span of
-                    {{/if}}
-                  </div>
-                </div>
-                <br>
+              {{#if songsShared}}
+                <h1 class="ui centered header">{{userFirstNameOnly}}'s <i>musical history</i></h1>
                 <div class="ui divider"></div>
-                <div class="ui statistic">
-                  <div class="value">
-                    {{totalTimeSpan}}
-                  </div>
-                  <div class="label">
-                    {{#if yearCountPluralRequired}}
-                      years
-                    {{else}}
-                      year
-                    {{/if}}
-                  </div>
-                </div>
-                <div class="ui divider"></div>
-                <br>
-                <div class="ui statistic">
-                  <div class="value">
-                    {{totalPlaytimeInMinutes}}
-                  </div>
-                  <div class="label">
-                    minutes of total playtime
-                  </div>
-                </div>
-                {{#if hourPlaytimeVisible}}
-                  <div class="ui divider"></div>
-                  <br>
-                  <div class="ui statistic">
-                    <div class="value">
-                      {{totalPlaytimeInHours}}
-                    </div>
-                    <div class="label">
-                      hours of total playtime
-                    </div>
-                  </div>
-                {{/if}}
-                <br>
-                {{#if topArtists}}
-                  <div class="ui divider"></div>
-                  <div class="ui statistic">
-                    <div class="label">
-                      top artists
-                    </div>
-                    <center>
-                      <div>
-                        {{#each topArtists}}
-                          <img class="ui small rounded bordered image" src="{{artistImage}}">
-                          {{artistName}}<br><br>
-                        {{/each}}
-                      </div>
-                    </center>
-                  </div>
-                  <br>
-                {{/if}}
-                {{#if topGenres}}
-                  <div class="ui divider"></div>
-                  <div class="ui statistic">
-                    <div class="label">
-                      top genres
-                    </div>
-                    <div>
-                      {{#each topGenres}}
-                        {{genreName}}<br>
-                      {{/each}}
-                    </div>
-                  </div>
-                  <div class="ui divider"></div>  
-                {{/if}}            
-                <button id="btnFBMusicalHistory" class="ui huge facebook button">
-                  <i class="facebook icon"></i>
-                  Share to Facebook!
-                </button>
-                <br><br>                
-                <a href="https://twitter.com/intent/tweet?text={{socialTxt}}&url={{yearInReviewURLToBeShared}}" title="Tweet this song!" target="_blank" class="ui huge twitter button">
-                  <i class="twitter icon"></i> Tweet your musical history!
-                </a>
-                <div class="ui divider"></div>  
-                {{#if currentUser}}
                   <center>
-                    <a id="logout" class="ui small red button">Not {{userFirstNameOnly}}? <br>Check out your musical history instead!</a>
+                    <div class="ui statistic">
+                      <div class="value">
+                        {{songCount}}
+                      </div>
+                      <div class="label">
+                        {{#if songCountPluralRequired}}
+                          Songs shared over the span of
+                        {{else}}
+                          Song shared over the span of
+                        {{/if}}
+                      </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="ui statistic">
+                      <div class="value">
+                        {{totalTimeSpan}}
+                      </div>
+                      <div class="label">
+                        {{#if yearCountPluralRequired}}
+                          years
+                        {{else}}
+                          year
+                        {{/if}}
+                      </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="ui statistic">
+                      <div class="value">
+                        {{totalPlaytimeInMinutes}}
+                      </div>
+                      <div class="label">
+                        minutes of total playtime
+                      </div>
+                    </div>
+                    {{#if hourPlaytimeVisible}}
+                      <div class="ui divider"></div>
+                      <div class="ui statistic">
+                        <div class="value">
+                          {{totalPlaytimeInHours}}
+                        </div>
+                        <div class="label">
+                          hours of total playtime
+                        </div>
+                      </div>
+                    {{/if}}
+                    <br>
+                    {{#if topArtists}}
+                      <div class="ui divider"></div>
+                      <div class="ui statistic">
+                        <div class="label">
+                          top artists
+                        </div>
+                        <center>
+                          <div>
+                            {{#each topArtists}}
+                              <img class="ui small rounded bordered image" src="{{artistImage}}">
+                              {{artistName}}<br><br>
+                            {{/each}}
+                          </div>
+                        </center>
+                      </div>
+                      <br>
+                    {{/if}}
+                    {{#if topGenres}}
+                      <div class="ui divider"></div>
+                      <div class="ui statistic">
+                        <div class="label">
+                          top genres
+                        </div>
+                        <div>
+                          {{#each topGenres}}
+                            {{genreName}}<br>
+                          {{/each}}
+                        </div>
+                      </div>
+                      <div class="ui divider"></div>  
+                    {{/if}}            
+                    <button id="btnFBMusicalHistory" class="ui huge facebook button">
+                      <i class="facebook icon"></i>
+                      Share to Facebook!
+                    </button>
+                    <br><br>                
+                    <a href="https://twitter.com/intent/tweet?text={{socialTxt}}&url={{yearInReviewURLToBeShared}}" title="Tweet this song!" target="_blank" class="ui huge twitter button">
+                      <i class="twitter icon"></i> Tweet your musical history!
+                    </a>
+                    <div class="ui divider"></div>  
+                    {{#if currentUser}}
+                      <center>
+                        <a id="logout" class="ui small red button">Not {{userFirstNameOnly}}? <br>Check out your musical history instead!</a>
+                      </center>
+                    {{else}}
+                      <center>
+                        <div id="facebook-login" class="ui large facebook button">
+                        <i class="facebook icon"></i>
+                        Sign in with Facebook to see your musical history!</div>
+                      </center>
+                    {{/if}}
                   </center>
                 {{else}}
                   <center>
-                    <div id="facebook-login" class="ui large facebook button">
-                    <i class="facebook icon"></i>
-                    Sign in with Facebook to see your musical history!</div>
+                    <h2 class="ui centered header">Sorry {{userFirstNameOnly}}, <br><i>but you don't seem to have shared any music socially thus far.<br>Groovli, can currently only analyze your musical history via music shared to Facebook.<br>Check back later whenever you have shared some music to Facebook!<br><br>Thanks!<br></i></h2>
                   </center>
                 {{/if}}
-              </center>
             {{else}}
               <!--<div class="ui active centered inline loader">Loading your musical history...</div>-->
               <!--<div class="ui segment">

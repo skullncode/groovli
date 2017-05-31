@@ -17,6 +17,9 @@ Template.yearInReviewDetail.helpers({
 	{
         return userFirstName.get();
 	},
+    songsShared: function() {
+        return totalSongCount.get() > 0;
+    },
     songCount: function() {
       //return Session.get(this._id+'_sc');
         return totalSongCount.get();
@@ -86,13 +89,13 @@ function pullInDetailsForYearInReview(){
         }
         else{
             // do something with result
-            //console.log('GOT THIS BACK From the server: ');
-            //console.log(result);
+            console.log('GOT THIS BACK From the server: ');
+            console.log(result);
             totalSongCount.set(result.totalSongCount);
             socialText.set(result.socialText);  
             userFirstName.set(result.firstName);
-            //console.log("this is the social text: ");
-            //console.log(socialText.get());
+            console.log("this is the social text: ");
+            console.log(socialText.get());
             var faveBandList = [];
             var faveGenreList = [];
             var faveBandGenres = result.faveBandGenres;
@@ -129,8 +132,7 @@ function pullInDetailsForYearInReview(){
 
 
 var checkImportProgress = function () {
-    //console.log('LOADING songboard and going to update the fb friendlist!');
-    var x = Meteor.users.findOne();
+    var x = Meteor.users.findOne(FlowRouter.current().params._id);
     //console.log("this is the found user: ");
     //console.log(x.importProgress);
     updateProgressBar(x.importProgress + 0.10)

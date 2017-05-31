@@ -200,6 +200,8 @@ Template.semanticLanding.events({
                   eventCategory: 'landing',
                   eventAction: 'facebook login failed'
                 });
+                console.log('########################## hit an error when trying to login with FB:');
+                console.log(err);
                 throw new Meteor.Error("Facebook login failed");
             }
             else
