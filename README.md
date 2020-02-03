@@ -21,4 +21,4 @@ This is Groovli; if you're here, I know you; if I don't know you, something's me
 
 ### Who do I talk to? ###
 
-* Sandeep Jayendran (sandeep@groovli.com)
+* Sandeep Jayendran (sandjay@gmail.com)
