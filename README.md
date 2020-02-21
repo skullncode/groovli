@@ -4,7 +4,7 @@ This is Groovli; if you're here, I know you; if I don't know you, something's me
 
 ### What is this repository for? ###
 
-* Current build of www.groovli.com
+* Current build of www.groovli.com (now defunct)
 * Version BETA
 
 ### How do I get set up? ###
